@@ -1,0 +1,29 @@
+# Android & Gradle
+*.iml
+.gradle
+/local.properties
+/.idea/
+/build
+*/build
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Python & FastAPI
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.env
+
+# Heavy ML artifacts (датасеты и тяжелые веса)
+datasets/
+raw_images/
+runs/
+*.pt
+*.onnx
+
+# Легковесные мобильные модели для приложения оставляем
+!android-app/app/src/main/assets/*.tflite
+!android-app/app/src/main/assets/*.ppn
