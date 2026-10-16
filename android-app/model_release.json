@@ -1,0 +1,6 @@
+{
+  "comment": "GitHub Release with published ONNX models (fetch_assets.py). Fill 'files' when the release is created by ml-pipeline/prepare_model_release.py.",
+  "repository": "stasevboris/agrovoice-ai",
+  "tag": "models-allcrops-v1",
+  "files": []
+}

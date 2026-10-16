@@ -66,3 +66,6 @@ docs/**/*.bin
 docs/**/*.jsonl
 /artifacts/documents/
 /ml-pipeline/*.pt
+
+# Prepared GitHub Release files (ml-pipeline/prepare_model_release.py)
+/artifacts/release/

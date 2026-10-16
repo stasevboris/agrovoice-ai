@@ -99,4 +99,7 @@ python package_results.py          # -> results_<host>_<дата>.zip (best/last
 
 ## Что потом делать с результатами (дома)
 
-Задача A-03 в `docs/ROADMAP.md`: проверка ONNX на ПК → добавление модели в APK (новый манифест с 49 классами и 15 культурами) → замер на Redmi Note 7 и A56.
+1. Распаковать `results_*.zip` в `runs/allcrops_v1/` (задача M-04: разбор метрик).
+2. Подготовить релиз: `python -X utf8 ml-pipeline/prepare_model_release.py runs/allcrops_v1/<S> runs/allcrops_v1/<N> --tag models-allcrops-v1 --update-config` → `artifacts/release/models-allcrops-v1/` (ONNX, SHA256SUMS, MODEL_CARD, RELEASE_NOTES, LICENSE, ATTRIBUTION).
+3. Создать на GitHub релиз с тегом `models-allcrops-v1`, текст — `RELEASE_NOTES.md`, приложить все файлы папки.
+4. Задача A-03 в `docs/ROADMAP.md`: модель в APK (манифест с 49 классами и 15 культурами), замер на Redmi Note 7 и A56.

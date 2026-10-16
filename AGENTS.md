@@ -30,6 +30,7 @@
 - Не запускай длинные обучения на домашней RX 9060 XT (Борис просил её не мучить). Обучение — через комплект `ml-pipeline/gpu_kit/` на арендованной GPU. Короткие проверки на CPU — можно.
 - Не меняй порядок и ID классов в `ml-pipeline/allcrops/taxonomy_v1.json`: от него зависят ONNX и приложение. Новые классы — только новой версией таксономии (v2) с новым набором.
 - Не трогай без явного разрешения Бориса: удаление данных и архивов, переписывание истории git, `git push`, установку системного ПО и драйверов, действия на его телефоне, публикацию чего-либо наружу.
+- Не публикуй веса DEIMv2 (закрытая лицензия) и любые модели не через `prepare_model_release.py`. Лицензия проекта — AGPL-3.0, авторы данных — `ATTRIBUTION.md`.
 - Не выдумывай диагнозы по картинке. Метка — только из источника данных или от специалиста.
 - Не пиши дозировки препаратов из головы. Только из Госреестра РБ со ссылкой; без проверки специалистом — `status: draft`.
 
@@ -52,7 +53,7 @@
 ## 5. Команды (проверены 16.10.2026 на Windows этого ПК)
 
 ```powershell
-# Python-тесты (23 шт., ~1 с)
+# Python-тесты (29 шт., ~1 с)
 .\ml-pipeline\venv\Scripts\python.exe -X utf8 -m unittest discover -s ml-pipeline\tests
 
 # Android: JVM-тесты и сборка (JDK 25 в PATH, SDK в local.properties)
@@ -61,6 +62,12 @@ cd android-app; .\gradlew.bat testDebugUnitTest; .\gradlew.bat assembleDebug
 # Набор allcrops_v1 (~15 мин, CPU) и пробный мини-набор
 .\ml-pipeline\venv\Scripts\python.exe -X utf8 ml-pipeline\build_allcrops_v1.py --overwrite
 .\ml-pipeline\venv\Scripts\python.exe -X utf8 ml-pipeline\build_allcrops_v1.py --limit-per-class 2 --out ml-pipeline\dataset_allcrops_v1_smoke --overwrite --no-previews
+
+# Модели и голос для APK (чистый клон; только стандартная библиотека Python)
+python android-app\fetch_assets.py
+
+# Файлы GitHub Release из результатов обучения (ONNX, SHA256SUMS, карточка модели)
+.\ml-pipeline\venv\Scripts\python.exe -X utf8 ml-pipeline\prepare_model_release.py runs\allcrops_v1\<run> --tag models-allcrops-v1 --update-config
 
 # Комплект для GPU
 .\ml-pipeline\venv\Scripts\python.exe -X utf8 ml-pipeline\pack_gpu_kit.py

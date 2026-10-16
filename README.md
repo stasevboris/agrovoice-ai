@@ -27,7 +27,14 @@ cd android-app
 .\gradlew.bat assembleDebug
 ```
 
-Модели (`app/src/main/assets/models/*.onnx`) и речевая модель Vosk (`app/src/main/assets/voice/ru/`) в git не хранятся: они лежат на рабочем ПК (см. [docs/ARCHIVE.md](docs/ARCHIVE.md)). Скрипт загрузки — задача G-05 в ROADMAP. Без них APK соберётся, но распознавание и голос работать не будут.
+Модели (`app/src/main/assets/models/*.onnx`) и речевая модель Vosk в git не хранятся. Перед сборкой:
+
+```powershell
+python android-app\fetch_assets.py          # проверить и скачать: модели — из GitHub Release, Vosk — с сайта авторов
+python android-app\fetch_assets.py --check  # только проверить
+```
+
+В релизе публикуются только итоговые модели allcrops; экспериментальные модели lab-сборки (включая DEIMv2, у которого закрытая лицензия) есть только на рабочем ПК.
 
 ## Данные и обучение
 
@@ -41,6 +48,10 @@ cd android-app
 ```
 
 Инструкция к сеансу обучения — [ml-pipeline/gpu_kit/README.md](ml-pipeline/gpu_kit/README.md).
+
+## Лицензия
+
+Код и опубликованные веса — [GNU AGPL-3.0](LICENSE) (обучение на Ultralytics YOLO, AGPL-3.0). Авторы данных и компонентов — [ATTRIBUTION.md](ATTRIBUTION.md). Карточка модели появляется в `docs/MODEL_CARD_<тег>.md` при подготовке релиза.
 
 ## Ограничения (честно)
 

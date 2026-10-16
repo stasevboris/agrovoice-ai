@@ -81,7 +81,7 @@
 - `PROJECT_GUIDE.md` → `docs/history/PROJECT_GUIDE_until_2026-10-16.md` (без изменений).
 - **Готово, когда:** новый человек по README за 30 мин собирает APK. 1 ч.
 
-### G-05 Воспроизводимые модели для APK — **агент**
+### G-05 Воспроизводимые модели для APK — **скрипты готовы 17.10, релиз — после M-03**
 Модели `.onnx` и голос Vosk в git не хранятся. Сделать `android-app/fetch_assets.ps1` (+ `.sh`): скачивает из GitHub Release (или копирует из локального архива), проверяет SHA по `assets/models/manifest.json` и `assets/voice/manifest.json`. **Готово, когда:** чистый клон + скрипт + `gradlew assembleDebug` дают рабочий APK. 2 ч. **Борис:** создать Release и загрузить файлы (или дать токен `gh`).
 
 ### M-01 Набор allcrops_v1 — **сделано 16.10**
