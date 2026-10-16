@@ -9,13 +9,13 @@
 - **Комплект для RTX 5090:** `artifacts/gpu_kit/agrovoice_gpu_kit_20261016.zip` — 2,46 ГиБ, 74 510 файлов, SHA-256 `c34ce3668338f0e4b717bc11c3b9acbb1610f82efba36daf49a3331260055509`. Инструкция — рядом (`.README.md`) и внутри. Распакованная копия проверена на CPU: пробный прогон, лимит времени, STOP с продолжением, экспорт ONNX `[1,53,3549]`, паритет < 0,001. На самой 5090 ещё не запускался.
 - **Тесты:** Python 29/29 (ещё 13 тестов preflight — в ветке `archive/leaf-v3-preflight`), Android JVM 9/9.
 - **Публикация весов:** решено публиковать итоговые allcrops-модели в GitHub Release под AGPL-3.0 (`LICENSE`, `ATTRIBUTION.md`). Готовы `android-app/fetch_assets.py` (проверено на этом ПК: 9 моделей и Vosk на месте; официальная ссылка Vosk отвечает) и `ml-pipeline/prepare_model_release.py` (проверен на выходе пробного прогона комплекта). Веса DEIMv2 не публикуются.
-- **Git:** 17.10 история почищена (`main`, `archive/leaf-v3-preflight`), но **не отправлена**: GitHub отказал аккаунту svgagwfaegaswdgaws (403), нужен вход под stasevboris; тяжёлые файлы — вне git (`docs/ARCHIVE.md`), полная прежняя история — bundle на E:. Незаконченный preflight Leaf v3 — в ветке `archive/leaf-v3-preflight`.
+- **Git:** 17.10 история почищена и отправлена на GitHub (`main`, `archive/leaf-v3-preflight`); загрузка 1b041e3, сделанная в обход, влита в `main` без изменения файлов (её содержимое — подмножество main); тяжёлые файлы — вне git (`docs/ARCHIVE.md`), полная прежняя история — bundle на E:. Незаконченный preflight Leaf v3 — в ветке `archive/leaf-v3-preflight`.
 - **Диск F:** свободно 191 ГБ из 239. 16–17.10 архивы перенесены на `E:\Перенесено_с_F` с тем же путём, что был на F: (старые APK, `runs\*`, `ml-pipeline\dataset`, `dataset_clean_v1`, `plantdoc_yolo.zip`, `artifacts\documents`, копия проекта от 12.10, WSL-дистрибутив AgroVoice-ML, модели Ollama). Список «откуда → куда» — `E:\Перенесено_с_F\ЧТО_ПЕРЕНЕСЕНО.txt`; на F: на месте каждой папки — записка `ПЕРЕНЕСЕНО_НА_E__*.txt`. Старые отчёты ссылаются на `runs\...` по прежним путям — искать там же на E:.
 
 ## Следующее
 
 1. **M-03 (Борис, пн 20.10):** сеанс на 5090 по README комплекта, привезти `results_*.zip`.
-2. **После M-03:** `prepare_model_release.py` → Борис создаёт релиз `models-allcrops-v1` на GitHub (нужен вход под stasevboris, как и для `git push`).
+2. **После M-03:** `prepare_model_release.py` → Борис создаёт релиз `models-allcrops-v1` на GitHub.
 3. **M-04 → A-01 → A-02 → A-03:** разбор результатов, манифест v3, культуры из манифеста, модель в APK.
 
 ## Найдено, но не сделано
@@ -28,5 +28,5 @@
 ## Журнал (одна строка на задачу)
 
 - 16.10 — аудит проекта, ROADMAP, AGENTS.md, набор allcrops_v1, комплект GPU, тесты сборщика.
-- 16–17.10 — архивы перенесены на E:, корзина F: очищена; G-01…G-04: git почищен (push ждёт входа под stasevboris), мусор в корне убран, новый README, PROJECT_GUIDE → docs/history.
+- 16–17.10 — архивы перенесены на E:, корзина F: очищена; G-01…G-04: git почищен и отправлен, мусор в корне убран, новый README, PROJECT_GUIDE → docs/history.
 - 17.10 — лицензия AGPL-3.0, ATTRIBUTION, fetch_assets.py, prepare_model_release.py + 6 тестов.
