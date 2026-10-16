@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "lmstudio/REPLACE_WITH_LOCAL_MODEL_ID",
+  "share": "disabled",
+  "providers": {
+    "lmstudio": {
+      "settings": {
+        "baseURL": "http://127.0.0.1:1234/v1"
+      }
+    }
+  },
+  "permissions": [
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "git status *", "effect": "allow" },
+    { "action": "shell", "resource": "git diff *", "effect": "allow" },
+    { "action": "shell", "resource": "git push *", "effect": "deny" },
+    { "action": "edit", "resource": "*", "effect": "ask" },
+    { "action": "edit", "resource": "docs/agent-output/*", "effect": "allow" },
+    { "action": "edit", "resource": "ml-pipeline/run_study.py", "effect": "deny" },
+    { "action": "edit", "resource": "ml-pipeline/train_clean.py", "effect": "deny" },
+    { "action": "edit", "resource": "ml-pipeline/evaluate_clean.py", "effect": "deny" },
+    { "action": "edit", "resource": "ml-pipeline/dataset_clean_v2/*", "effect": "deny" },
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    { "action": "subagent", "resource": "*", "effect": "deny" }
+  ]
+}

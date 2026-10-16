@@ -1,0 +1,16 @@
+name: AgroVoice local
+version: 1.0.0
+schema: v1
+models:
+  - name: Local Qwen
+    provider: lmstudio
+    # Replace with the exact LM Studio Model API Identifier.
+    model: REPLACE_WITH_LOCAL_MODEL_ID
+    apiBase: http://127.0.0.1:1234/v1
+    roles: [chat, edit, apply]
+    # Declaring this does not add tool support to a model/runtime.
+    # Verify an actual tool call before using Agent mode.
+    capabilities: [tool_use]
+    defaultCompletionOptions:
+      contextLength: 8192
+      maxTokens: 2048

@@ -1,0 +1,251 @@
+[
+  {
+    "repo": "Qwen/Qwen2.5-Coder-14B-Instruct-GGUF",
+    "revision": "d0a692ef765eefbf2fabb130b3cb2e8917e3d225",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "name": "qwen2.5-coder-14b-instruct-q2_k.gguf",
+        "bytes": 5770497408
+      },
+      {
+        "name": "qwen2.5-coder-14b-instruct-q3_k_m.gguf",
+        "bytes": 7339203968
+      },
+      {
+        "name": "qwen2.5-coder-14b-instruct-q4_k_m-00001-of-00002.gguf",
+        "bytes": 8000444480
+      },
+      {
+        "name": "qwen2.5-coder-14b-instruct-q4_k_m-00002-of-00002.gguf",
+        "bytes": 987665920
+      },
+      {
+        "name": "qwen2.5-coder-14b-instruct-q4_k_m.gguf",
+        "bytes": 8988110272
+      },
+      {
+        "name": "qwen2.5-coder-14b-instruct-q5_k_m-00001-of-00002.gguf",
+        "bytes": 8003097408
+      },
+      {
+        "name": "qwen2.5-coder-14b-instruct-q5_k_m-00002-of-00002.gguf",
+        "bytes": 2505775872
+      },
+      {
+        "name": "qwen2.5-coder-14b-instruct-q5_k_m.gguf",
+        "bytes": 10508873152
+      }
+    ]
+  },
+  {
+    "repo": "unsloth/Qwen3.5-9B-GGUF",
+    "revision": "3885219b6810b007914f3a7950a8d1b469d598a5",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "name": "Qwen3.5-9B-IQ4_XS.gguf",
+        "bytes": 5168653536
+      },
+      {
+        "name": "Qwen3.5-9B-Q3_K_M.gguf",
+        "bytes": 4673643744
+      },
+      {
+        "name": "Qwen3.5-9B-Q3_K_S.gguf",
+        "bytes": 4316865760
+      },
+      {
+        "name": "Qwen3.5-9B-Q4_K_M.gguf",
+        "bytes": 5680522464
+      },
+      {
+        "name": "Qwen3.5-9B-Q5_K_M.gguf",
+        "bytes": 6577841376
+      },
+      {
+        "name": "Qwen3.5-9B-UD-Q2_K_XL.gguf",
+        "bytes": 4121781472
+      }
+    ]
+  },
+  {
+    "repo": "unsloth/Qwen3.8-27B-GGUF",
+    "revision": "4ca720788d1e01f1bff70c033e0d0028fd02e502",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "name": "Qwen3.8-27B-UD-IQ4_XS.gguf",
+        "bytes": 14252845984
+      },
+      {
+        "name": "Qwen3.8-27B-UD-Q2_K_XL.gguf",
+        "bytes": 9828981664
+      },
+      {
+        "name": "Qwen3.8-27B-UD-Q4_K_M.gguf",
+        "bytes": 16464440224
+      },
+      {
+        "name": "Qwen3.8-27B-UD-Q5_K_M.gguf",
+        "bytes": 19771509664
+      }
+    ]
+  },
+  {
+    "repo": "unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF",
+    "revision": "b17cb02dd882d5b6ab62fc777ad2995f19668350",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-IQ4_XS.gguf",
+        "bytes": 16378076320
+      },
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-Q2_K.gguf",
+        "bytes": 11258612896
+      },
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-Q2_K_L.gguf",
+        "bytes": 11331542176
+      },
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-Q3_K_M.gguf",
+        "bytes": 14711850144
+      },
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-Q3_K_S.gguf",
+        "bytes": 13292471456
+      },
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-Q4_K_M.gguf",
+        "bytes": 18556689568
+      },
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-Q5_K_M.gguf",
+        "bytes": 21725584544
+      },
+      {
+        "name": "Qwen3-Coder-30B-A3B-Instruct-UD-Q2_K_XL.gguf",
+        "bytes": 11788590240
+      }
+    ]
+  },
+  {
+    "repo": "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF",
+    "revision": "6e458b8add42681bfd023de5eab93637694aaf82",
+    "license": "other",
+    "files": [
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-IQ4_XS.gguf",
+        "bytes": 12780424352
+      },
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-Q2_K.gguf",
+        "bytes": 8890862752
+      },
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-Q2_K_L.gguf",
+        "bytes": 9048149152
+      },
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-Q3_K_M.gguf",
+        "bytes": 11474619552
+      },
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-Q3_K_S.gguf",
+        "bytes": 10400812192
+      },
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-Q4_K_M.gguf",
+        "bytes": 14334446752
+      },
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-Q5_K_M.gguf",
+        "bytes": 16764521632
+      },
+      {
+        "name": "Devstral-Small-2-24B-Instruct-2512-UD-Q2_K_XL.gguf",
+        "bytes": 9292680352
+      }
+    ]
+  },
+  {
+    "repo": "unsloth/GLM-4.7-Flash-GGUF",
+    "revision": "0d32489ecb9db6d2a4fc93bd27ef01519f95474d",
+    "license": "mit",
+    "files": [
+      {
+        "name": "GLM-4.7-Flash-IQ4_XS.gguf",
+        "bytes": 16271360352
+      },
+      {
+        "name": "GLM-4.7-Flash-Q2_K.gguf",
+        "bytes": 11344720224
+      },
+      {
+        "name": "GLM-4.7-Flash-Q2_K_L.gguf",
+        "bytes": 11419062624
+      },
+      {
+        "name": "GLM-4.7-Flash-Q3_K_M.gguf",
+        "bytes": 14614624608
+      },
+      {
+        "name": "GLM-4.7-Flash-Q3_K_S.gguf",
+        "bytes": 13288618336
+      },
+      {
+        "name": "GLM-4.7-Flash-Q4_K_M.gguf",
+        "bytes": 18312339808
+      },
+      {
+        "name": "GLM-4.7-Flash-Q5_K_M.gguf",
+        "bytes": 21408850272
+      },
+      {
+        "name": "GLM-4.7-Flash-UD-Q2_K_XL.gguf",
+        "bytes": 11888759136
+      }
+    ]
+  },
+  {
+    "repo": "Qwen/Qwen3-Coder-Next-GGUF",
+    "revision": "b82fb7382639d97b38fa7672e526c760c2fb358e",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "name": "Qwen3-Coder-Next-Q4_K_M/Qwen3-Coder-Next-Q4_K_M-00001-of-00004.gguf",
+        "bytes": 15524827040
+      },
+      {
+        "name": "Qwen3-Coder-Next-Q4_K_M/Qwen3-Coder-Next-Q4_K_M-00002-of-00004.gguf",
+        "bytes": 14872168352
+      },
+      {
+        "name": "Qwen3-Coder-Next-Q4_K_M/Qwen3-Coder-Next-Q4_K_M-00003-of-00004.gguf",
+        "bytes": 14503294496
+      },
+      {
+        "name": "Qwen3-Coder-Next-Q4_K_M/Qwen3-Coder-Next-Q4_K_M-00004-of-00004.gguf",
+        "bytes": 3510702144
+      },
+      {
+        "name": "Qwen3-Coder-Next-Q5_K_M/Qwen3-Coder-Next-Q5_K_M-00001-of-00004.gguf",
+        "bytes": 17813589920
+      },
+      {
+        "name": "Qwen3-Coder-Next-Q5_K_M/Qwen3-Coder-Next-Q5_K_M-00002-of-00004.gguf",
+        "bytes": 17479501728
+      },
+      {
+        "name": "Qwen3-Coder-Next-Q5_K_M/Qwen3-Coder-Next-Q5_K_M-00003-of-00004.gguf",
+        "bytes": 17226413600
+      },
+      {
+        "name": "Qwen3-Coder-Next-Q5_K_M/Qwen3-Coder-Next-Q5_K_M-00004-of-00004.gguf",
+        "bytes": 4190867520
+      }
+    ]
+  }
+]
