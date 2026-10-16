@@ -24,6 +24,7 @@ Git содержит исходники, конфиги, отчёты и неб�
 - `agrovoice-ai\ml-pipeline\dataset`, `dataset_clean_v1`, `plantdoc_yolo.zip` — исторические наборы и исходный архив PlantDoc;
 - `agrovoice-ai\ml-pipeline\runtime\wsl\ext4.vhdx` — WSL-дистрибутив AgroVoice-ML (ROCm), зарегистрирован в WSL по этому пути;
 - `agrovoice-ai\git\agrovoice_full_63d9a7e.bundle` — полная история git до чистки 17.10 (включая все тяжёлые файлы старого коммита `63d9a7e`). Восстановить: `git clone E:\Перенесено_с_F\agrovoice-ai\git\agrovoice_full_63d9a7e.bundle restored`.
+- `agrovoice-ai\git\codex_checkpoint_4d0f5f9.bundle` — служебная контрольная точка Codex (`refs/codex/turn-diffs/...`), удалённая из репозитория при чистке.
 - `agrovoice-ai-12.10.2026\` — копия проекта от 12.10.
 
 DOCX описания темы и истории разработки (05.10) продублированы в git: `docs/thesis/2026-10-05/`.
