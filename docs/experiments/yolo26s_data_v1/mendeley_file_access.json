@@ -1,0 +1,57 @@
+{
+  "updated_utc": "2026-10-05T05:54:00.684995+00:00",
+  "status": "public_metadata_verified_archive_acquisition_unconfirmed",
+  "license": "CC-BY-4.0 as displayed on all four publisher file pages",
+  "files": [
+    {
+      "dataset": "3j4nfkvp2n",
+      "version": 1,
+      "name": "EB.zip",
+      "file_id": "5717ac85-cf61-461d-bf70-e1e5af2f2c53",
+      "publisher_sha256": "cffd37bbb79e75c0e23c1486f88f0a7c873b3fe67f643c41db3abd794bdc01e5",
+      "publisher_display_size": "2.58 GB",
+      "page": "https://data.mendeley.com/datasets/3j4nfkvp2n/1/files/5717ac85-cf61-461d-bf70-e1e5af2f2c53",
+      "download": "https://data.mendeley.com/public-files/datasets/3j4nfkvp2n/files/5717ac85-cf61-461d-bf70-e1e5af2f2c53/file_downloaded",
+      "archive_acquired": false
+    },
+    {
+      "dataset": "3j4nfkvp2n",
+      "version": 1,
+      "name": "Healthy.zip",
+      "file_id": "d4ce2acf-3af8-416e-90bc-bb834ba9da66",
+      "publisher_sha256": "2b7e4107d7ba03c0ef9636831aa4de7d333435df238f667f562e27b1e46e59e2",
+      "publisher_display_size": "3.43 GB",
+      "page": "https://data.mendeley.com/datasets/3j4nfkvp2n/1/files/d4ce2acf-3af8-416e-90bc-bb834ba9da66",
+      "download": "https://data.mendeley.com/public-files/datasets/3j4nfkvp2n/files/d4ce2acf-3af8-416e-90bc-bb834ba9da66/file_downloaded",
+      "archive_acquired": false
+    },
+    {
+      "dataset": "3j4nfkvp2n",
+      "version": 1,
+      "name": "LB.zip",
+      "file_id": "35ff7712-865c-41bf-96b1-d25d84af7b95",
+      "publisher_sha256": "f4d31182b5d2f147c256e1c73838eac9b17592b89ed2b1ae394f58863e74a447",
+      "publisher_display_size": "2.16 GB",
+      "page": "https://data.mendeley.com/datasets/3j4nfkvp2n/1/files/35ff7712-865c-41bf-96b1-d25d84af7b95",
+      "download": "https://data.mendeley.com/public-files/datasets/3j4nfkvp2n/files/35ff7712-865c-41bf-96b1-d25d84af7b95/file_downloaded",
+      "archive_acquired": false
+    },
+    {
+      "dataset": "3mbnb82mxd",
+      "version": 2,
+      "name": "Tomato_Leaf_Disease_Dataset_Pakistan.zip",
+      "file_id": "4844fda3-b66b-4b2a-bd83-775c0da974ea",
+      "publisher_sha256": "2a2b36a8f972337f6d0e95e436835e55ffee5291fa07277157b40f0441f42f50",
+      "publisher_display_size": "693 MB",
+      "page": "https://data.mendeley.com/datasets/3mbnb82mxd/2/files/4844fda3-b66b-4b2a-bd83-775c0da974ea",
+      "download": "https://data.mendeley.com/public-files/datasets/3mbnb82mxd/files/4844fda3-b66b-4b2a-bd83-775c0da974ea/file_downloaded",
+      "archive_acquired": false
+    }
+  ],
+  "attempts": [
+    "Ordinary direct EB URL HTTP403/HTML; file not stored as ZIP.",
+    "Initial browser click blocked by cookie banner; no download claimed.",
+    "Necessary-cookie choice cleared overlay; subsequent EB20s event and45s downloadMedia and Tomato30s downloadMedia returned no completed file.",
+    "No CAPTCHA/security warning/authentication shown or bypassed. No repeated downloads automatically scheduled."
+  ]
+}

@@ -1,0 +1,2218 @@
+{
+  "dataset": "dataset_clean_v2",
+  "seed": 20261003,
+  "fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "base_dataset": "dataset_clean_v1",
+  "base_fingerprint": "c531bd8272140f3f955ce467b565ea944e9e34fda91cb3878bfd9721092822f5",
+  "annotation_target": "whole_leaf_with_crop_and_condition_or_explicit_unknown",
+  "splits": {
+    "train": {
+      "images": 2609,
+      "boxes": 7760,
+      "absent_classes": [],
+      "sources": {
+        "Cucumber": 42,
+        "PlantDoc": 1977,
+        "PlantVillage": 590
+      }
+    },
+    "val": {
+      "images": 349,
+      "boxes": 1309,
+      "absent_classes": [
+        "Cucumber leaf (condition unknown)"
+      ],
+      "sources": {
+        "PlantDoc": 349
+      }
+    },
+    "test": {
+      "images": 236,
+      "boxes": 452,
+      "absent_classes": [
+        "Potato leaf",
+        "Tomato two spotted spider mites leaf",
+        "Cucumber leaf (condition unknown)"
+      ],
+      "sources": {
+        "PlantDoc": 236
+      }
+    },
+    "val_aux": {
+      "images": 160,
+      "boxes": 160,
+      "absent_classes": [
+        "Apple Scab Leaf",
+        "Apple leaf",
+        "Apple rust leaf",
+        "Bell_pepper leaf",
+        "Bell_pepper leaf spot",
+        "Blueberry leaf",
+        "Cherry leaf",
+        "Corn Gray leaf spot",
+        "Corn leaf blight",
+        "Corn rust leaf",
+        "Peach leaf",
+        "Potato leaf early blight",
+        "Potato leaf late blight",
+        "Raspberry leaf",
+        "Soyabean leaf",
+        "Squash Powdery mildew leaf",
+        "Strawberry leaf",
+        "Tomato Septoria leaf spot",
+        "Tomato leaf late blight",
+        "Tomato leaf mosaic virus",
+        "Tomato leaf yellow virus",
+        "Tomato mold leaf",
+        "grape leaf",
+        "grape leaf black rot"
+      ],
+      "sources": {
+        "Cucumber": 11,
+        "PlantVillage": 149
+      }
+    }
+  },
+  "classes": [
+    {
+      "id": 0,
+      "name": "Apple Scab Leaf",
+      "train": 129,
+      "val": 29,
+      "test": 13,
+      "val_aux": 0
+    },
+    {
+      "id": 1,
+      "name": "Apple leaf",
+      "train": 192,
+      "val": 45,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 2,
+      "name": "Apple rust leaf",
+      "train": 123,
+      "val": 45,
+      "test": 11,
+      "val_aux": 0
+    },
+    {
+      "id": 3,
+      "name": "Bell_pepper leaf",
+      "train": 268,
+      "val": 44,
+      "test": 11,
+      "val_aux": 0
+    },
+    {
+      "id": 4,
+      "name": "Bell_pepper leaf spot",
+      "train": 213,
+      "val": 36,
+      "test": 15,
+      "val_aux": 0
+    },
+    {
+      "id": 5,
+      "name": "Blueberry leaf",
+      "train": 671,
+      "val": 155,
+      "test": 22,
+      "val_aux": 0
+    },
+    {
+      "id": 6,
+      "name": "Cherry leaf",
+      "train": 192,
+      "val": 29,
+      "test": 19,
+      "val_aux": 0
+    },
+    {
+      "id": 7,
+      "name": "Corn Gray leaf spot",
+      "train": 53,
+      "val": 20,
+      "test": 4,
+      "val_aux": 0
+    },
+    {
+      "id": 8,
+      "name": "Corn leaf blight",
+      "train": 309,
+      "val": 48,
+      "test": 12,
+      "val_aux": 0
+    },
+    {
+      "id": 9,
+      "name": "Corn rust leaf",
+      "train": 98,
+      "val": 19,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 10,
+      "name": "Peach leaf",
+      "train": 484,
+      "val": 126,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 11,
+      "name": "Potato leaf",
+      "train": 124,
+      "val": 7,
+      "test": 0,
+      "val_aux": 32
+    },
+    {
+      "id": 12,
+      "name": "Potato leaf early blight",
+      "train": 250,
+      "val": 54,
+      "test": 17,
+      "val_aux": 0
+    },
+    {
+      "id": 13,
+      "name": "Potato leaf late blight",
+      "train": 214,
+      "val": 22,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 14,
+      "name": "Raspberry leaf",
+      "train": 462,
+      "val": 77,
+      "test": 17,
+      "val_aux": 0
+    },
+    {
+      "id": 15,
+      "name": "Soyabean leaf",
+      "train": 216,
+      "val": 30,
+      "test": 20,
+      "val_aux": 0
+    },
+    {
+      "id": 16,
+      "name": "Squash Powdery mildew leaf",
+      "train": 203,
+      "val": 48,
+      "test": 6,
+      "val_aux": 0
+    },
+    {
+      "id": 17,
+      "name": "Strawberry leaf",
+      "train": 397,
+      "val": 65,
+      "test": 30,
+      "val_aux": 0
+    },
+    {
+      "id": 18,
+      "name": "Tomato Early blight leaf",
+      "train": 283,
+      "val": 28,
+      "test": 19,
+      "val_aux": 25
+    },
+    {
+      "id": 19,
+      "name": "Tomato Septoria leaf spot",
+      "train": 332,
+      "val": 76,
+      "test": 24,
+      "val_aux": 0
+    },
+    {
+      "id": 20,
+      "name": "Tomato leaf",
+      "train": 400,
+      "val": 47,
+      "test": 27,
+      "val_aux": 17
+    },
+    {
+      "id": 21,
+      "name": "Tomato leaf bacterial spot",
+      "train": 358,
+      "val": 26,
+      "test": 14,
+      "val_aux": 32
+    },
+    {
+      "id": 22,
+      "name": "Tomato leaf late blight",
+      "train": 179,
+      "val": 28,
+      "test": 14,
+      "val_aux": 0
+    },
+    {
+      "id": 23,
+      "name": "Tomato leaf mosaic virus",
+      "train": 212,
+      "val": 13,
+      "test": 36,
+      "val_aux": 0
+    },
+    {
+      "id": 24,
+      "name": "Tomato leaf yellow virus",
+      "train": 701,
+      "val": 81,
+      "test": 42,
+      "val_aux": 0
+    },
+    {
+      "id": 25,
+      "name": "Tomato mold leaf",
+      "train": 223,
+      "val": 54,
+      "test": 16,
+      "val_aux": 0
+    },
+    {
+      "id": 26,
+      "name": "Tomato two spotted spider mites leaf",
+      "train": 158,
+      "val": 1,
+      "test": 0,
+      "val_aux": 43
+    },
+    {
+      "id": 27,
+      "name": "grape leaf",
+      "train": 175,
+      "val": 30,
+      "test": 15,
+      "val_aux": 0
+    },
+    {
+      "id": 28,
+      "name": "grape leaf black rot",
+      "train": 99,
+      "val": 26,
+      "test": 8,
+      "val_aux": 0
+    },
+    {
+      "id": 29,
+      "name": "Cucumber leaf (condition unknown)",
+      "train": 42,
+      "val": 0,
+      "test": 0,
+      "val_aux": 11
+    }
+  ],
+  "sources": [
+    {
+      "name": "PlantDoc",
+      "url": "https://github.com/pratikkayal/PlantDoc-Object-Detection-Dataset",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "name": "PlantVillage",
+      "url": "https://github.com/spMohanty/PlantVillage-Dataset",
+      "revision": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+      "license": "CC-BY-SA-3.0",
+      "license_source": "https://huggingface.co/datasets/mohanty/PlantVillage",
+      "annotation": "Derived whole-leaf boxes from segmented counterparts; laboratory RGB retained"
+    },
+    {
+      "name": "Cucumber",
+      "url": "https://zenodo.org/records/16816441",
+      "license": "CC-BY-4.0",
+      "archive_md5": "0c0797650bfcdf66fdf528f5a605909e",
+      "annotation": "53 visually accepted candidates before duplicate gates; source disease labels discarded"
+    }
+  ],
+  "split_policy": "Original PlantDoc train/val/test preserved. Supplements grouped by physical leaf IDs and detected similarities; 20% groups held out as val_aux. Primary val is field PlantDoc only.",
+  "duplicate_policy": "Exclude supplements similar to any original image; exact decoded hash or pHash/dHash <=4 with aspect tolerance 3%. Cucumber supplementary grouping threshold 6. Not proof of exhaustive near-duplicate removal.",
+  "issues": [
+    {
+      "source": "PlantVillage",
+      "filename": "0efaac13-1988-48db-aec3-f31df3045b95___RS_Erly.B 8342.JPG",
+      "reason": "mask_spans_background_or_truncated_leaf"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a54e9f9d-e56b-4097-83c2-b137f9111edf___RS_Erly.B 9411.JPG",
+      "reason": "multiple_components"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c73fd35a-bc55-46c3-baf3-a943a6e396c5___RS_Erly.B 9563.JPG",
+      "reason": "mask_area_or_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "cdb26b0e-04b6-4ccf-855c-d85a106c1f95___RS_Erly.B 8387.JPG",
+      "reason": "mask_spans_background_or_truncated_leaf"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d6ac1972-b67c-422e-b81d-11f2f1d9ec5f___RS_Erly.B 9435.JPG",
+      "reason": "multiple_components"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "df721edd-686e-4bb8-a05b-e8c67743c8ca___RS_Erly.B 8265.JPG",
+      "reason": "mask_spans_background_or_truncated_leaf"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e56354a5-5e3f-4ed6-bfe5-3c783a32dc98___RS_Erly.B 9413.JPG",
+      "reason": "multiple_components"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f870ea24-aac9-41cd-92a3-72f87d395c33___RS_Erly.B 7598.JPG",
+      "reason": "mask_area_or_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "00694db7-3327-45e0-b4da-a8bb7ab6a4b7___Crnl_L.Mold 6923.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "022a4dfb-84cc-45cb-81c5-a620817e31cb___Crnl_L.Mold 6926.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0595201b-049b-47ff-9e56-7e042932c0fe___Crnl_L.Mold 9179.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "05bbff69-adad-4e16-8fad-c265be82e25a___Crnl_L.Mold 6929.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0741bcde-474a-4b81-b6d5-217ab4f7d0e9___Crnl_L.Mold 6660.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "076334e5-f0a2-4f7a-b936-02a89ddd0cf5___Crnl_L.Mold 8857.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0c0debed-e807-4236-a2e3-d9b72f54367f___Crnl_L.Mold 6899.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0e508a3f-af06-4c8a-be78-5c38d2d4fb68___Crnl_L.Mold 6775.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0f740b31-f63b-4193-ab1a-6795c11a7f00___Crnl_L.Mold 7033.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1692055a-2fc8-4680-b8fe-32916f040b6f___Crnl_L.Mold 6843.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1a1acd8f-bd8d-47be-945d-ce308dffd678___Crnl_L.Mold 6675.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1b35b99c-c7c0-4f2c-975e-148e4b6e18b3___Crnl_L.Mold 8820.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1f64f046-46e6-47b3-91ef-31c2433face3___Crnl_L.Mold 9089.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1fef5c8b-7d83-45b5-9031-f636c3dc44ae___Crnl_L.Mold 8953.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "220cb426-88be-48c1-bcbf-a776e5659930___Crnl_L.Mold 8714.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "241287d9-30c8-4463-999c-821fd32ba894___Crnl_L.Mold 6583.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "272c102c-6c18-4e3a-a64c-078bce56bde1___Crnl_L.Mold 6889.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "29059c14-7b1c-4e06-8c40-2fc73f28ffe6___Crnl_L.Mold 6927.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2aa365ee-c396-47e3-bf04-aad9d18f470f___Crnl_L.Mold 6655.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2aa4f976-9ac1-496d-9b58-0ec03e4bbad8___Crnl_L.Mold 7067.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2b727376-492d-47dd-983a-c8f9c7ab386a___Crnl_L.Mold 6556.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2d6f98ac-7545-4ea6-97f7-51374d16adc2___Crnl_L.Mold 7005.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2dc1abcc-a84b-4317-8865-9d2c195d4cb8___Crnl_L.Mold 8901.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2ecf7371-b3e3-4206-be7c-5a8f3656be8a___Crnl_L.Mold 8921.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2f195926-6d02-4c40-bf4a-ba3a123fe66e___Crnl_L.Mold 9130.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2f49ea7d-edf2-48bd-9598-449d8c83d0a0___Crnl_L.Mold 9154.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "30677953-f7e1-4f57-95f2-288425b6bc02___Crnl_L.Mold 6938.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "32245a13-92fe-48bf-85c8-938819a057ee___Crnl_L.Mold 8643.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "32ea8308-bcd3-4dcc-bd3a-f2a454f8ab4d___Crnl_L.Mold 9021.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "333654c3-6429-4ac2-b648-23b80488a08f___Crnl_L.Mold 7171.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "35343df4-2017-47f9-a5ef-d08bd52dfd7c___Crnl_L.Mold 8827.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "36bed8e9-0b39-48f9-a8f7-d776469ce245___Crnl_L.Mold 8912.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3a7f507d-76d7-4489-baf4-2e4dad468173___Crnl_L.Mold 8784.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "408bcf77-7dd7-4a8a-9f3a-b97684520217___Crnl_L.Mold 6611.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4176b39b-a3b7-4611-b05b-b4020269bae3___Crnl_L.Mold 7115.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "41a6e837-7822-447c-b887-3be149d58322___Crnl_L.Mold 7100.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4505fb9f-e46f-4d8f-b63e-b7d389811dab___Crnl_L.Mold 6907.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "452bc068-6862-4715-a724-a4057d4155ee___Crnl_L.Mold 6866.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4615af1a-bf03-4e3a-9687-e62ce353f1e8___Crnl_L.Mold 8702.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "462317c2-9028-473b-9dc6-523eb348e47b___Crnl_L.Mold 6875.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4797e35c-7ec7-4853-95d5-c9fa4b6c0be9___Crnl_L.Mold 9162.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "483cc7e3-9fbd-4433-82b4-133c561f994c___Crnl_L.Mold 6537.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4b6a59ef-a004-4581-a2c4-d8f94893817e___Crnl_L.Mold 6541.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4da69391-2910-4fa5-9a74-58c7fe0890c2___Crnl_L.Mold 8622.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4f03bdbd-e492-49a1-b04b-f19d9aaa95fd___Crnl_L.Mold 6837.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "51cb012e-4646-447c-b63f-9084a370b781___Crnl_L.Mold 6916.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "53583056-c427-4687-b89f-e0507471c8b2___Crnl_L.Mold 9077.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "561e6144-f53b-477e-96ef-88deff234bc6___Crnl_L.Mold 6855.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "56f9744f-d517-49f5-9c76-0870da25c035___Crnl_L.Mold 6891.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "586436a4-0d4b-4874-82d4-b8708e20706c___Crnl_L.Mold 8972.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5af43679-cda7-4cdc-8d9f-e962e22e68c5___Crnl_L.Mold 8654.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5c8c542d-0f80-46c8-92f9-65e6d6554c37___Crnl_L.Mold 8628.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5d0e582a-7d32-4069-9987-468d87614c8f___Crnl_L.Mold 9138.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5fc8babb-214b-459a-9440-898cedeb4944___Crnl_L.Mold 8667.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "605aacc9-f599-4bef-a53c-01e56dde4892___Crnl_L.Mold 8679.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "60d51b5b-d8ac-411b-bb3a-98d75f5965c6___Crnl_L.Mold 9178.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "624b9411-3aef-4d0e-a62a-f7feb5fad021___Crnl_L.Mold 6881.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "629b73e7-834a-4b53-a164-bdc3a2030417___Crnl_L.Mold 8816.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "636917d9-3ca7-43d0-9295-6b9fcf1103b0___Crnl_L.Mold 8919.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "67146d7f-01d8-46e5-b772-3617f7b5d403___Crnl_L.Mold 8673.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "676a35ff-f0b2-43c8-bb58-ab531c46516a___Crnl_L.Mold 9005.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6911d2dc-3f23-4a99-bf13-69a61f83585c___Crnl_L.Mold 8786.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6ae9566d-3180-429e-a8a1-08c201048d0f___Crnl_L.Mold 6605.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6bb7b9f1-7f75-4cf4-a949-cf779a171417___Crnl_L.Mold 6958.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6beda1f2-d01e-4693-b3c0-e544cf00954b___Crnl_L.Mold 6917.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6f0ac1c9-cf47-4d88-87e6-5554dedfa621___Crnl_L.Mold 6663.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6f733647-eb00-45d7-91a9-0845c1613d80___Crnl_L.Mold 7049.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "705249ab-9023-4025-8f6c-9ed74b1b69d9___Crnl_L.Mold 7014.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "722e11c3-9b08-4192-9ad0-142e9240914c___Crnl_L.Mold 8920.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "731cf3e6-e1a9-4258-9679-d7502ad51914___Crnl_L.Mold 7127.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "73c3f88e-6802-4afd-9065-431bbe6a312d___Crnl_L.Mold 6970.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "790cfb1d-4926-46bb-bd50-b750e823c72a___Crnl_L.Mold 7130.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "794848b0-1482-46ae-b615-1382b41ea623___Crnl_L.Mold 6595.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7b1a4b49-7b2f-435b-b6e0-2e3d7ea81d17___Crnl_L.Mold 8987.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7de0d9b9-6d4f-4375-85c4-a64da65937d8___Crnl_L.Mold 7077.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7e0b313f-bffb-436c-975f-1566645abfe6___Crnl_L.Mold 7182.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7f9fdc98-b176-45ac-a56f-28accf0a5a95___Crnl_L.Mold 6945.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "80b652e5-7f1f-4806-8d9d-550ce54891ce___Crnl_L.Mold 7090.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "872c2185-148d-486c-92e8-2a3ad418f609___Crnl_L.Mold 7146.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "87b0ae17-3c7a-462b-8d63-5ee04eb165d4___Crnl_L.Mold 9015.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "87c76d05-d959-4fe6-ba9e-a874c88f9a09___Crnl_L.Mold 6906.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "89df26fb-3707-4503-814c-b712cc06f713___Crnl_L.Mold 6570.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8b009f83-acfa-48bd-bc45-76ea1c58d317___Crnl_L.Mold 8855.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8cd36896-f066-47f4-a965-d5bf0c58f954___Crnl_L.Mold 7042.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8e3d29dc-2a32-4471-9318-7ba1c664e1ad___Crnl_L.Mold 8903.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8e92b724-a066-4039-a090-2699c5cfed4e___Crnl_L.Mold 6724.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "904a5f71-4358-44b5-98ff-3681df988769___Crnl_L.Mold 6601.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "91c943e8-a79e-4a0d-b882-f372655f571b___Crnl_L.Mold 9132.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "93c02ade-4b3a-4401-836d-0577276c645c___Crnl_L.Mold 8736.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9622ac01-44eb-46b1-99cf-811d655ad6a8___Crnl_L.Mold 8801.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9846d408-3d13-490d-b9b1-4809f33c22ef___Crnl_L.Mold 6750.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9b6483fe-95eb-464b-a73d-0cac6f777994___Crnl_L.Mold 8632.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9bc3f5d2-a34c-45b1-9c8e-970c6c0e688b___Crnl_L.Mold 8971.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9d63ab4a-2bf7-4965-b96c-5c4c28c844c0___Crnl_L.Mold 8944.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a0de49f7-e907-4336-87e8-4440ee6df913___Crnl_L.Mold 7034.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a18ef1c1-96c1-42ee-8ad7-c78283c8fc4f___Crnl_L.Mold 7023.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a4a9faea-5038-4fa7-b056-8eed57e56525___Crnl_L.Mold 7179.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a4baece0-0e73-4b2f-a434-007c429fb5f9___Crnl_L.Mold 6672.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a538806f-f606-439e-8e1a-5c7731f5b76f___Crnl_L.Mold 7015.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a5639de3-303c-4066-b3a0-a72aa73ef818___Crnl_L.Mold 6740.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a740fdd7-45f9-445f-a992-37005aa41d32___Crnl_L.Mold 6883.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a8ce6b5a-1f27-4e8c-9c53-989674ae4c4b___Crnl_L.Mold 6649.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a99fee24-87a5-4945-878c-5d16240e27bd___Crnl_L.Mold 9133.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a9ed3e3f-7c8c-4a0e-ae96-8bf55585a522___Crnl_L.Mold 7082.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a9f6aedd-4f87-4547-8aad-a36b1f4c3677___Crnl_L.Mold 7066.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "af7e1ce4-bb49-4227-ba89-9972bab473b7___Crnl_L.Mold 6560.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b0f88a05-dfca-4814-9080-fb0a3fa0ee0c___Crnl_L.Mold 6978.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b193984f-18ce-4d09-af21-0b70e44d704e___Crnl_L.Mold 8705.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b31c5c8a-aac0-4cad-af32-2b10e2fa64f6___Crnl_L.Mold 7053.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b394a386-09e3-4dc9-b1cb-debf575963e6___Crnl_L.Mold 8908.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b6bdf275-d731-415b-a68d-193bbd6c037a___Crnl_L.Mold 8772.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b7b40130-ae85-438e-9bc4-7ed4ce5cdd1f___Crnl_L.Mold 9137.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b9beb5ed-0e80-4a9f-bcec-0be7abc6904d___Crnl_L.Mold 7152.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "bc374eed-3802-4ffe-9339-47e04a74a648___Crnl_L.Mold 9181.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "bf1b824c-7a99-45a5-9b60-5da58b3fe47c___Crnl_L.Mold 8759.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c05c1b58-b391-41d4-bdd4-72f82b59a508___Crnl_L.Mold 8926.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c28fe517-5ca7-4021-98a5-9fe8908c815b___Crnl_L.Mold 7116.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c3bd29d2-8770-4897-8554-ccba8fcc387e___Crnl_L.Mold 7154.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c5dae6ba-42cf-4497-bf05-52af90c98d8a___Crnl_L.Mold 9038.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c6c8b630-7166-4bfe-a520-f34cf25d7aae___Crnl_L.Mold 6506.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c6e1c2ad-78ae-4241-b86c-39d056318737___Crnl_L.Mold 6736.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c9bdd302-7a60-43a7-9850-b48861d021b4___Crnl_L.Mold 7129.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "cb956960-ad6c-4a87-bee1-dacfc8acb7d8___Crnl_L.Mold 8945.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "cf7130f7-50b1-4dce-81ed-841302e5f71d___Crnl_L.Mold 7072.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d0049080-d379-4a5c-9407-1073f4d3ce3f___Crnl_L.Mold 8642.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d15e91c8-b473-472e-96b6-331a5c62392d___Crnl_L.Mold 8787.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d23729f0-3d5c-4e13-abd2-5cc7f21a51ee___Crnl_L.Mold 6976.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d31448f3-312d-4f30-bb39-c1045b1df616___Crnl_L.Mold 6807.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d6a9f74c-1b76-4b09-860c-2a68fb605c4f___Crnl_L.Mold 6894.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d93b58b0-81cd-4e29-93b3-6f3d8fc9e6f3___Crnl_L.Mold 6966.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d9c04f45-b778-42cf-a96c-bdf559f5be25___Crnl_L.Mold 8833.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "da70a983-649d-4262-a78f-4b5be677167e___Crnl_L.Mold 9168.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "da83c654-4106-45be-b410-28ae89d93e22___Crnl_L.Mold 7054.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "db35e8bc-5879-436e-82a1-e1e0e0f9b19c___Crnl_L.Mold 7044.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "dc61dd2d-7b0f-4927-a3af-4ad0c71bda15___Crnl_L.Mold 6561.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "dde4e8af-a08a-48e7-969d-0b6c66912431___Crnl_L.Mold 8963.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "de7feb7f-caf7-4f98-90d4-096b0f130817___Crnl_L.Mold 6629.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e1d28219-50e4-4fae-be14-ab80ffe0c748___Crnl_L.Mold 6969.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e3f2056b-aa97-4369-8b56-90fd45f37d4d___Crnl_L.Mold 6555.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e40da81e-07e7-4914-af0d-461a2b1a10ec___Crnl_L.Mold 7101.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e5296fcd-8354-4c8c-8e91-777fe4d9555b___Crnl_L.Mold 8973.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e52d4992-f924-4b08-afea-8bbdb4766089___Crnl_L.Mold 9010.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "ec76173b-c354-4711-9bb7-b38dae1ea5b4___Crnl_L.Mold 9074.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f0e71c5c-4a0b-4b97-88db-19438a52d9b1___Crnl_L.Mold 8751.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f1cba359-4553-46a7-a1b3-3b6dbbcb81ae___Crnl_L.Mold 7151.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f519ceb3-e49b-4be9-81fa-20fea299b49e___Crnl_L.Mold 9088.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f588d442-8eb5-439a-9c1a-cad5722ecc28___Crnl_L.Mold 7133.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "fa0cb20b-cafb-494d-85f5-0af1a5785671___Crnl_L.Mold 6743.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "fa2fb8f3-3561-4dad-bec1-a60555b9197d___Crnl_L.Mold 8852.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "fdec728a-c3e5-478d-9e14-ac1a717d5ffc___Crnl_L.Mold 9045.JPG",
+      "reason": "category_excluded_after_visual_mask_background_leakage"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "01b32f27-2b9b-4961-805b-8066bf4d90f1___PSU_CG 2417.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "021accd9-bbb2-4777-8f94-93295e6de49e___PSU_CG 2075.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "046a2559-23b4-4018-a3db-337347ceb391___PSU_CG 2321.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "05910684-8466-4472-b520-b6f90bfc0d01___PSU_CG 2076.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "08e45674-8d1e-4c3c-804a-663d9fef1ead___PSU_CG 2249.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "09910ece-e505-4e19-ae9b-0d9e2eaa2cb1___PSU_CG 2047.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0a7cc59f-b2b0-4201-9c4a-d91eca5c03a3___PSU_CG 2230.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0befa341-0db3-49f4-b4fc-beeb05854bff___PSU_CG 2338.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0c05f5bb-e38d-422f-8b1c-632d8c0d730c___PSU_CG 2133.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0c676b36-7985-42e8-b550-83e2b1c55535___PSU_CG 2177.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0c779116-043c-4715-b080-16be2e8d2552___PSU_CG 2285.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0dae2780-43e7-40ac-ae45-95e5318c8f32___PSU_CG 2290.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "0f47e5f6-7271-45c8-8364-e962dedd83c9___PSU_CG 2148.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1349c403-c930-42be-9bfd-39a099c66f4a___PSU_CG 2328.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "14c21616-aa9e-4d85-8aff-bdf7f4cf3720___PSU_CG 2079.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1588e951-b57d-47a2-8371-7be3a45fd2cc___PSU_CG 2121.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "176ff795-1f59-4248-8374-bf5a88187934___PSU_CG 2160.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "186fd47c-c1a7-4384-b619-dc3c0c0e9d4b___PSU_CG 2203.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "1ccfd473-6b3d-47a9-897b-0653d7683d75___PSU_CG 2163.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "21fe0741-4ff6-4f8f-8969-6b8bdeea58fa___PSU_CG 2278.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "22a98961-90fb-4ff5-a6db-6313fa61f74b___PSU_CG 2125.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2480c7f8-eb75-4606-bf92-24f09ac52a37___PSU_CG 2380.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "25857136-3515-4433-8129-c26f91e94cbe___PSU_CG 2233.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "263f99b9-9604-42c3-9a7f-687973b8dc79___PSU_CG 2280.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "271772e3-6aeb-4d46-9233-ad877d12971f___PSU_CG 2317.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "274c03c3-c69a-4182-ba3f-d6e93b2dea0b___PSU_CG 2349.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "27ebc6ca-9094-46c1-9fa7-35432b9adb93___PSU_CG 2310.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2bd56a9c-3dec-41f7-ab7a-403670ea0462___PSU_CG 2346.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2fa22081-5533-4b18-9a8f-671f210db37e___PSU_CG 2092.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "33f5422e-7889-4ab4-ab53-93507cc83f78___PSU_CG 2261.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3671c4a4-c7dd-40cb-a6a8-02fb84331246___PSU_CG 2383.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "382828a4-dbdf-4ddc-a75b-9a6fcc4b600e___PSU_CG 2054.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "388f46e3-32d3-45f3-84fd-12cb06feed12___PSU_CG 2119.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3890da39-cc56-47ae-bc49-547565b69dc0___PSU_CG 2248.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3b0a3f5d-ff2c-4c7b-a8b9-71d8daa6dd4f___PSU_CG 2097.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3cb6ee9b-8550-4216-bde5-814807add4e5___PSU_CG 2395.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3d028390-f367-423b-b0f7-a44e2cac2393___PSU_CG 2205.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "40f5f8aa-9bba-4e56-8ec0-8a935309c70f___PSU_CG 2211.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "42896f16-bf4c-4db1-b488-08d830dff66b___PSU_CG 2341.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "43f4bccf-0e70-479a-9880-5523f8ffbe9b___PSU_CG 2367.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4571a1c4-3a67-4437-a5bf-8bc1a2af22e4___PSU_CG 2360.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "49a98ba1-a1b1-4d4b-85af-29aa6648fc64___PSU_CG 2292.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4a76c13f-3e28-4849-81ef-4cdd6cdcccf4___PSU_CG 2171.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4ab5b752-6622-42f2-8743-fa9c9b03e137___PSU_CG 2120.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "526f2f56-2290-422d-a454-d576aa72d466___PSU_CG 2057.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5455c7dd-3208-49aa-b5f7-b1d76ad73959___PSU_CG 2122.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "55117128-4dcf-4b3a-bde6-9f42a18d4b24___PSU_CG 2377.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "55e25156-7b0c-43c6-b6f8-37d0b7097a38___PSU_CG 2347.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "59f9754c-2d49-4a74-ba11-4f9a017c8348___PSU_CG 2200.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5a006502-4484-463c-8ed3-48d61e803520___PSU_CG 2388.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5ab64087-b61c-48b9-9db7-5c6ce3eeefcd___PSU_CG 2299.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5b09c1a9-f5ca-4c26-a627-a6ac6b2045cb___PSU_CG 2247.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5b9b782e-cabd-447c-b690-4b8a29bf7f7e___PSU_CG 2231.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5f45109b-365d-47f2-9921-07e576ac9a93___PSU_CG 2314.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6374877d-fcc6-4a2a-97de-e4d0c157ffae___PSU_CG 2068.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "65226438-efaa-4bf4-91e7-e459e3528565___PSU_CG 2143.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "658e96ee-271d-442b-876e-a52970ff540f___PSU_CG 2269.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "65d7e8ff-9197-4211-a1b7-850c3a74f740___PSU_CG 2073.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "67076009-be77-4b3f-8de7-bc6f13df64f4___PSU_CG 2209.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "67c65196-795d-4df0-bbd8-0c18af1028c1___PSU_CG 2387.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6804695f-56f8-4ff9-90f8-69ee95097463___PSU_CG 2067.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "69bad8a8-c403-4e4b-bff8-1026169bb582___PSU_CG 2109.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "69d3740b-5aba-47e2-ae2f-46541333c3a5___PSU_CG 2420.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6a2c0438-3207-4998-893a-02ddb3a26081___PSU_CG 2294.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6b15d0fc-1089-4f54-955a-0d1ebbf0ab30___PSU_CG 2364.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6c468dae-d392-4435-8d2f-adcadf0425b8___PSU_CG 2276.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6ddf37fe-9143-420d-a269-c57f53ac5429___PSU_CG 2213.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6e36029a-1c73-49e6-80b9-5e5cf12f43c1___PSU_CG 2217.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6e67c953-5934-439c-8303-e1762793a36a___PSU_CG 2181.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "71aa5741-6923-4593-9a23-bc7f58dc40b2___PSU_CG 2183.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "71ed39c0-f601-4913-aaf0-7719b3cc75b2___PSU_CG 2152.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7395917b-a4d4-4156-9bd8-55b4a4dc5022___PSU_CG 2207.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "739ccd84-1026-4871-8f5c-2320c205fe2e___PSU_CG 2399.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7569fab7-ac19-4ac4-a01b-b77a4abb0c29___PSU_CG 2350.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "763335af-2beb-4331-b2e5-3f61a4b0b914___PSU_CG 2365.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "76a40b12-a909-483a-853e-f548c569be2e___PSU_CG 2189.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "78c968a3-8083-4924-b351-3f36569cf33a___PSU_CG 2214.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7a6e4837-d63d-465a-abae-ef857bf43e2d___PSU_CG 2117.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7d961b54-7557-4800-ae6a-00b6945f99c0___PSU_CG 2293.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7db0dde8-3597-4a71-8fc1-cc6bc1dd89c4___PSU_CG 2196.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7ddb3878-8899-42bd-8ec1-5ee012f30cf2___PSU_CG 2188.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "82a23930-4324-4d3e-b599-9861796f01db___PSU_CG 2366.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "847307bc-58ab-45fc-8001-f1e07a38bc82___PSU_CG 2065.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "860780b3-9c8b-4f90-9010-ac255e953784___PSU_CG 2150.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "875b2d3c-44cd-440c-8807-8f52b1e7d45a___PSU_CG 2318.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8a398af5-59cc-4d7e-9de9-07c5a5bb2cf3___PSU_CG 2116.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8af472ce-108f-4478-807f-cdf8f4cbdceb___PSU_CG 2218.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8b75624a-5775-4d44-a2e0-62243632b4a9___PSU_CG 2279.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8babd25a-f124-4d1f-a57a-5db347b34f0d___PSU_CG 2355.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8d37ec47-c16b-4d56-a19e-0cf49690a30a___PSU_CG 2197.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "91247151-4bae-4d55-a35c-edb9318bdb09___PSU_CG 2139.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "914cd3f1-e98f-49b3-8223-0a55870362b0___PSU_CG 2259.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "932959d9-826b-465f-82d7-8b419d2ad040___PSU_CG 2187.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "97465c93-52c3-4df9-a820-de9ae6f4d03e___PSU_CG 2232.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "97aa541d-9ac5-4933-8977-2bd64094ad38___PSU_CG 2070.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9876590b-d8fd-48b0-9b48-c8ed707db6f8___PSU_CG 2127.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "99e849b4-3c38-4a96-ba96-14a133861e06___PSU_CG 2151.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9a3941e6-32bc-4417-862b-2f03e4040b65___PSU_CG 2159.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9fb02b86-77fe-450a-a85e-276cf7d1c1fb___PSU_CG 2376.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a03ed170-8835-4339-9d11-ab36c11c4b5a___PSU_CG 2394.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a374c412-e665-4f38-9e73-49a70fb18b1c___PSU_CG 2378.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a3bfb1c8-d60a-4894-adf8-297035279f47___PSU_CG 2306.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a4917ff1-44a6-4f13-bb49-9368acb3a7e9___PSU_CG 2069.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "a7c7e844-1b1f-4aaf-aa23-abd2bce9f5fc___PSU_CG 2244.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b32647fc-d502-4bb4-99f6-3003874daee4___PSU_CG 2246.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b6301c1d-250f-43df-a7e9-ab9d61c1c8b8___PSU_CG 2296.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b637932e-ac61-448a-b0d6-cabd8b444d27___PSU_CG 2407.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b801ed5c-9127-4ce5-b71f-5480620510cf___PSU_CG 2252.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b8853fe7-7194-4ed8-bda6-b5799bf7815e___PSU_CG 2309.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b8972ee2-b576-4fdd-bb69-f8c43b87471b___PSU_CG 2060.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b8a9c9dd-fbba-41e2-b75d-7fd7f990cda0___PSU_CG 2185.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b8c1b55d-a4b9-4f84-9f0c-bd7d08a48f78___PSU_CG 2262.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "ba31b5ca-1a78-46f9-a76a-c203d81077d4___PSU_CG 2401.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "bf950cb4-985f-4174-b32b-9ae2d6e99a84___PSU_CG 2320.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c16122a0-a5e9-47d6-82b6-93325f1e9667___PSU_CG 2385.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c16ac093-9b9b-4c37-b669-aa68f3cd55cf___PSU_CG 2270.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c1ff629a-8390-43a4-88ed-86e462d688a7___PSU_CG 2083.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c3ddea5d-2076-46cf-8769-0d200185c259___PSU_CG 2348.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c44f307f-dd40-495d-abfa-e2f68dc31ff6___PSU_CG 2312.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c5132603-ce86-45c0-b9f9-d35c07f4057f___PSU_CG 2256.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c56876f0-d18b-4a90-86d1-7f90e8e15fac___PSU_CG 2240.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c668017b-5c87-4f2e-90ab-021b81f48b1b___PSU_CG 2272.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c9da2f9b-58f3-4715-8012-ee1fe722921f___PSU_CG 2199.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "cd8dc897-42ed-494e-8079-53d625d925e0___PSU_CG 2311.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "cfd8a28f-7af7-4102-b848-0b6d1b2c60e4___PSU_CG 2404.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d338ebb0-f140-48c6-b828-7349f43cf866___PSU_CG 2339.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d38e784f-9bbb-4c1f-84d1-3464ff0dbc16___PSU_CG 2103.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d8106a03-3742-4e57-9ea7-d634b56c76cf___PSU_CG 2265.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d82c0de0-bd22-464c-b511-1aad0a44f005___PSU_CG 2384.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d9812306-9ab7-4c41-8c08-0aaaa0a9db5f___PSU_CG 2056.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "da1583ac-e469-400a-9092-da870299fd35___PSU_CG 2071.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "da2bbe3c-5626-46d2-9640-2da89552f113___PSU_CG 2319.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "dcbf5ac4-f25b-4e62-999b-44e1892db4ab___PSU_CG 2107.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "dd1161b0-ed4e-42f0-a63b-1ff8d9adf3ed___PSU_CG 2405.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e03cb55d-6525-4186-a318-5c06c0691642___PSU_CG 2353.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e10f2f79-91b8-4210-95a3-f1fe50d109e2___PSU_CG 2295.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e19ffd2f-e299-49c2-b445-270a938fc4e7___PSU_CG 2251.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e1c99066-9ee5-4424-8701-9ee9bea5e229___PSU_CG 2284.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e98b0937-0e74-4bc9-bfa5-9018ce0498d2___PSU_CG 2298.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "ee5d3bda-66ef-4de8-878d-e345c3eae676___PSU_CG 2086.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "eec8df45-9f5b-4121-a630-8088c5422efd___PSU_CG 2157.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f12723c6-e944-4473-9cb1-19ba52417fe7___PSU_CG 2362.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f32568bd-2f68-4cbc-b083-4d9084858436___PSU_CG 2155.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f600fd06-c834-4305-83b2-ee1bd08cea49___PSU_CG 2235.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f6c12455-7dce-40b2-9d33-36bff9caa4ea___PSU_CG 2192.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f7066d3e-694d-44a0-a42a-a8fb1eb52ff7___PSU_CG 2190.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f73758a1-230b-49a7-87ae-7265232b6b67___PSU_CG 2128.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f90809d6-8b8d-4a7d-81df-c0d708ed9bb4___PSU_CG 2176.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f983209a-7b7c-43f3-b86a-bd9bc7e29c96___PSU_CG 2287.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "fc40f0c6-d15e-4c87-ad7d-8c376306b20c___PSU_CG 2198.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "15daad17-78e9-45d2-9054-5a76221f6c1e___GH_HL Leaf 246.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "256a65aa-690c-4e03-b426-21e84bb9b6dd___GH_HL Leaf 477.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2763797b-4786-41ef-8ff1-73b088f9973c___GH_HL Leaf 231.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "29d9f827-5e61-4b9b-acba-db0e7ce2016d___GH_HL Leaf 480.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "29ff6f63-9b09-4833-8d76-00af9c7b6495___GH_HL Leaf 320.2.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2a859068-5042-4f74-82ac-29339c760cbb___GH_HL Leaf 436.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "2b14b93f-0664-4b7f-93fa-b7d3df03dc06___GH_HL Leaf 508.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "37081fee-4a04-4134-99d9-f9ac3801ad47___GH_HL Leaf 201.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "37aad83b-7ff8-4b35-b3ed-fb8e0f54910b___GH_HL Leaf 342.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "39976b35-40e7-4426-b21d-a8bfe1ce0a01___GH_HL Leaf 450.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3b4a011c-68ae-4b84-90b5-27ef4b2d3447___GH_HL Leaf 255.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3e9a67e4-492b-4306-be1b-0a2624ea5c3e___GH_HL Leaf 175.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "3f1beda2-534d-4970-b33e-99c43c1ee930___GH_HL Leaf 219.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "45fc3f1c-6ccc-4ffd-a0a9-f53cbe4e71a1___GH_HL Leaf 206.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4629608b-5ac4-49d9-a8ff-ca1548fd4710___GH_HL Leaf 375.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "48e28bd8-2395-4541-a64c-fd6fab030f06___GH_HL Leaf 352.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4959798b-5c9b-4f8e-b0a0-3778259614b1___CG1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "4e3e2f5a-04a7-4142-aad1-acfa13344e33___GH_HL Leaf 358.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "54059d2e-8903-4cf1-9856-676620a5be93___GH_HL Leaf 484.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5b36f575-af3a-454c-b31f-2d4218fb5cca___GH_HL Leaf 487.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5c4d21aa-76f8-4ab7-8440-65fd3cac640b___GH_HL Leaf 263.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "5d11d60f-fb4a-4178-9594-d017a0f51b59___GH_HL Leaf 271.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "64518a58-5c06-4a14-9ab6-2c4f71456050___GH_HL Leaf 394.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6b9b1ad6-3e75-4378-ad97-7dc9b8fa084e___GH_HL Leaf 179.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "6dca3464-9e71-4edf-9ca5-746b5eebe418___GH_HL Leaf 352.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "79e38a3e-8170-44e3-a7ce-e00bbbcf24dc___GH_HL Leaf 460.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7c879fc2-09b8-47ab-af57-2508cc854861___GH_HL Leaf 380.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "7e3c7e5d-172c-4a25-ad05-2b32e49c7bd2___GH_HL Leaf 387.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "81382c17-1a00-4597-87e4-2e674d38d6d2___GH_HL Leaf 269.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "84cbb98b-5c2f-4367-8d78-52be491e66bd___GH_HL Leaf 336.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "8accf0ce-a43d-449c-86fb-e327fb6ab2c9___GH_HL Leaf 241.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "933b7a1c-5015-48df-8c2d-b7fdf918a4db___GH_HL Leaf 490.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "93d00575-64fc-4cb6-93c1-91be73a0b90c___GH_HL Leaf 313.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9630e186-4b6c-492b-b450-a30bd7fd7fcb___GH_HL Leaf 322.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9b5626b0-ea1d-45d0-bc41-c898f7253a75___GH_HL Leaf 315.2.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9bda0790-8cb2-4dce-8b8a-debdbd08a67d___GH_HL Leaf 388.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "9d197d8a-3f35-401a-8aa4-39f7e69d05c5___GH_HL Leaf 326.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b3e24070-34b9-4dcb-8c84-026affadfb4b___GH_HL Leaf 360.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b6256250-7248-410b-b369-08cb07166099___GH_HL Leaf 452.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "b8af2ce5-8429-4842-8ebc-c9d1ac9ed96f___GH_HL Leaf 301.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "bd7ec723-4020-4d73-96b4-8c57c94e93fe___GH_HL Leaf 382.2.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c25ca040-07f4-4882-b5c9-e8083ba994a2___GH_HL Leaf 417.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "c58defb7-5515-4b89-896f-13039c13051f___GH_HL Leaf 372.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "cb602835-7f6d-4926-80b4-77fe22f7ff66___GH_HL Leaf 226.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d19a7818-769b-4633-bd09-5c3c20d2b4d1___GH_HL Leaf 172.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "d442075f-73bb-47a0-9545-9b36bca9300b___GH_HL Leaf 210.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e020155a-f93a-496c-adc6-1810b4cea333___GH_HL Leaf 206.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e33cde2d-5103-48aa-bb82-490aa779312c___GH_HL Leaf 515.2.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e786ac89-29fe-47e3-b49e-b9a9ee7edd9d___GH_HL Leaf 342.1.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "e95c13d4-9ba6-452e-b53c-03007f575401___GH_HL Leaf 320.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f163df8f-6510-4520-82ee-779d2679af33___GH_HL Leaf 422.2.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f1b0ad53-6f2a-44bd-9f58-da590c9cdde2___GH_HL Leaf 371.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "f2b8486a-71c9-43e2-8eb6-36476905dd40___GH_HL Leaf 346.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "fc5d1b1e-a225-463a-ab66-ab8f3dbf1861___GH_HL Leaf 363.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "PlantVillage",
+      "filename": "fe28e4c7-0c35-4f52-984e-0e60f33a2c6e___GH_HL Leaf 198.JPG",
+      "reason": "physical_leaf_group_unknown_or_ambiguous"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/07a9faad-Fresh_Leaf_25.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/4a1aef53-Fresh_Leaf_99.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/5448eab2-Fresh_Leaf_33.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/6ceb7cf4-Fresh_Leaf_23.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/839d8eb0-Fresh_Leaf_46.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/b165bbe2-Fresh_Leaf_20.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/e57f2007-Fresh_Leaf_31.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/f28c54b6-Fresh_Leaf_34.jpg",
+      "reason": "visual_review_rejected"
+    },
+    {
+      "source": "Cucumber",
+      "filename": "images/fef0d4eb-Fresh_Leaf_22.jpg",
+      "reason": "visual_review_rejected"
+    }
+  ],
+  "issue_counts": {
+    "mask_spans_background_or_truncated_leaf": 3,
+    "multiple_components": 3,
+    "mask_area_or_background_leakage": 2,
+    "category_excluded_after_visual_mask_background_leakage": 150,
+    "physical_leaf_group_unknown_or_ambiguous": 205,
+    "visual_review_rejected": 9
+  },
+  "limitations": [
+    "PlantVillage domain is laboratory; derived boxes are not expert lesion annotations",
+    "Primary val/test have no cucumber; crop-only auxiliary validation cannot establish disease detection",
+    "Original source already has sparse classes and may contain undetected near-duplicates",
+    "Whole-leaf bounding boxes cannot measure percentage of diseased tissue"
+  ]
+}

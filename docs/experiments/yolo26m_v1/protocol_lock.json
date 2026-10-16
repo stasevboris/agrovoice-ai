@@ -1,0 +1,18 @@
+{
+  "study": "yolo26m_v1",
+  "frozen_utc": "2026-10-04T17:39:29.816486+00:00",
+  "before_any_M_training": true,
+  "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+  "protected_sources": {
+    "train_clean.py": "b7bd5296722c991deab36ac2b2481113cdccc6d96333b3fcb7731efbc16e59a5",
+    "evaluate_clean.py": "38706b2a05f9e83f9cbb75bc65f61a1893289208318d05ee77afbb6b949c36a7",
+    "run_study.py": "b0f1736dcb999df80edf3ba562e427745507fc0ea9a7d1139353052c7f8ec7ca",
+    "yolo_s_accuracy.py": "31c616878fa10b980b54f86eb6c41115079563e66dd7a8e90f1d6fbf98ec42d9",
+    "evaluate_accuracy_pipeline.py": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+    "yolo_m_accuracy.py": "a509e52ad78a313ddfa083c590a7341921ba6f40020dd950b4c8814a627b1083",
+    "evaluate_yolo26m.py": "47e174cb36cd78abfd78255cc5bed6dc5d90d6e1076968cb34ec8c86c973233b"
+  },
+  "rule": "No recipe, training/evaluator, checkpoint, data or plan changes in this M cohort. Guard/report/phone helpers may be repaired with journal evidence without changing training or selection.",
+  "protocol_revision": 2,
+  "pretraining_history": "pretraining_protocol_v1"
+}

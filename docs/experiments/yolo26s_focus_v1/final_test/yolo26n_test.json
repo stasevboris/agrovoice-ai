@@ -1,0 +1,340 @@
+{
+  "model": {
+    "id": "yolo26n",
+    "name": "YOLO26n",
+    "asset": "models/yolo26n.onnx",
+    "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+    "bytes": 9719842,
+    "family": "yolo",
+    "side": 416,
+    "seed": 20261012,
+    "detector_seed": 20261012,
+    "dataset": "clean v2",
+    "provisional": false,
+    "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ]
+  },
+  "split": "test",
+  "images": 236,
+  "partial": false,
+  "disease_detection": {
+    "map50_95": 0.4366535695981422,
+    "map50": 0.5699569771436658
+  },
+  "diagnosis_at_fixed_threshold": {
+    "threshold": 0.25,
+    "matching_iou": 0.5,
+    "gt_leaves": 452,
+    "matched_leaves": 386,
+    "correctly_diagnosed_gt_leaves": 257,
+    "leaf_localization_recall": 0.8539823008849557,
+    "correct_class_and_box_recall": 0.5685840707964602,
+    "classification_accuracy_on_matched_boxes": 0.6658031088082902,
+    "macro_f1": 0.5021442389106446,
+    "classes": [
+      {
+        "id": 0,
+        "tp": 8,
+        "fn": 5,
+        "fp": 5,
+        "precision": 0.6153846153846154,
+        "recall": 0.6153846153846154,
+        "f1": 0.6153846153846154
+      },
+      {
+        "id": 1,
+        "tp": 9,
+        "fn": 1,
+        "fp": 10,
+        "precision": 0.47368421052631576,
+        "recall": 0.9,
+        "f1": 0.6206896551724138
+      },
+      {
+        "id": 2,
+        "tp": 7,
+        "fn": 4,
+        "fp": 7,
+        "precision": 0.5,
+        "recall": 0.6363636363636364,
+        "f1": 0.56
+      },
+      {
+        "id": 3,
+        "tp": 4,
+        "fn": 7,
+        "fp": 12,
+        "precision": 0.25,
+        "recall": 0.36363636363636365,
+        "f1": 0.2962962962962963
+      },
+      {
+        "id": 4,
+        "tp": 4,
+        "fn": 11,
+        "fp": 10,
+        "precision": 0.2857142857142857,
+        "recall": 0.26666666666666666,
+        "f1": 0.2758620689655172
+      },
+      {
+        "id": 5,
+        "tp": 15,
+        "fn": 7,
+        "fp": 18,
+        "precision": 0.45454545454545453,
+        "recall": 0.6818181818181818,
+        "f1": 0.5454545454545454
+      },
+      {
+        "id": 6,
+        "tp": 4,
+        "fn": 15,
+        "fp": 3,
+        "precision": 0.5714285714285714,
+        "recall": 0.21052631578947367,
+        "f1": 0.3076923076923077
+      },
+      {
+        "id": 7,
+        "tp": 1,
+        "fn": 3,
+        "fp": 5,
+        "precision": 0.16666666666666666,
+        "recall": 0.25,
+        "f1": 0.2
+      },
+      {
+        "id": 8,
+        "tp": 8,
+        "fn": 4,
+        "fp": 4,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666
+      },
+      {
+        "id": 9,
+        "tp": 9,
+        "fn": 1,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.9,
+        "f1": 0.9473684210526316
+      },
+      {
+        "id": 10,
+        "tp": 9,
+        "fn": 1,
+        "fp": 12,
+        "precision": 0.42857142857142855,
+        "recall": 0.9,
+        "f1": 0.5806451612903225
+      },
+      {
+        "id": 11,
+        "tp": 0,
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      },
+      {
+        "id": 12,
+        "tp": 6,
+        "fn": 11,
+        "fp": 16,
+        "precision": 0.2727272727272727,
+        "recall": 0.35294117647058826,
+        "f1": 0.30769230769230765
+      },
+      {
+        "id": 13,
+        "tp": 3,
+        "fn": 7,
+        "fp": 11,
+        "precision": 0.21428571428571427,
+        "recall": 0.3,
+        "f1": 0.25
+      },
+      {
+        "id": 14,
+        "tp": 14,
+        "fn": 3,
+        "fp": 16,
+        "precision": 0.4666666666666667,
+        "recall": 0.8235294117647058,
+        "f1": 0.5957446808510638
+      },
+      {
+        "id": 15,
+        "tp": 15,
+        "fn": 5,
+        "fp": 12,
+        "precision": 0.5555555555555556,
+        "recall": 0.75,
+        "f1": 0.6382978723404256
+      },
+      {
+        "id": 16,
+        "tp": 5,
+        "fn": 1,
+        "fp": 7,
+        "precision": 0.4166666666666667,
+        "recall": 0.8333333333333334,
+        "f1": 0.5555555555555556
+      },
+      {
+        "id": 17,
+        "tp": 30,
+        "fn": 0,
+        "fp": 6,
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091
+      },
+      {
+        "id": 18,
+        "tp": 5,
+        "fn": 14,
+        "fp": 8,
+        "precision": 0.38461538461538464,
+        "recall": 0.2631578947368421,
+        "f1": 0.3125
+      },
+      {
+        "id": 19,
+        "tp": 15,
+        "fn": 9,
+        "fp": 31,
+        "precision": 0.32608695652173914,
+        "recall": 0.625,
+        "f1": 0.4285714285714286
+      },
+      {
+        "id": 20,
+        "tp": 9,
+        "fn": 18,
+        "fp": 20,
+        "precision": 0.3103448275862069,
+        "recall": 0.3333333333333333,
+        "f1": 0.32142857142857145
+      },
+      {
+        "id": 21,
+        "tp": 3,
+        "fn": 11,
+        "fp": 8,
+        "precision": 0.2727272727272727,
+        "recall": 0.21428571428571427,
+        "f1": 0.23999999999999996
+      },
+      {
+        "id": 22,
+        "tp": 10,
+        "fn": 4,
+        "fp": 20,
+        "precision": 0.3333333333333333,
+        "recall": 0.7142857142857143,
+        "f1": 0.4545454545454545
+      },
+      {
+        "id": 23,
+        "tp": 7,
+        "fn": 29,
+        "fp": 2,
+        "precision": 0.7777777777777778,
+        "recall": 0.19444444444444445,
+        "f1": 0.3111111111111111
+      },
+      {
+        "id": 24,
+        "tp": 28,
+        "fn": 14,
+        "fp": 39,
+        "precision": 0.417910447761194,
+        "recall": 0.6666666666666666,
+        "f1": 0.5137614678899082
+      },
+      {
+        "id": 25,
+        "tp": 8,
+        "fn": 8,
+        "fp": 12,
+        "precision": 0.4,
+        "recall": 0.5,
+        "f1": 0.4444444444444445
+      },
+      {
+        "id": 26,
+        "tp": 0,
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      },
+      {
+        "id": 27,
+        "tp": 15,
+        "fn": 0,
+        "fp": 3,
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091
+      },
+      {
+        "id": 28,
+        "tp": 6,
+        "fn": 2,
+        "fp": 2,
+        "precision": 0.75,
+        "recall": 0.75,
+        "f1": 0.75
+      },
+      {
+        "id": 29,
+        "tp": 0,
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    ],
+    "matching": "Score-ordered class-agnostic IoU matching, one prediction per GT; unmatched leaves penalized"
+  },
+  "proposed_leaves": 0,
+  "skipped_leaves": 0,
+  "desktop_pipeline_ms": {
+    "median": 15.656057000001056,
+    "p95": 49.54768474999938
+  },
+  "note": "One selected S and one fixed N checkpoint; not ten-seed test mean. Historical test already seen. Fresh external field control still required; absent classes unassessed.",
+  "protocol": {
+    "detector_nms_iou": 0.7,
+    "proposal_threshold": 0.1,
+    "max_classified": 32,
+    "max_detections": 300,
+    "field_matching_iou": 0.5,
+    "confidence_for_f1": 0.25,
+    "score": "detector score * classifier softmax for two-stage",
+    "preprocessing": "cv2 detector letterbox; PIL square crop for classifier, unresized original photo",
+    "original_study_comparability": "Original Ultralytics multi-label evaluator differs; compare all modes under this shared protocol"
+  },
+  "code_sha256": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+  "selection_lock_sha256": "f74a36b98d35e352b15704771a3188827b2c065581764b64e48c7f3a9afbca10",
+  "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+  "launcher_sha256": "00043fd24f7b0c45390f62152fa56afd59e65662bc22d4cc0819c780d1077816"
+}

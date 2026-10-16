@@ -1,0 +1,353 @@
+{
+  "dataset_fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "run": "accuracy_v1_yolo26m_seed20261004",
+  "annotation_target": "whole_leaf_with_crop_and_condition_or_explicit_unknown",
+  "image_size": 416,
+  "trained_image_size": 416,
+  "onnx_bytes": 81699764,
+  "pytorch_bytes": 44076761,
+  "mode": "external_nms",
+  "onnx_path": "weights/best.onnx",
+  "model_architecture": "yolo26m.yaml",
+  "validation_split": "val",
+  "seed": 20261004,
+  "onnx_comparison": [
+    {
+      "image": "pd_00e805902ce2d2f74ea5.jpg",
+      "shape": [
+        1,
+        34,
+        3549
+      ],
+      "max_absolute_error": 0.0032958984375,
+      "mean_absolute_error": 5.016381237510359e-06
+    },
+    {
+      "image": "pd_01382244d92c90251bd5.jpg",
+      "shape": [
+        1,
+        34,
+        3549
+      ],
+      "max_absolute_error": 0.001129150390625,
+      "mean_absolute_error": 2.8737356387864565e-06
+    },
+    {
+      "image": "pd_01777008e72402bc2e95.jpg",
+      "shape": [
+        1,
+        34,
+        3549
+      ],
+      "max_absolute_error": 0.002593994140625,
+      "mean_absolute_error": 4.771620751853334e-06
+    }
+  ],
+  "validation": {
+    "overall": {
+      "metrics/precision(B)": 0.6224758605138923,
+      "metrics/recall(B)": 0.5770262835558765,
+      "metrics/mAP50(B)": 0.5967265058031012,
+      "metrics/mAP50-95(B)": 0.40518675016994865,
+      "fitness": 0.40518675016994865
+    },
+    "classes": [
+      {
+        "id": 0,
+        "name": "Apple Scab Leaf",
+        "metrics": {
+          "precision": 0.52794255598022,
+          "recall": 0.3086223070112924,
+          "map50": 0.4726674568972544,
+          "map50_95": 0.35826997693402707
+        }
+      },
+      {
+        "id": 1,
+        "name": "Apple leaf",
+        "metrics": {
+          "precision": 0.765852004521935,
+          "recall": 0.4666666666666667,
+          "map50": 0.8044746591183912,
+          "map50_95": 0.5237461589288229
+        }
+      },
+      {
+        "id": 2,
+        "name": "Apple rust leaf",
+        "metrics": {
+          "precision": 0.8403260233667627,
+          "recall": 0.6,
+          "map50": 0.8189140859964412,
+          "map50_95": 0.5188929778796685
+        }
+      },
+      {
+        "id": 3,
+        "name": "Bell_pepper leaf",
+        "metrics": {
+          "precision": 0.4050239348945397,
+          "recall": 0.75,
+          "map50": 0.5034111949312037,
+          "map50_95": 0.32834722804640454
+        }
+      },
+      {
+        "id": 4,
+        "name": "Bell_pepper leaf spot",
+        "metrics": {
+          "precision": 0.43183517939347577,
+          "recall": 0.5555555555555556,
+          "map50": 0.48950473992186727,
+          "map50_95": 0.31567164385935786
+        }
+      },
+      {
+        "id": 5,
+        "name": "Blueberry leaf",
+        "metrics": {
+          "precision": 0.6019044337988723,
+          "recall": 0.7483870967741936,
+          "map50": 0.6927387964371157,
+          "map50_95": 0.42559816234826464
+        }
+      },
+      {
+        "id": 6,
+        "name": "Cherry leaf",
+        "metrics": {
+          "precision": 0.44450127826433355,
+          "recall": 0.7175222329011792,
+          "map50": 0.6322707992070994,
+          "map50_95": 0.4308267619502225
+        }
+      },
+      {
+        "id": 7,
+        "name": "Corn Gray leaf spot",
+        "metrics": {
+          "precision": 0.62182301662116,
+          "recall": 0.41171789025051125,
+          "map50": 0.5319371293828803,
+          "map50_95": 0.39039683619190413
+        }
+      },
+      {
+        "id": 8,
+        "name": "Corn leaf blight",
+        "metrics": {
+          "precision": 0.6632366228527213,
+          "recall": 0.7083333333333334,
+          "map50": 0.6976309316742488,
+          "map50_95": 0.43879562330187427
+        }
+      },
+      {
+        "id": 9,
+        "name": "Corn rust leaf",
+        "metrics": {
+          "precision": 0.6703999570900019,
+          "recall": 0.8947368421052632,
+          "map50": 0.8648917428606663,
+          "map50_95": 0.6885353022855798
+        }
+      },
+      {
+        "id": 10,
+        "name": "Peach leaf",
+        "metrics": {
+          "precision": 0.785953800945946,
+          "recall": 0.753968253968254,
+          "map50": 0.8461646513177664,
+          "map50_95": 0.5309000907112873
+        }
+      },
+      {
+        "id": 11,
+        "name": "Potato leaf",
+        "metrics": {
+          "precision": 1.0,
+          "recall": 0.0,
+          "map50": 0.020901639344262295,
+          "map50_95": 0.017109408410548827
+        }
+      },
+      {
+        "id": 12,
+        "name": "Potato leaf early blight",
+        "metrics": {
+          "precision": 0.6280295937437081,
+          "recall": 0.24074074074074073,
+          "map50": 0.40762994621026394,
+          "map50_95": 0.258991173030401
+        }
+      },
+      {
+        "id": 13,
+        "name": "Potato leaf late blight",
+        "metrics": {
+          "precision": 0.5938984180406884,
+          "recall": 0.7727272727272727,
+          "map50": 0.6532706352901168,
+          "map50_95": 0.5065422049934584
+        }
+      },
+      {
+        "id": 14,
+        "name": "Raspberry leaf",
+        "metrics": {
+          "precision": 0.5682338997283276,
+          "recall": 0.7662337662337663,
+          "map50": 0.7670310660732217,
+          "map50_95": 0.5649786835887458
+        }
+      },
+      {
+        "id": 15,
+        "name": "Soyabean leaf",
+        "metrics": {
+          "precision": 0.4253961581298632,
+          "recall": 0.7666666666666667,
+          "map50": 0.729291707789786,
+          "map50_95": 0.6205800399330045
+        }
+      },
+      {
+        "id": 16,
+        "name": "Squash Powdery mildew leaf",
+        "metrics": {
+          "precision": 0.5710058065933291,
+          "recall": 0.5625,
+          "map50": 0.5790865275694378,
+          "map50_95": 0.40422451193822395
+        }
+      },
+      {
+        "id": 17,
+        "name": "Strawberry leaf",
+        "metrics": {
+          "precision": 0.6737041898002366,
+          "recall": 0.9846153846153847,
+          "map50": 0.9628838772770989,
+          "map50_95": 0.7463528048410674
+        }
+      },
+      {
+        "id": 18,
+        "name": "Tomato Early blight leaf",
+        "metrics": {
+          "precision": 0.20053101968501671,
+          "recall": 0.1883890745219077,
+          "map50": 0.25169660670831406,
+          "map50_95": 0.14794511096652552
+        }
+      },
+      {
+        "id": 19,
+        "name": "Tomato Septoria leaf spot",
+        "metrics": {
+          "precision": 0.6249911191727151,
+          "recall": 0.4605263157894737,
+          "map50": 0.5611851594008583,
+          "map50_95": 0.33209318458356407
+        }
+      },
+      {
+        "id": 20,
+        "name": "Tomato leaf",
+        "metrics": {
+          "precision": 0.5857341989237524,
+          "recall": 0.574468085106383,
+          "map50": 0.6188381600366398,
+          "map50_95": 0.3070639464447902
+        }
+      },
+      {
+        "id": 21,
+        "name": "Tomato leaf bacterial spot",
+        "metrics": {
+          "precision": 0.5551513158910939,
+          "recall": 0.5384615384615384,
+          "map50": 0.4875458472938766,
+          "map50_95": 0.3089964992709973
+        }
+      },
+      {
+        "id": 22,
+        "name": "Tomato leaf late blight",
+        "metrics": {
+          "precision": 0.6384245790608362,
+          "recall": 0.8928571428571429,
+          "map50": 0.8046642679189483,
+          "map50_95": 0.5569566071513321
+        }
+      },
+      {
+        "id": 23,
+        "name": "Tomato leaf mosaic virus",
+        "metrics": {
+          "precision": 0.6524107016300977,
+          "recall": 0.6153846153846154,
+          "map50": 0.5755723905723906,
+          "map50_95": 0.4977827721661055
+        }
+      },
+      {
+        "id": 24,
+        "name": "Tomato leaf yellow virus",
+        "metrics": {
+          "precision": 0.46808295838998654,
+          "recall": 0.5308641975308642,
+          "map50": 0.47614999088843335,
+          "map50_95": 0.20728822512348724
+        }
+      },
+      {
+        "id": 25,
+        "name": "Tomato mold leaf",
+        "metrics": {
+          "precision": 0.6867017077156222,
+          "recall": 0.3333333333333333,
+          "map50": 0.48974301901903006,
+          "map50_95": 0.31673641751349346
+        }
+      },
+      {
+        "id": 26,
+        "name": "Tomato two spotted spider mites leaf",
+        "metrics": {
+          "precision": 1.0,
+          "recall": 0.0,
+          "map50": 0.0,
+          "map50_95": 0.0
+        }
+      },
+      {
+        "id": 27,
+        "name": "grape leaf",
+        "metrics": {
+          "precision": 0.6467517911359083,
+          "recall": 0.8,
+          "map50": 0.7398603824807998,
+          "map50_95": 0.48316434153222454
+        }
+      },
+      {
+        "id": 28,
+        "name": "grape leaf black rot",
+        "metrics": {
+          "precision": 0.7739536895317267,
+          "recall": 0.7904839105850777,
+          "map50": 0.8251112566715187,
+          "map50_95": 0.5236290610031265
+        }
+      },
+      {
+        "id": 29,
+        "name": "Cucumber leaf (condition unknown)",
+        "metrics": null
+      }
+    ]
+  },
+  "completed_epochs": 60
+}

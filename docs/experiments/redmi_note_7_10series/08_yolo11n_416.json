@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "label": "yolo11n_416",
+  "run_id": "block8_yolo11n_416_2637ab1372244235b0302cf83b4a98b0",
+  "completed_epoch_ms": 1791038146899,
+  "device": "Xiaomi Redmi Note 7",
+  "android": "13",
+  "sdk": 33,
+  "runtime": "ONNX Runtime Android 1.30.0 CPU FP32",
+  "threads": 4,
+  "input_shape": [
+    1,
+    3,
+    416,
+    416
+  ],
+  "output_shape": [
+    1,
+    33,
+    3549
+  ],
+  "model_bytes": 10530117,
+  "warmup": 10,
+  "iterations": 40,
+  "inference": {
+    "median_ms": 120.10291649999999,
+    "p95_ms": 122.3015018
+  },
+  "inference_and_postprocess": {
+    "median_ms": 122.4973435,
+    "p95_ms": 125.02556524999999
+  },
+  "memory": {
+    "baseline_process_rss_bytes": 118571008,
+    "process_rss_bytes": 220774400,
+    "peak_process_rss_bytes": 220774400
+  },
+  "last_image_detections": 14,
+  "scope": "Prepared tensors; excludes photo decode/resize, camera and rendering. Absolute process RAM.",
+  "block": 8,
+  "context_before": {
+    "battery": [
+      "AC powered: false",
+      "USB powered: true",
+      "status: 2",
+      "level: 67",
+      "temperature: 340"
+    ],
+    "thermal": [
+      "IsStatusOverride: false",
+      "Thermal Status: 0"
+    ]
+  },
+  "context_after": {
+    "battery": [
+      "AC powered: false",
+      "USB powered: true",
+      "status: 2",
+      "level: 67",
+      "temperature: 340"
+    ],
+    "thermal": [
+      "IsStatusOverride: false",
+      "Thermal Status: 0"
+    ]
+  },
+  "desktop_output_check": {
+    "status": "passed",
+    "samples": 1,
+    "max_absolute_error": 0.00048828125
+  }
+}

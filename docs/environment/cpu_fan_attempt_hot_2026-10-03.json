@@ -1,0 +1,16 @@
+{
+  "cutoff_celsius": 70,
+  "samples": [],
+  "requested_seconds": 120,
+  "status": "failed_before_stop",
+  "ended_utc": "2026-10-03T17:48:43.8619343Z",
+  "before": {
+    "rpm": null,
+    "celsius": 86.625,
+    "temperature_identifier": "/amdcpu/0/temperature/2",
+    "utc": "2026-10-03T17:48:42.7937478Z"
+  },
+  "fancontrol_started": true,
+  "error": "No valid CPU temperature below 70 C; fan stop was not applied.",
+  "started_utc": "2026-10-03T17:48:33.8957967Z"
+}

@@ -1,0 +1,7 @@
+{
+  "status": "blocked",
+  "training_started": false,
+  "problems": [
+    "Final audited dataset and frozen plan are not ready; draft is not a training permit."
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "status": "source_semantics_verified_training_support_pending",
+  "checked_utc": "2026-10-06T17:02:24.155933+00:00",
+  "source_url": "https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2023.1251888/full",
+  "evidence_sections": [
+    "Data collection and labeling",
+    "Table1",
+    "Multi-label classification"
+  ],
+  "records_sha256": "643dd1e54e30c4f987156fa19344873ee94d3636a87bdcefd832b9b596429372",
+  "classes": [
+    {
+      "source_class": "cucumber__K",
+      "crop": "cucumber",
+      "condition": "potassium_deficiency",
+      "kind": "nutrition",
+      "originals": 50,
+      "publisher_table_count": 50,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "cucumber__N",
+      "crop": "cucumber",
+      "condition": "nitrogen_deficiency",
+      "kind": "nutrition",
+      "originals": 89,
+      "publisher_table_count": 89,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "cucumber__N_K",
+      "crop": "cucumber",
+      "condition": "nitrogen_and_potassium_deficiency",
+      "kind": "combined_nutrition",
+      "originals": 76,
+      "publisher_table_count": 76,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "cucumber__healthy",
+      "crop": "cucumber",
+      "condition": "healthy",
+      "kind": "healthy",
+      "originals": 34,
+      "publisher_table_count": 34,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "tomato__JAS_MIT",
+      "crop": "tomato",
+      "condition": "jassid_and_mite_damage",
+      "kind": "combined_pest",
+      "originals": 32,
+      "publisher_table_count": 32,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "tomato__K",
+      "crop": "tomato",
+      "condition": "potassium_deficiency",
+      "kind": "nutrition",
+      "originals": 36,
+      "publisher_table_count": 36,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "tomato__LM",
+      "crop": "tomato",
+      "condition": "leaf_miner_damage",
+      "kind": "pest",
+      "originals": 207,
+      "publisher_table_count": 207,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "tomato__MIT",
+      "crop": "tomato",
+      "condition": "mite_damage_unspecified_species",
+      "kind": "pest",
+      "originals": 200,
+      "publisher_table_count": 200,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "tomato__N",
+      "crop": "tomato",
+      "condition": "nitrogen_deficiency",
+      "kind": "nutrition",
+      "originals": 47,
+      "publisher_table_count": 47,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "tomato__N_K",
+      "crop": "tomato",
+      "condition": "nitrogen_and_potassium_deficiency",
+      "kind": "combined_nutrition",
+      "originals": 40,
+      "publisher_table_count": 40,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": null,
+      "final_class_id": null,
+      "training_accepted": false
+    },
+    {
+      "source_class": "tomato__healthy",
+      "crop": "tomato",
+      "condition": "healthy",
+      "kind": "healthy",
+      "originals": 236,
+      "publisher_table_count": 236,
+      "count_match": true,
+      "semantic_status": "publisher_definition_verified",
+      "proposed_existing_id": 20,
+      "final_class_id": null,
+      "training_accepted": false
+    }
+  ],
+  "limitations": [
+    "Combined conditions remain combined.",
+    "MIT does not establish two-spotted mite species.",
+    "LM is leaf miner damage, not fungal leaf mold.",
+    "Publisher supervision is not our own laboratory confirmation.",
+    "Geometry, quarantine, physical groups and independent class support still govern acceptance."
+  ]
+}

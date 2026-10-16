@@ -1,0 +1,111 @@
+{
+  "status": "resumed",
+  "started_unix": 1791051671.3893228,
+  "started_utc": "2026-10-03T18:21:11.389331+00:00",
+  "processes": [
+    {
+      "pid": 299,
+      "ppid": 298,
+      "start_ticks": "412",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/run_study.py --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 38957,
+      "ppid": 299,
+      "start_ticks": "1317719",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 38998,
+      "ppid": 38957,
+      "start_ticks": "1319289",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39006,
+      "ppid": 38957,
+      "start_ticks": "1319290",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39014,
+      "ppid": 38957,
+      "start_ticks": "1319292",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39022,
+      "ppid": 38957,
+      "start_ticks": "1319293",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39803,
+      "ppid": 38957,
+      "start_ticks": "1323369",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39811,
+      "ppid": 38957,
+      "start_ticks": "1323377",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39819,
+      "ppid": 38957,
+      "start_ticks": "1323381",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39827,
+      "ppid": 38957,
+      "start_ticks": "1323386",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39835,
+      "ppid": 38957,
+      "start_ticks": "1323389",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39843,
+      "ppid": 38957,
+      "start_ticks": "1323392",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39851,
+      "ppid": 38957,
+      "start_ticks": "1323397",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    },
+    {
+      "pid": 39859,
+      "ppid": 38957,
+      "start_ticks": "1323400",
+      "command": "/opt/agrovoice/venv/bin/python -u /mnt/f/agrovoice-ai/ml-pipeline/train_clean.py --data /mnt/f/agrovoice-ai/ml-pipeline/dataset_clean_v2/data.yaml --model /mnt/f/agrovoice-ai/ml-pipeline/yolo11n.pt --name study10_v2_yolo11n_seed20261007 --seed 20261007 --epochs 60 --patience 60 --imgsz 416 --batch 16 --device 0 --workers 4 --threads 8 --optimizer AdamW --lr0 .001 --stop-file /mnt/f/agrovoice-ai/ml-pipeline/logs/20261003_142846_087.study.stop "
+    }
+  ],
+  "watchdog_seconds": 240,
+  "reason": "User-authorized timed CPU fan noise test",
+  "resumed_utc": "2026-10-03T18:21:47.201538+00:00",
+  "resumed_pids": [
+    39859,
+    39851,
+    39843,
+    39835,
+    39827,
+    39819,
+    39811,
+    39803,
+    39022,
+    39014,
+    39006,
+    38998,
+    38957,
+    299
+  ],
+  "pause_seconds": 35.8
+}

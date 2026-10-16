@@ -1,0 +1,9 @@
+{
+  "status": "failed_before_stop",
+  "ended_utc": "2026-10-03T17:42:36.3906641Z",
+  "requested_seconds": 120,
+  "error": "FanControl is not running.",
+  "started_utc": "2026-10-03T17:42:36.3474587Z",
+  "cutoff_celsius": 70,
+  "samples": []
+}

@@ -1,0 +1,860 @@
+{
+  "status": "all_37_pairs_visually_reviewed",
+  "updated_utc": "2026-10-05T12:21:24.662467+00:00",
+  "review_index_sha256": "4aa5ec89e884bf42f5d8c820290fa1065a449c2955c59b829261c37d1b14fb07",
+  "sheets_inspected": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "stats": {
+    "same_source_photo_variants": 37,
+    "cross_split_pairs": 9,
+    "label_set_disagreement_pairs": 19
+  },
+  "unique_historical_records_in_review": 71,
+  "records_in_cross_split_pairs": 18,
+  "class_set_disagreement_pair_numbers": [
+    4,
+    5,
+    6,
+    8,
+    9,
+    13,
+    15,
+    17,
+    19,
+    21,
+    22,
+    23,
+    24,
+    27,
+    28,
+    31,
+    32,
+    33,
+    36
+  ],
+  "pairs": [
+    {
+      "pair": 1,
+      "a_id": "pd_1dbbf71258e164d8051d.jpg",
+      "a_split": "train",
+      "a_classes": [
+        18
+      ],
+      "b_id": "pd_19a8f2db8064ab6d913f.jpg",
+      "b_split": "train",
+      "b_classes": [
+        18
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 1,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 2,
+      "a_id": "pd_289d6438e3195c7d0da2.jpg",
+      "a_split": "val",
+      "a_classes": [
+        4
+      ],
+      "b_id": "pd_21ca6c719f5526231cc0.jpg",
+      "b_split": "train",
+      "b_classes": [
+        4
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 1,
+      "cross_split": true,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 3,
+      "a_id": "pd_433a9bcb10ace0265354.jpg",
+      "a_split": "train",
+      "a_classes": [
+        0
+      ],
+      "b_id": "pd_2664bd6c06bd2977f8a0.jpg",
+      "b_split": "train",
+      "b_classes": [
+        0
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 1,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 4,
+      "a_id": "pd_4d3401f0f047e8c10c57.jpg",
+      "a_split": "train",
+      "a_classes": [
+        13
+      ],
+      "b_id": "pd_4060f4a39ab6d737e708.jpg",
+      "b_split": "train",
+      "b_classes": [
+        22
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 1,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 5,
+      "a_id": "pd_587364e7b0810d60506f.jpg",
+      "a_split": "train",
+      "a_classes": [
+        18
+      ],
+      "b_id": "pd_0bbc29ba943bbfa02c05.jpg",
+      "b_split": "train",
+      "b_classes": [
+        18,
+        20
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 2,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 6,
+      "a_id": "pd_6555aa92dae558d4b7de.jpg",
+      "a_split": "train",
+      "a_classes": [
+        13
+      ],
+      "b_id": "pd_477bb290a6f117c37a74.jpg",
+      "b_split": "val",
+      "b_classes": [
+        12
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 2,
+      "cross_split": true,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 7,
+      "a_id": "pd_71501d7d299808541f72.jpg",
+      "a_split": "val",
+      "a_classes": [
+        13
+      ],
+      "b_id": "pd_1d1d26950d34fbba039a.jpg",
+      "b_split": "val",
+      "b_classes": [
+        13
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 2,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 8,
+      "a_id": "pd_7b6b369899a8a1ba967c.jpg",
+      "a_split": "train",
+      "a_classes": [
+        22
+      ],
+      "b_id": "pd_0dd1a7f692a35525e5ff.jpg",
+      "b_split": "train",
+      "b_classes": [
+        12
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 2,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 9,
+      "a_id": "pd_7e2e04a62d3edd2a140b.jpg",
+      "a_split": "train",
+      "a_classes": [
+        12
+      ],
+      "b_id": "pd_1c0352f055ab54e8fb6b.jpg",
+      "b_split": "train",
+      "b_classes": [
+        18
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 3,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 10,
+      "a_id": "pd_88490601ed7e38e58471.jpg",
+      "a_split": "train",
+      "a_classes": [
+        8
+      ],
+      "b_id": "pd_086efef0be3c2a13654d.jpg",
+      "b_split": "train",
+      "b_classes": [
+        8
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 3,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 11,
+      "a_id": "pd_8cb2bd53af8fd73e2793.jpg",
+      "a_split": "train",
+      "a_classes": [
+        21
+      ],
+      "b_id": "pd_307b2fb56525afd4683a.jpg",
+      "b_split": "train",
+      "b_classes": [
+        21
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 3,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 12,
+      "a_id": "pd_8d5ad4435507f6d66c25.jpg",
+      "a_split": "train",
+      "a_classes": [
+        4
+      ],
+      "b_id": "pd_32c1e9822786c850fb85.jpg",
+      "b_split": "train",
+      "b_classes": [
+        4
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 3,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 13,
+      "a_id": "pd_8e7d7fc8214068f1048a.jpg",
+      "a_split": "train",
+      "a_classes": [
+        12
+      ],
+      "b_id": "pd_450c32b276940329e2f4.jpg",
+      "b_split": "train",
+      "b_classes": [
+        13
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 4,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 14,
+      "a_id": "pd_9760b1cb995402f0a4b5.jpg",
+      "a_split": "train",
+      "a_classes": [
+        8
+      ],
+      "b_id": "pd_8c8d51089ed669c6edf7.jpg",
+      "b_split": "train",
+      "b_classes": [
+        8
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 4,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 15,
+      "a_id": "pd_9a58d0147c99265af34b.jpg",
+      "a_split": "train",
+      "a_classes": [
+        19
+      ],
+      "b_id": "pd_925d785c4b326fbc10f3.jpg",
+      "b_split": "val",
+      "b_classes": [
+        12
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 4,
+      "cross_split": true,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 16,
+      "a_id": "pd_a7c74ba3038ed7b66ff7.jpg",
+      "a_split": "test",
+      "a_classes": [
+        21
+      ],
+      "b_id": "pd_2cea0573fd6e5de424cd.jpg",
+      "b_split": "train",
+      "b_classes": [
+        21
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 4,
+      "cross_split": true,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 17,
+      "a_id": "pd_abfd5ef2231c3d0732de.jpg",
+      "a_split": "val",
+      "a_classes": [
+        12
+      ],
+      "b_id": "pd_5f92ab8c2597e295663d.jpg",
+      "b_split": "train",
+      "b_classes": [
+        18
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 5,
+      "cross_split": true,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 18,
+      "a_id": "pd_aea2e2c67726559f1645.jpg",
+      "a_split": "train",
+      "a_classes": [
+        16
+      ],
+      "b_id": "pd_17c86445dc7a0d9472c9.jpg",
+      "b_split": "train",
+      "b_classes": [
+        16
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 5,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 19,
+      "a_id": "pd_b75371e2d5e5dec8bdfa.jpg",
+      "a_split": "train",
+      "a_classes": [
+        22
+      ],
+      "b_id": "pd_86e8a33812c0083cdd01.jpg",
+      "b_split": "train",
+      "b_classes": [
+        13
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 5,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 20,
+      "a_id": "pd_bd262333d334b4d8180f.jpg",
+      "a_split": "train",
+      "a_classes": [
+        22
+      ],
+      "b_id": "pd_5890281007af285f319b.jpg",
+      "b_split": "train",
+      "b_classes": [
+        22
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 5,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 21,
+      "a_id": "pd_bfb8478ff543ede099cc.jpg",
+      "a_split": "train",
+      "a_classes": [
+        7
+      ],
+      "b_id": "pd_979eeb0ad72e88143e16.jpg",
+      "b_split": "val",
+      "b_classes": [
+        8
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 6,
+      "cross_split": true,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 22,
+      "a_id": "pd_c4be3e65467abf7bce53.jpg",
+      "a_split": "val",
+      "a_classes": [
+        19
+      ],
+      "b_id": "pd_a2dc05f9e3d1aefae085.jpg",
+      "b_split": "train",
+      "b_classes": [
+        21
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 6,
+      "cross_split": true,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 23,
+      "a_id": "pd_c5fb7ba963b70f7feaa9.jpg",
+      "a_split": "train",
+      "a_classes": [
+        18
+      ],
+      "b_id": "pd_2d171b6d1eea4739748a.jpg",
+      "b_split": "train",
+      "b_classes": [
+        22
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 6,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 24,
+      "a_id": "pd_cc52de7632c24f6329ad.jpg",
+      "a_split": "train",
+      "a_classes": [
+        18
+      ],
+      "b_id": "pd_b084b909949c1d0e7fb3.jpg",
+      "b_split": "train",
+      "b_classes": [
+        13
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 6,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 25,
+      "a_id": "pd_cebd08aa8c45bea4e0d6.jpg",
+      "a_split": "train",
+      "a_classes": [
+        2
+      ],
+      "b_id": "pd_80b1d4fd337bf8bb0df5.jpg",
+      "b_split": "train",
+      "b_classes": [
+        2
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 7,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 26,
+      "a_id": "pd_d445075b118d4ccd8560.jpg",
+      "a_split": "train",
+      "a_classes": [
+        4
+      ],
+      "b_id": "pd_8eaf7c66322b852b0b10.jpg",
+      "b_split": "train",
+      "b_classes": [
+        4
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 7,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 27,
+      "a_id": "pd_dbb6e68009dbf4023db7.jpg",
+      "a_split": "train",
+      "a_classes": [
+        18
+      ],
+      "b_id": "pd_662729641d9584fe5a31.jpg",
+      "b_split": "train",
+      "b_classes": [
+        19
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 7,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 28,
+      "a_id": "pd_dd66a0d230771d2d47ae.jpg",
+      "a_split": "train",
+      "a_classes": [
+        19
+      ],
+      "b_id": "pd_178095a84052febebd8f.jpg",
+      "b_split": "train",
+      "b_classes": [
+        4
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 7,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 29,
+      "a_id": "pd_df328ae72352f9ee6a1e.jpg",
+      "a_split": "train",
+      "a_classes": [
+        16
+      ],
+      "b_id": "pd_4e9507608a22aecf1d16.jpg",
+      "b_split": "train",
+      "b_classes": [
+        16
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 8,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 30,
+      "a_id": "pd_e5f2e17e94118553a189.jpg",
+      "a_split": "train",
+      "a_classes": [
+        18
+      ],
+      "b_id": "pd_1c0352f055ab54e8fb6b.jpg",
+      "b_split": "train",
+      "b_classes": [
+        18
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 8,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 31,
+      "a_id": "pd_e5f2e17e94118553a189.jpg",
+      "a_split": "train",
+      "a_classes": [
+        18
+      ],
+      "b_id": "pd_7e2e04a62d3edd2a140b.jpg",
+      "b_split": "train",
+      "b_classes": [
+        12
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 8,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 32,
+      "a_id": "pd_ef0078d11c0aead4dd47.jpg",
+      "a_split": "train",
+      "a_classes": [
+        12
+      ],
+      "b_id": "pd_dfcbc4265e5c5d094a7f.jpg",
+      "b_split": "train",
+      "b_classes": [
+        22
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 8,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 33,
+      "a_id": "pd_f2e1b4f58cfedc8cb695.jpg",
+      "a_split": "train",
+      "a_classes": [
+        22
+      ],
+      "b_id": "pd_e2ad3f4597b2637d7077.jpg",
+      "b_split": "test",
+      "b_classes": [
+        13
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 9,
+      "cross_split": true,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 34,
+      "a_id": "pd_f66304fb3c1e0fac738a.jpg",
+      "a_split": "train",
+      "a_classes": [
+        22
+      ],
+      "b_id": "pd_842860d9de758b14a3b6.jpg",
+      "b_split": "test",
+      "b_classes": [
+        22
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 9,
+      "cross_split": true,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 35,
+      "a_id": "pd_fab3b6dba7ea320b80fe.jpg",
+      "a_split": "train",
+      "a_classes": [
+        14
+      ],
+      "b_id": "pd_d4117729aabb14efaa79.jpg",
+      "b_split": "train",
+      "b_classes": [
+        14
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 9,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 36,
+      "a_id": "pd_fd6402880e73c364ef28.jpg",
+      "a_split": "val",
+      "a_classes": [
+        22
+      ],
+      "b_id": "pd_d13e4543171aa4ea21c6.jpg",
+      "b_split": "val",
+      "b_classes": [
+        12
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 9,
+      "cross_split": false,
+      "class_set_disagreement": true,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    },
+    {
+      "pair": 37,
+      "a_id": "pd_fddde4c824084dff5c4d.jpg",
+      "a_split": "val",
+      "a_classes": [
+        24
+      ],
+      "b_id": "pd_538945389d5280352f8b.jpg",
+      "b_split": "val",
+      "b_classes": [
+        24
+      ],
+      "visual_relation": "same_source_photograph_derivative_confirmed",
+      "inspected_sheet": 10,
+      "cross_split": false,
+      "class_set_disagreement": false,
+      "diagnosis_resolution": null,
+      "decision": "same split family required in new dataset; conflicting annotations require source/object-level review, no label selected from appearance"
+    }
+  ],
+  "quarantine_pending_annotation_review_for_new_base_only": [
+    "pd_086efef0be3c2a13654d.jpg",
+    "pd_0bbc29ba943bbfa02c05.jpg",
+    "pd_0dd1a7f692a35525e5ff.jpg",
+    "pd_178095a84052febebd8f.jpg",
+    "pd_17c86445dc7a0d9472c9.jpg",
+    "pd_19a8f2db8064ab6d913f.jpg",
+    "pd_1c0352f055ab54e8fb6b.jpg",
+    "pd_1d1d26950d34fbba039a.jpg",
+    "pd_1dbbf71258e164d8051d.jpg",
+    "pd_21ca6c719f5526231cc0.jpg",
+    "pd_2664bd6c06bd2977f8a0.jpg",
+    "pd_289d6438e3195c7d0da2.jpg",
+    "pd_2cea0573fd6e5de424cd.jpg",
+    "pd_2d171b6d1eea4739748a.jpg",
+    "pd_307b2fb56525afd4683a.jpg",
+    "pd_32c1e9822786c850fb85.jpg",
+    "pd_4060f4a39ab6d737e708.jpg",
+    "pd_433a9bcb10ace0265354.jpg",
+    "pd_450c32b276940329e2f4.jpg",
+    "pd_477bb290a6f117c37a74.jpg",
+    "pd_4d3401f0f047e8c10c57.jpg",
+    "pd_4e9507608a22aecf1d16.jpg",
+    "pd_538945389d5280352f8b.jpg",
+    "pd_587364e7b0810d60506f.jpg",
+    "pd_5890281007af285f319b.jpg",
+    "pd_5f92ab8c2597e295663d.jpg",
+    "pd_6555aa92dae558d4b7de.jpg",
+    "pd_662729641d9584fe5a31.jpg",
+    "pd_71501d7d299808541f72.jpg",
+    "pd_7b6b369899a8a1ba967c.jpg",
+    "pd_7e2e04a62d3edd2a140b.jpg",
+    "pd_80b1d4fd337bf8bb0df5.jpg",
+    "pd_842860d9de758b14a3b6.jpg",
+    "pd_86e8a33812c0083cdd01.jpg",
+    "pd_88490601ed7e38e58471.jpg",
+    "pd_8c8d51089ed669c6edf7.jpg",
+    "pd_8cb2bd53af8fd73e2793.jpg",
+    "pd_8d5ad4435507f6d66c25.jpg",
+    "pd_8e7d7fc8214068f1048a.jpg",
+    "pd_8eaf7c66322b852b0b10.jpg",
+    "pd_925d785c4b326fbc10f3.jpg",
+    "pd_9760b1cb995402f0a4b5.jpg",
+    "pd_979eeb0ad72e88143e16.jpg",
+    "pd_9a58d0147c99265af34b.jpg",
+    "pd_a2dc05f9e3d1aefae085.jpg",
+    "pd_a7c74ba3038ed7b66ff7.jpg",
+    "pd_abfd5ef2231c3d0732de.jpg",
+    "pd_aea2e2c67726559f1645.jpg",
+    "pd_b084b909949c1d0e7fb3.jpg",
+    "pd_b75371e2d5e5dec8bdfa.jpg",
+    "pd_bd262333d334b4d8180f.jpg",
+    "pd_bfb8478ff543ede099cc.jpg",
+    "pd_c4be3e65467abf7bce53.jpg",
+    "pd_c5fb7ba963b70f7feaa9.jpg",
+    "pd_cc52de7632c24f6329ad.jpg",
+    "pd_cebd08aa8c45bea4e0d6.jpg",
+    "pd_d13e4543171aa4ea21c6.jpg",
+    "pd_d4117729aabb14efaa79.jpg",
+    "pd_d445075b118d4ccd8560.jpg",
+    "pd_dbb6e68009dbf4023db7.jpg",
+    "pd_dd66a0d230771d2d47ae.jpg",
+    "pd_df328ae72352f9ee6a1e.jpg",
+    "pd_dfcbc4265e5c5d094a7f.jpg",
+    "pd_e2ad3f4597b2637d7077.jpg",
+    "pd_e5f2e17e94118553a189.jpg",
+    "pd_ef0078d11c0aead4dd47.jpg",
+    "pd_f2e1b4f58cfedc8cb695.jpg",
+    "pd_f66304fb3c1e0fac738a.jpg",
+    "pd_fab3b6dba7ea320b80fe.jpg",
+    "pd_fd6402880e73c364ef28.jpg",
+    "pd_fddde4c824084dff5c4d.jpg"
+  ],
+  "original_classes_still_supported_if_review_records_withheld": {
+    "0": 125,
+    "1": 192,
+    "2": 121,
+    "3": 268,
+    "4": 199,
+    "5": 671,
+    "6": 192,
+    "7": 50,
+    "8": 305,
+    "9": 98,
+    "10": 484,
+    "11": 124,
+    "12": 241,
+    "13": 207,
+    "14": 446,
+    "15": 216,
+    "16": 199,
+    "17": 397,
+    "18": 265,
+    "19": 327,
+    "20": 398,
+    "21": 350,
+    "22": 161,
+    "23": 212,
+    "24": 701,
+    "25": 223,
+    "26": 158,
+    "27": 175,
+    "28": 99
+  },
+  "training_dataset_changed": false,
+  "historical_results_recomputed": false,
+  "new_training_accepted": 0,
+  "new_gpu_runs": 0,
+  "limits": "Visual identity is a same-photo judgement, not an expert crop/disease diagnosis. Class-set disagreements may involve object annotation differences and require box-level/source review; no automatic majority label or relabeling was used."
+}

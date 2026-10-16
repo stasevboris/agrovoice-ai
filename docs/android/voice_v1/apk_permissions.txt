@@ -1,0 +1,4 @@
+package: com.agronomy.phytomonitor
+uses-permission: name='android.permission.RECORD_AUDIO'
+permission: com.agronomy.phytomonitor.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+uses-permission: name='com.agronomy.phytomonitor.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'

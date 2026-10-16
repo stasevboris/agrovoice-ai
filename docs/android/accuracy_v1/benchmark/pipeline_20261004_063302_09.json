@@ -1,0 +1,119 @@
+{
+  "status": "passed",
+  "series": 9,
+  "warmup": 3,
+  "iterations": 10,
+  "photo": "01_potato_late_blight.jpg",
+  "photo_sha256": "e01d96d3bbef4fa050c64fe0c4802c99363d802408e7e66df19f71ccacc6268c",
+  "results": [
+    {
+      "model": "yolo11n",
+      "seed": 20261003,
+      "detector_seed": 20261003,
+      "detector_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "inference_ms": [
+        119.972604,
+        120.76974,
+        118.920989,
+        120.68125,
+        122.498177,
+        120.807813,
+        120.062344,
+        123.320052,
+        120.13974,
+        118.949271
+      ],
+      "pipeline_ms": [
+        151.247344,
+        152.240469,
+        150.202396,
+        152.319531,
+        153.971979,
+        152.29724,
+        151.284374,
+        157.51901,
+        153.486458,
+        150.27849
+      ],
+      "median_inference_ms": 120.410495,
+      "median_pipeline_ms": 152.26885449999997,
+      "rss_kb_after": 236015616,
+      "process_hwm_kb": 236015616,
+      "detections": 2
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261012,
+      "detector_seed": 20261012,
+      "detector_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "inference_ms": [
+        108.980417,
+        103.807865,
+        105.880105,
+        106.460104,
+        106.0525,
+        105.55599,
+        104.987187,
+        106.172448,
+        104.775886,
+        105.218438
+      ],
+      "pipeline_ms": [
+        140.377188,
+        135.29177,
+        137.345625,
+        137.668698,
+        137.602344,
+        137.538646,
+        136.342239,
+        137.649636,
+        136.041823,
+        136.607343
+      ],
+      "median_inference_ms": 105.7180475,
+      "median_pipeline_ms": 137.4421355,
+      "rss_kb_after": 211181568,
+      "process_hwm_kb": 260849664,
+      "detections": 2
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "seed": 20261003,
+      "detector_seed": 20261012,
+      "detector_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "classifier_sha256": "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e",
+      "inference_ms": [
+        184.323594,
+        179.193385,
+        178.814999,
+        181.874894,
+        179.243386,
+        178.647188,
+        180.737761,
+        179.806406,
+        179.742344,
+        185.216668
+      ],
+      "pipeline_ms": [
+        246.428802,
+        240.759166,
+        240.727552,
+        243.569427,
+        240.902292,
+        240.224948,
+        242.213385,
+        244.293801,
+        241.558385,
+        246.650937
+      ],
+      "median_inference_ms": 179.77437500000002,
+      "median_pipeline_ms": 241.88588499999997,
+      "rss_kb_after": 265945088,
+      "process_hwm_kb": 304066560,
+      "detections": 1
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "created_epoch_ms": 1791095689335,
+  "scope": "Warm real-photo complete pipeline; fresh process per series, rotated mode order; HWM is cumulative process memory"
+}

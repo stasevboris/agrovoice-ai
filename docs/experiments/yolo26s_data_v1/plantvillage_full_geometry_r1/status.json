@@ -1,0 +1,144 @@
+{
+  "status": "completed_geometry_audit_not_training_ready",
+  "pid": 4844,
+  "source_revision": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+  "source_index_sha256": "3bbf8f929fc215174e0ea6acc1638b266df642e06ef58c999045239ad8a917ae",
+  "source_archive_sha256": "08c1367853c3b4afe636755ea84d454f73920e82ffcfd3453bd26b1c5d26a070",
+  "helper_sha256": "0851d96382ffa4c52d1b3873f1f4257677c25d049ecf0fb5aa93910a8912119f",
+  "planned_pairs": 38694,
+  "checked_pairs": 38694,
+  "training_accepted": 0,
+  "gpu": false,
+  "updated_utc": "2026-10-05T06:07:05.785847+00:00",
+  "counts": {
+    "pairs": 38694,
+    "no_flags": 27688,
+    "flagged": 11006
+  },
+  "flags": {
+    "mask_spans_background_or_truncated_leaf": 3048,
+    "mask_area_or_background_leakage": 413,
+    "multiple_components": 193,
+    "physical_leaf_group_unknown_or_ambiguous": 10295,
+    "empty_mask": 1,
+    "mask_rgb_geometry_mismatch": 1
+  },
+  "class_counts": {
+    "Apple___Apple_scab": {
+      "pairs": 630,
+      "no_flags": 608
+    },
+    "Apple___Cedar_apple_rust": {
+      "pairs": 275,
+      "no_flags": 275
+    },
+    "Apple___healthy": {
+      "pairs": 1645,
+      "no_flags": 1625
+    },
+    "Blueberry___healthy": {
+      "pairs": 1502,
+      "no_flags": 1499
+    },
+    "Cherry_(including_sour)___healthy": {
+      "pairs": 854,
+      "no_flags": 847
+    },
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+      "pairs": 513,
+      "no_flags": 0
+    },
+    "Corn_(maize)___Common_rust_": {
+      "pairs": 1192,
+      "no_flags": 0
+    },
+    "Corn_(maize)___Northern_Leaf_Blight": {
+      "pairs": 985,
+      "no_flags": 0
+    },
+    "Grape___Black_rot": {
+      "pairs": 1180,
+      "no_flags": 1165
+    },
+    "Grape___healthy": {
+      "pairs": 423,
+      "no_flags": 0
+    },
+    "Peach___healthy": {
+      "pairs": 360,
+      "no_flags": 356
+    },
+    "Pepper,_bell___Bacterial_spot": {
+      "pairs": 997,
+      "no_flags": 951
+    },
+    "Pepper,_bell___healthy": {
+      "pairs": 1478,
+      "no_flags": 1441
+    },
+    "Potato___Early_blight": {
+      "pairs": 1000,
+      "no_flags": 991
+    },
+    "Potato___Late_blight": {
+      "pairs": 1000,
+      "no_flags": 998
+    },
+    "Potato___healthy": {
+      "pairs": 152,
+      "no_flags": 152
+    },
+    "Raspberry___healthy": {
+      "pairs": 371,
+      "no_flags": 371
+    },
+    "Soybean___healthy": {
+      "pairs": 5090,
+      "no_flags": 4866
+    },
+    "Squash___Powdery_mildew": {
+      "pairs": 1835,
+      "no_flags": 0
+    },
+    "Strawberry___healthy": {
+      "pairs": 456,
+      "no_flags": 454
+    },
+    "Tomato___Bacterial_spot": {
+      "pairs": 2127,
+      "no_flags": 2117
+    },
+    "Tomato___Early_blight": {
+      "pairs": 1000,
+      "no_flags": 926
+    },
+    "Tomato___Late_blight": {
+      "pairs": 1909,
+      "no_flags": 817
+    },
+    "Tomato___Leaf_Mold": {
+      "pairs": 952,
+      "no_flags": 856
+    },
+    "Tomato___Septoria_leaf_spot": {
+      "pairs": 1771,
+      "no_flags": 987
+    },
+    "Tomato___Spider_mites Two-spotted_spider_mite": {
+      "pairs": 1676,
+      "no_flags": 1670
+    },
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+      "pairs": 5357,
+      "no_flags": 2721
+    },
+    "Tomato___Tomato_mosaic_virus": {
+      "pairs": 373,
+      "no_flags": 0
+    },
+    "Tomato___healthy": {
+      "pairs": 1591,
+      "no_flags": 995
+    }
+  }
+}

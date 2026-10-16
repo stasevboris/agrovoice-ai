@@ -1,0 +1,22 @@
+{
+  "review_date": "2026-10-03",
+  "reviewer": "Codex visual review of all 62 candidate thumbnails; not an agronomic diagnosis",
+  "source": "Zenodo 16816441 / Image tags/fresh_leaf.zip",
+  "contact_sheets": ["cucumber_crop_candidates_1.jpg", "cucumber_crop_candidates_2.jpg", "cucumber_crop_candidates_3.jpg", "cucumber_crop_candidates_4.jpg"],
+  "annotation_target": "whole visible cucumber leaf; condition unknown",
+  "class_name": "Cucumber leaf (condition unknown)",
+  "reject_ids": [2, 14, 18, 25, 30, 40, 52, 57, 61],
+  "rejection_reasons": {
+    "2": "Box cuts a substantial part of the visible leaf",
+    "14": "Folded foliage; a single leaf cannot be resolved confidently from the thumbnail",
+    "18": "Extreme close-up without sufficient leaf boundary",
+    "25": "Extreme close-up without sufficient leaf boundary",
+    "30": "Extreme close-up without sufficient leaf boundary",
+    "40": "Extreme close-up without sufficient leaf boundary",
+    "52": "Growing shoot with multiple leaves inside one box",
+    "57": "Extreme close-up without sufficient leaf boundary",
+    "61": "Folded/overlapping foliage and uncertain box extent"
+  },
+  "policy": "Retain source rectangles only for remaining candidates. Remove health/disease claims; retain crop identity. Group exact and detected near-duplicates before split.",
+  "limitation": "Small source subset; thumbnail review does not replace expert field validation or prove a disease label. Background leaves may be unlabelled, as in the source."
+}

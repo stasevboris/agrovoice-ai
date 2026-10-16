@@ -1,0 +1,173 @@
+{
+  "generated_utc": "2026-10-04T13:03:50.866877+00:00",
+  "generated_local": "2026-10-04T16:03:50.866877+03:00",
+  "status": "estimate_not_guarantee",
+  "jobs_completed": 9,
+  "jobs_total": 80,
+  "current": {
+    "id": "yolo26s_seed20261004",
+    "epoch": 27,
+    "epochs": 60,
+    "elapsed_recorded_seconds": 1236.86,
+    "recent_epoch_seconds": 44.738000000000056,
+    "estimated_epochs_remaining_seconds": 1476.3540000000019,
+    "source": "runs\\detect\\accuracy_v1_yolo26s_seed20261004\\results.csv"
+  },
+  "observed": {
+    "mobilenet_v3_large": [
+      {
+        "job": "mobilenet_v3_large_seed20261003",
+        "seconds": 1079.162061043,
+        "epochs": 30,
+        "source": "runs\\accuracy_v1\\mobilenet_v3_large_seed20261003\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      },
+      {
+        "job": "mobilenet_v3_large_seed20261004",
+        "seconds": 1278.9229020250045,
+        "epochs": 30,
+        "source": "runs\\accuracy_v1\\mobilenet_v3_large_seed20261004\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      }
+    ],
+    "yolo26s": [
+      {
+        "job": "yolo26s_seed20261003",
+        "seconds": 2906.04,
+        "epochs": 60,
+        "source": "runs\\detect\\accuracy_v1_yolo26s_seed20261003\\results.csv",
+        "basis": "last cumulative training time in results.csv"
+      }
+    ],
+    "deimv2_n": [
+      {
+        "job": "deimv2_n_seed20261003",
+        "seconds": 6768.395975923001,
+        "epochs": 60,
+        "source": "runs\\accuracy_v1\\deimv2_n_seed20261003\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      }
+    ],
+    "efficientnet_b0": [
+      {
+        "job": "efficientnet_b0_seed20261003",
+        "seconds": 1578.6359682059997,
+        "epochs": 30,
+        "source": "runs\\accuracy_v1\\efficientnet_b0_seed20261003\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      }
+    ],
+    "leaf_mask": [
+      {
+        "job": "leaf_mask_seed20261003",
+        "seconds": 164.5103363470007,
+        "epochs": 20,
+        "source": "runs\\accuracy_v1\\leaf_mask_seed20261003\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      }
+    ],
+    "teacher_efficientnet_v2_s": [
+      {
+        "job": "teacher_efficientnet_v2_s_seed20261003",
+        "seconds": 2945.0541889859996,
+        "epochs": 30,
+        "source": "runs\\accuracy_v1\\teacher_efficientnet_v2_s_seed20261003\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      }
+    ],
+    "masked_mobilenet_v3_large": [
+      {
+        "job": "masked_mobilenet_v3_large_seed20261003",
+        "seconds": 1488.7699875900007,
+        "epochs": 30,
+        "source": "runs\\accuracy_v1\\masked_mobilenet_v3_large_seed20261003\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      }
+    ],
+    "distilled_mobilenet_v3_large": [
+      {
+        "job": "distilled_mobilenet_v3_large_seed20261003",
+        "seconds": 1657.393137766997,
+        "epochs": 30,
+        "source": "runs\\accuracy_v1\\distilled_mobilenet_v3_large_seed20261003\\history.json",
+        "basis": "sum of recorded epoch.seconds; excludes off-process pause/manual export repair"
+      }
+    ]
+  },
+  "remaining_by_kind": [
+    {
+      "kind": "yolo26s",
+      "unfinished_jobs": 9,
+      "reference_completed_jobs": 1,
+      "typical_recorded_seconds_per_job": 2906.04,
+      "seconds_before_current_credit": 26154.36
+    },
+    {
+      "kind": "deimv2_n",
+      "unfinished_jobs": 9,
+      "reference_completed_jobs": 1,
+      "typical_recorded_seconds_per_job": 6768.395975923001,
+      "seconds_before_current_credit": 60915.56378330701
+    },
+    {
+      "kind": "efficientnet_b0",
+      "unfinished_jobs": 9,
+      "reference_completed_jobs": 1,
+      "typical_recorded_seconds_per_job": 1578.6359682059997,
+      "seconds_before_current_credit": 14207.723713853997
+    },
+    {
+      "kind": "leaf_mask",
+      "unfinished_jobs": 9,
+      "reference_completed_jobs": 1,
+      "typical_recorded_seconds_per_job": 164.5103363470007,
+      "seconds_before_current_credit": 1480.5930271230063
+    },
+    {
+      "kind": "teacher_efficientnet_v2_s",
+      "unfinished_jobs": 9,
+      "reference_completed_jobs": 1,
+      "typical_recorded_seconds_per_job": 2945.0541889859996,
+      "seconds_before_current_credit": 26505.487700873997
+    },
+    {
+      "kind": "masked_mobilenet_v3_large",
+      "unfinished_jobs": 9,
+      "reference_completed_jobs": 1,
+      "typical_recorded_seconds_per_job": 1488.7699875900007,
+      "seconds_before_current_credit": 13398.929888310005
+    },
+    {
+      "kind": "distilled_mobilenet_v3_large",
+      "unfinished_jobs": 9,
+      "reference_completed_jobs": 1,
+      "typical_recorded_seconds_per_job": 1657.393137766997,
+      "seconds_before_current_credit": 14916.538239902973
+    },
+    {
+      "kind": "mobilenet_v3_large",
+      "unfinished_jobs": 8,
+      "reference_completed_jobs": 2,
+      "typical_recorded_seconds_per_job": 1179.0424815340023,
+      "seconds_before_current_credit": 9432.339852272018
+    }
+  ],
+  "nominal_recorded_training_hours_remaining": 46.04852116823416,
+  "nominal_training_completion_local": "2026-10-06T14:06:45.543083+03:00",
+  "planning_range_hours": [
+    45,
+    55
+  ],
+  "planning_range_completion_local": [
+    "2026-10-06T13:03:50.866877+03:00",
+    "2026-10-06T23:03:50.866877+03:00"
+  ],
+  "assumptions": [
+    "One continuous GPU worker; PC stays powered on and awake",
+    "Reference times mostly one completed seed per component; MobileNet two",
+    "Uses recorded epoch times, not manifest wall time spanning manual export repair or stopped process",
+    "45–55h is a rounded planning range allowing execution variability and normal per-job export/check overhead; not a statistical confidence interval",
+    "Final shared quality comparisons, final test selection and final APK verification may require additional time",
+    "Token reserve pauses development, but does not stop the already running training queue"
+  ]
+}

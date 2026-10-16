@@ -1,0 +1,85 @@
+{
+  "schema": "agrovoice-inspections-v1",
+  "exported_epoch_ms": 1791153151623,
+  "contains_photo_bytes": false,
+  "records": [
+    {
+      "id": "ed79b95b-6e14-4abb-9a16-a7c6bfd7a833",
+      "created_epoch_ms": 1791153036486,
+      "updated_epoch_ms": 1791153036486,
+      "report_name": "1791152777095_yolo26s_67ee9cc4.json",
+      "report_sha256": "ef8255a31c71ed445a51efcee772baab6bccd7cf7fc2a9b23731fa5511868e75",
+      "prediction": {
+        "created_epoch_ms": 1791152777092,
+        "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/import_b2b1932b-d808-40f1-bd55-b25da388babf.jpg",
+        "photo_sha256": "6b604bf88a5abecb23eebf3a016aa8d3ba385819e97a1af987ad27dbaed3736a",
+        "decoded_width": 384,
+        "decoded_height": 288,
+        "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+        "model": "yolo26s",
+        "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+        "dataset": "clean v2",
+        "seed": 20261004,
+        "provisional": false,
+        "detector_seed": 20261004,
+        "family": "yolo",
+        "proposed_leaves": 0,
+        "classified_leaves": 0,
+        "skipped_leaves": 0,
+        "score_policy": "detector class score",
+        "model_metadata": {
+          "id": "yolo26s",
+          "name": "YOLO26s",
+          "family": "yolo",
+          "side": 416,
+          "seed": 20261004,
+          "detector_seed": 20261004,
+          "asset": "models\/yolo26s.onnx",
+          "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+          "bytes": 38104599,
+          "provisional": false,
+          "dataset": "clean v2",
+          "completed_runs": 10,
+          "paired_evaluations": 10,
+          "selection": "shared full-val end-to-end AP50-95; ten seeds; lower seed breaks ties",
+          "source": "runs\/accuracy_v1\/yolo26s_seed20261004",
+          "input_shape": [
+            1,
+            3,
+            416,
+            416
+          ],
+          "output_shape": [
+            1,
+            34,
+            3549
+          ]
+        },
+        "crop_filter": "Tomato",
+        "confidence_threshold": 0.37441977858543396,
+        "inference_ms": 442.853854,
+        "pipeline_ms": 875.344114,
+        "detections": [
+          {
+            "class_id": 19,
+            "class_name": "Tomato Septoria leaf spot",
+            "label_ru": "Томат: септориоз",
+            "confidence": 0.9073076248168945,
+            "xyxy_pixels": [
+              25.339317,
+              34.369686,
+              383.88812,
+              271.05908
+            ]
+          }
+        ],
+        "device": "Xiaomi Redmi Note 7",
+        "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area."
+      },
+      "note": "TEST: UI export check",
+      "review": "unrated",
+      "plot": "",
+      "review_scope": "User assessment of this entire photo\/result, not verified leaf labels or training ground truth"
+    }
+  ]
+}

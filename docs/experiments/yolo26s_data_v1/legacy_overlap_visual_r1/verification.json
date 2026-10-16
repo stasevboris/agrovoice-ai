@@ -1,0 +1,16 @@
+{
+  "updated_utc": "2026-10-05T12:21:24.662467+00:00",
+  "protected_sources_unchanged": {
+    "train_clean.py": true,
+    "evaluate_clean.py": true,
+    "run_study.py": true,
+    "yolo_s_accuracy.py": true,
+    "evaluate_accuracy_pipeline.py": true,
+    "yolo_m_accuracy.py": true,
+    "evaluate_yolo26m.py": true
+  },
+  "old_dataset_manifest_sha256": "6eeb02546dfe35f48cd6a8f37931b325e74b8c338e62c0c18708e3784832abfe",
+  "source_archive_reverified_for_conflicts": 5,
+  "original_classes_supported_after_provisional_quarantine": 29,
+  "visual_pairs_reviewed": 37
+}

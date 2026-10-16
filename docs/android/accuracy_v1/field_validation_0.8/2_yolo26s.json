@@ -1,0 +1,164 @@
+{
+  "created_epoch_ms": 1791116864791,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/09_cucumber_downy_mildew_2024.jpg",
+  "photo_sha256": "86fa687998b921cbc114ab11df812c32277c93a4be2e2ee7afde53fc8bd1b187",
+  "decoded_width": 2000,
+  "decoded_height": 1500,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo26s",
+  "model_sha256": "9631b6073310657435eb30d93dcc7314b5e29dcce73498736a71021b132d2c1e",
+  "dataset": "clean v2",
+  "seed": 20261003,
+  "provisional": true,
+  "detector_seed": 20261003,
+  "family": "yolo",
+  "proposed_leaves": 0,
+  "classified_leaves": 0,
+  "skipped_leaves": 0,
+  "score_policy": "detector class score",
+  "model_metadata": {
+    "id": "yolo26s",
+    "name": "YOLO26s",
+    "family": "yolo",
+    "side": 416,
+    "seed": 20261003,
+    "detector_seed": 20261003,
+    "asset": "models\/yolo26s.onnx",
+    "sha256": "9631b6073310657435eb30d93dcc7314b5e29dcce73498736a71021b132d2c1e",
+    "bytes": 38104599,
+    "provisional": true,
+    "dataset": "clean v2",
+    "completed_runs": 1,
+    "paired_evaluations": 1,
+    "selection": "provisional native detector val",
+    "source": "runs\\accuracy_v1\\yolo26s_seed20261003",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ]
+  },
+  "crop_filter": "all",
+  "confidence_threshold": 0.25,
+  "inference_ms": 345.396146,
+  "pipeline_ms": 662.385937,
+  "detections": [
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.8416738510131836,
+      "xyxy_pixels": [
+        493.40396,
+        210.39163,
+        744.1612,
+        378.73083
+      ]
+    },
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.7882159948348999,
+      "xyxy_pixels": [
+        483.56885,
+        426.0995,
+        715.9969,
+        623.9825
+      ]
+    },
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.6980549097061157,
+      "xyxy_pixels": [
+        408.48856,
+        1160.4397,
+        614.9929,
+        1340.7816
+      ]
+    },
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.5510155558586121,
+      "xyxy_pixels": [
+        148.02345,
+        743.16833,
+        332.11423,
+        897.6501
+      ]
+    },
+    {
+      "class_id": 29,
+      "class_name": "Cucumber leaf (condition unknown)",
+      "label_ru": "Огурец: лист, состояние неизвестно",
+      "confidence": 0.48544174432754517,
+      "xyxy_pixels": [
+        812.0374,
+        711.85455,
+        1703.0814,
+        1256.5446
+      ]
+    },
+    {
+      "class_id": 28,
+      "class_name": "grape leaf black rot",
+      "label_ru": "Виноград: чёрная гниль",
+      "confidence": 0.36342382431030273,
+      "xyxy_pixels": [
+        1167.6482,
+        248.85133,
+        1903.5819,
+        707.52057
+      ]
+    },
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.2868155241012573,
+      "xyxy_pixels": [
+        243.70209,
+        813.29974,
+        681.3147,
+        1071.183
+      ]
+    },
+    {
+      "class_id": 16,
+      "class_name": "Squash Powdery mildew leaf",
+      "label_ru": "Тыквенные: мучнистая роса (класс Squash)",
+      "confidence": 0.28300952911376953,
+      "xyxy_pixels": [
+        1173.2961,
+        245.77496,
+        1909.1049,
+        695.9236
+      ]
+    },
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.255779504776001,
+      "xyxy_pixels": [
+        394.8114,
+        602.84607,
+        692.6817,
+        770.7844
+      ]
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+  "validation_photo": "09_cucumber_downy_mildew_2024.jpg"
+}

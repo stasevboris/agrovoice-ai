@@ -1,0 +1,57 @@
+{
+  "created_epoch_ms": 1791055291605,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/import_dc212f83-2e1f-4d85-9e64-92e2b56255ef.jpg",
+  "photo_sha256": "7158710edc8c4b70b2b463b1d9d18010b6180f958b81a2ca8d605061e7210b64",
+  "decoded_width": 1632,
+  "decoded_height": 1224,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo11n",
+  "model_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+  "dataset": "clean v2",
+  "seed": 20261003,
+  "provisional": true,
+  "crop_filter": "all",
+  "confidence_threshold": 0.25,
+  "inference_ms": 166.143281,
+  "pipeline_ms": 209.397968,
+  "detections": [
+    {
+      "class_id": 16,
+      "class_name": "Squash Powdery mildew leaf",
+      "label_ru": "Тыквенные: мучнистая роса (класс Squash)",
+      "confidence": 0.9021753072738647,
+      "xyxy_pixels": [
+        380.13263,
+        157.99783,
+        1313.0919,
+        1163.9382
+      ]
+    },
+    {
+      "class_id": 16,
+      "class_name": "Squash Powdery mildew leaf",
+      "label_ru": "Тыквенные: мучнистая роса (класс Squash)",
+      "confidence": 0.6353214383125305,
+      "xyxy_pixels": [
+        0,
+        275.08917,
+        302.06943,
+        774.2296
+      ]
+    },
+    {
+      "class_id": 16,
+      "class_name": "Squash Powdery mildew leaf",
+      "label_ru": "Тыквенные: мучнистая роса (класс Squash)",
+      "confidence": 0.37395432591438293,
+      "xyxy_pixels": [
+        415.95425,
+        0.20471103,
+        858.6231,
+        381.19
+      ]
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area."
+}

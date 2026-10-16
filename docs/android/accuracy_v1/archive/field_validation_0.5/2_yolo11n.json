@@ -1,0 +1,65 @@
+{
+  "created_epoch_ms": 1791108819736,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/09_cucumber_downy_mildew_2024.jpg",
+  "photo_sha256": "86fa687998b921cbc114ab11df812c32277c93a4be2e2ee7afde53fc8bd1b187",
+  "decoded_width": 2000,
+  "decoded_height": 1500,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo11n",
+  "model_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+  "dataset": "clean v2",
+  "seed": 20261003,
+  "provisional": false,
+  "detector_seed": 20261003,
+  "family": "yolo",
+  "proposed_leaves": 0,
+  "classified_leaves": 0,
+  "skipped_leaves": 0,
+  "score_policy": "detector class score",
+  "model_metadata": {
+    "id": "yolo11n",
+    "name": "YOLO11n",
+    "asset": "models\/yolo11n.onnx",
+    "sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+    "bytes": 10530938,
+    "source": "runs\\detect\\study10_v2_yolo11n_seed20261003\\weights\\best.onnx",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ],
+    "family": "yolo",
+    "seed": 20261003,
+    "detector_seed": 20261003,
+    "dataset": "clean v2",
+    "provisional": false,
+    "side": 416
+  },
+  "crop_filter": "all",
+  "confidence_threshold": 0.25,
+  "inference_ms": 125.356562,
+  "pipeline_ms": 337.21026,
+  "detections": [
+    {
+      "class_id": 29,
+      "class_name": "Cucumber leaf (condition unknown)",
+      "label_ru": "Огурец: лист, состояние неизвестно",
+      "confidence": 0.29161888360977173,
+      "xyxy_pixels": [
+        1168.6105,
+        265.70306,
+        1894.1642,
+        682.8405
+      ]
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+  "validation_photo": "09_cucumber_downy_mildew_2024.jpg"
+}

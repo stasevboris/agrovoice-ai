@@ -1,0 +1,84 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-10-04T17:40:41.221118+00:00",
+  "scope": "Eight actual negative entrypoint calls before S completion. No completed M or phone quality is implied.",
+  "active_s_pid": 30236,
+  "m_gpu_started": false,
+  "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+  "checks": [
+    {
+      "entrypoint": "yolo_m_accuracy.py",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "Finish all ten YOLO26s",
+      "output": "\nTraceback (most recent call last):\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo_m_accuracy.py\", line 84, in <module>\n    try:main()\n        ^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo_m_accuracy.py\", line 12, in main\n    protocol();base_examples()\n               ^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 23, in base_examples\n    selected=s_selection()\n             ^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26_focus_validation.py\", line 65, in cohort_selection\n    assert queue['status'] == 'completed' and queue['completed'] == 10, 'Finish all ten YOLO26s exports before selection/test'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Finish all ten YOLO26s exports before selection/test\n"
+    },
+    {
+      "entrypoint": "package_yolo26m.py",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "Finish all ten YOLO26s",
+      "output": "\nTraceback (most recent call last):\n  File \"F:\\agrovoice-ai\\ml-pipeline\\package_yolo26m.py\", line 26, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\package_yolo26m.py\", line 9, in main\n    selected,base=pilot_selection() if args.pilot else final_selection()\n                  ^^^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 76, in pilot_selection\n    base=base_examples();row=validate_seed(SEEDS[0]);model=model_for(row,base,False)\n         ^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 23, in base_examples\n    selected=s_selection()\n             ^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26_focus_validation.py\", line 65, in cohort_selection\n    assert queue['status'] == 'completed' and queue['completed'] == 10, 'Finish all ten YOLO26s exports before selection/test'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Finish all ten YOLO26s exports before selection/test\n"
+    },
+    {
+      "entrypoint": "package_yolo26m.py",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "Finish all ten YOLO26s",
+      "output": "\nTraceback (most recent call last):\n  File \"F:\\agrovoice-ai\\ml-pipeline\\package_yolo26m.py\", line 26, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\package_yolo26m.py\", line 9, in main\n    selected,base=pilot_selection() if args.pilot else final_selection()\n                                                       ^^^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 81, in final_selection\n    base=base_examples();plan,lock=protocol()\n         ^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 23, in base_examples\n    selected=s_selection()\n             ^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26_focus_validation.py\", line 65, in cohort_selection\n    assert queue['status'] == 'completed' and queue['completed'] == 10, 'Finish all ten YOLO26s exports before selection/test'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Finish all ten YOLO26s exports before selection/test\n"
+    },
+    {
+      "entrypoint": "evaluate_yolo26m_test.py",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "Finish all ten YOLO26s",
+      "output": "\nTraceback (most recent call last):\n  File \"F:\\agrovoice-ai\\ml-pipeline\\evaluate_yolo26m_test.py\", line 23, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\evaluate_yolo26m_test.py\", line 5, in main\n    selection,base=final_selection()\n                   ^^^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 81, in final_selection\n    base=base_examples();plan,lock=protocol()\n         ^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 23, in base_examples\n    selected=s_selection()\n             ^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26_focus_validation.py\", line 65, in cohort_selection\n    assert queue['status'] == 'completed' and queue['completed'] == 10, 'Finish all ten YOLO26s exports before selection/test'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Finish all ten YOLO26s exports before selection/test\n"
+    },
+    {
+      "entrypoint": "mark_yolo26m_phone_gate.py",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "Finish all ten YOLO26s",
+      "output": "\nTraceback (most recent call last):\n  File \"F:\\agrovoice-ai\\ml-pipeline\\mark_yolo26m_phone_gate.py\", line 58, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\mark_yolo26m_phone_gate.py\", line 8, in main\n    selected,base=final_selection() if args.final else pilot_selection()\n                                                       ^^^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 76, in pilot_selection\n    base=base_examples();row=validate_seed(SEEDS[0]);model=model_for(row,base,False)\n         ^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 23, in base_examples\n    selected=s_selection()\n             ^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26_focus_validation.py\", line 65, in cohort_selection\n    assert queue['status'] == 'completed' and queue['completed'] == 10, 'Finish all ten YOLO26s exports before selection/test'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Finish all ten YOLO26s exports before selection/test\n"
+    },
+    {
+      "entrypoint": "yolo26m_queue.py",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "Finish all ten YOLO26s",
+      "output": "\nTraceback (most recent call last):\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_queue.py\", line 36, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_queue.py\", line 8, in main\n    plan,lock=protocol();base_examples()\n                         ^^^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26m_validation.py\", line 23, in base_examples\n    selected=s_selection()\n             ^^^^^^^^^^^^^\n  File \"F:\\agrovoice-ai\\ml-pipeline\\yolo26_focus_validation.py\", line 65, in cohort_selection\n    assert queue['status'] == 'completed' and queue['completed'] == 10, 'Finish all ten YOLO26s exports before selection/test'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Finish all ten YOLO26s exports before selection/test\n"
+    },
+    {
+      "entrypoint": "Start-Yolo26mPilot.ps1",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "A GPU worker is already active",
+      "output": "\nA GPU worker is already active.\nAt F:\\agrovoice-ai\\ml-pipeline\\Start-Yolo26mPilot.ps1:7 char:43\n+ ... ainingProcess $taskPrevious){throw 'A GPU worker is already active.'}\n+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (A GPU worker is already active.:String) [], RuntimeException\n    + FullyQualifiedErrorId : A GPU worker is already active.\n \n"
+    },
+    {
+      "entrypoint": "Start-Yolo26mStudy.ps1",
+      "status": "expected_refusal",
+      "exit_code": 1,
+      "expected_reason": "A GPU worker is already active",
+      "output": "\nA GPU worker is already active.\nAt F:\\agrovoice-ai\\ml-pipeline\\Start-Yolo26mStudy.ps1:7 char:43\n+ ... ainingProcess $taskPrevious){throw 'A GPU worker is already active.'}\n+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : OperationStopped: (A GPU worker is already active.:String) [], RuntimeException\n    + FullyQualifiedErrorId : A GPU worker is already active.\n \n"
+    }
+  ],
+  "protected_sha_before_and_after": {
+    "ml-pipeline\\train_clean.py": "b7bd5296722c991deab36ac2b2481113cdccc6d96333b3fcb7731efbc16e59a5",
+    "ml-pipeline\\evaluate_clean.py": "38706b2a05f9e83f9cbb75bc65f61a1893289208318d05ee77afbb6b949c36a7",
+    "ml-pipeline\\run_study.py": "b0f1736dcb999df80edf3ba562e427745507fc0ea9a7d1139353052c7f8ec7ca",
+    "ml-pipeline\\yolo_s_accuracy.py": "31c616878fa10b980b54f86eb6c41115079563e66dd7a8e90f1d6fbf98ec42d9",
+    "ml-pipeline\\evaluate_accuracy_pipeline.py": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+    "ml-pipeline\\yolo_m_accuracy.py": "a509e52ad78a313ddfa083c590a7341921ba6f40020dd950b4c8814a627b1083",
+    "ml-pipeline\\evaluate_yolo26m.py": "47e174cb36cd78abfd78255cc5bed6dc5d90d6e1076968cb34ec8c86c973233b",
+    "docs\\experiments\\yolo26s_focus_v1\\plan.json": "bc0d5491639b6b1ec54f8fad95e1d25a1c6f53df38b9d534391768bd271426a0",
+    "docs\\experiments\\accuracy_v1\\architecture_plan.json": "f244ab05acf4b79f32309ee93d5daf458908f4ef6c7549d94eeaa18136a08315",
+    "android-app\\app\\src\\main\\assets\\models\\manifest.json": "7db7e426315808657a975da3809d4201c84e3c828e373ab9318d5d06ef14a4f4",
+    "ml-pipeline\\logs\\active_training.json": "d188da026ccd637111b45b0a769c167e45740b2789e3409d8b52ee61f95378b3",
+    "ml-pipeline\\dataset_accuracy_v1\\manifest.json": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+    "ml-pipeline\\dataset_clean_v2\\manifest.json": "6eeb02546dfe35f48cd6a8f37931b325e74b8c338e62c0c18708e3784832abfe",
+    "artifacts\\apk\\current_model_lab.json": "7c815d789b822d0d53b50d909bfc28eb9817b038cb235bde8dd066a10dcfa6e5",
+    "docs\\experiments\\yolo26m_v1\\status.json": "8a9dc34cdd7b38c40356790623a049db96e32474676d6b95b9655d142b560c8e"
+  },
+  "new_M_selection_or_queue_files": false
+}

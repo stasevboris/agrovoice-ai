@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "models_visible": [
+    "YOLO11n",
+    "YOLO26n",
+    "Лист → MobileNet",
+    "Лист → EfficientNet",
+    "Маска → диагноз",
+    "YOLO26s",
+    "DEIMv2-N"
+  ],
+  "selected_mask_evidence": "model_lab_ui_0.7_mask.xml",
+  "screenshot": "model_lab_ui_0.7.png",
+  "restored_mode": "yolo26s",
+  "preserved_confidence": 0.45,
+  "restored_evidence": "model_lab_ui_0.7_restored.xml",
+  "threshold_text": [
+    "Порог уверенности: 0.45"
+  ]
+}

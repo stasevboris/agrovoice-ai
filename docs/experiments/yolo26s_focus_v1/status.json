@@ -1,0 +1,57 @@
+{
+  "jobs": {
+    "yolo26s_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T13:15:31.485845+00:00",
+      "reused": true
+    },
+    "yolo26s_seed20261004": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T13:32:54.060198+00:00"
+    },
+    "yolo26s_seed20261005": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T14:19:21.750856+00:00"
+    },
+    "yolo26s_seed20261006": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T15:06:03.793694+00:00"
+    },
+    "yolo26s_seed20261007": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T15:52:48.628289+00:00"
+    },
+    "yolo26s_seed20261008": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T16:40:24.741114+00:00"
+    },
+    "yolo26s_seed20261009": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T17:28:01.924237+00:00"
+    },
+    "yolo26s_seed20261010": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T18:14:25.932399+00:00"
+    },
+    "yolo26s_seed20261011": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T19:00:50.986086+00:00"
+    },
+    "yolo26s_seed20261012": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T19:47:10.753908+00:00"
+    }
+  },
+  "started_utc": "2026-10-04T13:15:31.275279+00:00",
+  "status": "completed",
+  "requested": 10,
+  "pid": 301,
+  "plan_sha256": "bc0d5491639b6b1ec54f8fad95e1d25a1c6f53df38b9d534391768bd271426a0",
+  "completed": 10,
+  "current": {
+    "id": "yolo26s_seed20261012",
+    "kind": "yolo26s",
+    "seed": 20261012
+  },
+  "updated_utc": "2026-10-04T19:47:10.761675+00:00"
+}

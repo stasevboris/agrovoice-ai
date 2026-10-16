@@ -1,0 +1,98 @@
+{
+  "status": "verified",
+  "updated_utc": "2026-10-05T08:01:37.108375+00:00",
+  "authorized_by": "Boris: expand voice and useful test app features for next morning,2026-10-04",
+  "scope": "App improvements alongside one unchanged GPU worker; existing15% reserve applies",
+  "current_verified_apk": {
+    "status": "verified",
+    "apk": "artifacts/apk/AgroVoice-model-lab-0.16.apk",
+    "version": "0.16-model-lab",
+    "version_code": 16,
+    "sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+    "bytes": 332738706,
+    "installed": true,
+    "serial": "b861c4e0",
+    "phone_parity": "passed",
+    "updated_utc": "2026-10-05T01:05:40.5484761+00:00",
+    "verification": "docs/android/accuracy_v1/verification.json"
+  },
+  "report": "docs/android/FIELD_TOOLS_2026-10-05.md",
+  "evidence": "docs\\android\\yolo26m_pilot_v16_phone",
+  "completed": [
+    "Explicit journal with exact original prediction/SHA/note/review/plot; persistence and no duplicate",
+    "Manual plot names and case-insensitive note/plot/model search with review filters",
+    "Local JSON export: native contentURI + actual SAF Downloads readback3042bytes; only own TEST data removed",
+    "All8models compared sequentially; selectedS04/fixedN12 and7otherexamples retained",
+    "Free Vosk note → release microphone → review grammar → confirm: two actualAndroidPCM voices/real microphone sessions, no acoustic field claim",
+    "Installed offlineRussianTTS ru-RU-language actualonDone at volume0; mic pause and background stop",
+    "10native tests;118of118fixed synthetic commands;0actions on24othercases;142WAV identicalSHA to0.13",
+    "24visualresults/12AndroidDesktopcomparisons and10fresh bitmap series passed",
+    "Visual card/note/journal/actualsystem file picker inspected; snapshots/JSON evidence retained",
+    "APK16 preserves all field tools and eight examples; real M03 ninth mode/voice9,10native/120of120commands/27visualresults/13graphparities/10freshbitmapseries passed",
+    "Actual installedAPK16 bytes verified; M nine-mode main UI inspected, S/Tomato restored and microphone off"
+  ],
+  "pending": [
+    "Human field speech/noise and real disease-photo validation; not blocking technical prototype",
+    "RemainingM study/final packaging must preserve these functions and all8examples; freshversion>16,10Labnative/IncludeLab+IncludeM/finalphonegate",
+    "UX polish later: success message currently shares the error-coloured message slot"
+  ],
+  "questions_sent": 3,
+  "answers_received": true,
+  "assumptions": "All three explicit human answers applied: own discretion, offline Vosk, speech/review approved.",
+  "source_note": "0.12 hide-box ASR failures and0.14 transition failure retained;0.15 verified without changing142WAV. APK16 adds realM9, retains all142previousWAV and passes144sample technical profile.",
+  "resume_not_before_local": null,
+  "remaining_percent": 13,
+  "weekly_remaining_percent": 9,
+  "user_answers": {
+    "priority": "Agent discretion",
+    "dictation": "Offline Vosk approved",
+    "speech_and_review": "Approved"
+  },
+  "last_budget_check_utc": "2026-10-05T07:54:46+00:00",
+  "budget_wait_note": "Boris cancelled the15percent reserve and saved overnight wait by direct message; continue authorized work with actual quota.",
+  "budget_resume_utc": "2026-10-04T22:11:16.979259+00:00",
+  "installed_bytes_evidence": "docs\\android\\yolo26m_pilot_v16_phone\\installed_apk_bytes.json",
+  "previous_verified_apk": {
+    "status": "verified",
+    "apk": "artifacts/apk/AgroVoice-model-lab-0.15.apk",
+    "version": "0.15-model-lab",
+    "version_code": 15,
+    "sha256": "bb4c3a75e5d3551644e35c9fbc26b047859b2a228a3686528113f44a81d3380d",
+    "bytes": 264777804,
+    "installed": true,
+    "serial": "b861c4e0",
+    "phone_parity": "passed",
+    "updated_utc": "2026-10-04T22:17:02.2765408+00:00",
+    "verification": "docs/android/accuracy_v1/verification.json"
+  },
+  "model_followup_report": "docs/reports/08_YOLO26M_PILOT_2026-10-05.md",
+  "known_model_cases": [
+    {
+      "photo_sha256": "67323b9a9656bb98a80b797783a2b7a718cfa20df2294f7d59ff3301b7b4a8c1",
+      "case": "User cucumber example: DEIM crop correct, N/S/M wrong or empty",
+      "evidence": "docs/diagnostics/cucumber_misclassification_2026-10-05/REPORT.md",
+      "status": "logged_for_future_data_series",
+      "apk_changed": false
+    }
+  ],
+  "budget_status": "active_user_reserve_cancelled",
+  "budget_check_utc": "2026-10-05T08:00:27+00:00",
+  "document_work_state": "artifacts/documents/2026-10-05/document_work_state.json",
+  "previous_budget_wait_cancelled_by_user": {
+    "resume_not_before_local": "2026-10-06T01:00:00+03:00",
+    "note": "Mandatory Boris reserve reached: remaining15percent; wait until2026-10-06T01:00Europe/Minsk despite an earlier reset. Only a brief necessary training check permitted; current new GPU training0.",
+    "cancelled_utc": "2026-10-05T08:01:37.108375+00:00"
+  },
+  "budget_stop_remaining_percent": null,
+  "budget_policy_override": {
+    "authorized_by": "Boris direct message2026-10-05: use the full limit",
+    "recorded_utc": "2026-10-05T08:01:37.108375+00:00",
+    "fifteen_percent_reserve_cancelled": true,
+    "saved_wait_until_oct6_cancelled": true,
+    "policy": "Continue authorized work with available quota; no15percent stop or overnight wait",
+    "observed_five_hour_remaining_percent": 13,
+    "observed_weekly_remaining_percent": 9,
+    "check_utc": "2026-10-05T08:00:27+00:00",
+    "training_constraints_unchanged": true
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "status": "passed",
+  "device": "CPU only",
+  "graphs": [
+    {
+      "status": "passed",
+      "kind": "efficientnet_b0",
+      "onnx": "/mnt/f/agrovoice-ai/ml-pipeline/runtime/probes/efficientnet_b0/model.onnx",
+      "sha256": "f3c9c9d7329ac19ce228bf85b0de59f892be76c13e247ad500f92bc366488b19",
+      "bytes": 16083002,
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "input": "RGB float32 /255, proportional square padding 114; ImageNet normalization embedded",
+      "output": "30 class logits; softmax externally",
+      "seed": 20261003,
+      "dataset_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+      "comparisons": [
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b000.jpg",
+          "max_absolute_error": 0.0
+        },
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b001.jpg",
+          "max_absolute_error": 0.0
+        },
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b002.jpg",
+          "max_absolute_error": 0.0
+        }
+      ],
+      "dependency": null,
+      "scope": "GT leaf crop classifier or lab leaf mask; full detector pipeline and Android validation pending",
+      "note": "Random-head architecture compatibility only; zero training epochs, never package into APK"
+    },
+    {
+      "status": "passed",
+      "kind": "leaf_mask",
+      "onnx": "/mnt/f/agrovoice-ai/ml-pipeline/runtime/probes/leaf_mask/model.onnx",
+      "sha256": "38557a7c3008c4b3dfbeeb84baa9bc2b8a728025d7b02f26582f6b7cb0592d76",
+      "bytes": 478019,
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "input": "RGB float32 /255, proportional square padding 114; ImageNet normalization embedded",
+      "output": "binary leaf mask logits",
+      "seed": 20261003,
+      "dataset_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+      "comparisons": [
+        {
+          "file": "crops/val_aux/pv_0097c837cbbbace9de29_b000.jpg",
+          "max_absolute_error": 5.960464477539063e-08
+        },
+        {
+          "file": "crops/val_aux/pv_02dc5aa16d04af24c6ea_b000.jpg",
+          "max_absolute_error": 5.960464477539063e-08
+        },
+        {
+          "file": "crops/val_aux/pv_03b3b8fa66ca8557ff1d_b000.jpg",
+          "max_absolute_error": 5.960464477539063e-08
+        }
+      ],
+      "dependency": null,
+      "scope": "GT leaf crop classifier or lab leaf mask; full detector pipeline and Android validation pending",
+      "note": "Random-head architecture compatibility only; zero training epochs, never package into APK"
+    },
+    {
+      "status": "passed",
+      "kind": "teacher_efficientnet_v2_s",
+      "onnx": "/mnt/f/agrovoice-ai/ml-pipeline/runtime/probes/teacher_efficientnet_v2_s/model.onnx",
+      "sha256": "ee4c1aa9fced08cefd7722f3c158f9100d7993d5b90a921163840ce8e8a57822",
+      "bytes": 80310830,
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "input": "RGB float32 /255, proportional square padding 114; ImageNet normalization embedded",
+      "output": "30 class logits; softmax externally",
+      "seed": 20261003,
+      "dataset_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+      "comparisons": [
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b000.jpg",
+          "max_absolute_error": 1.862645149230957e-09
+        },
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b001.jpg",
+          "max_absolute_error": 1.862645149230957e-09
+        },
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b002.jpg",
+          "max_absolute_error": 1.862645149230957e-09
+        }
+      ],
+      "dependency": null,
+      "scope": "GT leaf crop classifier or lab leaf mask; full detector pipeline and Android validation pending",
+      "note": "Random-head architecture compatibility only; zero training epochs, never package into APK"
+    },
+    {
+      "status": "passed",
+      "kind": "masked_mobilenet_v3_large",
+      "onnx": "/mnt/f/agrovoice-ai/ml-pipeline/runtime/probes/masked_mobilenet_v3_large/model.onnx",
+      "sha256": "bf4c28d4b80e7862a06088bc7c834836bb686c2b41c02ed0d4b73f7047710379",
+      "bytes": 17389447,
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "input": "RGB float32 /255, proportional square padding 114; ImageNet normalization embedded",
+      "output": "30 class logits; softmax externally",
+      "seed": 20261003,
+      "dataset_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+      "comparisons": [
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b000.jpg",
+          "max_absolute_error": 0.0
+        },
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b001.jpg",
+          "max_absolute_error": 1.1641532182693481e-10
+        },
+        {
+          "file": "crops/val/pd_00e805902ce2d2f74ea5_b002.jpg",
+          "max_absolute_error": 1.1641532182693481e-10
+        }
+      ],
+      "dependency": null,
+      "scope": "GT leaf crop classifier or lab leaf mask; full detector pipeline and Android validation pending",
+      "note": "Random-head architecture compatibility only; zero training epochs, never package into APK"
+    }
+  ]
+}

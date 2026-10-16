@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "held_ms": 13500,
+  "manual_buttons_enabled": true,
+  "background_stops_microphone": true,
+  "armed_foreground_resumes": true,
+  "off_does_not_resume": true,
+  "voice_help": true
+}

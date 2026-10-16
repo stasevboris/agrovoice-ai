@@ -1,0 +1,14 @@
+{
+  "created_utc": "2026-10-05T01:07:33.741154+00:00",
+  "source_sha256": {
+    "android-app/app/build.gradle.kts": "ef2861fd1587b39193a5e196acee50cf07850a4c5814b4ea47dc5f522fa3b938",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/voice/VoiceCommands.kt": "cc68018ff59718e11dea5c7b66675cec6eea1e28237aa240d0d5d315b5164642",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/FieldDemoActivity.kt": "4b623ec85c91bd60c26a8f7e6da4be6e2e8ec55fa99386906d409c43b9d44e7b",
+    "android-app/app/src/main/assets/models/manifest.json": "3d50e67704a834a4484a88626d32773308c362cfa05933bf4f48eac7186bf893",
+    "ml-pipeline/package_yolo26m.py": "3577974c354827ceaf7241d6a6c5746671f49d8cd8e4311197d6f0f697c781fb",
+    "ml-pipeline/Test-ModelLabPhone.ps1": "3a44a6dad853dddf1d4359bfde6303015c28e469462bb00bd239743fde66b4bd",
+    "ml-pipeline/mark_yolo26m_phone_gate.py": "ff718b4e3e0ab2cb51a36fa82a297d8d283a1aa8a32857656b2062d5c81382f2",
+    "ml-pipeline/Prepare-VoiceControlsSamples.ps1": "ec667b2acf880ecda09a4a5977aca81aae751d4a004ae10da6b205da688cb9e7",
+    "ml-pipeline/build_yolo26m_report.py": "7c363e7dea65b69ec09534c5c1a6dfd9c36aa7b8742ac385109b137a1118ee50"
+  }
+}

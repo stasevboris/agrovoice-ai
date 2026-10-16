@@ -1,0 +1,9 @@
+
+com.agronomy.phytomonitor.VoiceRecognitionTest:.
+com.agronomy.phytomonitor.VoiceUiTest:.
+
+Time: 11,868
+
+OK (2 tests)
+
+

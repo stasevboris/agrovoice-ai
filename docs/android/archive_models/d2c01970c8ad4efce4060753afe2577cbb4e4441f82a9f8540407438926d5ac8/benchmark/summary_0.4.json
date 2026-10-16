@@ -1,0 +1,92 @@
+{
+  "status": "passed",
+  "series": 10,
+  "iterations_per_mode_per_series": 10,
+  "warmup_per_mode_per_series": 3,
+  "photo_sha256": [
+    "e01d96d3bbef4fa050c64fe0c4802c99363d802408e7e66df19f71ccacc6268c"
+  ],
+  "models": {
+    "yolo11n": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 128.6461666,
+        "sd_of_series_medians_ms": 9.366539497496145
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 160.010302,
+        "sd_of_series_medians_ms": 9.36368957046108
+      },
+      "maximum_rss_bytes_after": 236339200,
+      "maximum_process_hwm_bytes": 328183808,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261003,
+        "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+        null
+      ]
+    },
+    "yolo26n": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 113.08180185,
+        "sd_of_series_medians_ms": 7.710287224428849
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 144.4100495,
+        "sd_of_series_medians_ms": 7.590212323955169
+      },
+      "maximum_rss_bytes_after": 237305856,
+      "maximum_process_hwm_bytes": 328183808,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261012,
+        20261012,
+        "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        null
+      ]
+    },
+    "mobilenet_v3_large": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 197.6810342,
+        "sd_of_series_medians_ms": 14.95762092735781
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 260.74016135,
+        "sd_of_series_medians_ms": 15.571640627778054
+      },
+      "maximum_rss_bytes_after": 266489856,
+      "maximum_process_hwm_bytes": 328183808,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261012,
+        "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e"
+      ]
+    },
+    "yolo26s": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 369.3567577,
+        "sd_of_series_medians_ms": 30.018598501221376
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 401.1948983,
+        "sd_of_series_medians_ms": 30.210494838112524
+      },
+      "maximum_rss_bytes_after": 296726528,
+      "maximum_process_hwm_bytes": 328183808,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261003,
+        "9631b6073310657435eb30d93dcc7314b5e29dcce73498736a71021b132d2c1e",
+        null
+      ]
+    }
+  },
+  "scope": "Warm decoded-bitmap analysis: preparation, detector, crops/classifier, postprocessing; excludes file decode/import, camera, saving and rendering. One potato photo, ten fresh processes, rotated mode order; not ten independent training runs"
+}

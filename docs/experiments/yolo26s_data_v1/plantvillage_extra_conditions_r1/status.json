@@ -1,0 +1,63 @@
+{
+  "status": "completed_extra_source_audit_not_training_ready",
+  "pid": 8356,
+  "gpu": false,
+  "archive_sha256": "08c1367853c3b4afe636755ea84d454f73920e82ffcfd3453bd26b1c5d26a070",
+  "checked": 15611,
+  "training_accepted": 0,
+  "source_revision": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+  "license": "CC-BY-SA-3.0",
+  "helper_sha256": "451dc06312538aafae0da09c936412b1f1899e78de1fc4ae3ce85bda67fb05fe",
+  "integrity_basis": "Already downloaded official pinned GitHub snapshot SHA+ZIP CRC; file Git blobs computed locally, not independently compared with API",
+  "updated_utc": "2026-10-05T06:43:05.433508+00:00",
+  "counts": {
+    "pairs": 15611,
+    "originals": 15611,
+    "flagged": 3662
+  },
+  "flags": {
+    "physical_leaf_group_unknown_or_ambiguous": 3520,
+    "mask_spans_background_or_truncated_leaf": 207,
+    "mask_area_or_background_leakage": 1212,
+    "multiple_components": 47,
+    "mask_rgb_geometry_mismatch": 3
+  },
+  "class_counts": {
+    "Apple___Black_rot": {
+      "originals": 621,
+      "flagged": 621
+    },
+    "Cherry_(including_sour)___Powdery_mildew": {
+      "originals": 1052,
+      "flagged": 17
+    },
+    "Corn_(maize)___healthy": {
+      "originals": 1162,
+      "flagged": 1162
+    },
+    "Grape___Esca_(Black_Measles)": {
+      "originals": 1383,
+      "flagged": 7
+    },
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+      "originals": 1076,
+      "flagged": 32
+    },
+    "Orange___Haunglongbing_(Citrus_greening)": {
+      "originals": 5507,
+      "flagged": 7
+    },
+    "Peach___Bacterial_spot": {
+      "originals": 2297,
+      "flagged": 76
+    },
+    "Strawberry___Leaf_scorch": {
+      "originals": 1109,
+      "flagged": 336
+    },
+    "Tomato___Target_Spot": {
+      "originals": 1404,
+      "flagged": 1404
+    }
+  }
+}

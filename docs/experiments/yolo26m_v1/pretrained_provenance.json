@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26m.pt",
+  "sha256": "401cea9ab23ad19246ff7744859816bc599f350e93c9dd30367b6f0a0745d0b7",
+  "bytes": 44255705,
+  "source": "Official Ultralytics GitHub releasev8.4.0",
+  "verification": "HTTP download, validPT ZIP container, locally pinnedSHA; publisher does not supply independent hash here",
+  "license": "Ultralytics AGPL-3.0, same model family as existing N/S"
+}

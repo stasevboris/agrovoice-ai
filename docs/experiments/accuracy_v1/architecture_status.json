@@ -1,0 +1,55 @@
+{
+  "jobs": {
+    "mobilenet_v3_large_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T10:11:46.779078+00:00"
+    },
+    "yolo26s_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T10:11:46.787294+00:00"
+    },
+    "deimv2_n_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T10:11:46.794691+00:00"
+    },
+    "efficientnet_b0_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T10:38:31.994618+00:00"
+    },
+    "leaf_mask_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T10:41:22.639779+00:00"
+    },
+    "teacher_efficientnet_v2_s_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T11:31:54.523241+00:00"
+    },
+    "masked_mobilenet_v3_large_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T11:57:08.688051+00:00"
+    },
+    "distilled_mobilenet_v3_large_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T12:25:13.158380+00:00"
+    },
+    "mobilenet_v3_large_seed20261004": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T12:42:25.511256+00:00"
+    },
+    "yolo26s_seed20261004": {
+      "status": "running",
+      "updated_utc": "2026-10-04T12:42:25.521050+00:00"
+    }
+  },
+  "started_utc": "2026-10-04T06:12:40.670808+00:00",
+  "status": "stopped",
+  "requested": 80,
+  "pid": 286,
+  "current": {
+    "id": "yolo26s_seed20261004",
+    "kind": "yolo26s",
+    "seed": 20261004
+  },
+  "completed": 9,
+  "updated_utc": "2026-10-04T13:12:39.273791+00:00"
+}

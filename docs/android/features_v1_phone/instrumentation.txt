@@ -1,0 +1,145 @@
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.InspectionToolsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+com.agronomy.phytomonitor.InspectionToolsTest:
+INSTRUMENTATION_STATUS: test=comparisonKeepsCurrentPhotoAndSettingsAndReturnsAllRealModes
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.InspectionToolsTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=comparisonKeepsCurrentPhotoAndSettingsAndReturnsAllRealModes
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.InspectionToolsTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=explicitJournalUsesExactPredictionAndUpdatesWithoutDuplicate
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.InspectionToolsTest
+INSTRUMENTATION_STATUS: current=2
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=explicitJournalUsesExactPredictionAndUpdatesWithoutDuplicate
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+com.agronomy.phytomonitor.VoiceControlsTest:
+INSTRUMENTATION_STATUS: test=continuousSwitchLastsBeyondOneShotTimeoutAndStopsInBackground
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=3
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=continuousSwitchLastsBeyondOneShotTimeoutAndStopsInBackground
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=gallerySupportsVoiceButtonsSwipesAndExplicitConfirmation
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=4
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=gallerySupportsVoiceButtonsSwipesAndExplicitConfirmation
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=voiceControlsAllEightModelsCulturesThresholdNavigationAndHelp
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=5
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=voiceControlsAllEightModelsCulturesThresholdNavigationAndHelp
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+INSTRUMENTATION_STATUS: test=twoStageCameraWaitsForConfirmationAndImmediateCameraDoesNot
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceControlsTest
+INSTRUMENTATION_STATUS: current=6
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=twoStageCameraWaitsForConfirmationAndImmediateCameraDoesNot
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceRecognitionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+com.agronomy.phytomonitor.VoiceRecognitionTest:
+INSTRUMENTATION_STATUS: test=recognizesRussianSamplesAndRejectsNegativeCommands
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceRecognitionTest
+INSTRUMENTATION_STATUS: current=7
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stack=java.lang.AssertionError: A supported synthetic command failed expected:<118> but was:<116>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:54)
+
+INSTRUMENTATION_STATUS: stream=
+Error in recognizesRussianSamplesAndRejectsNegativeCommands(com.agronomy.phytomonitor.VoiceRecognitionTest):
+java.lang.AssertionError: A supported synthetic command failed expected:<118> but was:<116>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:54)
+
+INSTRUMENTATION_STATUS: test=recognizesRussianSamplesAndRejectsNegativeCommands
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=
+com.agronomy.phytomonitor.VoiceUiTest:
+INSTRUMENTATION_STATUS: test=microphoneStartsStopsAndCommandHelpIsAvailable
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceUiTest
+INSTRUMENTATION_STATUS: current=8
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=8
+INSTRUMENTATION_STATUS: stream=.
+INSTRUMENTATION_STATUS: test=microphoneStartsStopsAndCommandHelpIsAvailable
+INSTRUMENTATION_STATUS_CODE: 0
+INSTRUMENTATION_RESULT: stream=
+
+Time: 93,855
+There was 1 failure:
+1) recognizesRussianSamplesAndRejectsNegativeCommands(com.agronomy.phytomonitor.VoiceRecognitionTest)
+java.lang.AssertionError: A supported synthetic command failed expected:<118> but was:<116>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:54)
+
+FAILURES!!!
+Tests run: 8,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

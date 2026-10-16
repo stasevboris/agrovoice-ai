@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-10-04T17:38:26.521509+00:00",
+  "python": "M wrappers/validation/package/queue/gate/report/state compiled with py_compile",
+  "powershell": "Start-Yolo26mPilot.ps1,Start-Yolo26mStudy.ps1,Test-ModelLabPhone.ps1,Prepare-VoiceControlsSamples.ps1 parsed without errors",
+  "android": "Gradle :app:testDebugUnitTest + :app:assembleDebugAndroidTest BUILD SUCCESSFUL; main APK source unchanged, new test artifact not installed",
+  "negative_guards": "guard_checks.json:8 expected refusals, protectedSHA/state/S-worker retained",
+  "training_gpu_started_for_M": false,
+  "mobile_M_tests": "not run; awaits real trained pilot"
+}

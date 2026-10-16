@@ -1,0 +1,90 @@
+{
+  "status": "passed",
+  "device": "CPU only",
+  "transfer": {
+    "accepted": 626,
+    "source_tensors": 637,
+    "skipped": [
+      "decoder.anchors",
+      "decoder.dec_score_head.0.bias",
+      "decoder.dec_score_head.0.weight",
+      "decoder.dec_score_head.1.bias",
+      "decoder.dec_score_head.1.weight",
+      "decoder.dec_score_head.2.bias",
+      "decoder.dec_score_head.2.weight",
+      "decoder.denoising_class_embed.weight",
+      "decoder.enc_score_head.bias",
+      "decoder.enc_score_head.weight",
+      "decoder.valid_mask"
+    ],
+    "missing": [
+      "decoder.up",
+      "decoder.reg_scale",
+      "decoder.anchors",
+      "decoder.valid_mask",
+      "decoder.denoising_class_embed.weight",
+      "decoder.enc_score_head.weight",
+      "decoder.enc_score_head.bias",
+      "decoder.dec_score_head.0.weight",
+      "decoder.dec_score_head.0.bias",
+      "decoder.dec_score_head.1.weight",
+      "decoder.dec_score_head.1.bias",
+      "decoder.dec_score_head.2.weight",
+      "decoder.dec_score_head.2.bias"
+    ],
+    "weights_sha256": "0de14388a703d86c95200589b32a4497b0b00dceb1d2d381c6a14fbd958856cb"
+  },
+  "training_probe_loss": 61.721920013427734,
+  "parameters_with_finite_gradient": 405,
+  "export_probe": {
+    "status": "passed",
+    "kind": "deimv2_n",
+    "sha256": "6b4dd1f9673dd663e7b2834074d1a23525e09b9426f89124cdd6850d2577e90b",
+    "bytes": 14633887,
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      300,
+      6
+    ],
+    "input": "RGB float32 /255, proportional letterbox 114; no ImageNet normalization",
+    "output": "xyxy in padded 416 frame, score, class ID; no NMS",
+    "comparisons": [
+      {
+        "file": "pd_00e805902ce2d2f74ea5.jpg",
+        "matched_max_absolute_error": 0.010040283203125,
+        "rowwise_max_absolute_error": 77.41744995117188
+      },
+      {
+        "file": "pd_01382244d92c90251bd5.jpg",
+        "matched_max_absolute_error": 0.000762939453125,
+        "rowwise_max_absolute_error": 97.18510437011719
+      },
+      {
+        "file": "pd_01777008e72402bc2e95.jpg",
+        "matched_max_absolute_error": 0.0007171630859375,
+        "rowwise_max_absolute_error": 162.73501586914062
+      }
+    ],
+    "scope": "Desktop graph parity; Android and shared end-to-end assessment pending"
+  },
+  "note": "Untrained 30-class head, this graph is never packaged into APK",
+  "parameters": 3552227,
+  "outputs": {
+    "pred_logits": [
+      1,
+      300,
+      30
+    ],
+    "pred_boxes": [
+      1,
+      300,
+      4
+    ]
+  }
+}

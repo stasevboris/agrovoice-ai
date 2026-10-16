@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "report_binding": true,
+  "no_duplicate": true,
+  "persisted_review": true,
+  "plot_and_search": true,
+  "content_uri_export": true,
+  "own_test_entries_removed": true
+}

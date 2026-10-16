@@ -1,0 +1,655 @@
+{
+  "dataset": "dataset_clean_v1",
+  "seed": 20261003,
+  "val_fraction": 0.15,
+  "fingerprint": "c531bd8272140f3f955ce467b565ea944e9e34fda91cb3878bfd9721092822f5",
+  "source_archive": "plantdoc_yolo.zip",
+  "source_url": "https://github.com/pratikkayal/PlantDoc-Object-Detection-Dataset",
+  "annotation_target": "whole_leaf_with_crop_and_condition",
+  "license": "CC-BY-4.0",
+  "split_policy": "Original TEST held out; TRAIN deduplicated and split into train/val; test content takes precedence",
+  "splits": {
+    "train": {
+      "images": 1977,
+      "boxes": 7128,
+      "absent_classes": []
+    },
+    "val": {
+      "images": 349,
+      "boxes": 1309,
+      "absent_classes": []
+    },
+    "test": {
+      "images": 236,
+      "boxes": 452,
+      "absent_classes": [
+        "Potato leaf",
+        "Tomato two spotted spider mites leaf"
+      ]
+    }
+  },
+  "case_collision_groups": [
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/Blueberry-Leaf.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/blueberry-leaf.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/Blueberry-leaves.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/blueberry-leaves.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/CAR1.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/car1.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/Gray-leaf-spot.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/gray-leaf-spot.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/LateBlightLeaf.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/lateblightleaf.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/Northern-Corn-Leaf-Blight.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/northern-corn-leaf-blight.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/Peach-Leaf.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/peach-leaf.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/early-blight-or-target-spot-alternaria-solani-lesions-on-a-tomato-BY9J8R.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/early-blight-or-target-spot-alternaria-solani-lesions-on-a-tomato-by9j8r.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/potato-blight-phytophora-infestans-close-up-of-infected-leaf-showing-A60HXN.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/potato-blight-phytophora-infestans-close-up-of-infected-leaf-showing-a60hxn.jpg"
+    ],
+    [
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/potato-blight-phytophora-infestans-close-up-of-infected-leaf-top-surface-A60HXG.jpg",
+      "PlantDoc-Object-Detection-Dataset-master/TRAIN/potato-blight-phytophora-infestans-close-up-of-infected-leaf-top-surface-a60hxg.jpg"
+    ]
+  ],
+  "resolved_filenames": [
+    {
+      "csv_filename": "powdery-mildew-on-squash-leaves.jpg",
+      "archive_member": "PlantDoc-Object-Detection-Dataset-master/TRAIN/powdery-mildew-on-squash-leaves.jpg?w=300&h=200",
+      "method": "strip_url_query"
+    }
+  ],
+  "duplicate_groups": [
+    {
+      "pixel_hash": "0395f8206a71a10c3e5bc0161cc94a0bd21aaab0b0adfe340ac08e1ade32e4bb",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/irish-blight-symptoms-on-potato-leaves-atmf8b.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/irish-blight-symptoms-on-potato-leaves-atmf8b.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "056d2a683d66a0091aed91cdd2e7a907e4028bb87c5bf143b4dd340c973ffbf2",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/blueberry-leaves-normal-above-and-iron-deficient-below-bgahf8.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/blueberry-leaves-normal-above-and-iron-deficient-below-bgahf8.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "2bee45bf4a0aaeb0628b482f63674c2c3aef8891ab83e9d997ea4536ea5dab33",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/early-blight-closeup-NCSU.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/early-blight-closeup-sm.jpg"
+      ],
+      "kept_partition": "train_pool",
+      "policy": "merge_unique_annotations"
+    },
+    {
+      "pixel_hash": "42172c0701d01f13607828f9abd860e551d8777966c0523e1655b2037022a306",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato_V8.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/tomato_V8.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "61489f3bbdca33335941cf18f70ac2449398790ef0bba8b190bdbb282fa716f1",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/5816740026_d42ef24413_Phytophthora-Infestans.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/5816740026_d42ef24413_Phytophthora-Infestans.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "740d24a5cff123b3f928ee4cadc61c9066e32dd0cb1f41db9e17ec3219f33c42",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/earlyblightpotato.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/earlyblightpotato.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "80bd69415e42263deec61649238925c7056500e6000a4116e33b6085befe1d09",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/18028_1.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/24064_1.jpg"
+      ],
+      "kept_partition": "train_pool",
+      "policy": "merge_unique_annotations"
+    },
+    {
+      "pixel_hash": "95ca980a4b5ed581a67a38da9ef4925d789de72723d2e6cc30a2ee82905f9767",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_42231.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/IMG_42231.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "98631fa5ac543669c5d37fcd3b4611ef2b6c4190f22ea643a6310feb7443515d",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/20150619d.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_5360.jpg"
+      ],
+      "kept_partition": "train_pool",
+      "policy": "merge_unique_annotations"
+    },
+    {
+      "pixel_hash": "98e706e4d4ae945947f956ad1b00c3072aaa7607129db23f996e37318f1d01c4",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/backus-056-potato-blight.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/backus-056-potato-blight.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "b744f0b2ab6bf51bdd87735e5ccec4adb7e27015cb9c43c261b3a62dee5cfa9a",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/1421_0.jpeg?itok=FMtmgePj.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/1421_0.jpeg?itok=FMtmgePj.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "c722344b7d0e6a2f17ba0adfbc4d2b14b4107dac1e1e1abbef9f3939bf7ec273",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/gray-leaf-spot.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/xgray-leaf-spot.jpg.pagespeed.ic.ltF8KfKtQ1.jpg"
+      ],
+      "kept_partition": "train_pool",
+      "policy": "merge_unique_annotations"
+    },
+    {
+      "pixel_hash": "da22454d6433118b4c98a5a8e5635604e981fe59a1876347f43d739e443b77c4",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/corn-gray-leaf-spot-f4.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/corn-gray-leaf-spot-f4.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "ea49e8e36188874da9036fc8760e3d96ebbdd62a981192df89ac8ac5e1989b44",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/early-blight-septoria-ls-fig-3.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/early-blight-septoria-ls-fig-3.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "ee5feb93630e84778bf22c136a56340ee51da6dc5e76b4171dfe037644966c84",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/2015070295153021.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/2015070295153021.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "f54dc8a3ee76a65073e9d3f573f229a37591e80aee3a218c71d75ceac2c85112",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/tylcv-seminar-1-638.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TEST/tylcv-seminar-1-638.jpg"
+      ],
+      "kept_partition": "test",
+      "policy": "test_annotations_only"
+    },
+    {
+      "pixel_hash": "fcba0db5f64b5798a55bf451b416dc34ecb5c0d3d732d73af322d6237629e8d3",
+      "members": [
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato-yellow-leaf-curl-disease.jpg",
+        "PlantDoc-Object-Detection-Dataset-master/TRAIN/tylc.jpg"
+      ],
+      "kept_partition": "train_pool",
+      "policy": "merge_unique_annotations"
+    }
+  ],
+  "issues": [
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/2f73110f80014a25a53f9551c94bf164.png.jpg",
+      "kind": "missing_csv_size",
+      "action": "use_raw_size"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/Early-blight.jpg",
+      "kind": "ambiguous_dimensions",
+      "action": "exclude_box",
+      "csv_size": [
+        640.0,
+        480.0
+      ],
+      "actual_size": [
+        598,
+        332
+      ],
+      "orientation": 1
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/Early-blight.jpg",
+      "kind": "ambiguous_dimensions",
+      "action": "exclude_box",
+      "csv_size": [
+        640.0,
+        480.0
+      ],
+      "actual_size": [
+        598,
+        332
+      ],
+      "orientation": 1
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/Fig%202b.%20GLS%20backlit%20copy.jpg",
+      "kind": "resized_source",
+      "action": "scale_coordinates",
+      "csv_size": [
+        3264.0,
+        2448.0
+      ],
+      "actual_size": [
+        852,
+        639
+      ]
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/Figure%201.jpg",
+      "kind": "resized_source",
+      "action": "scale_coordinates",
+      "csv_size": [
+        400.0,
+        227.0
+      ],
+      "actual_size": [
+        1080,
+        614
+      ]
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_1526.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_2348.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_2348.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_2348.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_2348.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/IMG_2348.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "TRAIN/NCLB.jpg",
+      "kind": "unresolved_image",
+      "action": "exclude_image",
+      "boxes": 2,
+      "candidates": []
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/SouthernRustLeaf.png.jpg",
+      "kind": "missing_csv_size",
+      "action": "use_raw_size"
+    },
+    {
+      "source": "TRAIN/early-blight-1.jpg",
+      "kind": "unresolved_image",
+      "action": "exclude_image",
+      "boxes": 6,
+      "candidates": []
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/markjones-corn-001.jpg",
+      "kind": "resized_source",
+      "action": "scale_coordinates",
+      "csv_size": [
+        3264.0,
+        2448.0
+      ],
+      "actual_size": [
+        500,
+        375
+      ]
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/powdery-mildew-on-squash-leaves.jpg?w=300&h=200",
+      "kind": "resized_source",
+      "action": "scale_coordinates",
+      "csv_size": [
+        680.0,
+        454.0
+      ],
+      "actual_size": [
+        300,
+        201
+      ]
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/powdery-mildew-on-squash-leaves.jpg?w=300&h=200",
+      "kind": "resized_source",
+      "action": "scale_coordinates",
+      "csv_size": [
+        680.0,
+        454.0
+      ],
+      "actual_size": [
+        300,
+        201
+      ]
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/powdery-mildew-on-squash-leaves.jpg?w=300&h=200",
+      "kind": "resized_source",
+      "action": "scale_coordinates",
+      "csv_size": [
+        680.0,
+        454.0
+      ],
+      "actual_size": [
+        300,
+        201
+      ]
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/ppth-friskop-1-corn-rust.png.jpg",
+      "kind": "missing_csv_size",
+      "action": "use_raw_size"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/southernrust1.png.jpg",
+      "kind": "missing_csv_size",
+      "action": "use_raw_size"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato-septoria-3.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato-septoria-3.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato-septoria-3.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato-septoria-5.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato_plants_1_original.JPG?1407178095.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    },
+    {
+      "source": "PlantDoc-Object-Detection-Dataset-master/TRAIN/tomato_plants_1_original.JPG?1407178095.jpg",
+      "kind": "upright_csv_coordinates",
+      "action": "keep_upright"
+    }
+  ],
+  "issue_counts": {
+    "missing_csv_size": 4,
+    "ambiguous_dimensions": 2,
+    "resized_source": 6,
+    "upright_csv_coordinates": 12,
+    "unresolved_image": 2
+  },
+  "classes": [
+    {
+      "id": 0,
+      "name": "Apple Scab Leaf",
+      "train": 129,
+      "val": 29,
+      "test": 13
+    },
+    {
+      "id": 1,
+      "name": "Apple leaf",
+      "train": 192,
+      "val": 45,
+      "test": 10
+    },
+    {
+      "id": 2,
+      "name": "Apple rust leaf",
+      "train": 123,
+      "val": 45,
+      "test": 11
+    },
+    {
+      "id": 3,
+      "name": "Bell_pepper leaf",
+      "train": 268,
+      "val": 44,
+      "test": 11
+    },
+    {
+      "id": 4,
+      "name": "Bell_pepper leaf spot",
+      "train": 213,
+      "val": 36,
+      "test": 15
+    },
+    {
+      "id": 5,
+      "name": "Blueberry leaf",
+      "train": 671,
+      "val": 155,
+      "test": 22
+    },
+    {
+      "id": 6,
+      "name": "Cherry leaf",
+      "train": 192,
+      "val": 29,
+      "test": 19
+    },
+    {
+      "id": 7,
+      "name": "Corn Gray leaf spot",
+      "train": 53,
+      "val": 20,
+      "test": 4
+    },
+    {
+      "id": 8,
+      "name": "Corn leaf blight",
+      "train": 309,
+      "val": 48,
+      "test": 12
+    },
+    {
+      "id": 9,
+      "name": "Corn rust leaf",
+      "train": 98,
+      "val": 19,
+      "test": 10
+    },
+    {
+      "id": 10,
+      "name": "Peach leaf",
+      "train": 484,
+      "val": 126,
+      "test": 10
+    },
+    {
+      "id": 11,
+      "name": "Potato leaf",
+      "train": 4,
+      "val": 7,
+      "test": 0
+    },
+    {
+      "id": 12,
+      "name": "Potato leaf early blight",
+      "train": 250,
+      "val": 54,
+      "test": 17
+    },
+    {
+      "id": 13,
+      "name": "Potato leaf late blight",
+      "train": 214,
+      "val": 22,
+      "test": 10
+    },
+    {
+      "id": 14,
+      "name": "Raspberry leaf",
+      "train": 462,
+      "val": 77,
+      "test": 17
+    },
+    {
+      "id": 15,
+      "name": "Soyabean leaf",
+      "train": 216,
+      "val": 30,
+      "test": 20
+    },
+    {
+      "id": 16,
+      "name": "Squash Powdery mildew leaf",
+      "train": 203,
+      "val": 48,
+      "test": 6
+    },
+    {
+      "id": 17,
+      "name": "Strawberry leaf",
+      "train": 397,
+      "val": 65,
+      "test": 30
+    },
+    {
+      "id": 18,
+      "name": "Tomato Early blight leaf",
+      "train": 166,
+      "val": 28,
+      "test": 19
+    },
+    {
+      "id": 19,
+      "name": "Tomato Septoria leaf spot",
+      "train": 332,
+      "val": 76,
+      "test": 24
+    },
+    {
+      "id": 20,
+      "name": "Tomato leaf",
+      "train": 322,
+      "val": 47,
+      "test": 27
+    },
+    {
+      "id": 21,
+      "name": "Tomato leaf bacterial spot",
+      "train": 240,
+      "val": 26,
+      "test": 14
+    },
+    {
+      "id": 22,
+      "name": "Tomato leaf late blight",
+      "train": 179,
+      "val": 28,
+      "test": 14
+    },
+    {
+      "id": 23,
+      "name": "Tomato leaf mosaic virus",
+      "train": 212,
+      "val": 13,
+      "test": 36
+    },
+    {
+      "id": 24,
+      "name": "Tomato leaf yellow virus",
+      "train": 701,
+      "val": 81,
+      "test": 42
+    },
+    {
+      "id": 25,
+      "name": "Tomato mold leaf",
+      "train": 223,
+      "val": 54,
+      "test": 16
+    },
+    {
+      "id": 26,
+      "name": "Tomato two spotted spider mites leaf",
+      "train": 1,
+      "val": 1,
+      "test": 0
+    },
+    {
+      "id": 27,
+      "name": "grape leaf",
+      "train": 175,
+      "val": 30,
+      "test": 15
+    },
+    {
+      "id": 28,
+      "name": "grape leaf black rot",
+      "train": 99,
+      "val": 26,
+      "test": 8
+    }
+  ],
+  "limitations": [
+    "Test does not cover every declared class",
+    "Very scarce classes remain experimental",
+    "Decoded-pixel hashing does not detect every near-duplicate",
+    "Whole-leaf boxes do not measure diseased tissue percentage"
+  ]
+}

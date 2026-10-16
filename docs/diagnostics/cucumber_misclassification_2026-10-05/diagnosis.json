@@ -1,0 +1,1216 @@
+{
+  "case": "User-supplied comparison of cucumber crop recognition, 2026-10-05",
+  "photo": "docs/diagnostics/cucumber_misclassification_2026-10-05/import_9b048b01-39c1-40a8-a9ba-ab6190cd2b55.jpg",
+  "photo_sha256": "67323b9a9656bb98a80b797783a2b7a718cfa20df2294f7d59ff3301b7b4a8c1",
+  "photo_size": [
+    900,
+    600
+  ],
+  "crop_ground_truth": "Cucumber, supplied by user; not expert disease ground truth",
+  "original_web_source": "Not identified; preserve as a private diagnostic example, not an openly licensed training source",
+  "phone_reports": [
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173339210_yolo26s_47448aa9.json",
+      "model": "yolo26s",
+      "threshold": 0.37441977858543396,
+      "crop": "Tomato",
+      "detections": [],
+      "graph_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173345211_yolo26s_255c1c4e.json",
+      "model": "yolo26s",
+      "threshold": 0.37441977858543396,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173349541_yolo26s_ded23aa0.json",
+      "model": "yolo26s",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 21,
+          "class_name": "Tomato leaf bacterial spot",
+          "label_ru": "Томат: бактериальная пятнистость",
+          "confidence": 0.1916370689868927,
+          "xyxy_pixels": [
+            24.21145,
+            46.85933,
+            898.15985,
+            600
+          ]
+        }
+      ],
+      "graph_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173357637_yolo11n_db11445e.json",
+      "model": "yolo11n",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 21,
+          "class_name": "Tomato leaf bacterial spot",
+          "label_ru": "Томат: бактериальная пятнистость",
+          "confidence": 0.32936400175094604,
+          "xyxy_pixels": [
+            23.01563,
+            48.62546,
+            895.95667,
+            597.9278
+          ]
+        }
+      ],
+      "graph_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173357958_yolo26n_d50ce234.json",
+      "model": "yolo26n",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 19,
+          "class_name": "Tomato Septoria leaf spot",
+          "label_ru": "Томат: септориоз",
+          "confidence": 0.34993430972099304,
+          "xyxy_pixels": [
+            23.002823,
+            43.69858,
+            897.86066,
+            600
+          ]
+        },
+        {
+          "class_id": 21,
+          "class_name": "Tomato leaf bacterial spot",
+          "label_ru": "Томат: бактериальная пятнистость",
+          "confidence": 0.24836322665214539,
+          "xyxy_pixels": [
+            21.655743,
+            43.563698,
+            897.43787,
+            599.4068
+          ]
+        }
+      ],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173358441_mobilenet_v3_large_5f9fc1aa.json",
+      "model": "mobilenet_v3_large",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173358958_efficientnet_b0_62e325a6.json",
+      "model": "efficientnet_b0",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173359596_masked_mobilenet_v3_large_c0e79236.json",
+      "model": "masked_mobilenet_v3_large",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173360136_distilled_mobilenet_v3_large_4f0655ed.json",
+      "model": "distilled_mobilenet_v3_large",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173360890_yolo26s_f68d9f04.json",
+      "model": "yolo26s",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 21,
+          "class_name": "Tomato leaf bacterial spot",
+          "label_ru": "Томат: бактериальная пятнистость",
+          "confidence": 0.1916370689868927,
+          "xyxy_pixels": [
+            24.21145,
+            46.85933,
+            898.15985,
+            600
+          ]
+        }
+      ],
+      "graph_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173362150_deimv2_n_ffa1575f.json",
+      "model": "deimv2_n",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.5550567507743835,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 12,
+          "class_name": "Potato leaf early blight",
+          "label_ru": "Картофель: альтернариоз",
+          "confidence": 0.38765886425971985,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 7,
+          "class_name": "Corn Gray leaf spot",
+          "label_ru": "Кукуруза: серая пятнистость",
+          "confidence": 0.22765517234802246,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 28,
+          "class_name": "grape leaf black rot",
+          "label_ru": "Виноград: чёрная гниль",
+          "confidence": 0.2191847860813141,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 18,
+          "class_name": "Tomato Early blight leaf",
+          "label_ru": "Томат: альтернариоз",
+          "confidence": 0.16502231359481812,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        }
+      ],
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173363694_yolo26m_96e1f2a0.json",
+      "model": "yolo26m",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.7818639278411865,
+          "xyxy_pixels": [
+            14.300714,
+            50.699394,
+            898.2487,
+            599.9445
+          ]
+        }
+      ],
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173381103_yolo26m_6c5db955.json",
+      "model": "yolo26m",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.7818639278411865,
+          "xyxy_pixels": [
+            14.300714,
+            50.699394,
+            898.2487,
+            599.9445
+          ]
+        }
+      ],
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173384412_yolo26m_c29c8e77.json",
+      "model": "yolo26m",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.7818639278411865,
+          "xyxy_pixels": [
+            14.300714,
+            50.699394,
+            898.2487,
+            599.9445
+          ]
+        }
+      ],
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173404087_yolo11n_f141b244.json",
+      "model": "yolo11n",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 21,
+          "class_name": "Tomato leaf bacterial spot",
+          "label_ru": "Томат: бактериальная пятнистость",
+          "confidence": 0.32936400175094604,
+          "xyxy_pixels": [
+            23.01563,
+            48.62546,
+            895.95667,
+            597.9278
+          ]
+        }
+      ],
+      "graph_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173407548_yolo26n_c2bf2cd4.json",
+      "model": "yolo26n",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 19,
+          "class_name": "Tomato Septoria leaf spot",
+          "label_ru": "Томат: септориоз",
+          "confidence": 0.34993430972099304,
+          "xyxy_pixels": [
+            23.002823,
+            43.69858,
+            897.86066,
+            600
+          ]
+        },
+        {
+          "class_id": 21,
+          "class_name": "Tomato leaf bacterial spot",
+          "label_ru": "Томат: бактериальная пятнистость",
+          "confidence": 0.24836322665214539,
+          "xyxy_pixels": [
+            21.655743,
+            43.563698,
+            897.43787,
+            599.4068
+          ]
+        }
+      ],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173412085_mobilenet_v3_large_ac626ddf.json",
+      "model": "mobilenet_v3_large",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173414534_efficientnet_b0_d548ba96.json",
+      "model": "efficientnet_b0",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173415987_masked_mobilenet_v3_large_4ced9031.json",
+      "model": "masked_mobilenet_v3_large",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [],
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173420217_deimv2_n_9a84c666.json",
+      "model": "deimv2_n",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.5550567507743835,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 12,
+          "class_name": "Potato leaf early blight",
+          "label_ru": "Картофель: альтернариоз",
+          "confidence": 0.38765886425971985,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 7,
+          "class_name": "Corn Gray leaf spot",
+          "label_ru": "Кукуруза: серая пятнистость",
+          "confidence": 0.22765517234802246,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 28,
+          "class_name": "grape leaf black rot",
+          "label_ru": "Виноград: чёрная гниль",
+          "confidence": 0.2191847860813141,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 18,
+          "class_name": "Tomato Early blight leaf",
+          "label_ru": "Томат: альтернариоз",
+          "confidence": 0.16502231359481812,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        }
+      ],
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173427961_yolo26m_523d454e.json",
+      "model": "yolo26m",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.7818639278411865,
+          "xyxy_pixels": [
+            14.300714,
+            50.699394,
+            898.2487,
+            599.9445
+          ]
+        }
+      ],
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173431017_deimv2_n_944fba0d.json",
+      "model": "deimv2_n",
+      "threshold": 0.16427850723266602,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.5550567507743835,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 12,
+          "class_name": "Potato leaf early blight",
+          "label_ru": "Картофель: альтернариоз",
+          "confidence": 0.38765886425971985,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 7,
+          "class_name": "Corn Gray leaf spot",
+          "label_ru": "Кукуруза: серая пятнистость",
+          "confidence": 0.22765517234802246,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 28,
+          "class_name": "grape leaf black rot",
+          "label_ru": "Виноград: чёрная гниль",
+          "confidence": 0.2191847860813141,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 18,
+          "class_name": "Tomato Early blight leaf",
+          "label_ru": "Томат: альтернариоз",
+          "confidence": 0.16502231359481812,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        }
+      ],
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173450284_deimv2_n_1e43efbe.json",
+      "model": "deimv2_n",
+      "threshold": 0.33027011156082153,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.5550567507743835,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 12,
+          "class_name": "Potato leaf early blight",
+          "label_ru": "Картофель: альтернариоз",
+          "confidence": 0.38765886425971985,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        }
+      ],
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173453423_deimv2_n_970d8b42.json",
+      "model": "deimv2_n",
+      "threshold": 0.35640770196914673,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.5550567507743835,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        },
+        {
+          "class_id": 12,
+          "class_name": "Potato leaf early blight",
+          "label_ru": "Картофель: альтернариоз",
+          "confidence": 0.38765886425971985,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        }
+      ],
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173454391_deimv2_n_39f8623a.json",
+      "model": "deimv2_n",
+      "threshold": 0.3959636688232422,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.5550567507743835,
+          "xyxy_pixels": [
+            26.167175,
+            48.939693,
+            894.10175,
+            597.9476
+          ]
+        }
+      ],
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0"
+    },
+    {
+      "file": "docs/diagnostics/cucumber_misclassification_2026-10-05/phone_results/1791173463602_yolo26m_c52538d8.json",
+      "model": "yolo26m",
+      "threshold": 0.3959636688232422,
+      "crop": "all",
+      "detections": [
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.7818639278411865,
+          "xyxy_pixels": [
+            14.300714,
+            50.699394,
+            898.2487,
+            599.9445
+          ]
+        }
+      ],
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6"
+    }
+  ],
+  "desktop_cpu": [
+    {
+      "model": "yolo11n",
+      "graph_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "top_postprocessed": [
+        {
+          "class_id": 21,
+          "label": "Tomato leaf bacterial spot",
+          "score": 0.3320663869380951,
+          "xyxy": [
+            23.021177291870117,
+            48.609683990478516,
+            895.9562377929688,
+            597.9282836914062
+          ]
+        },
+        {
+          "class_id": 28,
+          "label": "grape leaf black rot",
+          "score": 0.08593708276748657,
+          "xyxy": [
+            21.81888771057129,
+            46.218902587890625,
+            893.6785888671875,
+            600.0
+          ]
+        },
+        {
+          "class_id": 25,
+          "label": "Tomato mold leaf",
+          "score": 0.043743282556533813,
+          "xyxy": [
+            25.051998138427734,
+            44.19428634643555,
+            895.9068603515625,
+            599.8269653320312
+          ]
+        },
+        {
+          "class_id": 1,
+          "label": "Apple leaf",
+          "score": 0.003250300884246826,
+          "xyxy": [
+            9.556124687194824,
+            0.0,
+            900.0,
+            1.3513877391815186
+          ]
+        },
+        {
+          "class_id": 0,
+          "label": "Apple Scab Leaf",
+          "score": 0.0013662278652191162,
+          "xyxy": [
+            851.4441528320312,
+            234.9031524658203,
+            900.0,
+            596.9237670898438
+          ]
+        },
+        {
+          "class_id": 5,
+          "label": "Blueberry leaf",
+          "score": 0.0013103783130645752,
+          "xyxy": [
+            851.4852294921875,
+            349.9644775390625,
+            899.8509521484375,
+            586.6571044921875
+          ]
+        },
+        {
+          "class_id": 12,
+          "label": "Potato leaf early blight",
+          "score": 0.0011134445667266846,
+          "xyxy": [
+            848.7569580078125,
+            289.3948974609375,
+            900.0,
+            598.1002197265625
+          ]
+        }
+      ],
+      "maximum_raw_cucumber_score": 0.005089879035949707,
+      "cucumber_score_scope": "Across all proposals; not a calibrated crop probability",
+      "all_at_0_4": []
+    },
+    {
+      "model": "yolo26n",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "top_postprocessed": [
+        {
+          "class_id": 19,
+          "label": "Tomato Septoria leaf spot",
+          "score": 0.34581097960472107,
+          "xyxy": [
+            23.09505844116211,
+            43.714561462402344,
+            897.8715209960938,
+            600.0
+          ]
+        },
+        {
+          "class_id": 21,
+          "label": "Tomato leaf bacterial spot",
+          "score": 0.24859529733657837,
+          "xyxy": [
+            21.772802352905273,
+            43.58026885986328,
+            897.4698486328125,
+            599.432373046875
+          ]
+        },
+        {
+          "class_id": 12,
+          "label": "Potato leaf early blight",
+          "score": 0.001267552375793457,
+          "xyxy": [
+            829.1688232421875,
+            101.82999420166016,
+            900.0,
+            434.8533935546875
+          ]
+        }
+      ],
+      "maximum_raw_cucumber_score": 0.00418516993522644,
+      "cucumber_score_scope": "Across all proposals; not a calibrated crop probability",
+      "all_at_0_4": []
+    },
+    {
+      "model": "yolo26s",
+      "graph_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "top_postprocessed": [
+        {
+          "class_id": 21,
+          "label": "Tomato leaf bacterial spot",
+          "score": 0.18305090069770813,
+          "xyxy": [
+            24.089109420776367,
+            46.75963592529297,
+            898.3082275390625,
+            600.0
+          ]
+        },
+        {
+          "class_id": 20,
+          "label": "Tomato leaf",
+          "score": 0.004095971584320068,
+          "xyxy": [
+            466.30487060546875,
+            243.1573486328125,
+            543.9195556640625,
+            364.92523193359375
+          ]
+        },
+        {
+          "class_id": 12,
+          "label": "Potato leaf early blight",
+          "score": 0.0018840134143829346,
+          "xyxy": [
+            466.22186279296875,
+            242.62771606445312,
+            541.4583740234375,
+            364.5389709472656
+          ]
+        },
+        {
+          "class_id": 21,
+          "label": "Tomato leaf bacterial spot",
+          "score": 0.0014063715934753418,
+          "xyxy": [
+            400.52423095703125,
+            324.92401123046875,
+            471.7841491699219,
+            417.5435791015625
+          ]
+        }
+      ],
+      "maximum_raw_cucumber_score": 0.0039059221744537354,
+      "cucumber_score_scope": "Across all proposals; not a calibrated crop probability",
+      "all_at_0_4": []
+    },
+    {
+      "model": "deimv2_n",
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0",
+      "top_postprocessed": [
+        {
+          "class_id": 29,
+          "label": "Cucumber leaf (condition unknown)",
+          "score": 0.5363887548446655,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        },
+        {
+          "class_id": 12,
+          "label": "Potato leaf early blight",
+          "score": 0.38950905203819275,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        },
+        {
+          "class_id": 7,
+          "label": "Corn Gray leaf spot",
+          "score": 0.242156982421875,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        },
+        {
+          "class_id": 28,
+          "label": "grape leaf black rot",
+          "score": 0.23234668374061584,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        },
+        {
+          "class_id": 18,
+          "label": "Tomato Early blight leaf",
+          "score": 0.17213255167007446,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        },
+        {
+          "class_id": 0,
+          "label": "Apple Scab Leaf",
+          "score": 0.1566281020641327,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        },
+        {
+          "class_id": 16,
+          "label": "Squash Powdery mildew leaf",
+          "score": 0.11846590042114258,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        },
+        {
+          "class_id": 19,
+          "label": "Tomato Septoria leaf spot",
+          "score": 0.06654658913612366,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        }
+      ],
+      "maximum_raw_cucumber_score": 0.5363887548446655,
+      "cucumber_score_scope": "Across all proposals; not a calibrated crop probability",
+      "all_at_0_4": [
+        {
+          "class_id": 29,
+          "label": "Cucumber leaf (condition unknown)",
+          "score": 0.5363887548446655,
+          "xyxy": [
+            25.842010498046875,
+            48.85468673706055,
+            894.1708984375,
+            597.9027099609375
+          ]
+        }
+      ]
+    },
+    {
+      "model": "yolo26m",
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+      "top_postprocessed": [
+        {
+          "class_id": 25,
+          "label": "Tomato mold leaf",
+          "score": 0.7824817299842834,
+          "xyxy": [
+            14.416650772094727,
+            50.644264221191406,
+            898.2501220703125,
+            599.9965209960938
+          ]
+        },
+        {
+          "class_id": 22,
+          "label": "Tomato leaf late blight",
+          "score": 0.0059722959995269775,
+          "xyxy": [
+            7.176898002624512,
+            0.0,
+            883.85888671875,
+            8.28634262084961
+          ]
+        },
+        {
+          "class_id": 20,
+          "label": "Tomato leaf",
+          "score": 0.0024644136428833008,
+          "xyxy": [
+            17.188322067260742,
+            0.0,
+            897.4221801757812,
+            7.231235504150391
+          ]
+        }
+      ],
+      "maximum_raw_cucumber_score": 0.004845917224884033,
+      "cucumber_score_scope": "Across all proposals; not a calibrated crop probability",
+      "all_at_0_4": [
+        {
+          "class_id": 25,
+          "label": "Tomato mold leaf",
+          "score": 0.7824817299842834,
+          "xyxy": [
+            14.416650772094727,
+            50.644264221191406,
+            898.2501220703125,
+            599.9965209960938
+          ]
+        }
+      ]
+    }
+  ],
+  "desktop_scope": "CV2/PIL letterbox can differ from Android bitmap interpolation; phone reports are authoritative for screenshots. No claim of new pixel-exact Android/Desktop parity.",
+  "data_cucumber_class": {
+    "id": 29,
+    "name": "Cucumber leaf (condition unknown)",
+    "train": 42,
+    "val": 0,
+    "test": 0,
+    "val_aux": 11
+  },
+  "cucumber_source": {
+    "name": "Cucumber",
+    "url": "https://zenodo.org/records/16816441",
+    "license": "CC-BY-4.0",
+    "archive_md5": "0c0797650bfcdf66fdf528f5a605909e",
+    "annotation": "53 visually accepted candidates before duplicate gates; source disease labels discarded"
+  },
+  "cucumber_training_source_names": [
+    "images/040ef8b5-Fresh_Leaf_54.jpg",
+    "images/05d64ae8-Fresh_Leaf_67.jpg",
+    "images/0958dd27-Fresh_Leaf_140.jpg",
+    "images/17e731f5-Fresh_Leaf_28.jpg",
+    "images/182b7277-Fresh_Leaf_112.jpg",
+    "images/34fa8cf7-Fresh_Leaf_73.jpg",
+    "images/36bdb8ef-Fresh_Leaf_74.jpg",
+    "images/3c2e238c-Fresh_Leaf_155.jpg",
+    "images/46630186-Fresh_Leaf_9.jpg",
+    "images/4d12200a-Fresh_Leaf_1.jpg",
+    "images/4e62d7eb-Fresh_Leaf_80.jpg",
+    "images/55301f00-Fresh_Leaf_40.jpg",
+    "images/56edf9bf-Fresh_Leaf_69.jpg",
+    "images/69310907-Fresh_Leaf_153.jpg",
+    "images/6b6c1ced-Fresh_Leaf_149.jpg",
+    "images/6cba9479-Fresh_Leaf_44.jpg",
+    "images/7cda6927-Fresh_Leaf_35.jpg",
+    "images/7e07b648-Fresh_Leaf_109.jpg",
+    "images/80f63558-Fresh_Leaf_107.jpg",
+    "images/851e6633-Fresh_Leaf_95.jpg",
+    "images/8730ae58-Fresh_Leaf_37.jpg",
+    "images/87444d1e-Fresh_Leaf_129.jpg",
+    "images/990d9cea-Fresh_Leaf_65.jpg",
+    "images/9c0b70d4-Fresh_Leaf_110.jpg",
+    "images/aec1bdb2-Fresh_Leaf_13.jpg",
+    "images/af1db50d-Fresh_Leaf_43.jpg",
+    "images/c994b516-Fresh_Leaf_127.jpg",
+    "images/caabf327-Fresh_Leaf_151.jpg",
+    "images/cafe98fa-Fresh_Leaf_17.jpg",
+    "images/cd8f3478-Fresh_Leaf_102.jpg",
+    "images/cfcdee6d-Fresh_Leaf_68.jpg",
+    "images/cff0403b-Fresh_Leaf_36.jpg",
+    "images/d4dc8fbb-Fresh_Leaf_47.jpg",
+    "images/d9ff7d5e-Fresh_Leaf_97.jpg",
+    "images/ddbdd878-Fresh_Leaf_15.jpg",
+    "images/ded6a192-Fresh_Leaf_108.jpg",
+    "images/e8774727-Fresh_Leaf_16.jpg",
+    "images/e96c826a-Fresh_Leaf_150.jpg",
+    "images/ef1f1c15-Fresh_Leaf_21.jpg",
+    "images/f5a4c234-Fresh_Leaf_142.jpg",
+    "images/f7a1bc29-Fresh_Leaf_93.jpg",
+    "images/f93d2b0c-Fresh_Leaf_70.jpg"
+  ],
+  "duplicate_screen": {
+    "matches_under_existing_gate": [],
+    "nearest_candidates": [
+      {
+        "filename": "pd_aa2ff0cae51bca5d4f06.jpg",
+        "split": "val",
+        "source_dataset": "PlantDoc",
+        "sources": [
+          "PlantDoc-Object-Detection-Dataset-master/TRAIN/DSC05432.JPG.jpg"
+        ],
+        "boxes": [
+          [
+            16,
+            0.5034375,
+            0.5033333333333333,
+            0.993125,
+            0.9516666666666667
+          ]
+        ],
+        "phash_distance": 22,
+        "dhash_distance": 21,
+        "exact_bytes": false,
+        "exact_pixels": false
+      },
+      {
+        "filename": "pd_4aea43495645a003e35d.jpg",
+        "split": "train",
+        "source_dataset": "PlantDoc",
+        "sources": [
+          "PlantDoc-Object-Detection-Dataset-master/TRAIN/x3-most-common-types-tomato-blight.jpg.pagespeed.ic.5cLJi6TXEi.jpg"
+        ],
+        "boxes": [
+          [
+            19,
+            0.5122887864823349,
+            0.5024232633279483,
+            0.9508448540706606,
+            0.9466882067851373
+          ]
+        ],
+        "phash_distance": 26,
+        "dhash_distance": 18,
+        "exact_bytes": false,
+        "exact_pixels": false
+      },
+      {
+        "filename": "pd_a12f434cf2248f37d7a0.jpg",
+        "split": "train",
+        "source_dataset": "PlantDoc",
+        "sources": [
+          "PlantDoc-Object-Detection-Dataset-master/TRAIN/Tomato%2Bleaf.jpg"
+        ],
+        "boxes": [
+          [
+            20,
+            0.20199501246882792,
+            0.6990521327014217,
+            0.3740648379052369,
+            0.5687203791469194
+          ],
+          [
+            20,
+            0.26683291770573564,
+            0.2559241706161137,
+            0.3790523690773067,
+            0.4218009478672986
+          ],
+          [
+            20,
+            0.47506234413965087,
+            0.3187203791469194,
+            0.18703241895261846,
+            0.471563981042654
+          ],
+          [
+            20,
+            0.516209476309227,
+            0.7097156398104265,
+            0.1745635910224439,
+            0.3341232227488152
+          ],
+          [
+            20,
+            0.8154613466334164,
+            0.44075829383886256,
+            0.32917705735660846,
+            0.3933649289099526
+          ]
+        ],
+        "phash_distance": 24,
+        "dhash_distance": 20,
+        "exact_bytes": false,
+        "exact_pixels": false
+      },
+      {
+        "filename": "pd_f0c74263e6f0173a5b11.jpg",
+        "split": "train",
+        "source_dataset": "PlantDoc",
+        "sources": [
+          "PlantDoc-Object-Detection-Dataset-master/TRAIN/Tomato+mosaic+virus.jpg"
+        ],
+        "boxes": [
+          [
+            23,
+            0.21508379888268156,
+            0.8166666666666667,
+            0.41899441340782123,
+            0.35333333333333333
+          ],
+          [
+            23,
+            0.2541899441340782,
+            0.23666666666666666,
+            0.4748603351955307,
+            0.44666666666666666
+          ],
+          [
+            23,
+            0.5251396648044693,
+            0.25333333333333335,
+            0.39106145251396646,
+            0.4666666666666667
+          ],
+          [
+            23,
+            0.5502793296089385,
+            0.7733333333333333,
+            0.3854748603351955,
+            0.4266666666666667
+          ],
+          [
+            23,
+            0.7905027932960894,
+            0.49666666666666665,
+            0.41899441340782123,
+            0.35333333333333333
+          ]
+        ],
+        "phash_distance": 20,
+        "dhash_distance": 24,
+        "exact_bytes": false,
+        "exact_pixels": false
+      },
+      {
+        "filename": "pd_6f1d3a3ae41fe3f8630c.jpg",
+        "split": "train",
+        "source_dataset": "PlantDoc",
+        "sources": [
+          "PlantDoc-Object-Detection-Dataset-master/TRAIN/Late_blight_on_potato_leaf_3-58bcf5055f9b58af5c27bf74.jpg"
+        ],
+        "boxes": [
+          [
+            13,
+            0.33177083333333335,
+            0.6258503401360545,
+            0.21354166666666666,
+            0.272108843537415
+          ],
+          [
+            13,
+            0.5380208333333333,
+            0.5348639455782312,
+            0.3697916666666667,
+            0.39625850340136054
+          ]
+        ],
+        "phash_distance": 24,
+        "dhash_distance": 21,
+        "exact_bytes": false,
+        "exact_pixels": false
+      }
+    ],
+    "rule": "Exact file/decoded signature, or aspect ratio within3% and pHash+dHash distances each<=4. Screening is not proof of independence from all pretrained data."
+  },
+  "constraints": "No training, GPU inference, frozen data/recipe/selection, APK, phone settings or historical evidence changed.",
+  "interpretation": "Crop recognition case, not diagnosis accuracy or evidence that one architecture is globally best. Lower thresholds expose additional DEIM false classes; higher confidence does not guarantee correctness."
+}

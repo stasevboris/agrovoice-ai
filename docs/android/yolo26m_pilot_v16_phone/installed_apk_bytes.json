@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "apk_sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+  "actual_installed_apk_sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+  "bytes": 332738706,
+  "source": "mark_yolo26m_phone_gate.py actual ADB pull",
+  "validated_utc": "2026-10-05T01:18:56.500230+00:00"
+}

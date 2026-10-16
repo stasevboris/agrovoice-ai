@@ -1,0 +1,37 @@
+{
+  "status": "review_queue_only_not_training_manifest",
+  "updated_utc": "2026-10-06T15:02:02.709425+00:00",
+  "input_sha256": {
+    "group_closure_r1/candidate_split_constraints.jsonl": "69d173b12dc806d3ca41921612c2ad2b216c798a42f641f095646c004e9dba04",
+    "candidate_overlap_full_r3/candidate_disposition.jsonl": "2d897578a84431bf0013723effa1b2875eac13d4b084f0d3b6086ffbdf47e23b",
+    "source_class_mapping.draft.json": "92124450f1b05946235f159b06dcc97fb635104c2df928d903b8c16fa4ad8b3c",
+    "plantvillage_full_geometry_r1/records.jsonl": "de9c454e495ed86e06be6478eb3511c8da3016a139cc46c0db7b3a1cf4b65ff8",
+    "plantvillage_extra_conditions_r1/records.jsonl": "aa904c12cf8a111262b75e9bd97bd163826ffef7ec1b1f19f0b2755efefb8c1a",
+    "olid_review_r2_chroma/inventory.json": "61a7fcfbac0e1d3d4eb6270a99031bbbdf3656b5dd878bc338e9a2d90477db4f",
+    "cucumber_review/inventory.json": "47700e9ce7609f7ac519f4bf76a082b4b73a35c99b2aa478e9ba6c0605445ef9"
+  },
+  "source_counts": {
+    "PlantVillage": 54305,
+    "OLID": 1047,
+    "CucumberZenodo": 640
+  },
+  "records": 55992,
+  "pending_counts": {
+    "source_semantic_confirmation": 55992,
+    "physical_capture_group_review": 55992,
+    "independent_split_policy": 55992,
+    "whole_leaf_annotation_acceptance": 39637,
+    "whole_leaf_geometry_flags_review": 14668,
+    "new_class_contract_and_support": 17298,
+    "join_completed_original_geometry_decisions": 1047,
+    "whole_leaf_reannotation_or_verified_box_acceptance": 640
+  },
+  "accepted_train": 0,
+  "gpu": false,
+  "queue_sha256": "2957a79726469cedfccf9ee195f0a5e39c93b5e8860b0f75ae697cc7a51d7d59",
+  "limitations": [
+    "Draft mappings and geometric proposals remain unaccepted.",
+    "Quarantine and historical split restrictions must survive any later acceptance.",
+    "OLID geometry is already reviewed separately; join its decisions rather than repeat visual work."
+  ]
+}

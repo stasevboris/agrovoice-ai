@@ -1,0 +1,7 @@
+{
+  "created_utc": "2026-10-04T16:12:44.8424328+00:00",
+  "source": "Locally generated Windows System.Speech samples; no human recordings",
+  "pcm": "16000Hz mono 16-bit",
+  "scope": "Technical command check, not field speech accuracy or WER",
+  "count": 58
+}

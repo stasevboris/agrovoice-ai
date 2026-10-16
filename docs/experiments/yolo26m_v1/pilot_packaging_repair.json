@@ -1,0 +1,8 @@
+{
+  "recorded_utc": "2026-10-05T01:14:50.009989+00:00",
+  "first_attempt": "package_yolo26m.py --pilot",
+  "first_attempt_result": "FileNotFoundError: assets/models/model_lab/yolo26m.part parent directory did not exist",
+  "repair": "Create target.parent after all guards, then the existing atomic verified graph copy",
+  "second_attempt": "passed, real M03 graph added ninth; selection recipe and eight retained model objects unchanged",
+  "protected_sources_or_plan_changed": false
+}

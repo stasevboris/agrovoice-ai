@@ -1,0 +1,76 @@
+{
+  "created_epoch_ms": 1791173407546,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/import_9b048b01-39c1-40a8-a9ba-ab6190cd2b55.jpg",
+  "photo_sha256": "67323b9a9656bb98a80b797783a2b7a718cfa20df2294f7d59ff3301b7b4a8c1",
+  "decoded_width": 900,
+  "decoded_height": 600,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo26n",
+  "model_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+  "dataset": "clean v2",
+  "seed": 20261012,
+  "provisional": false,
+  "detector_seed": 20261012,
+  "family": "yolo",
+  "proposed_leaves": 0,
+  "classified_leaves": 0,
+  "skipped_leaves": 0,
+  "score_policy": "detector class score",
+  "model_metadata": {
+    "id": "yolo26n",
+    "name": "YOLO26n",
+    "asset": "models\/yolo26n.onnx",
+    "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+    "bytes": 9719842,
+    "family": "yolo",
+    "side": 416,
+    "seed": 20261012,
+    "detector_seed": 20261012,
+    "dataset": "clean v2",
+    "provisional": false,
+    "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ]
+  },
+  "crop_filter": "all",
+  "confidence_threshold": 0.16427850723266602,
+  "inference_ms": 112.167916,
+  "pipeline_ms": 349.104583,
+  "detections": [
+    {
+      "class_id": 19,
+      "class_name": "Tomato Septoria leaf spot",
+      "label_ru": "Томат: септориоз",
+      "confidence": 0.34993430972099304,
+      "xyxy_pixels": [
+        23.002823,
+        43.69858,
+        897.86066,
+        600
+      ]
+    },
+    {
+      "class_id": 21,
+      "class_name": "Tomato leaf bacterial spot",
+      "label_ru": "Томат: бактериальная пятнистость",
+      "confidence": 0.24836322665214539,
+      "xyxy_pixels": [
+        21.655743,
+        43.563698,
+        897.43787,
+        599.4068
+      ]
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area."
+}

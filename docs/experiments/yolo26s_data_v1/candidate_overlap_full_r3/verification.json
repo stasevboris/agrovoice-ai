@@ -1,0 +1,129 @@
+{
+  "status": "passed",
+  "scope": "Output hashes, inherited links unchanged, actual-record brute-force overlap spot check, source JPEG bytes for all five OLID conflicts",
+  "outputs_verified": 5,
+  "brute_force_extra_records": 32,
+  "comparisons": 1899040,
+  "brute_force_match_count": 0,
+  "all_candidates_unique": true,
+  "all_training_accepted_false": true,
+  "conflict_groups_verified_from_source_archive": 5,
+  "conflict_record_count": 10,
+  "conflicts": [
+    {
+      "decoded_hash": "46edae3b63ae92c222c093def046832adcd28e5142316376bec81e14d349d85b",
+      "records": [
+        {
+          "id": "b448ed34db61bd8ec735",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__K/tomato__K (12).JPG",
+          "source_class": "tomato__K",
+          "sha256": "28511586e038610e38771eac56f22fc3d44e51495e2ae7bab3dd645a3891db89",
+          "bytes": 5352242
+        },
+        {
+          "id": "2536cc7e42f03efce8ec",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__N/tomato__N (16).JPG",
+          "source_class": "tomato__N",
+          "sha256": "28511586e038610e38771eac56f22fc3d44e51495e2ae7bab3dd645a3891db89",
+          "bytes": 5352242
+        }
+      ],
+      "file_bytes_identical": true,
+      "decision": "quarantine_all_members_no_diagnosis_inferred"
+    },
+    {
+      "decoded_hash": "326f618188b14a1ee9a651c575384700f8d5703910e221c4d372b84b4a5147a6",
+      "records": [
+        {
+          "id": "b2569612c7bb75b3e06d",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__K/tomato__K (27).JPG",
+          "source_class": "tomato__K",
+          "sha256": "b35feddb65008fd76748a4bb9e35ca47da9bb51ef9bdb6924a1ca39916d98a3e",
+          "bytes": 4049320
+        },
+        {
+          "id": "4e66d2d08e29c7c87bde",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__N/tomato__N (13).JPG",
+          "source_class": "tomato__N",
+          "sha256": "b35feddb65008fd76748a4bb9e35ca47da9bb51ef9bdb6924a1ca39916d98a3e",
+          "bytes": 4049320
+        }
+      ],
+      "file_bytes_identical": true,
+      "decision": "quarantine_all_members_no_diagnosis_inferred"
+    },
+    {
+      "decoded_hash": "f41d1f2739b8f6205e87b829a4b97ae00b6190231a5b5eba132ebf212e4cdc82",
+      "records": [
+        {
+          "id": "0ef0d5e8e27c209ec43a",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__K/tomato__K (31).JPG",
+          "source_class": "tomato__K",
+          "sha256": "9a5cff1927054f31858963cd77f5f0b2a5a1548fb539035199a22f29982ae62f",
+          "bytes": 5861968
+        },
+        {
+          "id": "820d8c122cb0a1a4ec27",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__N/tomato__N (25).JPG",
+          "source_class": "tomato__N",
+          "sha256": "9a5cff1927054f31858963cd77f5f0b2a5a1548fb539035199a22f29982ae62f",
+          "bytes": 5861968
+        }
+      ],
+      "file_bytes_identical": true,
+      "decision": "quarantine_all_members_no_diagnosis_inferred"
+    },
+    {
+      "decoded_hash": "5965568b17775e9e60e736e48dba60fa66769d557c7959b3b86bc86ab7265463",
+      "records": [
+        {
+          "id": "dc153ecb91e53dcd585f",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__N/tomato__N (21).JPG",
+          "source_class": "tomato__N",
+          "sha256": "6923e80a8a9b0e8a5e44724228765ccae4ccadc82b293528841d0d1dc0238e8b",
+          "bytes": 6083520
+        },
+        {
+          "id": "b9fdc8a2fc5d688370ed",
+          "archive": "tomato__part_2.zip",
+          "member": "tomato__MIT/tomato__MIT (1).JPG",
+          "source_class": "tomato__MIT",
+          "sha256": "6923e80a8a9b0e8a5e44724228765ccae4ccadc82b293528841d0d1dc0238e8b",
+          "bytes": 6083520
+        }
+      ],
+      "file_bytes_identical": true,
+      "decision": "quarantine_all_members_no_diagnosis_inferred"
+    },
+    {
+      "decoded_hash": "829e26884262c81e26c2237203d267bb9d56e8b5050e8a3ee5f2fc602fec2d9a",
+      "records": [
+        {
+          "id": "893b58d3bcacab041dd1",
+          "archive": "tomato__part_1.zip",
+          "member": "tomato__N/tomato__N (26).JPG",
+          "source_class": "tomato__N",
+          "sha256": "5c05ae81e5345f790f6df2bfc305232f1eadd02356f05de836fb29226f13f2fb",
+          "bytes": 5969476
+        },
+        {
+          "id": "1861f583e06e58078ec7",
+          "archive": "tomato__part_2.zip",
+          "member": "tomato__MIT/tomato__MIT (8).JPG",
+          "source_class": "tomato__MIT",
+          "sha256": "5c05ae81e5345f790f6df2bfc305232f1eadd02356f05de836fb29226f13f2fb",
+          "bytes": 5969476
+        }
+      ],
+      "file_bytes_identical": true,
+      "decision": "quarantine_all_members_no_diagnosis_inferred"
+    }
+  ]
+}

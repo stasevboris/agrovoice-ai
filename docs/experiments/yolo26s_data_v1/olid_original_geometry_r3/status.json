@@ -1,0 +1,23 @@
+{
+  "status": "completed_original_audit_pending_geometry_review",
+  "pid": 30692,
+  "gpu": false,
+  "checked": 1047,
+  "planned": 1047,
+  "training_accepted": 0,
+  "parent_sha256": "61a7fcfbac0e1d3d4eb6270a99031bbbdf3656b5dd878bc338e9a2d90477db4f",
+  "visual_review_sha256": "a73d32e75945075404b18467ab66604248fafa435783338758e9d63a2104e9ea",
+  "helper_sha256": "7732077cb47e87269052c3b61ea90f986a1e2898be51235332f57f76a5b70574",
+  "updated_utc": "2026-10-05T06:33:14.257082+00:00",
+  "counts": {
+    "images": 1047,
+    "with_capture_time": 938,
+    "flagged": 42
+  },
+  "flags": {
+    "visible_frame_truncation_review": 27,
+    "changed_box_review": 6,
+    "area_extreme_review": 8,
+    "multiple_components_review": 6
+  }
+}

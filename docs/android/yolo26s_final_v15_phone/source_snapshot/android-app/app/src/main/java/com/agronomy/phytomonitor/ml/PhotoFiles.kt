@@ -1,0 +1,92 @@
+package com.agronomy.phytomonitor.ml
+
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ColorSpace
+import android.graphics.Matrix
+import androidx.exifinterface.media.ExifInterface
+import android.net.Uri
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
+import java.util.UUID
+import kotlin.math.max
+
+object PhotoFiles {
+    fun folder(context: Context) = File(context.getExternalFilesDir(null) ?: context.filesDir,"photos").apply { mkdirs() }
+    fun newCapture(context: Context) = File(folder(context),"camera_${UUID.randomUUID()}.jpg")
+
+    fun import(context: Context, uri: Uri): File {
+        val extension=when(context.contentResolver.getType(uri)) {
+            "image/png"->"png"; "image/webp"->"webp"; "image/heic","image/heif"->"heic"; else->"jpg"
+        }
+        val target=File(folder(context),"import_${UUID.randomUUID()}.$extension")
+        try {
+            val input=context.contentResolver.openInputStream(uri) ?: error("Фото недоступно")
+            input.use { source -> target.outputStream().use { destination ->
+                var total=0L; val chunk=ByteArray(64*1024)
+                while(true){
+                    val read=source.read(chunk); if(read<0)break
+                    total+=read; require(total<=64L*1024*1024){"Фото больше 64 МБ"}
+                    destination.write(chunk,0,read)
+                }
+            } }
+            return target
+        } catch(error: Exception){target.delete();throw error}
+    }
+
+    fun decode(file: File): Bitmap {
+        val bounds=BitmapFactory.Options().apply {inJustDecodeBounds=true}
+        BitmapFactory.decodeFile(file.absolutePath,bounds)
+        require(bounds.outWidth>0 && bounds.outHeight>0){"Не удалось прочитать фото. Попробуйте JPEG или PNG."}
+        var sample=1
+        while(max(bounds.outWidth,bounds.outHeight).toLong()>2048L*sample)sample*=2
+        val options=BitmapFactory.Options().apply {
+            inSampleSize=sample; inPreferredConfig=Bitmap.Config.ARGB_8888
+            inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB)
+        }
+        val decoded=BitmapFactory.decodeFile(file.absolutePath,options) ?: error("Не удалось открыть фото")
+        val orientation=try { ExifInterface(file.absolutePath).getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_NORMAL) } catch(_:Exception){ExifInterface.ORIENTATION_NORMAL}
+        val matrix=Matrix()
+        when(orientation){
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL->matrix.setScale(-1f,1f)
+            ExifInterface.ORIENTATION_ROTATE_180->matrix.setRotate(180f)
+            ExifInterface.ORIENTATION_FLIP_VERTICAL->matrix.setScale(1f,-1f)
+            ExifInterface.ORIENTATION_TRANSPOSE->{matrix.setRotate(90f);matrix.postScale(-1f,1f)}
+            ExifInterface.ORIENTATION_ROTATE_90->matrix.setRotate(90f)
+            ExifInterface.ORIENTATION_TRANSVERSE->{matrix.setRotate(270f);matrix.postScale(-1f,1f)}
+            ExifInterface.ORIENTATION_ROTATE_270->matrix.setRotate(270f)
+        }
+        if(matrix.isIdentity)return decoded
+        return Bitmap.createBitmap(decoded,0,0,decoded.width,decoded.height,matrix,true).also { if(it!==decoded)decoded.recycle() }
+    }
+
+    fun saveResult(context: Context, photo: File, bitmap: Bitmap, result: DetectionResult,
+                   detector: FieldDetector, crop: String, threshold: Float): File {
+        val directory=File(context.getExternalFilesDir(null) ?: context.filesDir,"results").apply{mkdirs()}
+        val boxes=JSONArray()
+        result.boxes.forEach { box->boxes.put(JSONObject()
+            .put("class_id",box.classId).put("class_name",detector.classes[box.classId])
+            .put("label_ru",detector.labels[box.classId]).put("confidence",box.confidence.toDouble())
+            .put("xyxy_pixels",JSONArray(listOf(box.left,box.top,box.right,box.bottom)))) }
+        val report=JSONObject().put("created_epoch_ms",System.currentTimeMillis())
+            .put("photo",photo.absolutePath).put("photo_sha256",FieldDetector.sha256(photo))
+            .put("decoded_width",bitmap.width).put("decoded_height",bitmap.height)
+            .put("coordinate_space","EXIF-oriented decoded image, maximum side 2048")
+            .put("model",result.model.id).put("model_sha256",result.model.sha256)
+            .put("dataset",result.model.dataset).put("seed",result.model.seed).put("provisional",result.model.provisional)
+            .put("detector_seed",result.model.detectorSeed).put("family",result.model.family)
+            .put("proposed_leaves",result.proposedLeaves).put("classified_leaves",result.classifiedLeaves).put("skipped_leaves",result.skippedLeaves)
+            .put("score_policy",if(result.model.classifier==null) "detector class score" else "detector maximum class score times classifier softmax; uncalibrated")
+            .put("model_metadata",detector.manifest.getJSONArray("models").let {array ->
+                (0 until array.length()).map {array.getJSONObject(it)}.first {it.getString("id")==result.model.id}
+            })
+            .put("crop_filter",crop).put("confidence_threshold",threshold.toDouble())
+            .put("inference_ms",result.inferenceMs).put("pipeline_ms",result.pipelineMs)
+            .put("detections",boxes).put("device","${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
+            .put("scope","Whole leaf with crop/condition. Confidence is not disease probability or damaged area.")
+        return File(directory,"${System.currentTimeMillis()}_${result.model.id}_${UUID.randomUUID().toString().take(8)}.json")
+            .apply {writeText(report.toString(2))}
+    }
+}

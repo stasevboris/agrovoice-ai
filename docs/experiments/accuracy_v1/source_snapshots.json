@@ -1,0 +1,153 @@
+{
+  "updated_utc": "2026-10-04T15:27:36.656370+00:00",
+  "sources": [
+    {
+      "script": "accuracy_study.py",
+      "sha256": "234e5a27346e5a8ad3f3d0ea7b57b46dfff1cdf28d0045465e66e6d543852e63",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\accuracy_study_234e5a27346e5a8a.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "accuracy_component.py",
+      "sha256": "a3f37f8c4b262639f5fe5fcd953694b83fc0c21c0ea98dedfdeab78da3890f89",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\accuracy_component_a3f37f8c4b262639.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "architecture_queue.py",
+      "sha256": "e20603467281d3225d82bd5b6ff0398fbc4cd594b8ca808951111ecbe6abccac",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\architecture_queue_e20603467281d322.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "yolo_s_accuracy.py",
+      "sha256": "31c616878fa10b980b54f86eb6c41115079563e66dd7a8e90f1d6fbf98ec42d9",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\yolo_s_accuracy_31c616878fa10b98.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "deim_accuracy.py",
+      "sha256": "75b776695f17d7e43a9d5b556dd9c1181fb81164e721a54d32aeec798b04f7fb",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\deim_accuracy_75b776695f17d7e4.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "prepare_accuracy_data.py",
+      "sha256": "75b01b21d55cac7f8eaf7c302228a3444db00a36c382550044fcd707efed3641",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\prepare_accuracy_data_75b01b21d55cac7f.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "evaluate_accuracy_pipeline.py",
+      "sha256": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\evaluate_accuracy_pipeline_84d1b8cb13094aac.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "evaluate_accuracy_final_test.py",
+      "sha256": "f6ddc480a691dcc2b9c283197a6cb833c3a8a2a867d0953245003f0364e530bb",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\evaluate_accuracy_final_test_f6ddc480a691dcc2.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "package_accuracy_models.py",
+      "sha256": "ccc398f7165040f8d8ef640370d677fc942facee9a41699e7e7f71b099081c87",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\package_accuracy_models_ccc398f7165040f8.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "verify_accuracy_phone.py",
+      "sha256": "21542cb4a15c740217a7f4836a4ac26cd19552ae6f83f0be4498034447c2007d",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\verify_accuracy_phone_21542cb4a15c7402.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "summarize_accuracy_seeds.py",
+      "sha256": "81593889840f3b09e887eef38ddba99ef90bb8882060d34ce6512731e8fea140",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\summarize_accuracy_seeds_81593889840f3b09.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "accuracy_study.py",
+      "sha256": "0a454d34ccef9a0610722f1758aaf95a00f0683d9070a2106ff4678b501833a3",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\accuracy_study_0a454d34ccef9a06.py",
+      "scope": "Exact checksum matches the source recorded by MobileNet seed20261003, before finite-value guard"
+    },
+    {
+      "script": "deim_accuracy.py",
+      "sha256": "46f1ed0071470d34cb100093367ab2588dddfa8f73b1cdb74184f83abb60a667",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\deim_accuracy_46f1ed0071470d34.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "verify_accuracy_phone.py",
+      "sha256": "c62350fd2b9c9ba3e92c83d7e703db37f66a08e85722ad14f6986321783a3835",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\verify_accuracy_phone_c62350fd2b9c9ba3.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "deim_export_validation.py",
+      "sha256": "12af77b0ef5c43417d8b676a15f4b0e13b83b61bc94dde490c9385a90fa00ca2",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\deim_export_validation_12af77b0ef5c4341.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "diagnose_deim_parity.py",
+      "sha256": "86b9c16a8916c6740493a3ee515333b6eafcb76ce43a1907707a00f9f566b3a9",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\diagnose_deim_parity_86b9c16a8916c674.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "validate_deim_export_full.py",
+      "sha256": "89ca1ac3ef721eef9dbb8fb13fce910d60c5f56be805bbcf3b835c1380eb1c48",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\validate_deim_export_full_89ca1ac3ef721eef.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "evaluate_accuracy_teacher.py",
+      "sha256": "ca770cc74ef40e7996fa9fdcc0dc3cfd8097e1a380cdb8fc5919cf8dec583332",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\evaluate_accuracy_teacher_ca770cc74ef40e79.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "yolo26s_focus_queue.py",
+      "sha256": "509029e056df1d58c8b93b97a5497b3f2e65f79ec01cdd0c8c11ca1d0ee878a5",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\yolo26s_focus_queue_509029e056df1d58.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "yolo26_focus_validation.py",
+      "sha256": "3dde5d5e23926cd4fe6ac2fffcfc26a0279cfa6904e14c9de425da890d519e7a",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\yolo26_focus_validation_3dde5d5e23926cd4.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "package_yolo26s_focus.py",
+      "sha256": "bd470a2f438b3341eb682b81004f89ef231940f3f1d8329a5c0e7b9160fc57ff",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\package_yolo26s_focus_bd470a2f438b3341.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "evaluate_yolo26s_focus_test.py",
+      "sha256": "00043fd24f7b0c45390f62152fa56afd59e65662bc22d4cc0819c780d1077816",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\evaluate_yolo26s_focus_test_00043fd24f7b0c45.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "build_yolo26s_focus_report.py",
+      "sha256": "9d4f3aaa490e52bde885018453f68f10ff5d929acdb666a667935b7b189bacf7",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\build_yolo26s_focus_report_9d4f3aaa490e52bd.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    },
+    {
+      "script": "build_yolo26s_focus_report.py",
+      "sha256": "d3205ad418edcd3edad5ec92d8afd1f11adc2fc663f19c89ac3f9b7b335cc866",
+      "snapshot": "docs\\experiments\\accuracy_v1\\source_snapshots\\build_yolo26s_focus_report_d3205ad418edcd3e.py",
+      "scope": "Current source snapshot; manifests identify the version actually executed"
+    }
+  ],
+  "earlier_mobilenet_source_verified_seeds": [
+    20261003
+  ],
+  "note": "Historical reconstruction is included only when its full SHA matches the run manifest; snapshots do not alter training or data"
+}

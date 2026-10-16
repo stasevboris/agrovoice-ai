@@ -1,0 +1,22 @@
+{
+  "ended_utc": "2026-10-03T17:52:57.2614440Z",
+  "started_utc": "2026-10-03T17:52:44.4880100Z",
+  "study_resume_exit_code": 0,
+  "samples": [],
+  "cutoff_celsius": 70,
+  "status": "failed_before_stop",
+  "loaded_temperature": {
+    "utc": "2026-10-03T17:52:47.6194634Z",
+    "rpm": null,
+    "temperature_identifier": "/amdcpu/0/temperature/2",
+    "celsius": 81.25
+  },
+  "error": "CPU fan RPM is unavailable; fan stop was not applied.",
+  "before": {
+    "utc": "2026-10-03T17:52:57.0603329Z",
+    "rpm": null,
+    "temperature_identifier": "/amdcpu/0/temperature/2",
+    "celsius": 63.000008
+  },
+  "requested_seconds": 120
+}

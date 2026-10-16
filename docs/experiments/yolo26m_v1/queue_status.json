@@ -1,0 +1,34 @@
+{
+  "jobs": {
+    "yolo26m_seed20261003": {
+      "status": "completed",
+      "reused": true,
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+      "val_sha256": "50d70ea986797445eb1c769978d0413bb88d60d542539336235a8d47c534b9ea",
+      "updated_utc": "2026-10-05T01:19:26.952042+00:00"
+    },
+    "yolo26m_seed20261004": {
+      "status": "completed",
+      "reused": false,
+      "graph_sha256": "74335645bc8cdfa2f6938f9dbe1770fc27d686832edd1dee303633344f4c0245",
+      "val_sha256": "29e4085fd8b25a14fee13abec52a1ca1cee03e3b30e0e3810fdbb75a5e86f7b5",
+      "updated_utc": "2026-10-05T03:00:19.363363+00:00"
+    },
+    "yolo26m_seed20261005": {
+      "status": "running",
+      "updated_utc": "2026-10-05T03:00:19.370755+00:00"
+    }
+  },
+  "started_utc": "2026-10-05T01:19:24.116663+00:00",
+  "status": "stopped",
+  "requested": 10,
+  "pid": 286,
+  "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+  "current": {
+    "id": "yolo26m_seed20261005",
+    "kind": "yolo26m",
+    "seed": 20261005
+  },
+  "completed": 2,
+  "updated_utc": "2026-10-05T04:28:25.051455+00:00"
+}

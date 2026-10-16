@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "models": 8,
+  "cultures": 4,
+  "threshold_range": "10..80 step5",
+  "help_back_scroll": true
+}

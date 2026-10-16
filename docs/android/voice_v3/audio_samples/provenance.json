@@ -1,0 +1,7 @@
+{
+  "pcm": "16000Hz mono 16-bit",
+  "created_utc": "2026-10-04T16:53:11.6032954+00:00",
+  "scope": "Technical command check, not field speech accuracy or WER",
+  "count": 114,
+  "source": "Locally generated Windows System.Speech samples; no human recordings"
+}

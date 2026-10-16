@@ -1,0 +1,20 @@
+{
+  "created_epoch_ms": 1791054504725,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/import_dc212f83-2e1f-4d85-9e64-92e2b56255ef.jpg",
+  "photo_sha256": "7158710edc8c4b70b2b463b1d9d18010b6180f958b81a2ca8d605061e7210b64",
+  "decoded_width": 1632,
+  "decoded_height": 1224,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo11n",
+  "model_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+  "dataset": "clean v2",
+  "seed": 20261003,
+  "provisional": true,
+  "crop_filter": "Cucumber",
+  "confidence_threshold": 0.25,
+  "inference_ms": 157.241407,
+  "pipeline_ms": 201.905313,
+  "detections": [],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area."
+}

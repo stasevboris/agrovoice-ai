@@ -1,0 +1,7 @@
+{
+  "pid": 19716,
+  "start_utc": "2026-10-05T06:32:33.4986619Z",
+  "script": "ml-pipeline/audit_leaf_v3_full_overlap.py",
+  "status_path": "docs/experiments/yolo26s_data_v1/candidate_overlap_full_r2/status.json",
+  "gpu": false
+}

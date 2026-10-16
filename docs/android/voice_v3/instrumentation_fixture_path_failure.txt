@@ -1,0 +1,74 @@
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceRecognitionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stream=
+com.agronomy.phytomonitor.VoiceRecognitionTest:
+INSTRUMENTATION_STATUS: test=recognizesRussianSamplesAndRejectsNegativeCommands
+INSTRUMENTATION_STATUS_CODE: 1
+INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.VoiceRecognitionTest
+INSTRUMENTATION_STATUS: current=1
+INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+INSTRUMENTATION_STATUS: numtests=1
+INSTRUMENTATION_STATUS: stack=java.io.FileNotFoundException: /storage/emulated/0/Android/data/com.agronomy.phytomonitor/files/voice_validation_v3/cases.json: open failed: ENOENT (No such file or directory)
+	at libcore.io.IoBridge.open(IoBridge.java:574)
+	at java.io.FileInputStream.<init>(FileInputStream.java:160)
+	at kotlin.io.FilesKt__FileReadWriteKt.readText(FileReadWrite.kt:131)
+	at kotlin.io.FilesKt__FileReadWriteKt.readText$default(FileReadWrite.kt:131)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:22)
+	... 32 trimmed
+Caused by: android.system.ErrnoException: open failed: ENOENT (No such file or directory)
+	at libcore.io.Linux.open(Native Method)
+	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+	at android.app.ActivityThread$AndroidOs.open(ActivityThread.java:7845)
+	at libcore.io.IoBridge.open(IoBridge.java:560)
+	... 37 more
+
+INSTRUMENTATION_STATUS: stream=
+Error in recognizesRussianSamplesAndRejectsNegativeCommands(com.agronomy.phytomonitor.VoiceRecognitionTest):
+java.io.FileNotFoundException: /storage/emulated/0/Android/data/com.agronomy.phytomonitor/files/voice_validation_v3/cases.json: open failed: ENOENT (No such file or directory)
+	at libcore.io.IoBridge.open(IoBridge.java:574)
+	at java.io.FileInputStream.<init>(FileInputStream.java:160)
+	at kotlin.io.FilesKt__FileReadWriteKt.readText(FileReadWrite.kt:131)
+	at kotlin.io.FilesKt__FileReadWriteKt.readText$default(FileReadWrite.kt:131)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:22)
+	... 32 trimmed
+Caused by: android.system.ErrnoException: open failed: ENOENT (No such file or directory)
+	at libcore.io.Linux.open(Native Method)
+	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+	at android.app.ActivityThread$AndroidOs.open(ActivityThread.java:7845)
+	at libcore.io.IoBridge.open(IoBridge.java:560)
+	... 37 more
+
+INSTRUMENTATION_STATUS: test=recognizesRussianSamplesAndRejectsNegativeCommands
+INSTRUMENTATION_STATUS_CODE: -2
+INSTRUMENTATION_RESULT: stream=
+
+Time: 0,033
+There was 1 failure:
+1) recognizesRussianSamplesAndRejectsNegativeCommands(com.agronomy.phytomonitor.VoiceRecognitionTest)
+java.io.FileNotFoundException: /storage/emulated/0/Android/data/com.agronomy.phytomonitor/files/voice_validation_v3/cases.json: open failed: ENOENT (No such file or directory)
+	at libcore.io.IoBridge.open(IoBridge.java:574)
+	at java.io.FileInputStream.<init>(FileInputStream.java:160)
+	at kotlin.io.FilesKt__FileReadWriteKt.readText(FileReadWrite.kt:131)
+	at kotlin.io.FilesKt__FileReadWriteKt.readText$default(FileReadWrite.kt:131)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:22)
+	... 32 trimmed
+Caused by: android.system.ErrnoException: open failed: ENOENT (No such file or directory)
+	at libcore.io.Linux.open(Native Method)
+	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+	at android.app.ActivityThread$AndroidOs.open(ActivityThread.java:7845)
+	at libcore.io.IoBridge.open(IoBridge.java:560)
+	... 37 more
+
+FAILURES!!!
+Tests run: 1,  Failures: 1
+
+
+INSTRUMENTATION_CODE: -1

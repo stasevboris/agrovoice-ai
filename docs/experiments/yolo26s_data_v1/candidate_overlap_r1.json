@@ -1,0 +1,1068 @@
+{
+  "status": "candidate_overlap_review_required_not_split_authorization",
+  "updated_utc": "2026-10-05T05:51:11.827757+00:00",
+  "input_sha256": {
+    "docs/experiments/yolo26s_data_v1/cucumber_review/inventory.json": "47700e9ce7609f7ac519f4bf76a082b4b73a35c99b2aa478e9ba6c0605445ef9",
+    "docs/experiments/yolo26s_data_v1/olid_review_r2_chroma/inventory.json": "61a7fcfbac0e1d3d4eb6270a99031bbbdf3656b5dd878bc338e9a2d90477db4f",
+    "docs/experiments/yolo26s_data_v1/plantvillage_qa_r1/inventory.json": "51108b9f3d87737f4dcbd4a0d2c80e1923afa9c316d7770e1d85fc416e53a2e0",
+    "ml-pipeline/dataset_clean_v2/manifest.json": "6eeb02546dfe35f48cd6a8f37931b325e74b8c338e62c0c18708e3784832abfe"
+  },
+  "algorithm": "Exact decoded RGB or aspect ratio within3%, pHash and dHash Hamming<=4; existing source signatures",
+  "limitations": [
+    "This screen can miss rotations/opposite leaf surfaces and crops.",
+    "Near matches may be different leaves; review before grouping.",
+    "Missing physical plant/session IDs remain unknown; connected groups are not proven plant IDs.",
+    "Historical matches must not become a new independent test; old holdouts never enter training."
+  ],
+  "counts": {
+    "candidates": 1919,
+    "historical": 3354,
+    "candidate_links": 7,
+    "historical_links": 89,
+    "suggested_connected_groups": 1912
+  },
+  "candidate_links": [
+    {
+      "a": [
+        "CucumberZenodo",
+        "bacterial_wilt_52395701-Bacterial_Wilt_20"
+      ],
+      "b": [
+        "CucumberZenodo",
+        "bacterial_wilt_10285c58-Bacterial_Wilt_82"
+      ],
+      "exact_decoded": true
+    },
+    {
+      "a": [
+        "OLID",
+        "5161544b68f1541d0ef8"
+      ],
+      "b": [
+        "OLID",
+        "6c7d8d62e6bdb762c628"
+      ],
+      "exact_decoded": true
+    },
+    {
+      "a": [
+        "OLID",
+        "4e66d2d08e29c7c87bde"
+      ],
+      "b": [
+        "OLID",
+        "b2569612c7bb75b3e06d"
+      ],
+      "exact_decoded": true
+    },
+    {
+      "a": [
+        "OLID",
+        "2536cc7e42f03efce8ec"
+      ],
+      "b": [
+        "OLID",
+        "b448ed34db61bd8ec735"
+      ],
+      "exact_decoded": true
+    },
+    {
+      "a": [
+        "OLID",
+        "820d8c122cb0a1a4ec27"
+      ],
+      "b": [
+        "OLID",
+        "0ef0d5e8e27c209ec43a"
+      ],
+      "exact_decoded": true
+    },
+    {
+      "a": [
+        "OLID",
+        "b9fdc8a2fc5d688370ed"
+      ],
+      "b": [
+        "OLID",
+        "dc153ecb91e53dcd585f"
+      ],
+      "exact_decoded": true
+    },
+    {
+      "a": [
+        "OLID",
+        "1861f583e06e58078ec7"
+      ],
+      "b": [
+        "OLID",
+        "893b58d3bcacab041dd1"
+      ],
+      "exact_decoded": true
+    }
+  ],
+  "historical_links": [
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_040ef8b5-Fresh_Leaf_54"
+      ],
+      "historical": "cuc_aa665b0451cbcc204d90.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:67ed3aaee160c386543d74c74e2eb1870688c3ba81408abd3e33ee02a6458f46",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_05d64ae8-Fresh_Leaf_67"
+      ],
+      "historical": "cuc_6b188c975f3a7ae5d259.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:a11dd49f1a0d7ccb3143c6ef567123efd18318b5a532e0659c338b23140c7c8f",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_0958dd27-Fresh_Leaf_140"
+      ],
+      "historical": "cuc_9e5eff6bdf2b87419645.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:86c19889e847379cdb1721f5ffb5a02036ae4e172c9421e74a684b56d7260bff",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_17e731f5-Fresh_Leaf_28"
+      ],
+      "historical": "cuc_d11c0f15a21c5ee71c99.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:ea8d508c7668f64cd60157c4f8cf302031e095797418e455268c680d0431d377",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_182b7277-Fresh_Leaf_112"
+      ],
+      "historical": "cuc_507f908de3bc05e22e9f.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:792a02a705b0a98a366fd74685240a9d2026700f2a419cdaab9c678f6e65ec82",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_20b124f8-Fresh_Leaf_103"
+      ],
+      "historical": "cuc_a1cd422084822f31f831.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:f4d86df9ba701d408356b3116324dee809eaed099df1e2ea63bd0644d7648d5a",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_2910c656-Fresh_Leaf_100"
+      ],
+      "historical": "cuc_f05f8a0330d048380301.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:1ccbc7c78111752b0307674f9faadbbc2f68c528d8411051f75252d1981ef9ce",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_2d282f05-Fresh_Leaf_125"
+      ],
+      "historical": "cuc_13f84a5e164943b64195.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:6aea2c86986af4e89ef833f143de6bf80eb6e210508434dae07fc291114b2bad",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_2d87d671-Fresh_Leaf_115"
+      ],
+      "historical": "cuc_91f665bef4d4e877404b.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:f3a9608cfa06371171686b53ba79267f32b13109bda66bd3bbfd09e08b7e93ae",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_34fa8cf7-Fresh_Leaf_73"
+      ],
+      "historical": "cuc_00b79e6331b1537c16e7.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:07c2f701848144dcb1de9ef01fc04f76a1774bc0ec9da2acac4e1d34760f0314",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_36bdb8ef-Fresh_Leaf_74"
+      ],
+      "historical": "cuc_de3152031316652e7a45.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:0af6f976a3ddce7221a7bacd65e2db374bcd7e1e89139c57d5007516b840d0a1",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_3c2e238c-Fresh_Leaf_155"
+      ],
+      "historical": "cuc_ab0a158ed4db8fb87b19.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:feaeb5baef034d2d6a23d459831f25cbcafb94ccec3099f8308066a492cdad49",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_46630186-Fresh_Leaf_9"
+      ],
+      "historical": "cuc_03b234a36551e2bfb09c.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:330edbf8a5f36f365ddf187d5a542211f1155f698e55bd50df44c295b9db551a",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_4b3bac03-Fresh_Leaf_154"
+      ],
+      "historical": "cuc_3ac3898ead6b4bf080e2.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:fc74230adbba30de4ba80c37fb88caa8c92ad6aa3ee1ae257cc7d813bbe5ce26",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_4d12200a-Fresh_Leaf_1"
+      ],
+      "historical": "cuc_6548ac114c90daa9b7ea.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:c45490cbfaf8a55ce6cc9b5ddefb8e3587ab70564935220b35d114d246356168",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_4e62d7eb-Fresh_Leaf_80"
+      ],
+      "historical": "cuc_cf3bbfa3813a55cfc464.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:dfc51cb021d45f800bdd5430970ab6c61dcdfc79ebec024234591ddbb4d72c52",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_55301f00-Fresh_Leaf_40"
+      ],
+      "historical": "cuc_35da19bd75f9884a8162.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:f6459eac3cf37a6a6a5a790c32697cb1d33a5a46a77fed114246a317e524cf8f",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_56edf9bf-Fresh_Leaf_69"
+      ],
+      "historical": "cuc_05a73de32ecd7ac0c692.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:88e44b55b0c26c0fdb2283ff96447b97362692ec00042a06ed768186ddd4b43f",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_57d6187a-Fresh_Leaf_123"
+      ],
+      "historical": "cuc_33620231044e6eddb29f.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:534d2f0414de9f0c3d4500edc3258873db6ee489b34a03521a214e9a6910640e",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_69310907-Fresh_Leaf_153"
+      ],
+      "historical": "cuc_08278d30023c3d3f9188.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:97d9067f9df6010c49d7e09d231117a4086b560f4e85db12df41f64ed3f2496c",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_6b6c1ced-Fresh_Leaf_149"
+      ],
+      "historical": "cuc_2ad3fdec5e684931f2b1.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:75746e213ed7d74b4a6a6d9e228ef51c75e78c636abc4e5f8539f769df34ccb1",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_6cba9479-Fresh_Leaf_44"
+      ],
+      "historical": "cuc_b297781ce34223aedb24.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:1fb48da63fb7a6253deda9a9fd7a53ee2b121f704a1b16a1802d234ea68831db",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_7cda6927-Fresh_Leaf_35"
+      ],
+      "historical": "cuc_d57f2312c66febeb9974.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:f63a0628fa87be415bd8ba0cdfe4346b99de8273deef0735c070912dfd987a0a",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_7df39b4e-Fresh_Leaf_38"
+      ],
+      "historical": "cuc_db0868aa10747411a80d.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:7aeecd2109533f4f6514ce6b2f62763d66615b179b08668fc1996fc95c0eae31",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_7e07b648-Fresh_Leaf_109"
+      ],
+      "historical": "cuc_a28b17ac25922ac554ff.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:03fe6f23603e48dbac9b9b152b85787ca6b284dade92e389a8c0f4b3e33e2f8a",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_80f63558-Fresh_Leaf_107"
+      ],
+      "historical": "cuc_0d582b3d6cb351ed5bbe.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:2cad5de66389660bb1cd64f4ca323f1d5d9ea11321172a5dd1cce394dc0ab188",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_851e6633-Fresh_Leaf_95"
+      ],
+      "historical": "cuc_080002b336e75dc1f1d5.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:6b41e9b20a4e577e694cc436186aca09ae3cf076ef81ccb88703e36091b08f37",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_8730ae58-Fresh_Leaf_37"
+      ],
+      "historical": "cuc_0494b8707ca3be1ef1cf.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:9c8ae57d5537192500b224f33d08ae3a47e8f9a3ca86307e720bd810f34195f9",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_87444d1e-Fresh_Leaf_129"
+      ],
+      "historical": "cuc_6f23a2d822f4798de99c.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:e1a82c8477497f195a6fd8820530b422cc93291f632db4d48110e4f108c69f4f",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_8b8f7a61-Fresh_Leaf_114"
+      ],
+      "historical": "cuc_4e62896b7af89a726cb0.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:853d2303ee85dd24644f043f74b6f03455250f47b7792ecb17a535e8c374a86b",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_990d9cea-Fresh_Leaf_65"
+      ],
+      "historical": "cuc_16a2072cdf9399969aab.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:635a0fc18b61046c5b7b935c2f1d8b06e983a2e69d3bbe71e22062be61bc25bd",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_9c0b70d4-Fresh_Leaf_110"
+      ],
+      "historical": "cuc_81cd3a911481c24ca8a4.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:ac2d73515f216de0be747fadcc413f5c294969155177fc237b7a749e7b50a23f",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_a36e1ee0-Fresh_Leaf_45"
+      ],
+      "historical": "cuc_c6372a5d897f12364cdb.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:f6a774865f78a8438999e8404ad815c2bc17cbb93fbbd8141bdd372fada15b31",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_aec1bdb2-Fresh_Leaf_13"
+      ],
+      "historical": "cuc_6c672ad64be304b4d104.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:3cd75dc99e714eabf28fb06314f0bd4d053b632e0aa0426055a8323e4cbea3e3",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_af1db50d-Fresh_Leaf_43"
+      ],
+      "historical": "cuc_e824950b652718c8942e.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:8b15cbe5373d780cd008bd917d3fe2733571c2527a7a9d4215e60f4e73b94abd",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_c994b516-Fresh_Leaf_127"
+      ],
+      "historical": "cuc_3d87ee7534d050e587e1.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:bb1ce44759338d281f3fd5bb24b6abf501c24778832dd1ec102c87180ea3f410",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_caabf327-Fresh_Leaf_151"
+      ],
+      "historical": "cuc_4067c283dab7e9b9711d.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:9058becb3dd90c303083cceb4a72effecd7e8110055b25da3292cd532aaf8236",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_cafe98fa-Fresh_Leaf_17"
+      ],
+      "historical": "cuc_27dfc7ea9d36cf730458.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:9af1ea172d0f9e87012b50d706394156cd6faa03adb32b429ea3e152deaf5847",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_cd8f3478-Fresh_Leaf_102"
+      ],
+      "historical": "cuc_1fe380abe39007698aba.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:fde48bc20add82dfa75b70730b76348965a1b6c689f7be6c0d93580730103759",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_cfcdee6d-Fresh_Leaf_68"
+      ],
+      "historical": "cuc_7381559423f0ff8780de.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:a29e98a6cc58b9a041caede374f7a7089b43c7dff16f437496ca138d81421b5b",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_cff0403b-Fresh_Leaf_36"
+      ],
+      "historical": "cuc_03e02ca341bd3b3a938e.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:fd5b92e0b92e6281e7326bc3177032cbc5eddd5f01bc237db3d3058def6c2145",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_d4dc8fbb-Fresh_Leaf_47"
+      ],
+      "historical": "cuc_b0e65ef333c90922e184.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:894f3bf258cc76b4c355e5f72ff8c6c31592804f35a0cbb5ab060c702666a322",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_d7cdcc92-Fresh_Leaf_130"
+      ],
+      "historical": "cuc_e37d00d00d677714607a.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:f25c38c34a5f54cf06ff25e75826a80a617b1665881c6eca536767fea1b6db8b",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_d9ff7d5e-Fresh_Leaf_97"
+      ],
+      "historical": "cuc_080e6869089aa0c5f493.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:1bffdc7c05b8c81fd67b31e56bbe70879451deea3efa46b8c0a9a91cdb6b27c7",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_ddbdd878-Fresh_Leaf_15"
+      ],
+      "historical": "cuc_af8faf31febfe7bf1ffc.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:fd8acc0be210ede8c8270e8e27aae016710d571912f3dcadfa894afe233a445d",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_ded6a192-Fresh_Leaf_108"
+      ],
+      "historical": "cuc_f7031af2fa5b4251c6c9.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:170de9faf6c773121369aaf640ff853f6aab94d9d3d58fb05d795e0cfce6d87d",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_e79235b1-Fresh_Leaf_26"
+      ],
+      "historical": "cuc_0616c8270a219b4d3a5d.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:812f006f70018ef6cc3f32d1c3b0cafb1d3575f24d3a91f25b7f130f7e396d92",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_e8774727-Fresh_Leaf_16"
+      ],
+      "historical": "cuc_c95557043b8999559fb3.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:12c84aa55aef2a14ab1912a294f59bad23a7d44503ee8839bcb1cb6a62a535b3",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_e96c826a-Fresh_Leaf_150"
+      ],
+      "historical": "cuc_9a4f4d53e8529eb5d2af.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:9d36314ca989a3c45cc34fcede8e72c67953489446ceb199733b21d46ac6bc4b",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_ef1f1c15-Fresh_Leaf_21"
+      ],
+      "historical": "cuc_e4ac2333c0ab908d4e59.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:d04abc945d0b2ee4178f1b483986224bd9ef8910e4b0fd1356be55d618712d83",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_f5a4c234-Fresh_Leaf_142"
+      ],
+      "historical": "cuc_6639f8437760f6c772d3.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:ab2c62cee1e9bf35d0b53497ed9d1fb01847d5e268ee77cf6bd25df8004648c4",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_f7a1bc29-Fresh_Leaf_93"
+      ],
+      "historical": "cuc_384e6db37e1f3fd1b4f4.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:17707ab299306dd3d4bbcdbe6de9f78df907ee15ca60f3c7197eb6660084ea55",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "CucumberZenodo",
+        "fresh_leaf_f93d2b0c-Fresh_Leaf_70"
+      ],
+      "historical": "cuc_c162a96c630a81d28c8b.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:6fe151503104a70df09846a73729809b6422ef962cf6d9a2f3db0d293924b816",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "0985fcb53ec2fc75"
+      ],
+      "historical": "pv_3c1598ffedb95a855c13.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:0f17351703c32d5b14f1adadc318b07509a3a7dfffcb9181d16001ff280d82b1",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "62fbeaf4767fe83a"
+      ],
+      "historical": "pv_809e24098c5a8737fc05.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:af195e7c3416195e7b7ef1fd20195b63ff13ef9c13b7a2f469527cece26043ac",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "3ef534f16e58f37c"
+      ],
+      "historical": "pv_45c1bcee048c667060da.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:335ded0cf053a29ebd991c552968342446560165e4a9c17333caa8a38df8eec1",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "2100b4c578cea684"
+      ],
+      "historical": "pv_ef3d4935fa5a27b959cd.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:02712e5e8d7fd9eeaeba4ed576d958ea280d60ebe3f88702090cdfcdf9c1bcae",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "8351c0e0532bdad5"
+      ],
+      "historical": "pv_ec100a2b29b612c37a37.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:bb40d08597eda8cb3f6ad9a05de20fb0ba460f6b1b5f6c86fcd3710a6568410e",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "ef89cd402e91f683"
+      ],
+      "historical": "pv_ff7d2a4e97d6b47bd189.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:265706ac6c36f831187874d526a03c38f82dc4f902196c39b08b17bdd414a239",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "62ab5b3bc6f71d09"
+      ],
+      "historical": "pv_44beb85508e54f927a85.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:0c18bc4d8796b0aef201a5f5fc57aa79ea7ba2de6f639212d3a73522207285e3",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "03d8e40b762e7c1a"
+      ],
+      "historical": "pv_3e7c1441e6207f94d3fd.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:265706ac6c36f831187874d526a03c38f82dc4f902196c39b08b17bdd414a239",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "631a0af271377cc9"
+      ],
+      "historical": "pv_6098879f69f3c03f466d.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:3d3507cae8ea3212fc63fef8f1b7f96330a65b8400c15b7573da231e065f5821",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "07014cedd8f14c93"
+      ],
+      "historical": "pv_c5b6d892edc52af59101.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:59f5b336c9ff955a9e4537c66eb9733610ede1e3d49933fb859a8fc088e4b66c",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "090c02471f308e0a"
+      ],
+      "historical": "pv_2f5371e4f87b40d429ea.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:36deaaa67186ce9f321fe2da44607f90da372a7a40d750cbcae4fc71fed81223",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "982e9d7adcb1d6ef"
+      ],
+      "historical": "pv_c19dddff29c3732514dc.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:a03130dd4780d4371bf1052c3c3a926b7599c8deb73ef8a3a1087c8948ef0669",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "b8f892567128e324"
+      ],
+      "historical": "pv_979f56254087b22fd083.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:be106e78d12a970bd131875da4ad418bf9030d316448134f1e79ffb5a953c43b",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "e42150b4af56c2f6"
+      ],
+      "historical": "pv_a9266a9415833113d980.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:66590231a6c00ae132f05da1676849fdf71107a54ab1ba3ef976bb2d0a350613",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "e3cf23f8633842d8"
+      ],
+      "historical": "pv_0098374daa06e219486a.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:76ba78e5f6ca9fb15424690292d5c9598d7c00e11cb5acf378e6f6b8f7e6463a",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "171430784c1cee07"
+      ],
+      "historical": "pv_aea48f8f2f5f0468efce.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:bf11fdb1a962d1bb136a995ae6d0f7df407384f3e2cd741d604f6fb35d6939e2",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "7a32d1cbd39c45df"
+      ],
+      "historical": "pv_86cb3bc4048bb6f6712f.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:ce94e922d35984896a156435ed0c14b48f9a61c561b82e40f519155b0b141e12",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "f3c1cfdf0f2d2cf9"
+      ],
+      "historical": "pv_7bdda7d3c20e2aa2a477.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:a1c2630a36e4aaca0c8a518b5fefb8b155438e938c31e3c9d8e09ada0e6a13f0",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "3b02a4c7ec48d630"
+      ],
+      "historical": "pv_27114639d66b4fb781c7.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:e6c3ad12779431b86e411609403197bf117ff4cba0af7a44b4c5a29bfde00230",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "68222b311690bfb1"
+      ],
+      "historical": "pv_bd5079f3d34a8ee52914.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:1e7b395113f6c352ac56f98c948062ba0055c97e29bd2d10eb261cce454fafb9",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "e66185eb75648d98"
+      ],
+      "historical": "pv_8bec2cca2441e6a7c8ea.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:b954111060a4c28431e633f539a910870d1bd1565320a2f9a21623cddaacb621",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "5d23f717b123fa81"
+      ],
+      "historical": "pv_6ae3c2e6bae25b2eae92.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:afffdb20290cb760edf72937492d8a182e550779eb86297e3874938d9c5706ef",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "6efff66d733ddd5f"
+      ],
+      "historical": "pv_5d5e0b7af491373d8a59.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:84931fdf6a9f53f7a9051a9fab8351407575910e12758b60d44edf79d8b14018",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "a5d9484a9a9c3847"
+      ],
+      "historical": "pv_874bdad124d5a69c1c08.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:e31a40f719cb624f20e2d1b00c5c0645b0d50bff48c3ef07fc3fe77bff74a6a0",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "c6b9f29f9e696b1b"
+      ],
+      "historical": "pv_965715170990f6235143.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:04e85e52c42a472956fd752749d01e145acfca26b26b6674c25c030a83e2abc5",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "5da5f23718c8360a"
+      ],
+      "historical": "pv_3a86c931c96346d20595.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:eed713a8cbe7b259a2bd4b651c89c42afba8d67a1d44435e9baf4f83aedf0925",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "8257ae20a5e277d6"
+      ],
+      "historical": "pv_f3256c0f732bdb15e700.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:d1f2f4fb078830ef19e1b7109a78057f51755492c78717a1e8322b8988d54aa3",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "5a456fe7da6bd7b0"
+      ],
+      "historical": "pv_75b2f000a84f03829faa.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:42b275c1b386a9f6c18bd4fccae906b54239d61105718e7c1f98da197fb2e978",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "42f660ed19943cc2"
+      ],
+      "historical": "pv_4f64a88fe49fb47c17a6.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:dea92da3bac6fcde39769202958c6f31d9764fc3862b75d076a82399faf2f1e2",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "09aabd87f8a4de18"
+      ],
+      "historical": "pv_f1cbec13bb3dbc182cf1.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:331b23463716fbbec848b970602d92bf54faf63228d5fdc400f423321d58d34f",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "74d6467c7d0e6306"
+      ],
+      "historical": "pv_ca6da9a1d392eef8f547.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:e174df3ed877b626797d95baa6637e0ace41a636f945151de0878937abb9281b",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "b4f99971a329b09f"
+      ],
+      "historical": "pv_d8cfae3ee66d01f89792.jpg",
+      "historical_split": "val_aux",
+      "historical_group": "supp:73e73daabc601d19e6ad2a9fd68984952b297be546b64aca8814b9c4e3e71dc5",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "3f75f51d7f7c3c78"
+      ],
+      "historical": "pv_c924551ae5d6da8c3375.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:c7153d123fe59326ce1a99580706317f00fd87bb618013c2b17628d85f243f5b",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "8a26d7e3393e1508"
+      ],
+      "historical": "pv_c79a0a790ce6106e6868.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:800350020aee5a288398fef6817d1d0b4b81d630c9d37ccbc2427758a1690e34",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "583c4613c54e262e"
+      ],
+      "historical": "pv_40d17433c13a1de377d4.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:e5a5ea3f7e0856bf5ec3e5555a331d3519e47642dadf95355ab9196641864fa4",
+      "exact_decoded": true
+    },
+    {
+      "candidate": [
+        "PlantVillageQA",
+        "62b635860d1aa13d"
+      ],
+      "historical": "pv_6da4b706bc4efc9577ee.jpg",
+      "historical_split": "train",
+      "historical_group": "supp:b77968b46c23895cbeadfe645032834cba09d23d3b50faaeb8626735b86eac4e",
+      "exact_decoded": true
+    }
+  ],
+  "suggested_groups": [
+    [
+      [
+        "CucumberZenodo",
+        "bacterial_wilt_10285c58-Bacterial_Wilt_82"
+      ],
+      [
+        "CucumberZenodo",
+        "bacterial_wilt_52395701-Bacterial_Wilt_20"
+      ]
+    ],
+    [
+      [
+        "OLID",
+        "6c7d8d62e6bdb762c628"
+      ],
+      [
+        "OLID",
+        "5161544b68f1541d0ef8"
+      ]
+    ],
+    [
+      [
+        "OLID",
+        "b448ed34db61bd8ec735"
+      ],
+      [
+        "OLID",
+        "2536cc7e42f03efce8ec"
+      ]
+    ],
+    [
+      [
+        "OLID",
+        "b2569612c7bb75b3e06d"
+      ],
+      [
+        "OLID",
+        "4e66d2d08e29c7c87bde"
+      ]
+    ],
+    [
+      [
+        "OLID",
+        "0ef0d5e8e27c209ec43a"
+      ],
+      [
+        "OLID",
+        "820d8c122cb0a1a4ec27"
+      ]
+    ],
+    [
+      [
+        "OLID",
+        "dc153ecb91e53dcd585f"
+      ],
+      [
+        "OLID",
+        "b9fdc8a2fc5d688370ed"
+      ]
+    ],
+    [
+      [
+        "OLID",
+        "893b58d3bcacab041dd1"
+      ],
+      [
+        "OLID",
+        "1861f583e06e58078ec7"
+      ]
+    ]
+  ],
+  "training_accepted": 0
+}

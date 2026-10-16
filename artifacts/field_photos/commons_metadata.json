@@ -1,0 +1,1058 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "180381450": {
+        "pageid": 180381450,
+        "ns": 6,
+        "title": "File:Downy mildew on leaves of Cucumis sativus.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 4880547,
+            "width": 4000,
+            "height": 3000,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Downy_mildew_on_leaves_of_Cucumis_sativus.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Downy_mildew_on_leaves_of_Cucumis_sativus.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=180381450",
+            "sha1": "68a90670a23cb7978f8011a419b1fbe2a7c042a9",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2025-12-20 15:13:25",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Downy mildew on leaves of Cucumis sativus",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Pseudoperonospora cubensis|Self-published work|Files with coordinates missing SDC location of creation|Zenxin Organic Park|Uploaded via Campaign:wsc-my|Wildlife and nature images from Wiki Science Competition 2025",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "GPSLatitude": {
+                "value": "1.961906",
+                "source": "commons-desc-page"
+              },
+              "GPSLongitude": {
+                "value": "103.214953",
+                "source": "commons-desc-page"
+              },
+              "GPSMapDatum": {
+                "value": "WGS-84",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "The cucumber plants showing symptom of Downy Mildew on the leaves where blocky yellow areas are visible on adaxial surface. After blocky yellow areas appear on leaves, they would expand rapidly and turn brown.\nCucurbitaceae downy mildew is caused by Pseudoperonospora cubensis and it is specific to cucurbits. The disease is one of the most significant diseases of cucurbits worldwide.",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2024-04-29 09:58:33",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a href=\"//commons.wikimedia.org/wiki/User:Wee_Hong\" title=\"User:Wee Hong\">Wee Hong</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY-SA 4.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution-Share Alike 4.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by-sa/4.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-sa-4.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "25221133": {
+        "pageid": 25221133,
+        "ns": 6,
+        "title": "File:Early blight on tomato leaves (7871930010).jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 3591091,
+            "width": 3872,
+            "height": 2592,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Early_blight_on_tomato_leaves_%287871930010%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Early_blight_on_tomato_leaves_(7871930010).jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=25221133",
+            "sha1": "135b5fbef889bcd761a2ac5f2304254e26382fc3",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2013-03-21 17:54:44",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Early blight on tomato leaves (7871930010)",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Alternaria solani|Taken with Nikon D200|Flickr images reviewed by File Upload Bot (Magnus Manske)|Solanum lycopersicum leaves|Photographs taken on 2012-08-23|Files uploaded from Flickr by Jacopo Werther via Bot|Photographs by Dwight Sipler",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Early blight on tomato leaves",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2012-08-23 12:18",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<p><a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/photos/photofarmer/7871930010/\">Early blight on tomato leaves</a>\n</p>\n<ul><li>Uploaded by <a href=\"//commons.wikimedia.org/wiki/User:Jacopo_Werther\" title=\"User:Jacopo Werther\">Jacopo Werther</a></li></ul>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/62528187@N00\">Dwight Sipler</a> from Stow, MA, USA",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY 2.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution 2.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by/2.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-2.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "4600566": {
+        "pageid": 4600566,
+        "ns": 6,
+        "title": "File:Falscher Mehltau.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 834025,
+            "width": 1600,
+            "height": 1200,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Falscher_Mehltau.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Falscher_Mehltau.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=4600566",
+            "sha1": "8b4de166d8255d776fa1d7d018cd1c4a478f2cda",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2008-08-21 15:18:21",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Falscher Mehltau",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Pseudoperonospora cubensis|GFDL|Taken with Canon PowerShot A60|Mildew|License migration redundant|Self-published work|Diseases and disorders of leaves|Files with coordinates missing SDC location of creation (50° N, 11° E)|Diseases and disorders of Cucurbitaceae",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "GPSLatitude": {
+                "value": "50.939098",
+                "source": "commons-desc-page"
+              },
+              "GPSLongitude": {
+                "value": "11.611487",
+                "source": "commons-desc-page"
+              },
+              "GPSMapDatum": {
+                "value": "WGS-84",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Downy Mildew on a cucumber (typical mosaik structure on the upper side of the leave)",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2008-07-26",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "Christian Hummert (<a href=\"//commons.wikimedia.org/wiki/User:Ixitixel\" title=\"User:Ixitixel\">Ixitixel</a>)",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY-SA 3.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution-Share Alike 3.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by-sa/3.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-sa-3.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "38349375": {
+        "pageid": 38349375,
+        "ns": 6,
+        "title": "File:Potato Late Blight.JPG",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 674443,
+            "width": 2048,
+            "height": 1536,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Potato_Late_Blight.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Potato_Late_Blight.JPG",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=38349375",
+            "sha1": "7b5e3f56af887bd1f2ac59b701ae26fc4fac2590",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2015-02-12 14:14:48",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Potato Late Blight",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Potato blight caused by Phytophthora infestans|Self-published work|Taken with Sony Ericsson K800i",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Potato leaf infected by Phytophthora infestans",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2006-08-24 08:55:48",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Bj%C3%B6rn_Andersson_(SLU)&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Björn Andersson (SLU) (page does not exist)\">Björn Andersson (SLU)</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY-SA 4.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution-Share Alike 4.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by-sa/4.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-sa-4.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "109825074": {
+        "pageid": 109825074,
+        "ns": 6,
+        "title": "File:Septoria leaf spot symptoms on tomato leaf (Septoria lycopersici on Solanum lycopersicum leaf).jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 907222,
+            "width": 2219,
+            "height": 2728,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Septoria_leaf_spot_symptoms_on_tomato_leaf_%28Septoria_lycopersici_on_Solanum_lycopersicum_leaf%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Septoria_leaf_spot_symptoms_on_tomato_leaf_(Septoria_lycopersici_on_Solanum_lycopersicum_leaf).jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=109825074",
+            "sha1": "7af1c3d5cdfdc9eec76ea17234c07c292c961faa",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2021-09-08 11:12:32",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Septoria leaf spot symptoms on tomato leaf (Septoria lycopersici on Solanum lycopersicum leaf)",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Solanum lycopersicum|Septoria|Diseases and disorders of plants|Self-published work",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "The disease symptoms of tomato leaf spot, caused by Septoria lycopersici, on a tomato leaf (Solanum lycopersicum). Scale on orange bar on RHS is in mm and cm. Taken September 2021 on variety Sungold grown outdoors in domestic garden.",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2021-09-08",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a href=\"//commons.wikimedia.org/wiki/User:MerielGJones\" title=\"User:MerielGJones\">MerielGJones</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY-SA 4.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution-Share Alike 4.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by-sa/4.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-sa-4.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "154182255": {
+        "pageid": 154182255,
+        "ns": 6,
+        "title": "File:Solanum lycopersicum - spider mite -Clemson University - USDA.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 5086486,
+            "width": 3072,
+            "height": 3072,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Solanum_lycopersicum_-_spider_mite_-Clemson_University_-_USDA.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Solanum_lycopersicum_-_spider_mite_-Clemson_University_-_USDA.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=154182255",
+            "sha1": "b6151b9f32f6ca019a106e28c168dae5d6648616",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2025-05-14 23:55:14",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Solanum lycopersicum - spider mite -Clemson University - USDA",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Tetranychus urticae|Pests|Files from external sources with reviewed licenses|Diseases and disorders of Solanum lycopersicum|Images from IPM Images",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "The spider mites have covered the tomato plant (Solanum lycopersicum) with a spider web.",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "01.06.2011",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<table style=\"width:100%; border:1px solid #aaa; background:#efd; text-align:center\">\n<tbody><tr>\n<td><span typeof=\"mw:File\"><a href=\"//commons.wikimedia.org/wiki/File:Nectria_coccinea_2.jpg\" class=\"mw-file-description\"><img src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Nectria_coccinea_2.jpg/120px-Nectria_coccinea_2.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"70\" height=\"53\" class=\"mw-file-element\" srcset=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Nectria_coccinea_2.jpg/250px-Nectria_coccinea_2.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail 2x\" data-file-width=\"1536\" data-file-height=\"1152\"></a></span>\n</td>\n<td>This image is <a rel=\"nofollow\" class=\"external text\" href=\"https://www.ipmimages.org/browse/detail.cfm?imgnum=1234228\">Image Number 1234228</a> at <a rel=\"nofollow\" class=\"external text\" href=\"https://www.ipmimages.org\">IPM Images</a>, a source for agricultural and pest management pictures operated by the <a rel=\"nofollow\" class=\"external text\" href=\"https://www.bugwood.org/index.cfm\">Center for Invasive Species and Ecosystem Health</a>, <a rel=\"nofollow\" class=\"external text\" href=\"http://www.ext.colostate.edu/\">Colorado State University</a>, <a rel=\"nofollow\" class=\"external text\" href=\"http://www.sripmc.org/\">USDA CSREES</a> and the <a rel=\"nofollow\" class=\"external text\" href=\"http://www.sepdn.org/DesktopDefault.aspx\">Southern Plant Diagnostic Network</a>.\n</td></tr></tbody></table>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "Clemson University - USDA Cooperative Extension Slide Series , Bugwood.org",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY 3.0 us",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution 3.0 us",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-3.0-us",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "7829856": {
+        "pageid": 7829856,
+        "ns": 6,
+        "title": "File:Sphaerotheca fusca on Cucumber leaves.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 3489085,
+            "width": 3264,
+            "height": 2448,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Sphaerotheca_fusca_on_Cucumber_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Sphaerotheca_fusca_on_Cucumber_leaves.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=7829856",
+            "sha1": "3822372bb66446743a882766096c9c1ddf0a5e0e",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2009-09-16 18:37:55",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Sphaerotheca fusca on Cucumber leaves",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Podosphaera fusca|GFDL|Taken with Panasonic Lumix DMC-FZ18|CC-BY-SA-3.0,2.5,2.0,1.0|License migration redundant|Self-published work",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "<i><a href=\"//commons.wikimedia.org/w/index.php?title=Sphaerotheca_fusca&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"Sphaerotheca fusca (page does not exist)\">Sphaerotheca fusca</a></i> syn. <i>Sphaerotheca fuliginea</i> on Cucumber leaves",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2009-09-16",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a href=\"//commons.wikimedia.org/wiki/User:Rasbak\" title=\"User:Rasbak\">Rasbak</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY-SA 3.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution-Share Alike 3.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by-sa/3.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-sa-3.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "37132956": {
+        "pageid": 37132956,
+        "ns": 6,
+        "title": "File:Tomato Leaf Mold.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 18673,
+            "width": 384,
+            "height": 288,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Tomato_Leaf_Mold.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Tomato_Leaf_Mold.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=37132956",
+            "sha1": "7c528c42537a95220bb12620caaafb1a2286826c",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2014-12-04 06:42:10",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Tomato Leaf Mold",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Passalora fulva|Files from external sources with reviewed licenses|Images from Forestry Images|Diseases and disorders of Solanum lycopersicum leaves",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Symptoms on Tomato Leaf Mold",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2013-01-02",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<table style=\"width:100%; border:1px solid #aaa; background:#efd; text-align:center\">\n<tbody><tr>\n<td><span typeof=\"mw:File\"><a href=\"//commons.wikimedia.org/wiki/File:Juniperus_scopulorum.jpg\" class=\"mw-file-description\"><img src=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Juniperus_scopulorum.jpg/60px-Juniperus_scopulorum.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail\" decoding=\"async\" loading=\"lazy\" width=\"55\" height=\"79\" class=\"mw-file-element\" srcset=\"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/93/Juniperus_scopulorum.jpg/120px-Juniperus_scopulorum.jpg?utm_source=commons.wikimedia.org&amp;utm_campaign=parser&amp;utm_content=thumbnail 2x\" data-file-width=\"2048\" data-file-height=\"2960\"></a></span>\n</td>\n<td>This image is <a rel=\"nofollow\" class=\"external text\" href=\"https://www.forestryimages.org/browse/detail.cfm?imgnum=5487925\">Image Number 5487925</a> at <a rel=\"nofollow\" class=\"external text\" href=\"https://www.forestryimages.org\">Forestry Images</a>, a source for forest health, natural resources and silviculture images operated by <a rel=\"nofollow\" class=\"external text\" href=\"https://www.bugwood.org\">The Bugwood Network</a> at the University of Georgia and the <a rel=\"nofollow\" class=\"external text\" href=\"https://www.fs.fed.us\">USDA Forest Service</a>.\n<p>Check archived versions at <a rel=\"nofollow\" class=\"external text\" href=\"https://web.archive.org/https://www.forestryimages.org/browse/detail.cfm?imgnum=5487925\">web.archive</a>/<a rel=\"nofollow\" class=\"external text\" href=\"https://archive.is/https://www.forestryimages.org/browse/detail.cfm?imgnum=5487925\">archive.is</a> or on <a rel=\"nofollow\" class=\"external text\" href=\"https://www.insectimages.org/browse/detail.cfm?imgnum=5487925\">insectimages.org</a>\n</p>\n</td></tr></tbody></table>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "Elizabeth Bush, Virginia Polytechnic Institute and State University",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY 3.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution 3.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by/3.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-3.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "39933479": {
+        "pageid": 39933479,
+        "ns": 6,
+        "title": "File:Tomato late blight leaf sporulating lesions 1 (5816170621).jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 2050507,
+            "width": 2784,
+            "height": 1856,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/4/43/Tomato_late_blight_leaf_sporulating_lesions_1_%285816170621%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Tomato_late_blight_leaf_sporulating_lesions_1_(5816170621).jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=39933479",
+            "sha1": "4f754482c7ccdfdd8cd8f7df3382f5a57cfcaf9f",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2015-05-03 01:25:23",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Tomato late blight leaf sporulating lesions 1 (5816170621)",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "CC-Zero|Items with VRTS permission confirmed|Photographs by Scot Nelson|Late blight in tomatoes caused by Phytophthora infestans",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Late blight of tomato (Lycopersicon esculentum) in a garden near Hilo, Hawaii, caused by Phyophthora infestans",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2007-05-01 11:52",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/photos/scotnelson/5816170621/\">tomato_late_blight_leaf_sporulating_lesions_1</a>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/62295966@N07\">Scot Nelson</a> from Honolulu, Hawaii, USA",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Zero, Public Domain Dedication",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "182157026": {
+        "pageid": 182157026,
+        "ns": 6,
+        "title": "File:Tomato septoria leaf spot 3026.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 4215709,
+            "width": 3840,
+            "height": 2160,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Tomato_septoria_leaf_spot_3026.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:Tomato_septoria_leaf_spot_3026.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=182157026",
+            "sha1": "67f079e42c6b388e111af496dcf3e12f62a84cd4",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2026-01-21 00:23:21",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Tomato septoria leaf spot 3026",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "CC-Zero|Self-published work|Solanum lycopersicum leaves|Diseases and disorders of Solanum lycopersicum leaves|Septoria leaf blotch",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Tomato leaves with septoria leaf spot fungus",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2026-01-20 19:04:03",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Wolan268&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Wolan268 (page does not exist)\">Wolan268</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Zero, Public Domain Dedication",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "false",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      },
+      "126349025": {
+        "pageid": 126349025,
+        "ns": 6,
+        "title": "File:Картопля фітофтороз IMG20220820102315.jpg",
+        "imagerepository": "local",
+        "imageinfo": [
+          {
+            "size": 22360808,
+            "width": 6944,
+            "height": 9280,
+            "url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D0%BF%D0%BB%D1%8F_%D1%84%D1%96%D1%82%D0%BE%D1%84%D1%82%D0%BE%D1%80%D0%BE%D0%B7_IMG20220820102315.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+            "descriptionurl": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D0%BF%D0%BB%D1%8F_%D1%84%D1%96%D1%82%D0%BE%D1%84%D1%82%D0%BE%D1%80%D0%BE%D0%B7_IMG20220820102315.jpg",
+            "descriptionshorturl": "https://commons.wikimedia.org/w/index.php?curid=126349025",
+            "sha1": "1261daec6e63079d1ebb0b134938e2c5f36c478f",
+            "extmetadata": {
+              "DateTime": {
+                "value": "2022-12-05 19:28:45",
+                "source": "mediawiki-metadata",
+                "hidden": ""
+              },
+              "ObjectName": {
+                "value": "Картопля фітофтороз IMG20220820102315",
+                "source": "mediawiki-metadata"
+              },
+              "CommonsMetadataExtension": {
+                "value": 1.2,
+                "source": "extension",
+                "hidden": ""
+              },
+              "Categories": {
+                "value": "Potato blight caused by Phytophthora infestans|Nemishaieve|Self-published work|Potatoes in Ukraine|Files with coordinates missing SDC location of creation|Uploaded via Campaign:espc-ua|Living organisms images from Wiki Science Competition in Ukraine 2022|Images from Wiki Science Competition 2022 in Ukraine",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "Assessments": {
+                "value": "",
+                "source": "commons-categories",
+                "hidden": ""
+              },
+              "GPSLatitude": {
+                "value": "50.562070",
+                "source": "commons-desc-page"
+              },
+              "GPSLongitude": {
+                "value": "30.097650",
+                "source": "commons-desc-page"
+              },
+              "GPSMapDatum": {
+                "value": "WGS-84",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "ImageDescription": {
+                "value": "Potatoes sick with late blight.",
+                "source": "commons-desc-page"
+              },
+              "DateTimeOriginal": {
+                "value": "2022-08-20 10:23:15",
+                "source": "commons-desc-page"
+              },
+              "Credit": {
+                "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+                "source": "commons-desc-page"
+              },
+              "Artist": {
+                "value": "<a href=\"//commons.wikimedia.org/wiki/User:%D0%A1%D0%B0%D1%80%D0%B0%D0%BF%D1%83%D0%BB%D0%BE%D0%B2\" title=\"User:Сарапулов\">Сарапулов</a>",
+                "source": "commons-desc-page"
+              },
+              "LicenseShortName": {
+                "value": "CC BY 4.0",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "UsageTerms": {
+                "value": "Creative Commons Attribution 4.0",
+                "source": "commons-desc-page"
+              },
+              "AttributionRequired": {
+                "value": "true",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "LicenseUrl": {
+                "value": "https://creativecommons.org/licenses/by/4.0",
+                "source": "commons-desc-page"
+              },
+              "Copyrighted": {
+                "value": "True",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "Restrictions": {
+                "value": "",
+                "source": "commons-desc-page",
+                "hidden": ""
+              },
+              "License": {
+                "value": "cc-by-4.0",
+                "source": "commons-templates",
+                "hidden": ""
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

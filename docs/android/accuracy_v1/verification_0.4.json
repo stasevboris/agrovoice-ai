@@ -1,0 +1,180 @@
+{
+  "status": "passed",
+  "apk": "artifacts\\apk\\AgroVoice-model-lab-0.4.apk",
+  "apk_sha256": "cd1dd9bb55f466595e664365835448a0665d8e52cf7bf8cdb685681e94e03c1d",
+  "apk_bytes": 134984926,
+  "modes": [
+    "mobilenet_v3_large",
+    "yolo11n",
+    "yolo26n",
+    "yolo26s"
+  ],
+  "photos": [
+    "01_potato_late_blight.jpg",
+    "05_tomato_septoria_2026.jpg",
+    "09_cucumber_downy_mildew_2024.jpg"
+  ],
+  "results": 12,
+  "comparisons": [
+    {
+      "mode": "yolo11n",
+      "stage": "detector",
+      "graph_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00115966796875
+    },
+    {
+      "mode": "yolo26n",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125
+    },
+    {
+      "mode": "mobilenet_v3_large",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125
+    },
+    {
+      "mode": "mobilenet_v3_large",
+      "stage": "classifier",
+      "graph_sha256": "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 5.245208740234375e-06
+    },
+    {
+      "mode": "yolo26s",
+      "stage": "detector",
+      "graph_sha256": "9631b6073310657435eb30d93dcc7314b5e29dcce73498736a71021b132d2c1e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.000396728515625
+    }
+  ],
+  "android_ort": "1.30.0",
+  "desktop_ort": "1.26.0",
+  "scope": "Actual Android tensors and graphs, three manual examples; not an accuracy sample",
+  "manual_results": [
+    {
+      "model": "yolo11n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 126.202552,
+      "pipeline_ms": 541.414687,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 108.580208,
+      "pipeline_ms": 388.925677,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 178.956406,
+      "pipeline_ms": 578.543021,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 337.972344,
+      "pipeline_ms": 688.111979,
+      "skipped": 0
+    },
+    {
+      "model": "yolo11n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 5,
+      "inference_ms": 123.152708,
+      "pipeline_ms": 308.290469,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 2,
+      "inference_ms": 112.818646,
+      "pipeline_ms": 313.489583,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 1,
+      "inference_ms": 249.675573,
+      "pipeline_ms": 610.9475,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 4,
+      "inference_ms": 343.298177,
+      "pipeline_ms": 645.64802,
+      "skipped": 0
+    },
+    {
+      "model": "yolo11n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 1,
+      "inference_ms": 127.985052,
+      "pipeline_ms": 315.553281,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 110.659791,
+      "pipeline_ms": 310.932291,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 258.392553,
+      "pipeline_ms": 626.354739,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 9,
+      "inference_ms": 342.470886,
+      "pipeline_ms": 642.435573,
+      "skipped": 0
+    }
+  ]
+}

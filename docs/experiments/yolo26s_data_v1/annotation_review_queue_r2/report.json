@@ -1,0 +1,20 @@
+{
+  "status": "review_queue_only_not_training_manifest",
+  "updated_utc": "2026-10-06T16:03:22.529722+00:00",
+  "records": 55992,
+  "olid_geometry_joined": 1047,
+  "geometry_status_counts": {
+    "visually_reviewed_source_sample_box": 1047
+  },
+  "accepted_train": 0,
+  "gpu": false,
+  "input_sha256": {
+    "docs\\experiments\\yolo26s_data_v1\\annotation_review_queue_r1\\queue.jsonl": "2957a79726469cedfccf9ee195f0a5e39c93b5e8860b0f75ae697cc7a51d7d59",
+    "docs\\experiments\\yolo26s_data_v1\\olid_original_geometry_r3\\geometry_adjudication.json": "6990318d511c0954947b52a0fd1beba362b2eacdd01d26ca4be6740b2e059214"
+  },
+  "queue_sha256": "6b43098fde77978b35ab8a6ce20dc04797f39dd312cc37c417ba4b907c6e86c3",
+  "limitations": [
+    "Geometry acceptance does not accept disease mapping or independent physical groups.",
+    "All prior quarantine and historical split restrictions preserved."
+  ]
+}

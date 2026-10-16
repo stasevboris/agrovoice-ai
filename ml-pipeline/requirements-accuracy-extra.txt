@@ -1,0 +1,18 @@
+# Install with --no-deps into runtime/accuracy_site. Never replace ROCm torch/torchvision.
+faster-coco-eval==1.7.2
+scipy==1.16.3
+tensorboard==2.20.0
+calflops==0.3.2
+safetensors==0.6.2
+transformers==4.57.3
+huggingface-hub==0.36.0
+tokenizers==0.22.1
+regex==2025.11.3
+absl-py==2.3.1
+grpcio==1.76.0
+Markdown==3.10
+Werkzeug==3.1.4
+fsspec==2025.10.0
+tqdm==4.67.1
+tensorboard-data-server==0.7.2
+accelerate==1.12.0

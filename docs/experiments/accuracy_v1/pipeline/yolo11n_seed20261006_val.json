@@ -1,0 +1,339 @@
+{
+  "model": {
+    "id": "yolo11n",
+    "name": "YOLO11n",
+    "asset": "/mnt/f/agrovoice-ai/runs/detect/study10_v2_yolo11n_seed20261006/weights/best.onnx",
+    "sha256": "d08e01bbe5883c5e05d63c54e8f5100269b5d2fe8cbdf469765f92b660d29582",
+    "bytes": 10530938,
+    "source": "/mnt/f/agrovoice-ai/runs/detect/study10_v2_yolo11n_seed20261006",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ],
+    "family": "yolo",
+    "seed": 20261006,
+    "detector_seed": 20261006,
+    "dataset": "clean v2",
+    "provisional": true,
+    "side": 416,
+    "evaluation_pairing": "same seed across detector and classifier, independently repeated training; shared val data"
+  },
+  "split": "val",
+  "images": 349,
+  "partial": false,
+  "disease_detection": {
+    "map50_95": 0.28999262126141384,
+    "map50": 0.4306551013796084
+  },
+  "diagnosis_at_fixed_threshold": {
+    "threshold": 0.25,
+    "matching_iou": 0.5,
+    "gt_leaves": 1309,
+    "matched_leaves": 967,
+    "correctly_diagnosed_gt_leaves": 737,
+    "leaf_localization_recall": 0.7387318563789153,
+    "correct_class_and_box_recall": 0.5630252100840336,
+    "classification_accuracy_on_matched_boxes": 0.7621509824198552,
+    "macro_f1": 0.42122002677962556,
+    "classes": [
+      {
+        "id": 0,
+        "tp": 3,
+        "fn": 26,
+        "fp": 5,
+        "precision": 0.375,
+        "recall": 0.10344827586206896,
+        "f1": 0.16216216216216217
+      },
+      {
+        "id": 1,
+        "tp": 27,
+        "fn": 18,
+        "fp": 29,
+        "precision": 0.48214285714285715,
+        "recall": 0.6,
+        "f1": 0.5346534653465347
+      },
+      {
+        "id": 2,
+        "tp": 23,
+        "fn": 22,
+        "fp": 21,
+        "precision": 0.5227272727272727,
+        "recall": 0.5111111111111111,
+        "f1": 0.5168539325842696
+      },
+      {
+        "id": 3,
+        "tp": 34,
+        "fn": 10,
+        "fp": 90,
+        "precision": 0.27419354838709675,
+        "recall": 0.7727272727272727,
+        "f1": 0.4047619047619047
+      },
+      {
+        "id": 4,
+        "tp": 16,
+        "fn": 20,
+        "fp": 23,
+        "precision": 0.41025641025641024,
+        "recall": 0.4444444444444444,
+        "f1": 0.42666666666666664
+      },
+      {
+        "id": 5,
+        "tp": 107,
+        "fn": 48,
+        "fp": 128,
+        "precision": 0.4553191489361702,
+        "recall": 0.6903225806451613,
+        "f1": 0.5487179487179488
+      },
+      {
+        "id": 6,
+        "tp": 17,
+        "fn": 12,
+        "fp": 46,
+        "precision": 0.2698412698412698,
+        "recall": 0.5862068965517241,
+        "f1": 0.3695652173913043
+      },
+      {
+        "id": 7,
+        "tp": 6,
+        "fn": 14,
+        "fp": 4,
+        "precision": 0.6,
+        "recall": 0.3,
+        "f1": 0.4
+      },
+      {
+        "id": 8,
+        "tp": 34,
+        "fn": 14,
+        "fp": 35,
+        "precision": 0.4927536231884058,
+        "recall": 0.7083333333333334,
+        "f1": 0.5811965811965812
+      },
+      {
+        "id": 9,
+        "tp": 17,
+        "fn": 2,
+        "fp": 2,
+        "precision": 0.8947368421052632,
+        "recall": 0.8947368421052632,
+        "f1": 0.8947368421052632
+      },
+      {
+        "id": 10,
+        "tp": 98,
+        "fn": 28,
+        "fp": 88,
+        "precision": 0.5268817204301075,
+        "recall": 0.7777777777777778,
+        "f1": 0.6282051282051282
+      },
+      {
+        "id": 11,
+        "tp": 0,
+        "fn": 7,
+        "fp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "id": 12,
+        "tp": 10,
+        "fn": 44,
+        "fp": 17,
+        "precision": 0.37037037037037035,
+        "recall": 0.18518518518518517,
+        "f1": 0.24691358024691354
+      },
+      {
+        "id": 13,
+        "tp": 14,
+        "fn": 8,
+        "fp": 34,
+        "precision": 0.2916666666666667,
+        "recall": 0.6363636363636364,
+        "f1": 0.4
+      },
+      {
+        "id": 14,
+        "tp": 49,
+        "fn": 28,
+        "fp": 74,
+        "precision": 0.3983739837398374,
+        "recall": 0.6363636363636364,
+        "f1": 0.49
+      },
+      {
+        "id": 15,
+        "tp": 17,
+        "fn": 13,
+        "fp": 38,
+        "precision": 0.3090909090909091,
+        "recall": 0.5666666666666667,
+        "f1": 0.39999999999999997
+      },
+      {
+        "id": 16,
+        "tp": 33,
+        "fn": 15,
+        "fp": 41,
+        "precision": 0.44594594594594594,
+        "recall": 0.6875,
+        "f1": 0.540983606557377
+      },
+      {
+        "id": 17,
+        "tp": 55,
+        "fn": 10,
+        "fp": 35,
+        "precision": 0.6111111111111112,
+        "recall": 0.8461538461538461,
+        "f1": 0.7096774193548387
+      },
+      {
+        "id": 18,
+        "tp": 5,
+        "fn": 23,
+        "fp": 12,
+        "precision": 0.29411764705882354,
+        "recall": 0.17857142857142858,
+        "f1": 0.22222222222222224
+      },
+      {
+        "id": 19,
+        "tp": 45,
+        "fn": 31,
+        "fp": 57,
+        "precision": 0.4411764705882353,
+        "recall": 0.5921052631578947,
+        "f1": 0.5056179775280898
+      },
+      {
+        "id": 20,
+        "tp": 20,
+        "fn": 27,
+        "fp": 52,
+        "precision": 0.2777777777777778,
+        "recall": 0.425531914893617,
+        "f1": 0.3361344537815126
+      },
+      {
+        "id": 21,
+        "tp": 6,
+        "fn": 20,
+        "fp": 16,
+        "precision": 0.2727272727272727,
+        "recall": 0.23076923076923078,
+        "f1": 0.24999999999999994
+      },
+      {
+        "id": 22,
+        "tp": 25,
+        "fn": 3,
+        "fp": 24,
+        "precision": 0.5102040816326531,
+        "recall": 0.8928571428571429,
+        "f1": 0.6493506493506493
+      },
+      {
+        "id": 23,
+        "tp": 5,
+        "fn": 8,
+        "fp": 11,
+        "precision": 0.3125,
+        "recall": 0.38461538461538464,
+        "f1": 0.3448275862068966
+      },
+      {
+        "id": 24,
+        "tp": 32,
+        "fn": 49,
+        "fp": 42,
+        "precision": 0.43243243243243246,
+        "recall": 0.3950617283950617,
+        "f1": 0.4129032258064516
+      },
+      {
+        "id": 25,
+        "tp": 7,
+        "fn": 47,
+        "fp": 13,
+        "precision": 0.35,
+        "recall": 0.12962962962962962,
+        "f1": 0.18918918918918917
+      },
+      {
+        "id": 26,
+        "tp": 0,
+        "fn": 1,
+        "fp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "id": 27,
+        "tp": 18,
+        "fn": 12,
+        "fp": 21,
+        "precision": 0.46153846153846156,
+        "recall": 0.6,
+        "f1": 0.5217391304347826
+      },
+      {
+        "id": 28,
+        "tp": 14,
+        "fn": 12,
+        "fp": 13,
+        "precision": 0.5185185185185185,
+        "recall": 0.5384615384615384,
+        "f1": 0.5283018867924528
+      },
+      {
+        "id": 29,
+        "tp": 0,
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    ],
+    "matching": "Score-ordered class-agnostic IoU matching, one prediction per GT; unmatched leaves penalized"
+  },
+  "proposed_leaves": 0,
+  "skipped_leaves": 0,
+  "desktop_pipeline_ms": {
+    "median": 29.899397999997746,
+    "p95": 93.8762667999981
+  },
+  "note": "Shared desktop ONNX protocol. Desktop timing is not Android timing. Seed03 prototype is not ten-run result.",
+  "protocol": {
+    "detector_nms_iou": 0.7,
+    "proposal_threshold": 0.1,
+    "max_classified": 32,
+    "max_detections": 300,
+    "field_matching_iou": 0.5,
+    "confidence_for_f1": 0.25,
+    "score": "detector score * classifier softmax for two-stage",
+    "preprocessing": "cv2 detector letterbox; PIL square crop for classifier, unresized original photo",
+    "original_study_comparability": "Original Ultralytics multi-label evaluator differs; compare all modes under this shared protocol"
+  },
+  "manifest_sha256": "9b4d7fdb8a132c59ff7e0aac3c48f3d43ba9ac45ece20656b3c7c82af114d5ad",
+  "code_sha256": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a"
+}

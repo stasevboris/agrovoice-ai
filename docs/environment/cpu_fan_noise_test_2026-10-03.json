@@ -1,0 +1,212 @@
+{
+  "cutoff_celsius": 70,
+  "stop_reason": "60-second timeout",
+  "before": {
+    "celsius": 63.250008,
+    "utc": "2026-10-03T18:05:03.2661596Z",
+    "rpm": null,
+    "temperature_identifier": "/amdcpu/0/temperature/2"
+  },
+  "requested_seconds": 60,
+  "samples": [
+    {
+      "celsius": 63.625008,
+      "utc": "2026-10-03T18:05:05.6347287Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 60.125008,
+      "utc": "2026-10-03T18:05:07.6545791Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 59.375008,
+      "utc": "2026-10-03T18:05:09.6808064Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 57.250008,
+      "utc": "2026-10-03T18:05:11.7057837Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 55.500008,
+      "utc": "2026-10-03T18:05:13.7385319Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 54.125008,
+      "utc": "2026-10-03T18:05:15.7586209Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 56.750008,
+      "utc": "2026-10-03T18:05:17.7877391Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 58.125008,
+      "utc": "2026-10-03T18:05:19.8249347Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 58.000008,
+      "utc": "2026-10-03T18:05:21.8422610Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 63.750008,
+      "utc": "2026-10-03T18:05:23.8727402Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 62.875008,
+      "utc": "2026-10-03T18:05:25.8931721Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 61.000008,
+      "utc": "2026-10-03T18:05:27.9151817Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 57.875008,
+      "utc": "2026-10-03T18:05:29.9394313Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 55.375008,
+      "utc": "2026-10-03T18:05:31.9588626Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 56.000008,
+      "utc": "2026-10-03T18:05:34.0020209Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 53.875008,
+      "utc": "2026-10-03T18:05:36.0533184Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 52.000008,
+      "utc": "2026-10-03T18:05:38.0772381Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 53.875008,
+      "utc": "2026-10-03T18:05:40.1006043Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 51.875008,
+      "utc": "2026-10-03T18:05:42.1247459Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 52.125008,
+      "utc": "2026-10-03T18:05:44.1495024Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 53.250008,
+      "utc": "2026-10-03T18:05:46.1603154Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 52.500008,
+      "utc": "2026-10-03T18:05:48.1838516Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 50.875008,
+      "utc": "2026-10-03T18:05:50.1963810Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 53.000008,
+      "utc": "2026-10-03T18:05:52.2264756Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 51.000008,
+      "utc": "2026-10-03T18:05:54.2555154Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 49.625008,
+      "utc": "2026-10-03T18:05:56.2809689Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 48.625008,
+      "utc": "2026-10-03T18:05:58.3978989Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 50.625008,
+      "utc": "2026-10-03T18:06:00.4139137Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 49.750008,
+      "utc": "2026-10-03T18:06:02.4242727Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    },
+    {
+      "celsius": 49.875008,
+      "utc": "2026-10-03T18:06:04.4374536Z",
+      "rpm": null,
+      "temperature_identifier": "/amdcpu/0/temperature/2"
+    }
+  ],
+  "study_resume_exit_code": 0,
+  "rpm_feedback_available": false,
+  "started_utc": "2026-10-03T18:04:50.7782829Z",
+  "after": {
+    "celsius": 52.875008,
+    "utc": "2026-10-03T18:06:07.4642979Z",
+    "rpm": null,
+    "temperature_identifier": "/amdcpu/0/temperature/2"
+  },
+  "ended_utc": "2026-10-03T18:06:07.6148483Z",
+  "watchdog_pid": 18708,
+  "loaded_temperature": {
+    "celsius": 81.125,
+    "utc": "2026-10-03T18:04:53.9077097Z",
+    "rpm": null,
+    "temperature_identifier": "/amdcpu/0/temperature/2"
+  },
+  "elapsed_seconds": 60.8,
+  "status": "original_profile_restore_requested"
+}

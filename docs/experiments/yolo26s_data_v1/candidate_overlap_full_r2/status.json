@@ -1,0 +1,28 @@
+{
+  "status": "completed_overlap_screen_requires_review",
+  "pid": 26176,
+  "gpu": false,
+  "training_accepted": 0,
+  "input_sha256": {
+    "docs\\experiments\\yolo26s_data_v1\\plantvillage_full_geometry_r1\\records.jsonl": "de9c454e495ed86e06be6478eb3511c8da3016a139cc46c0db7b3a1cf4b65ff8",
+    "docs\\experiments\\yolo26s_data_v1\\cucumber_review\\inventory.json": "47700e9ce7609f7ac519f4bf76a082b4b73a35c99b2aa478e9ba6c0605445ef9",
+    "docs\\experiments\\yolo26s_data_v1\\olid_review_r2_chroma\\inventory.json": "61a7fcfbac0e1d3d4eb6270a99031bbbdf3656b5dd878bc338e9a2d90477db4f",
+    "ml-pipeline\\dataset_clean_v2\\manifest.json": "6eeb02546dfe35f48cd6a8f37931b325e74b8c338e62c0c18708e3784832abfe"
+  },
+  "counts": {
+    "images": 43735,
+    "checked": 43735,
+    "candidate_links": 28,
+    "historical_links": 792,
+    "historical_internal_links": 37,
+    "suggested_components": 42879
+  },
+  "algorithm": "Five exhaustive pHash bands then exact existing near() verification; decoded exact also indexed",
+  "limitations": [
+    "Links do not prove physical plant identity; no split acceptance.",
+    "Rotations, opposite leaf sides, crops or large lighting changes may be missed.",
+    "Old holdout images never move to training; historical matches are not new independent test."
+  ],
+  "updated_utc": "2026-10-05T06:32:41.228008+00:00",
+  "links_sha256": "368163d65a45b000a5852310e9f64c2f5da2b0c8f59bb38514a344e8fd56223d"
+}

@@ -1,142 +1,24 @@
-# 🌿 AgroVoice AI (PhytoGuard)
-> **Интеллектуальная система фитосанитарного мониторинга со встроенным голосовым ассистентом**  
-> *Client-Server Android Application with Edge AI (YOLOv11n), Two-Tier Voice Pipeline (Porcupine + Whisper) & Decision Support System (DSS)*
+# AgroVoice AI
 
-[![Android](https://img.shields.io/badge/Platform-Android_10+-3DDC84?style=flat&logo=android&logoColor=white)](https://developer.android.com)
-[![Kotlin](https://img.shields.io/badge/Language-Kotlin_2.0-7F52FF?style=flat&logo=kotlin&logoColor=white)](https://kotlinlang.org)
-[![SQLite](https://img.shields.io/badge/Database-SQLite_3-003B57?style=flat&logo=sqlite&logoColor=white)](https://www.sqlite.org)
-[![YOLOv11](https://img.shields.io/badge/Vision-YOLOv11n_INT8-00FFFF?style=flat)](https://github.com/ultralytics/ultralytics)
-[![Whisper](https://img.shields.io/badge/Speech-Faster--Whisper-FF6F00?style=flat)](https://github.com/SYSTRAN/faster-whisper)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+Android-проект для автономного распознавания состояния листьев и ведения журнала осмотров растений.
 
----
+Основной документ: [PROJECT_GUIDE.md](PROJECT_GUIDE.md) — фактическое состояние, стек, принятые решения, журнал изменений и команды обучения.
 
-## 📌 О проекте (Problem & Solution)
+[Подробные отчёты от 4 октября](docs/reports/README.md) — состояние, стек, обучения, APK и данные. Текущая работа по решению Бориса: [YOLO26s + YOLO26n](docs/reports/07_YOLO26_FOCUS_2026-10-04.md). После10S отдельно пробуем [YOLO26m](docs/experiments/yolo26m_v1/PROTOCOL.md): пилот и проверка телефона, затем10 одинаковых запусков при технической работоспособности. Доводим10S, лучшийN seed20261012 из уже готовых10 сохраняем. DETR дальше не обучаем, прежняя очередь80 остановлена; все восемь примеров в приложении остаются. [Протокол/команды](docs/experiments/yolo26s_focus_v1/CONTINUE.md), [исследование другихYOLO](docs/research/YOLO_ALTERNATIVES_2026-10-04.md).
 
-В промышленных теплицах и открытом грунте у агронома при обходе шпалер руки постоянно загрязнены соком растений или защищены плотными перчатками со следами химикатов. Работа с сенсорным экраном планшета приводит к загрязнению техники, ложным нажатиям и замедлению обхода сотен рядов.
+[Исследование от 3 октября](docs/research/README.md): дополнительные датасеты, локальные модели Hugging Face под RX 9060 XT, настройка локальных агентов и публикация в Android-магазинах.
 
-**AgroVoice AI** — мобильная система для Android с **100% Hands-Free сценарием**:
-1. **Взгляд / Камера**: Поддержка камеры смартфона, нагрудной UVC-камеры по USB-C (OTG, 0 мс задержки) и экшн-камер GoPro по Wi-Fi.
-2. **Голос (Two-Tier)**: Постоянное слушание фразы *«Агроном»* сверхлегкой нейросетью Porcupine KWS (< 1.1% CPU, 12–15 мА), DSP-фильтрация шума насосов (300–3400 Гц) и дискретная активация Faster-Whisper INT8 на 4 секунды (WER < 6.8%).
-3. **Детекция очагов (YOLOv11n)**: Локализация Bounding Box 5 ключевых патогенов (мучнистая роса, фитофтороз, серая гниль, паутинный клещ, белокрылка) с точностью **mAP@0.5 = 93.4%** за 25–40 мс на бортовом NPU/GPU.
-4. **СППР (Госреестр СЗР)**: Рекомендация регламентов (химические эталоны и биоаналоги) с нормами расхода на 10 л воды, классами опасности и сроками ожидания (каренцией).
-5. **Автономность**: Локальная база данных Room (SQLite) и пакетная синхронизация с 1С:Агро / SCADA через FastAPI.
+На 4 октября 2026 года:
 
----
+- Android: установлена и проверена [0.11](artifacts/apk/AgroVoice-model-lab-0.11.apk): постоянное слушание с переключателем, все восемь моделей/культуры/порог голосом, камера с подтверждением или «сделай фото сразу», галерея с номерами/свайпами/подтверждением. Шесть инструментальных тестов,98/98 синтезированных команд и0 действий на16 контрольных фразах; это техническая проверка, не точность речи в поле. Повторно проверены24 визуальных результата/12 паритетных сравнений, графы прежние. [Подробный отчёт](docs/android/VOICE_CONTROLS_2026-10-04.md), [инструкция](docs/android/MODEL_LAB.md).
+- ML: YOLO26n Detect и YOLO11n для сравнения, clean v2: все 29 классов PlantDoc и огурец с неизвестным состоянием. Прежняя clean v1 сохранена как история; её 1977 train / 349 val / 236 test очищены от точных пересечений.
+- Завершена серия по 10 обучений YOLO11n и YOLO26n на [clean v2](docs/data/dataset_clean_v2.md), 2609 train и отдельная вспомогательная проверка. Первые 29 ID сохранены; добавлен огурец с неизвестным состоянием. Средний val mAP50–95: YOLO26n 0,3540 ± 0,0084, YOLO11n 0,3266 ± 0,0039. Выбранная YOLO26n прошла test и упакована; её test mAP50–95 0,4884 относится к одному выбранному запуску. [Итог серии и ограничения](docs/experiments/study10_v2/FINAL_REPORT_2026-10-04.md).
+- Существующие старые веса и данные сохранены. Прежние метрики относятся к старой выборке с пересечениями и не являются независимой оценкой.
+- Историческое одиночное сравнение clean v1: YOLO11n и YOLO26n обучены на RX 9060 XT через WSL, по 60 эпох, 416×416. У YOLO26 val mAP50–95 = 0,3627 против 0,3361 у YOLO11; test = 0,4619 против 0,4734. Это прежние отдельные веса, а не итог новой серии clean v2. [Сравнение и ограничения](docs/experiments/YOLO_COMPARISON_2026-10-03.md).
+- На Redmi Note7 завершены [новые десять серий анализа bitmap](docs/android/accuracy_v1/benchmark/summary.json): подготовка входов, все графы, вырезки и postprocess; чтение/декодирование фото, камера и отрисовка не включены. Это отличается от [прежних замеров на готовых тензорах](docs/experiments/redmi_note_7_10series/REPORT.md). A56 и Redmi9T пока не проверены.
 
-## 🏗️ Архитектура системы
+Сервер входит в итоговую версию; его разработка отложена. Естественная речь и внешняя камера — следующие этапы. Процент поражённой ткани требует отдельной разметки: текущий PlantDoc размечает целый лист.
 
-```text
-┌────────────────────────────────────────────────────────────────────────┐
-│                   АППАРАТНЫЙ УРОВЕНЬ (HANDS-FREE)                      │
-│   Нагрудная UVC-камера (USB-C OTG)  /  GoPro Wi-Fi 5GHz  /  Гарнитура  │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│               ANDROID КЛИЕНТ (Kotlin + Jetpack Compose)                │
-│                                                                        │
-│  [Audio Pipeline]                                                      │
-│  16 kHz Audio -> Porcupine KWS -> Butterworth Filter -> Whisper INT8   │
-│                                                                        │
-│  [Vision Pipeline]                                                     │
-│  Camera Frame -> Crop 640x640 -> YOLOv11n (NNAPI/GPU) -> Bounding Box  │
-│                                                                        │
-│  [On-Demand FSM & Local Storage]                                       │
-│  SQLite / Room DB (Pathogens, Treatments, InspectionLogs)              │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Wi-Fi в лаборатории (конец смены)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│             СЕРВЕР СИНХРОНИЗАЦИИ (FastAPI / Python Docker)             │
-│   POST /api/v1/sync/batch  ──>  Дедупликация  ──>  1С:Агро / SCADA    │
-└────────────────────────────────────────────────────────────────────────┘
-```
+Приоритет полевой версии: картофель, томаты, огурцы. В завершённых моделях clean v1 огурцов нет; clean v2 добавляет обнаружение огурца с неизвестным состоянием. Болезни огурцов пока не заявляем. [Источники и ограничения](docs/data/cucumber_sources.md).
 
----
-
-## 🎯 Метрики качества детекции (Тестовый датасет 1 280 очагов)
-
-| Патоген / Вредитель | Культура | Очагов (Boxes) | Precision | Recall | mAP@0.5 |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| **Мучнистая роса** (*Podosphaera xanthii*) | Огурец | 342 | 0.942 | 0.915 | **0.938** |
-| **Фитофтороз** (*Phytophthora infestans*) | Томат | 418 | 0.951 | 0.930 | **0.947** |
-| **Серая гниль** (*Botrytis cinerea*) | Томат / Перец | 185 | 0.918 | 0.894 | **0.912** |
-| **Паутинный клещ** (*Tetranychus urticae*) | Огурец / Томат | 120 | 0.895 | 0.880 | **0.891** |
-| **Тепличная белокрылка** (*Trialeurodes*) | Томат | 215 | 0.931 | 0.910 | **0.925** |
-| **ИТОГ (Micro-average, взвешенный)** | **Все культуры** | **1 280** | **0.936** | **0.913** | **0.934 (93.4%)** |
-
----
-
-## 📂 Структура репозитория
-
-```bash
-├── android-app/                  # Исходный код Android-приложения (Kotlin)
-│   ├── app/src/main/
-│   │   ├── java/com/agronomy/phytomonitor/
-│   │   │   ├── data/             # Room DB, сущности, DAO, репозитории
-│   │   │   ├── domain/           # Бизнес-логика, UseCases
-│   │   │   ├── presentation/     # Jetpack Compose экраны (Видоискатель, Журнал)
-│   │   │   └── service/          # Foreground Service (микрофон KWS)
-│   │   └── AndroidManifest.xml   # Разрешения CAMERA, RECORD_AUDIO, USB
-│   └── build.gradle.kts
-│
-├── ml-pipeline/                  # Обучение и экспорт нейросетей
-│   ├── dataset/                  # Скрипты аугментации Albumentations (HSV, Blur)
-│   ├── train_yolo.py             # Обучение YOLOv11n (PyTorch)
-│   ├── export_onnx_tflite.py     # Квантование INT8/FP16 для NNAPI
-│   └── weights/                  # Готовые веса yolov11n_int8.tflite
-│
-├── voice-engine/                 # Речевой двухстадийный конвейер
-│   ├── kws_porcupine/            # Модель ключевого слова «Агроном» (1.2 МБ)
-│   ├── dsp_filter/               # Фильтр Баттерворта 300–3400 Гц + VAD
-│   └── whisper_onnx/             # Faster-Whisper Base/Small INT8
-│
-├── server/                       # Сервер синхронизации на FastAPI
-│   ├── main.py                   # REST эндпоинты пакетной синхронизации
-│   ├── models.py                 # Pydantic схемы логов и регламентов
-│   ├── Dockerfile
-│   └── requirements.txt
-│
-└── docs/                         # Материалы дипломной работы (схемы, графики)
-```
-
----
-
-## 🚀 Быстрый старт
-
-### 1. Мобильное приложение (Android Studio)
-1. Склонируйте репозиторий:
-   ```bash
-   git clone https://github.com/your-username/agrovoice-ai.git
-   ```
-2. Откройте папку `android-app` в Android Studio (Hedgehog+).
-3. Дождитесь синхронизации Gradle и выполните запуск на смартфоне с Android 10+:
-   ```bash
-   ./gradlew installDebug
-   ```
-
-### 2. Сервер синхронизации (FastAPI)
-```bash
-cd server
-python -m venv venv
-source venv/bin/activate # или venv\Scripts\activate на Windows
-pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-```
-Документация Swagger UI доступна по адресу: `http://localhost:8000/docs`
-
----
-
-## 🛡️ Публикация в Google Play Store
-
-* **Сборка релизного бандла**: `./gradlew bundleRelease` -> `release.aab`
-* **Программа закрытого тестирования**: 20 активных тестеров в течение 14 дней согласно регламенту Google Play 2023+.
-* **Политика конфиденциальности (Privacy Policy)**: Развернута в папке `docs/privacy-policy.md`.
-
----
-
-## 📜 Лицензия и авторство
-* **Автор**: Дипломный проект (2026 г.)
-* **Лицензия**: MIT License
+Исходная версия README с концепцией сохранена в [docs/history/README_before_2026-10-03.md](docs/history/README_before_2026-10-03.md). Её показатели качества и скорости не подтверждены измерениями проекта.

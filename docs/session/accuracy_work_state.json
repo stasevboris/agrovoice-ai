@@ -1,0 +1,419 @@
+{
+  "status": "preparing_new_yolo26s_data",
+  "updated_utc": "2026-10-05T12:30:23.271054+00:00",
+  "objective": "Prepare audited expanded all-crop data, two authorized YOLO26s runs, correct new-schema evaluation and separate tested APK mode; M deferred",
+  "data": "ml-pipeline/dataset_accuracy_v1",
+  "data_source": "frozen clean v2 with inherited groups; external improvement tracked separately",
+  "seed_policy": "20261003..20261012; pilot not claimed as final result",
+  "branches": {
+    "two_stage": {
+      "mobilenet_v3_large": {
+        "completed_exports": 2,
+        "required": null,
+        "runs": [
+          "mobilenet_v3_large_seed20261003",
+          "mobilenet_v3_large_seed20261004"
+        ],
+        "status": "example_only"
+      },
+      "efficientnet_b0": {
+        "completed_exports": 1,
+        "required": null,
+        "runs": [
+          "efficientnet_b0_seed20261003"
+        ],
+        "status": "example_only"
+      }
+    },
+    "detr": {
+      "completed_exports": 1,
+      "required": null,
+      "runs": [
+        "deimv2_n_seed20261003"
+      ],
+      "status": "discontinued_by_user"
+    },
+    "larger_yolo": {
+      "completed_exports": 10,
+      "required": 10,
+      "runs": [
+        "yolo26s_seed20261003",
+        "yolo26s_seed20261004",
+        "yolo26s_seed20261005",
+        "yolo26s_seed20261006",
+        "yolo26s_seed20261007",
+        "yolo26s_seed20261008",
+        "yolo26s_seed20261009",
+        "yolo26s_seed20261010",
+        "yolo26s_seed20261011",
+        "yolo26s_seed20261012"
+      ],
+      "training_completed": 10
+    },
+    "segmentation": {
+      "leaf_mask": {
+        "completed_exports": 1,
+        "required": null,
+        "runs": [
+          "leaf_mask_seed20261003"
+        ],
+        "status": "example_only"
+      },
+      "masked_mobilenet_v3_large": {
+        "completed_exports": 1,
+        "required": null,
+        "runs": [
+          "masked_mobilenet_v3_large_seed20261003"
+        ],
+        "status": "example_only"
+      }
+    },
+    "distillation": {
+      "teacher_efficientnet_v2_s": {
+        "completed_exports": 1,
+        "required": null,
+        "runs": [
+          "teacher_efficientnet_v2_s_seed20261003"
+        ],
+        "status": "example_only"
+      },
+      "distilled_mobilenet_v3_large": {
+        "completed_exports": 1,
+        "required": null,
+        "runs": [
+          "distilled_mobilenet_v3_large_seed20261003"
+        ],
+        "status": "example_only"
+      }
+    }
+  },
+  "apk": {
+    "verification_status": "passed",
+    "verified_modes": [
+      "deimv2_n",
+      "distilled_mobilenet_v3_large",
+      "efficientnet_b0",
+      "masked_mobilenet_v3_large",
+      "mobilenet_v3_large",
+      "yolo11n",
+      "yolo26m",
+      "yolo26n",
+      "yolo26s"
+    ],
+    "verified_apk_sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+    "evidence": "docs\\android\\yolo26m_pilot_v16_phone\\verification.json",
+    "all_five_final": false
+  },
+  "automation_id": "agrovoice",
+  "budget_stop_remaining_percent": null,
+  "budget_window_minutes": 300,
+  "resume_not_before_local": null,
+  "last_known_remaining_percent": 63,
+  "last_known_weekly_remaining_percent": 1,
+  "constraints": [
+    "One GPU worker at a time",
+    "Keep old frozen data and three protected scripts unchanged",
+    "FanControl closed; hardware unchanged",
+    "No publishing, payments or external messages",
+    "Journal all changes"
+  ],
+  "next": [
+    "Use candidate_overlap_full_r3/candidate_disposition.jsonl and group_closure_r1/candidate_split_constraints.jsonl in the new manifest; neither is an accepted training dataset",
+    "Keep all ten OLID conflicting-label exact copies quarantined; original archive bytes were verified identical in each pair",
+    "Keep the 71 historical images in legacy_overlap_visual_r1/visual_adjudication.json quarantined for the NEW base pending object/label review; do not modify frozen old data",
+    "Complete source-backed class semantics and whole-visible-leaf boxes for PlantVillage and cucumber; resolve geometry flags and unknown capture groups",
+    "Historical train-family candidates (1781) can only be training if all other checks pass; 447 historical holdout-family candidates are never new train or independent test",
+    "OLID capture dates are confounded with crop/state; do not use date-only split as all-class independent holdout",
+    "Build all-crop schema/provenance manifest/grouped independent val/test, freeze recipe, pass preflight and show Boris actual source counts before GPU",
+    "Then run exactly two sequential YOLO26s seeds 20261003/20261004, max60 epochs/patience15; no automatic third pilot or M restart"
+  ],
+  "blocks": [
+    {
+      "source": "Mendeley D01",
+      "reason": "Public metadata request returned Cloudflare 403; protection not bypassed"
+    }
+  ],
+  "budget_check_source": "Actual get_usage_limits tool; supplied at time of continuation write",
+  "active_worker": {
+    "pid": 29748,
+    "backend": "wsl",
+    "started_utc": "2026-10-05T01:19:14.0150943+00:00",
+    "name": "yolo26m_v1",
+    "study": "yolo26m_v1",
+    "stdout": "F:\\agrovoice-ai\\ml-pipeline\\logs\\20261005_011913_975.yolo26m_study.stdout.log",
+    "stderr": "F:\\agrovoice-ai\\ml-pipeline\\logs\\20261005_011913_975.yolo26m_study.stderr.log",
+    "stop_file": "F:\\agrovoice-ai\\ml-pipeline\\logs\\20261005_011913_975.yolo26m_study.stop",
+    "status_path": "docs/experiments/yolo26m_v1/queue_status.json"
+  },
+  "worker_running": false,
+  "authoritative_status": "docs/experiments/yolo26m_v1/queue_status.json",
+  "queue_plan": "docs/experiments/yolo26m_v1/plan.json",
+  "queue_jobs": 10,
+  "report": "docs/experiments/yolo26s_data_v1/REPORT.md",
+  "queue_status": "M_stopped_by_user_new_S_data_preparation",
+  "current_job": null,
+  "observed_progress": {
+    "job": "yolo26m_seed20261005",
+    "epoch": 51,
+    "epochs": 60,
+    "updated_utc": "2026-10-05T04:26:15.194655+00:00",
+    "source": "runs\\detect\\accuracy_v1_yolo26m_seed20261005\\results.csv",
+    "scope": "Completed native current-seed epochs only; final M selection still waits for all10 fullval"
+  },
+  "eta_evidence": "docs/experiments/yolo26m_v1/eta.json",
+  "pending_scope_question": {
+    "status": "resolved",
+    "resolution": "Boris fully discontinued DETR and chose YOLO26s/YOLO26n; all current APK examples remain",
+    "plan_changed": true
+  },
+  "active_scope": "yolo26s_data_v1",
+  "voice_feature": {
+    "status": "verified",
+    "apk": "artifacts/apk/AgroVoice-model-lab-0.16.apk",
+    "sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+    "installed": true,
+    "report": "docs/android/FIELD_TOOLS_2026-10-05.md",
+    "previous_verified": "docs/android/voice_v2/verification.json",
+    "all_eight_examples_preserved": true,
+    "persistent_foreground_listening": true,
+    "real_camera": {
+      "status": "passed",
+      "no_photo_before_confirmation": true,
+      "confirmed_photo": "AgroVoice_20261004_195745_525.jpg",
+      "immediate_photo": "AgroVoice_20261004_195748_016.jpg",
+      "immediate_bytes": 3918534,
+      "shutter_button_clicks": 0,
+      "scope": "Actual camera + dispatcher, unattended test bench; ASR is checked separately"
+    },
+    "gallery_confirmation": {
+      "status": "passed",
+      "photos": 25,
+      "stable_newest_to_oldest": true,
+      "swipes_and_buttons": true,
+      "voice_next_previous": true,
+      "bounds": true,
+      "confirmation_only_import": true,
+      "continuous_across_screens": true
+    },
+    "field_speech_accuracy": null,
+    "continuation": null,
+    "current_evidence": "docs\\android\\yolo26m_pilot_v16_phone",
+    "native_tests": 10,
+    "commands": 120,
+    "synthetic_samples": 144
+  },
+  "yolo26m_followup": {
+    "status": "deferred_by_user",
+    "report": "docs/experiments/yolo26m_v1/REPORT.md",
+    "scope": "Separate full60epoch technical first seed, then ten total if export/phone feasible. Never parallel GPU with S. Keep S series frozen and finish S final selection before M.",
+    "next": "No automatic resume; keep completed03/04 and stopped05 checkpoint for future hardware/light-model evaluation",
+    "continuation": "docs/experiments/yolo26m_v1/CONTINUE.md",
+    "protocol_lock": "docs/experiments/yolo26m_v1/protocol_lock.json",
+    "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+    "gpu_started": true,
+    "negative_guards": "docs/experiments/yolo26m_v1/guard_checks.json",
+    "protocol_revision": 2,
+    "completed_exports": 2,
+    "completed_full_val": 2,
+    "pilot_evidence": "docs/android/yolo26m_pilot_v16_phone",
+    "pilot_ap50_95": 0.3691082210166482,
+    "phone_gate": "docs/experiments/yolo26m_v1/phone_gate.json",
+    "pilot_phone_verified": true,
+    "current_seed": 20261005
+  },
+  "phone_install_verification": {
+    "authorized_by": "Direct human request2026-10-04",
+    "setting": "global verifier_verify_adb_installs",
+    "previous": "null (default)",
+    "current": 0,
+    "verified_readback": true,
+    "scope": "Human explicitly authorized disabling PlayProtect. Both real UI switches verifiedoff; ADB verifier disabled. Device lock/ADB auth/runtimepermissions untouched.",
+    "play_protect_scanning": false,
+    "unknown_app_analysis": false,
+    "verified_ui": "docs/android/voice_v3/playprotect_disabled.xml",
+    "setting_package_verifier_enable_current": 1,
+    "setting_package_verifier_user_consent_current": -1,
+    "google_ui_after_install": "docs/android/voice_v3/playprotect_after_install.xml",
+    "no_prompt_installs_confirmed": true,
+    "setting_package_verifier_enable_initial_attempt": 0,
+    "setting_package_verifier_user_consent_initial_attempt": 0
+  },
+  "automation_instruction_utf8": "automation_update returned ACTIVE; saved prompt readback matched (trailing newline normalized); documents/r3/group closure/37visual reviews complete; M stopped; exactly two S after accepted data.",
+  "last_heartbeat_check": {
+    "updated_utc": "2026-10-05T12:30:23.271054+00:00",
+    "M_worker_running": false,
+    "M_checkpoint_complete_epoch": 53,
+    "action": "Completed extra9 incremental overlap, row-level disposition, group closure, all37 historical visual comparisons; train accepted0/GPU0",
+    "new_scope_state": "docs/session/yolo26s_data_work_state.json",
+    "source_audit_report": "docs/experiments/yolo26s_data_v1/SOURCE_AUDIT_REPORT_2026-10-05.md"
+  },
+  "last_budget_check_utc": "2026-10-05T12:31:04+00:00",
+  "budget_resume_utc": "2026-10-04T22:11:16.979259+00:00",
+  "s_selection": {
+    "seed": 20261004,
+    "val_lock": "docs/experiments/yolo26s_focus_v1/validation_selection.json",
+    "full_shared_val_seeds": 10,
+    "fixed_n_seed": 20261012
+  },
+  "s_final": {
+    "completed_exports": 10,
+    "full_shared_val": 10,
+    "selected_seed": 20261004,
+    "test_lock": "docs/experiments/yolo26s_focus_v1/final_test_selection.json",
+    "phone_apk": {
+      "status": "verified",
+      "apk": "artifacts/apk/AgroVoice-model-lab-0.15.apk",
+      "version": "0.15-model-lab",
+      "version_code": 15,
+      "sha256": "bb4c3a75e5d3551644e35c9fbc26b047859b2a228a3686528113f44a81d3380d",
+      "bytes": 264777804,
+      "installed": true,
+      "serial": "b861c4e0",
+      "phone_parity": "passed",
+      "updated_utc": "2026-10-04T22:17:02.2765408+00:00",
+      "verification": "docs/android/accuracy_v1/verification.json"
+    },
+    "ten_fresh_bitmap_series": "docs/android/yolo26s_final_v15_phone/benchmark_batch.json",
+    "model_card": "docs/experiments/yolo26s_focus_v1/MODEL_CARD.md",
+    "status": "verified"
+  },
+  "app_state": "docs/session/app_work_state.json",
+  "data_followup": {
+    "status": "active_after_document_completion",
+    "authorized_by": "Boris direct request 2026-10-05: use Gemini findings after existing training finishes",
+    "incoming": "docs/research/GEMINI_DATASET_PROPOSALS_2026-10-05.md",
+    "diagnostic_case": "docs/diagnostics/cucumber_misclassification_2026-10-05/REPORT.md",
+    "recipe_or_data_changed": false,
+    "primary_val_cucumber_support": 0,
+    "report": "docs/experiments/yolo26s_data_v1/REPORT.md",
+    "all_original_cultures_preserved": true,
+    "new_conditions_approved": true,
+    "latest_overlap_review": "docs/experiments/yolo26s_data_v1/candidate_overlap_full_r3/candidate_disposition.jsonl",
+    "exact_historical_duplicate_candidates": 792,
+    "new_training_accepted": 0,
+    "olid_capture_metadata_audit": "docs/experiments/yolo26s_data_v1/olid_capture_metadata_r1/README.md",
+    "independent_grouped_split_ready": false,
+    "overlap_r3": {
+      "status": "completed_all_sources_screen_pending_annotation_and_split_acceptance",
+      "counts": {
+        "records": 59346,
+        "inherited_records": 43735,
+        "incremental_records": 15611,
+        "incremental_checked": 15611,
+        "inherited_links": 857,
+        "additional_links": 0,
+        "candidate_records": 55992,
+        "label_conflict_groups": 5,
+        "label_conflict_records": 10,
+        "dispositions": {
+          "no_match_in_this_screen_still_pending_semantics_boxes_groups": 55144,
+          "internal_match_pending_dedup_group_and_label_review": 46,
+          "historical_exact_copy_not_a_new_independent_example": 792,
+          "quarantine_conflicting_publisher_labels": 10
+        },
+        "suggested_components": 58490,
+        "delta_exact_links": 0,
+        "delta_nonexact_links": 0
+      },
+      "ledger": "docs/experiments/yolo26s_data_v1/candidate_overlap_full_r3/candidate_disposition.jsonl"
+    },
+    "group_closure_r1": {
+      "status": "completed_split_constraints_only_no_training_dataset",
+      "counts": {
+        "records": 59346,
+        "candidate_records": 55992,
+        "components": 25529,
+        "edges_by_reason": {
+          "publisher_leaf_map": 32966,
+          "frozen_historical_provenance": 195,
+          "OLID_same_second_conservative": 8,
+          "decoded_exact_copy": 820,
+          "near_match_conservative": 37
+        },
+        "candidate_rules": {
+          "no_historical_split_restriction_physical_provenance_still_requires_review": 53754,
+          "training_only_if_other_checks_pass_never_new_independent_holdout": 1781,
+          "historical_holdout_family_never_train_or_new_independent_test": 447,
+          "quarantine_source_label_conflict_component": 10
+        },
+        "inherited_multi_split_components": 9
+      },
+      "constraints": "docs/experiments/yolo26s_data_v1/group_closure_r1/candidate_split_constraints.jsonl"
+    },
+    "legacy_overlap_visual_r1": {
+      "status": "all_37_pairs_visually_reviewed",
+      "stats": {
+        "same_source_photo_variants": 37,
+        "cross_split_pairs": 9,
+        "label_set_disagreement_pairs": 19
+      },
+      "unique_historical_records": 71,
+      "records_in_cross_split_pairs": 18,
+      "adjudication": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/visual_adjudication.json"
+    },
+    "new_gpu_runs": 0
+  },
+  "new_scope_state": "docs/session/yolo26s_data_work_state.json",
+  "new_training_run_policy": {
+    "requested_runs": 2,
+    "seeds": [
+      20261003,
+      20261004
+    ],
+    "epochs_maximum": 60,
+    "patience": 15,
+    "first_technical_run_included_if_unchanged": true,
+    "automatic_ten_runs": false,
+    "basis": "Boris direct clarification2026-10-05",
+    "launch_prerequisite": "actual audited data + frozen recipe + source/count report shown to Boris; no new GPU load now",
+    "authorization": "Boris asked to do two; prepare audited data and report composition before executing, no extra ten-run continuation"
+  },
+  "remaining_percent": 63,
+  "weekly_remaining_percent": 1,
+  "budget_check_utc": "2026-10-05T12:31:04+00:00",
+  "previous_objective_history": "Complete tenS and separate authorized tenM with technical pilot/mobile gate, compareN/S/M, retain eight examples and verified voice controls",
+  "budget_status": "active_user_reserve_cancelled",
+  "budget_wait_note": "Boris cancelled the15percent reserve and saved overnight wait by direct message; continue authorized work with actual quota.",
+  "document_work_state": "artifacts/documents/2026-10-05/document_work_state.json",
+  "previous_budget_wait_cancelled_by_user": {
+    "resume_not_before_local": "2026-10-06T01:00:00+03:00",
+    "note": "Mandatory Boris reserve reached: remaining15percent; wait until2026-10-06T01:00Europe/Minsk despite an earlier reset. Only a brief necessary training check permitted; current new GPU training0.",
+    "cancelled_utc": "2026-10-05T08:01:37.108375+00:00"
+  },
+  "budget_policy_override": {
+    "authorized_by": "Boris direct message2026-10-05: use the full limit",
+    "recorded_utc": "2026-10-05T08:01:37.108375+00:00",
+    "fifteen_percent_reserve_cancelled": true,
+    "saved_wait_until_oct6_cancelled": true,
+    "policy": "Continue authorized work with available quota; no15percent stop or overnight wait",
+    "observed_five_hour_remaining_percent": 63,
+    "observed_weekly_remaining_percent": 1,
+    "check_utc": "2026-10-05T12:31:04+00:00",
+    "training_constraints_unchanged": true
+  },
+  "user_docx_request": {
+    "status": "complete",
+    "source_sha256": "31fa051053265f89bcfa4261cb221067699b3c02dbf8ff4be6320af7f94c02d5",
+    "source_backup_sha256": "abb152cbd3175f7334cfcbc6261fddfb6d9bd1cd64751a20b43803777263e9d3",
+    "description_artifact_sha256": "b76ce02dd8f540a26d88a54be1af8b7d83db1684faa548c6de1e4a6c19dc9ea4",
+    "history_sha256": "54f5bbb348da6cec3082a200e2c7da52b1d1350cc8ab22a51ec0dc78f950b689",
+    "history_pages": 791,
+    "history_visual_qa_pages": 791,
+    "history_contact_sheets": 132,
+    "embedded_source_files": 276,
+    "new_GPU": 0,
+    "phone_modified": false
+  },
+  "actual_budget_observation": {
+    "checked_utc": "2026-10-05T12:31:04+00:00",
+    "five_hour_used_percent": 37,
+    "five_hour_remaining_percent": 63,
+    "weekly_used_percent": 99,
+    "weekly_remaining_percent": 1,
+    "ordinary_usage_allowed": true,
+    "source": "actual get_usage_limits",
+    "token_balance_available": false,
+    "user_reserve_cancelled": true
+  },
+  "continuation_checkpoint": "docs/session/CONTINUATION_CHECKPOINT_2026-10-05.md"
+}

@@ -1,0 +1,9 @@
+{
+  "previous": {
+    "status": "failed",
+    "error": "CalledProcessError(1, ['/opt/agrovoice/venv/bin/python', '-u', '/mnt/f/agrovoice-ai/ml-pipeline/yolo_s_accuracy.py', '--seed', '20261003', '--stop-file', '/mnt/f/agrovoice-ai/ml-pipeline/logs/20261004_061237_745.accuracy.stop'])",
+    "updated_utc": "2026-10-04T06:12:46.293107+00:00"
+  },
+  "resolution": "--data now points to data.yaml; observed completed GPU epochs and checkpoints",
+  "updated_utc": "2026-10-04T06:51:38.163074+00:00"
+}

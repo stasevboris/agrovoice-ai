@@ -1,0 +1,44 @@
+{
+  "status": "reviewed_for_deterministic_duplicate_screen; no source records accepted for training",
+  "reviewed_utc": "2026-10-05T08:41:41.192144+00:00",
+  "inputs": {
+    "links": "docs/experiments/yolo26s_data_v1/candidate_overlap_full_r2/links.jsonl",
+    "links_sha256": "368163d65a45b000a5852310e9f64c2f5da2b0c8f59bb38514a344e8fd56223d",
+    "status": "docs/experiments/yolo26s_data_v1/candidate_overlap_full_r2/status.json"
+  },
+  "screen": {
+    "new_candidate_to_historical_links": 792,
+    "new_candidate_to_historical_nonexact_links": 0,
+    "unique_candidate_records_with_historical_exact_copy": 792,
+    "candidate_source_counts": {
+      "CucumberZenodo": 53,
+      "PlantVillage": 739
+    },
+    "historical_split_counts": {
+      "train": 632,
+      "val_aux": 160
+    },
+    "unique_historical_records": 792,
+    "policy": "Keep originals and source evidence in the archive; exclude exact historical matches from the new independent dataset. Historical records remain in their frozen splits."
+  },
+  "candidate_internal_links": {
+    "exact_duplicate_edges": 28,
+    "unique_candidate_records": 56,
+    "same_source_class_edges": 23,
+    "conflicting_source_class_edges": 5,
+    "source_edge_counts": {
+      "CucumberZenodo": 1,
+      "OLID": 6,
+      "PlantVillage": 21
+    },
+    "policy": "Same-label copies can be deduplicated only after the source label and leaf annotation are accepted; conflicting labels stay quarantined until publisher metadata resolves them."
+  },
+  "legacy_internal_links": {
+    "count": 37,
+    "all_nonexact": true,
+    "action": "Do not mutate the frozen historical v2 set; preserve as inherited limitation."
+  },
+  "training_accepted": 0,
+  "new_gpu_runs": 0,
+  "limits": "A perceptual-hash or exact-decoded match is a duplicate screen, not a physical-plant identity claim. No disease label was inferred from pixels."
+}

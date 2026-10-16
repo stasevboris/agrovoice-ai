@@ -1,0 +1,296 @@
+{
+  "status": "verified_complete",
+  "completed": 20,
+  "epochs_each": 60,
+  "selected": "study10_v2_yolo26n_seed20261012",
+  "primary": {
+    "yolo11n": {
+      "metrics/precision(B)": {
+        "n": 10,
+        "mean": 0.5408260625960346,
+        "sd": 0.02384248189994848,
+        "min": 0.5023738976501426,
+        "max": 0.5862184396936441
+      },
+      "metrics/recall(B)": {
+        "n": 10,
+        "mean": 0.4781651407876847,
+        "sd": 0.01983253455105144,
+        "min": 0.4430852670045548,
+        "max": 0.5117193025746289
+      },
+      "metrics/mAP50(B)": {
+        "n": 10,
+        "mean": 0.4840525068885689,
+        "sd": 0.006698307256913125,
+        "min": 0.47323179628232914,
+        "max": 0.496373519354942
+      },
+      "metrics/mAP50-95(B)": {
+        "n": 10,
+        "mean": 0.32663967532555693,
+        "sd": 0.003859547509389131,
+        "min": 0.3202943287511307,
+        "max": 0.3339236988682838
+      }
+    },
+    "yolo26n": {
+      "metrics/precision(B)": {
+        "n": 10,
+        "mean": 0.5893174938847158,
+        "sd": 0.020679881431609832,
+        "min": 0.5483904448880744,
+        "max": 0.6143024512237545
+      },
+      "metrics/recall(B)": {
+        "n": 10,
+        "mean": 0.4959697053487395,
+        "sd": 0.016979246641798028,
+        "min": 0.47309624367926917,
+        "max": 0.5230676985239302
+      },
+      "metrics/mAP50(B)": {
+        "n": 10,
+        "mean": 0.526724454407697,
+        "sd": 0.01243201796753538,
+        "min": 0.510471833333382,
+        "max": 0.5444965085352507
+      },
+      "metrics/mAP50-95(B)": {
+        "n": 10,
+        "mean": 0.3540051306534585,
+        "sd": 0.008429850665186511,
+        "min": 0.33826782344886586,
+        "max": 0.3662929365552378
+      }
+    }
+  },
+  "paired_map50_95": {
+    "n": 10,
+    "mean": 0.027365455327901522,
+    "sd": 0.010702550526708824,
+    "min": 0.006784733337084348,
+    "max": 0.040521202251025235,
+    "all_ten_positive": true,
+    "seed_variation_95pct_t_interval": [
+      0.01970931189693122,
+      0.03502159875887183
+    ]
+  },
+  "selected_test": {
+    "metrics/precision(B)": 0.5092304736664227,
+    "metrics/recall(B)": 0.6407288257281346,
+    "metrics/mAP50(B)": 0.6280378732001067,
+    "metrics/mAP50-95(B)": 0.48838832541474886,
+    "fitness": 0.48838832541474886
+  },
+  "class_priorities": [
+    {
+      "id": 11,
+      "name": "Potato leaf",
+      "val_images": 1,
+      "val_boxes": 7,
+      "test_images": 0,
+      "mean_val_map50_95": 0.014720374488994032,
+      "sd_val_map50_95": 0.03513125534953363,
+      "selected_test_metrics": null
+    },
+    {
+      "id": 12,
+      "name": "Potato leaf early blight",
+      "val_images": 16,
+      "val_boxes": 54,
+      "test_images": 8,
+      "mean_val_map50_95": 0.16965633759552004,
+      "sd_val_map50_95": 0.0314288674799931,
+      "selected_test_metrics": {
+        "precision": 0.28341207128466994,
+        "recall": 0.4117647058823529,
+        "map50": 0.3492187447332965,
+        "map50_95": 0.29669174356017963
+      }
+    },
+    {
+      "id": 13,
+      "name": "Potato leaf late blight",
+      "val_images": 11,
+      "val_boxes": 22,
+      "test_images": 8,
+      "mean_val_map50_95": 0.3702603515054949,
+      "sd_val_map50_95": 0.049635987931324475,
+      "selected_test_metrics": {
+        "precision": 0.27542843786427146,
+        "recall": 0.5,
+        "map50": 0.3006476338381709,
+        "map50_95": 0.26960251040248284
+      }
+    },
+    {
+      "id": 18,
+      "name": "Tomato Early blight leaf",
+      "val_images": 11,
+      "val_boxes": 28,
+      "test_images": 9,
+      "mean_val_map50_95": 0.12599359993327844,
+      "sd_val_map50_95": 0.03129269628338277,
+      "selected_test_metrics": {
+        "precision": 0.44039681183423446,
+        "recall": 0.3684210526315789,
+        "map50": 0.5126460068925348,
+        "map50_95": 0.3396459263189181
+      }
+    },
+    {
+      "id": 19,
+      "name": "Tomato Septoria leaf spot",
+      "val_images": 22,
+      "val_boxes": 76,
+      "test_images": 11,
+      "mean_val_map50_95": 0.34441647783486634,
+      "sd_val_map50_95": 0.021461240975063384,
+      "selected_test_metrics": {
+        "precision": 0.38427224425669165,
+        "recall": 0.6666666666666666,
+        "map50": 0.39139732410446704,
+        "map50_95": 0.25660140461344894
+      }
+    },
+    {
+      "id": 20,
+      "name": "Tomato leaf",
+      "val_images": 8,
+      "val_boxes": 47,
+      "test_images": 8,
+      "mean_val_map50_95": 0.24014168415987405,
+      "sd_val_map50_95": 0.04020759411410664,
+      "selected_test_metrics": {
+        "precision": 0.31383671624779813,
+        "recall": 0.3560284763852774,
+        "map50": 0.3604077726238828,
+        "map50_95": 0.24329228084705995
+      }
+    },
+    {
+      "id": 21,
+      "name": "Tomato leaf bacterial spot",
+      "val_images": 13,
+      "val_boxes": 26,
+      "test_images": 9,
+      "mean_val_map50_95": 0.2965500874771087,
+      "sd_val_map50_95": 0.031534352415149555,
+      "selected_test_metrics": {
+        "precision": 0.23194843493710948,
+        "recall": 0.35714285714285715,
+        "map50": 0.35404619180990027,
+        "map50_95": 0.31190229248976703
+      }
+    },
+    {
+      "id": 22,
+      "name": "Tomato leaf late blight",
+      "val_images": 13,
+      "val_boxes": 28,
+      "test_images": 10,
+      "mean_val_map50_95": 0.5482123157653316,
+      "sd_val_map50_95": 0.03939601718381693,
+      "selected_test_metrics": {
+        "precision": 0.30763839101592955,
+        "recall": 0.6428571428571429,
+        "map50": 0.5850145749816803,
+        "map50_95": 0.4320412441044021
+      }
+    },
+    {
+      "id": 23,
+      "name": "Tomato leaf mosaic virus",
+      "val_images": 3,
+      "val_boxes": 13,
+      "test_images": 10,
+      "mean_val_map50_95": 0.31709254703648226,
+      "sd_val_map50_95": 0.07126307965467764,
+      "selected_test_metrics": {
+        "precision": 0.8856324933390338,
+        "recall": 0.2157094311225121,
+        "map50": 0.4251745124791852,
+        "map50_95": 0.2918743681909128
+      }
+    },
+    {
+      "id": 24,
+      "name": "Tomato leaf yellow virus",
+      "val_images": 9,
+      "val_boxes": 81,
+      "test_images": 6,
+      "mean_val_map50_95": 0.15432284288079876,
+      "sd_val_map50_95": 0.024079370272095935,
+      "selected_test_metrics": {
+        "precision": 0.3864941739768143,
+        "recall": 0.6190476190476191,
+        "map50": 0.6061654396287461,
+        "map50_95": 0.30925868329829065
+      }
+    },
+    {
+      "id": 25,
+      "name": "Tomato mold leaf",
+      "val_images": 14,
+      "val_boxes": 54,
+      "test_images": 6,
+      "mean_val_map50_95": 0.22138318565122161,
+      "sd_val_map50_95": 0.02857617723670593,
+      "selected_test_metrics": {
+        "precision": 0.3276776858299925,
+        "recall": 0.5625,
+        "map50": 0.46565302285048743,
+        "map50_95": 0.29975991662766777
+      }
+    },
+    {
+      "id": 26,
+      "name": "Tomato two spotted spider mites leaf",
+      "val_images": 1,
+      "val_boxes": 1,
+      "test_images": 0,
+      "mean_val_map50_95": 0.0,
+      "sd_val_map50_95": 0.0,
+      "selected_test_metrics": null
+    },
+    {
+      "id": 29,
+      "name": "Cucumber leaf (condition unknown)",
+      "val_images": 0,
+      "val_boxes": 0,
+      "test_images": 0,
+      "mean_val_map50_95": null,
+      "sd_val_map50_95": null,
+      "selected_test_metrics": null
+    }
+  ],
+  "training_csv_time": {
+    "yolo11n": {
+      "mean_minutes": 23.24625,
+      "sd_minutes": 0.5689465424887274,
+      "min_minutes": 22.682833333333335,
+      "max_minutes": 24.519333333333336,
+      "n": 10
+    },
+    "yolo26n": {
+      "mean_minutes": 29.1236,
+      "sd_minutes": 0.5738768590758087,
+      "min_minutes": 28.692166666666665,
+      "max_minutes": 30.163666666666664,
+      "n": 10
+    }
+  },
+  "package": "F:\\agrovoice-ai\\ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012",
+  "package_sha256_verified": 6,
+  "completed_utc": "2026-10-03T23:32:15.377186+00:00",
+  "limitations": [
+    "Same validation split across ten seeds, not ten independent field tests",
+    "Test belongs only to the selected model, not a ten-run test comparison",
+    "Selection uses validation; selected validation score is optimistic",
+    "Cucumber diseases unsupported; laboratory auxiliary scores are not field evidence",
+    "APK 0.2 retains the verified matched pair seed 20261003; final selected weights are a separate package",
+    "Training times include validation within epochs and hardware/build interference; export and auxiliary evaluation excluded"
+  ]
+}

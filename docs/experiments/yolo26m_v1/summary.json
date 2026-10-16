@@ -1,0 +1,253 @@
+{
+  "generated_utc": "2026-10-05T03:02:17.351688+00:00",
+  "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+  "models": {
+    "yolo26n": {
+      "map50_95": {
+        "n": 10,
+        "mean": 0.32161298561075297,
+        "sd": 0.009278369366677995
+      },
+      "map50": {
+        "n": 10,
+        "mean": 0.4781177078690281,
+        "sd": 0.012406063737387361
+      },
+      "macro_f1": {
+        "n": 10,
+        "mean": 0.44477957928266865,
+        "sd": 0.01501878556039066
+      },
+      "correct_class_and_box_recall": {
+        "n": 10,
+        "mean": 0.5911382734912147,
+        "sd": 0.01307310797485311
+      },
+      "classification_accuracy_on_matched_boxes": {
+        "n": 10,
+        "mean": 0.8041390030304427,
+        "sd": 0.009467404572464339
+      }
+    },
+    "yolo26s": {
+      "map50_95": {
+        "n": 10,
+        "mean": 0.3528671885438367,
+        "sd": 0.006553451636367074
+      },
+      "map50": {
+        "n": 10,
+        "mean": 0.5147811200870499,
+        "sd": 0.008551197691011824
+      },
+      "macro_f1": {
+        "n": 10,
+        "mean": 0.48752194506842794,
+        "sd": 0.011660403451026688
+      },
+      "correct_class_and_box_recall": {
+        "n": 10,
+        "mean": 0.6233766233766234,
+        "sd": 0.010779735415592932
+      },
+      "classification_accuracy_on_matched_boxes": {
+        "n": 10,
+        "mean": 0.8203547426683105,
+        "sd": 0.010394946501671618
+      }
+    },
+    "yolo26m": {
+      "map50_95": {
+        "n": 2,
+        "mean": 0.3745643115879962,
+        "sd": 0.007716077283536301
+      },
+      "map50": {
+        "n": 2,
+        "mean": 0.5481565968119231,
+        "sd": 0.010255473464493892
+      },
+      "macro_f1": {
+        "n": 2,
+        "mean": 0.5014947762173945,
+        "sd": 0.00878835198147574
+      },
+      "correct_class_and_box_recall": {
+        "n": 2,
+        "mean": 0.6577540106951871,
+        "sd": 0.0054018852649850724
+      },
+      "classification_accuracy_on_matched_boxes": {
+        "n": 2,
+        "mean": 0.8387893661929058,
+        "sd": 0.00977753147196915
+      }
+    }
+  },
+  "paired": {
+    "yolo26s-yolo26n": {
+      "seeds": [
+        20261003,
+        20261004,
+        20261005,
+        20261006,
+        20261007,
+        20261008,
+        20261009,
+        20261010,
+        20261011,
+        20261012
+      ],
+      "map50_95": {
+        "n": 10,
+        "mean": 0.03125420293308374,
+        "sd": 0.00898765264907363
+      }
+    },
+    "yolo26m-yolo26s": {
+      "seeds": [
+        20261003,
+        20261004
+      ],
+      "map50_95": {
+        "n": 2,
+        "mean": 0.013062981104216886,
+        "sd": 0.006559652891940789
+      }
+    },
+    "yolo26m-yolo26n": {
+      "seeds": [
+        20261003,
+        20261004
+      ],
+      "map50_95": {
+        "n": 2,
+        "mean": 0.048243435313112926,
+        "sd": 0.01064783974342745
+      }
+    }
+  },
+  "m_seeds": [
+    {
+      "seed": 20261003,
+      "completed_export": true,
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+      "last_recorded_epoch": 60,
+      "shared_val_ap": 0.3691082210166482,
+      "correct_gt": 856,
+      "val_sha256": "50d70ea986797445eb1c769978d0413bb88d60d542539336235a8d47c534b9ea"
+    },
+    {
+      "seed": 20261004,
+      "completed_export": true,
+      "graph_sha256": "74335645bc8cdfa2f6938f9dbe1770fc27d686832edd1dee303633344f4c0245",
+      "last_recorded_epoch": 60,
+      "shared_val_ap": 0.3800204021593442,
+      "correct_gt": 866,
+      "val_sha256": "29e4085fd8b25a14fee13abec52a1ca1cee03e3b30e0e3810fdbb75a5e86f7b5"
+    },
+    {
+      "seed": 20261005,
+      "completed_export": false
+    },
+    {
+      "seed": 20261006,
+      "completed_export": false
+    },
+    {
+      "seed": 20261007,
+      "completed_export": false
+    },
+    {
+      "seed": 20261008,
+      "completed_export": false
+    },
+    {
+      "seed": 20261009,
+      "completed_export": false
+    },
+    {
+      "seed": 20261010,
+      "completed_export": false
+    },
+    {
+      "seed": 20261011,
+      "completed_export": false
+    },
+    {
+      "seed": 20261012,
+      "completed_export": false
+    }
+  ],
+  "completed_m_exports": 2,
+  "completed_m_full_val": 2,
+  "status": {
+    "status": "running",
+    "current": {
+      "id": "yolo26m_seed20261005",
+      "kind": "yolo26m",
+      "seed": 20261005
+    },
+    "requested": 10,
+    "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+    "gpu_started": true,
+    "updated_utc": "2026-10-05T03:00:31.018326+00:00"
+  },
+  "queue_status": {
+    "jobs": {
+      "yolo26m_seed20261003": {
+        "status": "completed",
+        "reused": true,
+        "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+        "val_sha256": "50d70ea986797445eb1c769978d0413bb88d60d542539336235a8d47c534b9ea",
+        "updated_utc": "2026-10-05T01:19:26.952042+00:00"
+      },
+      "yolo26m_seed20261004": {
+        "status": "completed",
+        "reused": false,
+        "graph_sha256": "74335645bc8cdfa2f6938f9dbe1770fc27d686832edd1dee303633344f4c0245",
+        "val_sha256": "29e4085fd8b25a14fee13abec52a1ca1cee03e3b30e0e3810fdbb75a5e86f7b5",
+        "updated_utc": "2026-10-05T03:00:19.363363+00:00"
+      },
+      "yolo26m_seed20261005": {
+        "status": "running",
+        "updated_utc": "2026-10-05T03:00:19.370755+00:00"
+      }
+    },
+    "started_utc": "2026-10-05T01:19:24.116663+00:00",
+    "status": "running",
+    "requested": 10,
+    "pid": 286,
+    "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+    "current": {
+      "id": "yolo26m_seed20261005",
+      "kind": "yolo26m",
+      "seed": 20261005
+    },
+    "completed": 2
+  },
+  "phone_gate": {
+    "status": "passed",
+    "stage": "technical_pilot",
+    "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+    "model_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+    "model_seed": 20261003,
+    "apk": "artifacts/apk/AgroVoice-model-lab-0.16.apk",
+    "apk_sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+    "actual_installed_apk_sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+    "serial": "b861c4e0",
+    "parity_evidence": "docs\\android\\accuracy_v1\\verification.json",
+    "parity_sha256": "28330ecb47168c6dd0d113a1fbd1c8c7f832e59c9dd4347d11792c0af05ed1a3",
+    "benchmark_batch_sha256": "7aadb8ba83e638ba0964e6c1041925679775529e3be6739aa99bd34c2a36558c",
+    "voice_evidence": "docs\\android\\yolo26m_pilot_v16_phone",
+    "voice_commands_accepted": 120,
+    "voice_model9_samples": 2,
+    "series": 10,
+    "pipeline_mean_series_median_ms": 1366.40096565,
+    "pipeline_sd_series_median_ms": 137.70506873669817,
+    "maximum_rss_bytes_after": 377057280,
+    "maximum_process_hwm_bytes": 386670592,
+    "validated_utc": "2026-10-05T01:18:56.500230+00:00",
+    "scope": "Actual Note7 execution/bytes/parity and10 warm bitmap series; not field diagnosis accuracy, long-term battery or A56/Redmi9T proof"
+  }
+}

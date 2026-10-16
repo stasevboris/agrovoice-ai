@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "photos": 25,
+  "stable_newest_to_oldest": true,
+  "swipes_and_buttons": true,
+  "voice_next_previous": true,
+  "bounds": true,
+  "confirmation_only_import": true,
+  "continuous_across_screens": true
+}

@@ -1,0 +1,750 @@
+{
+  "policy": "Single source box, area >=0.25, sides >=0.45; requires visual review.",
+  "source": "Zenodo 16816441, fresh_leaf.zip",
+  "candidates": [
+    {
+      "id": 0,
+      "source": "images/040ef8b5-Fresh_Leaf_54.jpg",
+      "label": "labels/040ef8b5-Fresh_Leaf_54.txt",
+      "box": [
+        0.5075915274646443,
+        0.4090073529411764,
+        0.9848169450707109,
+        0.6672794117647056
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 1,
+      "source": "images/05d64ae8-Fresh_Leaf_67.jpg",
+      "label": "labels/05d64ae8-Fresh_Leaf_67.txt",
+      "box": [
+        0.4975901183644189,
+        0.5597426470588235,
+        0.9730957931953269,
+        0.832720588235294
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 2,
+      "source": "images/07a9faad-Fresh_Leaf_25.jpg",
+      "label": "labels/07a9faad-Fresh_Leaf_25.txt",
+      "box": [
+        0.438238176368108,
+        0.4126838235294119,
+        0.6114630303340846,
+        0.6084558823529413
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 3,
+      "source": "images/0958dd27-Fresh_Leaf_140.jpg",
+      "label": "labels/0958dd27-Fresh_Leaf_140.txt",
+      "box": [
+        0.5224351173396188,
+        0.5036764705882353,
+        0.8902791299446607,
+        0.9926470588235294
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 4,
+      "source": "images/17e731f5-Fresh_Leaf_28.jpg",
+      "label": "labels/17e731f5-Fresh_Leaf_28.txt",
+      "box": [
+        0.4989703960852634,
+        0.5275735294117648,
+        0.9868985704037714,
+        0.9338235294117648
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 5,
+      "source": "images/182b7277-Fresh_Leaf_112.jpg",
+      "label": "labels/182b7277-Fresh_Leaf_112.txt",
+      "box": [
+        0.44237900953064135,
+        0.53125,
+        0.879236908177905,
+        0.7095588235294117
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 6,
+      "source": "images/20b124f8-Fresh_Leaf_103.jpg",
+      "label": "labels/20b124f8-Fresh_Leaf_103.txt",
+      "box": [
+        0.449970536995286,
+        0.5009191176470589,
+        0.8668144086903056,
+        0.9724264705882354
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 7,
+      "source": "images/2910c656-Fresh_Leaf_100.jpg",
+      "label": "labels/2910c656-Fresh_Leaf_100.txt",
+      "box": [
+        0.502760555441689,
+        0.5036764705882354,
+        0.9944788891166223,
+        0.8566176470588236
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 8,
+      "source": "images/2d282f05-Fresh_Leaf_125.jpg",
+      "label": "labels/2d282f05-Fresh_Leaf_125.txt",
+      "box": [
+        0.5679842821274851,
+        0.4981617647058823,
+        0.8599130200860832,
+        0.9816176470588235
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 9,
+      "source": "images/2d87d671-Fresh_Leaf_115.jpg",
+      "label": "labels/2d87d671-Fresh_Leaf_115.txt",
+      "box": [
+        0.50104081266653,
+        0.5,
+        0.963433849149416,
+        0.9852941176470589
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 10,
+      "source": "images/34fa8cf7-Fresh_Leaf_73.jpg",
+      "label": "labels/34fa8cf7-Fresh_Leaf_73.txt",
+      "box": [
+        0.50104081266653,
+        0.5119485294117646,
+        0.9827577372412378,
+        0.9209558823529409
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 11,
+      "source": "images/36bdb8ef-Fresh_Leaf_74.jpg",
+      "label": "labels/36bdb8ef-Fresh_Leaf_74.txt",
+      "box": [
+        0.498280257224841,
+        0.4972426470588233,
+        0.9772366263578598,
+        0.9062499999999996
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 12,
+      "source": "images/3c2e238c-Fresh_Leaf_155.jpg",
+      "label": "labels/3c2e238c-Fresh_Leaf_155.txt",
+      "box": [
+        0.49966053494568563,
+        0.5,
+        0.9799971817995491,
+        0.9779411764705883
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 13,
+      "source": "images/46630186-Fresh_Leaf_9.jpg",
+      "label": "labels/46630186-Fresh_Leaf_9.txt",
+      "box": [
+        0.4982802572248412,
+        0.463235294117647,
+        0.9882788481246157,
+        0.8419117647058824
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 14,
+      "source": "images/4a1aef53-Fresh_Leaf_99.jpg",
+      "label": "labels/4a1aef53-Fresh_Leaf_99.txt",
+      "box": [
+        0.5445195608731298,
+        0.5156249999999997,
+        0.6694346946095513,
+        0.9466911764705876
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 15,
+      "source": "images/4b3bac03-Fresh_Leaf_154.jpg",
+      "label": "labels/4b3bac03-Fresh_Leaf_154.txt",
+      "box": [
+        0.50104081266653,
+        0.5689338235294119,
+        0.9910394035663046,
+        0.8253676470588238
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 16,
+      "source": "images/4d12200a-Fresh_Leaf_1.jpg",
+      "label": "labels/4d12200a-Fresh_Leaf_1.txt",
+      "box": [
+        0.5138027772084444,
+        0.5808823529411765,
+        0.9723944455831114,
+        0.8382352941176471
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 17,
+      "source": "images/4e62d7eb-Fresh_Leaf_80.jpg",
+      "label": "labels/4e62d7eb-Fresh_Leaf_80.txt",
+      "box": [
+        0.465843730784997,
+        0.49264705882352944,
+        0.9206452398032385,
+        0.9669117647058824
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 18,
+      "source": "images/5448eab2-Fresh_Leaf_33.jpg",
+      "label": "labels/5448eab2-Fresh_Leaf_33.txt",
+      "box": [
+        0.502760555441689,
+        0.3795955882352942,
+        0.9944788891166223,
+        0.7187500000000001
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 19,
+      "source": "images/55301f00-Fresh_Leaf_40.jpg",
+      "label": "labels/55301f00-Fresh_Leaf_40.txt",
+      "box": [
+        0.6249151337364215,
+        0.4972426470588235,
+        0.7501697325271572,
+        0.983455882352941
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 20,
+      "source": "images/56edf9bf-Fresh_Leaf_69.jpg",
+      "label": "labels/56edf9bf-Fresh_Leaf_69.txt",
+      "box": [
+        0.4989703960852634,
+        0.5661764705882353,
+        0.9868985704037714,
+        0.8198529411764706
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 21,
+      "source": "images/57d6187a-Fresh_Leaf_123.jpg",
+      "label": "labels/57d6187a-Fresh_Leaf_123.txt",
+      "box": [
+        0.561082893523263,
+        0.4981617647058823,
+        0.8599130200860833,
+        0.963235294117647
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 22,
+      "source": "images/69310907-Fresh_Leaf_153.jpg",
+      "label": "labels/69310907-Fresh_Leaf_153.txt",
+      "box": [
+        0.48654789659766357,
+        0.5294117647058828,
+        0.9620535714285716,
+        0.7830882352941185
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 23,
+      "source": "images/6b6c1ced-Fresh_Leaf_149.jpg",
+      "label": "labels/6b6c1ced-Fresh_Leaf_149.txt",
+      "box": [
+        0.502760555441689,
+        0.5772058823529412,
+        0.9944788891166223,
+        0.8014705882352942
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 24,
+      "source": "images/6cba9479-Fresh_Leaf_44.jpg",
+      "label": "labels/6cba9479-Fresh_Leaf_44.txt",
+      "box": [
+        0.4851676188768191,
+        0.4871323529411765,
+        0.9703352377536382,
+        0.823529411764706
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 25,
+      "source": "images/6ceb7cf4-Fresh_Leaf_23.jpg",
+      "label": "labels/6ceb7cf4-Fresh_Leaf_23.txt",
+      "box": [
+        0.4948295629227301,
+        0.49540441176470584,
+        0.9896591258454602,
+        0.9834558823529411
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 26,
+      "source": "images/7cda6927-Fresh_Leaf_35.jpg",
+      "label": "labels/7cda6927-Fresh_Leaf_35.txt",
+      "box": [
+        0.4920690074810412,
+        0.478860294117647,
+        0.9841380149620824,
+        0.8731617647058824
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 27,
+      "source": "images/7df39b4e-Fresh_Leaf_38.jpg",
+      "label": "labels/7df39b4e-Fresh_Leaf_38.txt",
+      "box": [
+        0.47895636913301926,
+        0.6295955882352939,
+        0.8944199631071945,
+        0.6819852941176466
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 28,
+      "source": "images/7e07b648-Fresh_Leaf_109.jpg",
+      "label": "labels/7e07b648-Fresh_Leaf_109.txt",
+      "box": [
+        0.6121531691945071,
+        0.45680147058823517,
+        0.7743358013937286,
+        0.6047794117647057
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 29,
+      "source": "images/80f63558-Fresh_Leaf_107.jpg",
+      "label": "labels/80f63558-Fresh_Leaf_107.txt",
+      "box": [
+        0.5614223585775773,
+        0.5266544117647058,
+        0.8771552828448449,
+        0.9136029411764706
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 30,
+      "source": "images/839d8eb0-Fresh_Leaf_46.jpg",
+      "label": "labels/839d8eb0-Fresh_Leaf_46.txt",
+      "box": [
+        0.5003506738061079,
+        0.5027573529411764,
+        0.9979407921705268,
+        0.9761029411764706
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 31,
+      "source": "images/851e6633-Fresh_Leaf_95.jpg",
+      "label": "labels/851e6633-Fresh_Leaf_95.txt",
+      "box": [
+        0.5348576168272186,
+        0.459558823529412,
+        0.520364700758352,
+        0.7720588235294124
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 32,
+      "source": "images/8730ae58-Fresh_Leaf_37.jpg",
+      "label": "labels/8730ae58-Fresh_Leaf_37.txt",
+      "box": [
+        0.5879983090797294,
+        0.6672794117647058,
+        0.7978005226480834,
+        0.6323529411764706
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 33,
+      "source": "images/87444d1e-Fresh_Leaf_129.jpg",
+      "label": "labels/87444d1e-Fresh_Leaf_129.txt",
+      "box": [
+        0.4920690074810411,
+        0.5955882352941176,
+        0.9730957931953267,
+        0.7830882352941176
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 34,
+      "source": "images/8b8f7a61-Fresh_Leaf_114.jpg",
+      "label": "labels/8b8f7a61-Fresh_Leaf_114.txt",
+      "box": [
+        0.5048309720229556,
+        0.5147058823529412,
+        0.990338055954089,
+        0.849264705882353
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 35,
+      "source": "images/990d9cea-Fresh_Leaf_65.jpg",
+      "label": "labels/990d9cea-Fresh_Leaf_65.txt",
+      "box": [
+        0.5006901388604222,
+        0.5404411764705883,
+        0.9986197222791556,
+        0.8933823529411765
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 36,
+      "source": "images/9c0b70d4-Fresh_Leaf_110.jpg",
+      "label": "labels/9c0b70d4-Fresh_Leaf_110.txt",
+      "box": [
+        0.5058717846894856,
+        0.5174632352941176,
+        0.9703352377536381,
+        0.7113970588235294
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 37,
+      "source": "images/a36e1ee0-Fresh_Leaf_45.jpg",
+      "label": "labels/a36e1ee0-Fresh_Leaf_45.txt",
+      "box": [
+        0.5020704165812667,
+        0.5459558823529411,
+        0.9958591668374668,
+        0.7205882352941176
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 38,
+      "source": "images/aec1bdb2-Fresh_Leaf_13.jpg",
+      "label": "labels/aec1bdb2-Fresh_Leaf_13.txt",
+      "box": [
+        0.497590118364419,
+        0.6066176470588236,
+        0.9924196812871492,
+        0.6654411764705883
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 39,
+      "source": "images/af1db50d-Fresh_Leaf_43.jpg",
+      "label": "labels/af1db50d-Fresh_Leaf_43.txt",
+      "box": [
+        0.5831673370567739,
+        0.5303308823529411,
+        0.6556319174011068,
+        0.90625
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 40,
+      "source": "images/b165bbe2-Fresh_Leaf_20.jpg",
+      "label": "labels/b165bbe2-Fresh_Leaf_20.txt",
+      "box": [
+        0.49413942406230776,
+        0.5027573529411768,
+        0.9827577372412378,
+        0.9797794117647065
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 41,
+      "source": "images/c994b516-Fresh_Leaf_127.jpg",
+      "label": "labels/c994b516-Fresh_Leaf_127.txt",
+      "box": [
+        0.4920690074810412,
+        0.6185661764705883,
+        0.9841380149620824,
+        0.7481617647058824
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 42,
+      "source": "images/caabf327-Fresh_Leaf_151.jpg",
+      "label": "labels/caabf327-Fresh_Leaf_151.txt",
+      "box": [
+        0.5089718051854887,
+        0.5340073529411764,
+        0.9820563896290221,
+        0.931985294117647
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 43,
+      "source": "images/cafe98fa-Fresh_Leaf_17.jpg",
+      "label": "labels/cafe98fa-Fresh_Leaf_17.txt",
+      "box": [
+        0.46722400850584145,
+        0.6029411764705883,
+        0.9261663506866162,
+        0.7757352941176472
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 44,
+      "source": "images/cd8f3478-Fresh_Leaf_102.jpg",
+      "label": "labels/cd8f3478-Fresh_Leaf_102.txt",
+      "box": [
+        0.3906185949989752,
+        0.47334558823529416,
+        0.7177444148391063,
+        0.9025735294117648
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 45,
+      "source": "images/cfcdee6d-Fresh_Leaf_68.jpg",
+      "label": "labels/cfcdee6d-Fresh_Leaf_68.txt",
+      "box": [
+        0.4982802572248412,
+        0.5716911764705883,
+        0.9882788481246157,
+        0.8308823529411765
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 46,
+      "source": "images/cff0403b-Fresh_Leaf_36.jpg",
+      "label": "labels/cff0403b-Fresh_Leaf_36.txt",
+      "box": [
+        0.44928039813486365,
+        0.5818014705882353,
+        0.7908991340438614,
+        0.8363970588235294
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 47,
+      "source": "images/d4dc8fbb-Fresh_Leaf_47.jpg",
+      "label": "labels/d4dc8fbb-Fresh_Leaf_47.txt",
+      "box": [
+        0.4727451193892191,
+        0.5753676470588232,
+        0.9427296833367493,
+        0.834558823529411
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 48,
+      "source": "images/d7cdcc92-Fresh_Leaf_130.jpg",
+      "label": "labels/d7cdcc92-Fresh_Leaf_130.txt",
+      "box": [
+        0.5041408331625332,
+        0.5569852941176471,
+        0.9917183336749333,
+        0.7941176470588235
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 49,
+      "source": "images/d9ff7d5e-Fresh_Leaf_97.jpg",
+      "label": "labels/d9ff7d5e-Fresh_Leaf_97.txt",
+      "box": [
+        0.5914490033818407,
+        0.5027573529411763,
+        0.8074624666939947,
+        0.9761029411764703
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 50,
+      "source": "images/ddbdd878-Fresh_Leaf_15.jpg",
+      "label": "labels/ddbdd878-Fresh_Leaf_15.txt",
+      "box": [
+        0.4782662302725961,
+        0.6527573501362519,
+        0.9565324605451923,
+        0.5702205826254453
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 51,
+      "source": "images/ded6a192-Fresh_Leaf_108.jpg",
+      "label": "labels/ded6a192-Fresh_Leaf_108.txt",
+      "box": [
+        0.5351970818815331,
+        0.5110294117647061,
+        0.9296058362369338,
+        0.709558823529412
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 52,
+      "source": "images/e57f2007-Fresh_Leaf_31.jpg",
+      "label": "labels/e57f2007-Fresh_Leaf_31.txt",
+      "box": [
+        0.4748155359704853,
+        0.648897058823529,
+        0.7812371899979496,
+        0.7022058823529409
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 53,
+      "source": "images/e79235b1-Fresh_Leaf_26.jpg",
+      "label": "labels/e79235b1-Fresh_Leaf_26.txt",
+      "box": [
+        0.49482956292273,
+        0.5643382352941174,
+        0.98965912584546,
+        0.8419117647058819
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 54,
+      "source": "images/e8774727-Fresh_Leaf_16.jpg",
+      "label": "labels/e8774727-Fresh_Leaf_16.txt",
+      "box": [
+        0.5186337492313997,
+        0.5606617647058824,
+        0.9627325015371998,
+        0.8786764705882352
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 55,
+      "source": "images/e96c826a-Fresh_Leaf_150.jpg",
+      "label": "labels/e96c826a-Fresh_Leaf_150.txt",
+      "box": [
+        0.5110422217667555,
+        0.5165441176470589,
+        0.977915556466489,
+        0.7352941176470589
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 56,
+      "source": "images/ef1f1c15-Fresh_Leaf_21.jpg",
+      "label": "labels/ef1f1c15-Fresh_Leaf_21.txt",
+      "box": [
+        0.497590118364419,
+        0.5064338235294117,
+        0.9924196812871492,
+        0.9540441176470589
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 57,
+      "source": "images/f28c54b6-Fresh_Leaf_34.jpg",
+      "label": "labels/f28c54b6-Fresh_Leaf_34.txt",
+      "box": [
+        0.5003506738061078,
+        0.5036764705882353,
+        0.9841380149620824,
+        0.9926470588235294
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 58,
+      "source": "images/f5a4c234-Fresh_Leaf_142.jpg",
+      "label": "labels/f5a4c234-Fresh_Leaf_142.txt",
+      "box": [
+        0.4989703960852635,
+        0.5569852941176471,
+        0.9896591258454603,
+        0.8419117647058824
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 59,
+      "source": "images/f7a1bc29-Fresh_Leaf_93.jpg",
+      "label": "labels/f7a1bc29-Fresh_Leaf_93.txt",
+      "box": [
+        0.4444494261119082,
+        0.5091911764705882,
+        0.8888988522238164,
+        0.738970588235294
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 60,
+      "source": "images/f93d2b0c-Fresh_Leaf_70.jpg",
+      "label": "labels/f93d2b0c-Fresh_Leaf_70.txt",
+      "box": [
+        0.497590118364419,
+        0.5854779411764706,
+        0.9841380149620825,
+        0.7849264705882354
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    },
+    {
+      "id": 61,
+      "source": "images/fef0d4eb-Fresh_Leaf_22.jpg",
+      "label": "labels/fef0d4eb-Fresh_Leaf_22.txt",
+      "box": [
+        0.36232290172166415,
+        0.5772058823529411,
+        0.7191246925599506,
+        0.7683823529411766
+      ],
+      "annotation": "Cucumber leaf (condition unknown)"
+    }
+  ]
+}

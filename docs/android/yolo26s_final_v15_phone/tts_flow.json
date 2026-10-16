@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "offline_voice_available": true,
+  "voice": "ru-RU-language",
+  "speech_callback": "done",
+  "microphone_paused": true,
+  "background_stopped": true,
+  "volume": 0,
+  "scope": "Actual Android TTS request\/callback at volume0; no audible speaker or field acoustic test."
+}

@@ -1,0 +1,10 @@
+{
+  "status": "stopped",
+  "current": {
+    "kind": "yolo26m",
+    "seed": 20261005
+  },
+  "requested": 10,
+  "gpu_started": true,
+  "updated_utc": "2026-10-05T04:28:24.520802+00:00"
+}

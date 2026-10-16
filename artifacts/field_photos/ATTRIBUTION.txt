@@ -1,0 +1,75 @@
+AgroVoice: фотографии для ручной проверки
+
+Состояние указано по подписи автора; это не экспертная разметка.
+Огуречные болезни текущие модели не различают. Фотографии не добавлены в обучение.
+Проверка похожих снимков не доказывает независимость от PlantDoc; по ним не считаем точность.
+
+01_potato_late_blight.jpg — Картофель: фитофтороз
+Автор: Björn Andersson (SLU)
+Источник: https://commons.wikimedia.org/wiki/File:Potato_Late_Blight.JPG
+Лицензия: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+02_potato_late_blight_garden.jpg — Картофель: фитофтороз, садовый снимок
+Автор: Сарапулов
+Источник: https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D0%BF%D0%BB%D1%8F_%D1%84%D1%96%D1%82%D0%BE%D1%84%D1%82%D0%BE%D1%80%D0%BE%D0%B7_IMG20220820102315.jpg
+Лицензия: CC BY 4.0 https://creativecommons.org/licenses/by/4.0
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+03_tomato_early_blight.jpg — Томат: альтернариоз
+Автор: Dwight Sipler from Stow, MA, USA
+Источник: https://commons.wikimedia.org/wiki/File:Early_blight_on_tomato_leaves_(7871930010).jpg
+Лицензия: CC BY 2.0 https://creativecommons.org/licenses/by/2.0
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+04_tomato_late_blight.jpg — Томат: фитофтороз
+Автор: Scot Nelson from Honolulu, Hawaii, USA
+Источник: https://commons.wikimedia.org/wiki/File:Tomato_late_blight_leaf_sporulating_lesions_1_(5816170621).jpg
+Лицензия: CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: [{'file': 'pd_103327a5b54fcbf318f7.jpg', 'split': 'train', 'exact_decoded': False}]
+
+05_tomato_septoria_2026.jpg — Томат: септориоз
+Автор: Wolan268
+Источник: https://commons.wikimedia.org/wiki/File:Tomato_septoria_leaf_spot_3026.jpg
+Лицензия: CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+06_tomato_septoria_garden.jpg — Томат: септориоз, садовый снимок
+Автор: MerielGJones
+Источник: https://commons.wikimedia.org/wiki/File:Septoria_leaf_spot_symptoms_on_tomato_leaf_(Septoria_lycopersici_on_Solanum_lycopersicum_leaf).jpg
+Лицензия: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+07_tomato_leaf_mold.jpg — Томат: листовая плесень
+Автор: Elizabeth Bush, Virginia Polytechnic Institute and State University
+Источник: https://commons.wikimedia.org/wiki/File:Tomato_Leaf_Mold.jpg
+Лицензия: CC BY 3.0 https://creativecommons.org/licenses/by/3.0
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+08_tomato_spider_mite.jpg — Томат: повреждение паутинным клещом
+Автор: Clemson University - USDA Cooperative Extension Slide Series , Bugwood.org
+Источник: https://commons.wikimedia.org/wiki/File:Solanum_lycopersicum_-_spider_mite_-Clemson_University_-_USDA.jpg
+Лицензия: CC BY 3.0 us https://creativecommons.org/licenses/by/3.0/us/deed.en
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+09_cucumber_downy_mildew_2024.jpg — Огурец: пероноспороз (диагноз не поддерживается моделью)
+Автор: Wee Hong
+Источник: https://commons.wikimedia.org/wiki/File:Downy_mildew_on_leaves_of_Cucumis_sativus.jpg
+Лицензия: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []
+
+10_cucumber_powdery_mildew.jpg — Огурец: мучнистая роса (диагноз не поддерживается моделью)
+Автор: Rasbak
+Источник: https://commons.wikimedia.org/wiki/File:Sphaerotheca_fusca_on_Cucumber_leaves.jpg
+Лицензия: CC BY-SA 3.0 https://creativecommons.org/licenses/by-sa/3.0
+Изменения: нет, оригинальный файл.
+Возможные совпадения с clean v2: []

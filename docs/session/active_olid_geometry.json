@@ -1,0 +1,14 @@
+{
+  "pid": 31420,
+  "start_utc": "2026-10-05T06:27:08.6978163Z",
+  "script": "ml-pipeline/audit_olid_original_geometry.py",
+  "status_path": "docs/experiments/yolo26s_data_v1/olid_original_geometry_r3/status.json",
+  "gpu": false,
+  "status": "completed",
+  "worker_pid": 30692,
+  "worker_start_utc": "2026-10-05T06:27:08.7543580Z",
+  "process_running": false,
+  "observed_utc": "2026-10-05T12:30:23.271054+00:00",
+  "authoritative_status": "completed_original_audit_pending_geometry_review",
+  "observation": "Original launcher/worker PIDs absent; completed source status read. Do not rerun."
+}

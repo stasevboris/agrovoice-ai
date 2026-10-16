@@ -1,0 +1,44 @@
+{
+  "status": "completed_split_constraints_only_no_training_dataset",
+  "updated_utc": "2026-10-05T12:17:58.562688+00:00",
+  "gpu": false,
+  "training_accepted": 0,
+  "script_sha256": "b3cd7e760d84b8fa529a26973be77b1e97c5570c26f565fd8376ed324b89583d",
+  "leaf_map_sha256": "3b4b253683c6911744959a3870a92509b1faa1ee34e9f8585e21d0fe6337a25b",
+  "leaf_map_matches_pinned_archive": true,
+  "source_inputs_sha256": {
+    "docs\\experiments\\yolo26s_data_v1\\plantvillage_full_geometry_r1\\records.jsonl": "de9c454e495ed86e06be6478eb3511c8da3016a139cc46c0db7b3a1cf4b65ff8",
+    "docs\\experiments\\yolo26s_data_v1\\plantvillage_extra_conditions_r1\\records.jsonl": "aa904c12cf8a111262b75e9bd97bd163826ffef7ec1b1f19f0b2755efefb8c1a",
+    "docs\\experiments\\yolo26s_data_v1\\olid_original_geometry_r3\\records.jsonl": "643dd1e54e30c4f987156fa19344873ee94d3636a87bdcefd832b9b596429372",
+    "ml-pipeline\\dataset_clean_v2\\manifest.json": "6eeb02546dfe35f48cd6a8f37931b325e74b8c338e62c0c18708e3784832abfe"
+  },
+  "overlap_state_sha256": "f1690cfc01d29ecfef0c8c298e55d3894fa4b6fa90da3e11c511b328bc19032e",
+  "counts": {
+    "records": 59346,
+    "candidate_records": 55992,
+    "components": 25529,
+    "edges_by_reason": {
+      "publisher_leaf_map": 32966,
+      "frozen_historical_provenance": 195,
+      "OLID_same_second_conservative": 8,
+      "decoded_exact_copy": 820,
+      "near_match_conservative": 37
+    },
+    "candidate_rules": {
+      "no_historical_split_restriction_physical_provenance_still_requires_review": 53754,
+      "training_only_if_other_checks_pass_never_new_independent_holdout": 1781,
+      "historical_holdout_family_never_train_or_new_independent_test": 447,
+      "quarantine_source_label_conflict_component": 10
+    },
+    "inherited_multi_split_components": 9
+  },
+  "limitations": [
+    "No final train/val/test assignments were made.",
+    "Connected split constraints are not proven plant identities.",
+    "No images or frozen historical split assignments were changed."
+  ],
+  "output_sha256": {
+    "candidate_split_constraints.jsonl": "69d173b12dc806d3ca41921612c2ad2b216c798a42f641f095646c004e9dba04",
+    "inherited_split_conflicts.json": "14bdf9fa0efcc1defe13180c139b066efc5a7c7dc756023d75dba200b78d4694"
+  }
+}

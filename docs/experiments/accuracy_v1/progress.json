@@ -1,0 +1,7 @@
+{
+  "job": "mobilenet_v3_large_seed20261004",
+  "epoch": 30,
+  "epochs": 30,
+  "best_score": 0.6560348446176902,
+  "updated_utc": "2026-10-04T12:42:23.232441+00:00"
+}

@@ -1,0 +1,158 @@
+{
+  "selection": {
+    "study": "yolo26s_focus_v1",
+    "plan_sha256": "bc0d5491639b6b1ec54f8fad95e1d25a1c6f53df38b9d534391768bd271426a0",
+    "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+    "validation_code_sha256": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+    "preserved_examples_sha256": "7db7e426315808657a975da3809d4201c84e3c828e373ab9318d5d06ef14a4f4",
+    "models": {
+      "yolo26n": {
+        "id": "yolo26n",
+        "name": "YOLO26n",
+        "asset": "models/yolo26n.onnx",
+        "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "bytes": 9719842,
+        "family": "yolo",
+        "side": 416,
+        "seed": 20261012,
+        "detector_seed": 20261012,
+        "dataset": "clean v2",
+        "provisional": false,
+        "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ]
+      },
+      "yolo26s": {
+        "id": "yolo26s",
+        "name": "YOLO26s",
+        "family": "yolo",
+        "side": 416,
+        "seed": 20261004,
+        "detector_seed": 20261004,
+        "asset": "models/yolo26s.onnx",
+        "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+        "bytes": 38104599,
+        "provisional": false,
+        "dataset": "clean v2",
+        "completed_runs": 10,
+        "paired_evaluations": 10,
+        "selection": "shared full-val end-to-end AP50-95; ten seeds; lower seed breaks ties",
+        "source": "runs/accuracy_v1/yolo26s_seed20261004",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ]
+      }
+    },
+    "cohort": [
+      {
+        "seed": 20261003,
+        "ap": 0.3606836149545526,
+        "graph_sha256": "9631b6073310657435eb30d93dcc7314b5e29dcce73498736a71021b132d2c1e",
+        "bytes": 38104599,
+        "val_sha256": "2184d47ffef5f31405895c6fd6568e2879b6e3883b8016588a16b1afd2777988",
+        "paired_n_val_sha256": "7cde357df8480730511bb237a730d25fe95c7aa0334ed0d0309ac1b4501b1618",
+        "paired_ap_delta": 0.03228966956345214
+      },
+      {
+        "seed": 20261004,
+        "ap": 0.362319046013006,
+        "graph_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+        "bytes": 38104599,
+        "val_sha256": "cef4dac7c0d4144fc5c8542a075b0e5ebfb2ad7f37002c8afb93549ee6e22593",
+        "paired_n_val_sha256": "b1c73a0d647d167cc0feb4bc49aa802284c97ff72202d75514ff9c66949d0700",
+        "paired_ap_delta": 0.03807123885433994
+      },
+      {
+        "seed": 20261005,
+        "ap": 0.35612413788850783,
+        "graph_sha256": "3eedd87d2ccf29fcd9eab98fa5c9b39c42f4e59e9e04e2c690a7d8ea15c954ab",
+        "bytes": 38104599,
+        "val_sha256": "da3189a6730c27dd0c1e616c45d4629b1237524e960e6ffe293fd2021bd0dc3a",
+        "paired_n_val_sha256": "5039a74dddf79e98e40fb01f3ec14ede68a08cfb798ac3d867de46d70d21ad33",
+        "paired_ap_delta": 0.042431892678485184
+      },
+      {
+        "seed": 20261006,
+        "ap": 0.3585825202758721,
+        "graph_sha256": "d4aadd573a2fe2dcec65d93ebcad6bd34bda675a76a1ecdf7507f1139c8143e9",
+        "bytes": 38104599,
+        "val_sha256": "8ae213f19ee6e61ea627525e93a4de3e0a33b2b2125d514df05f1f3ba29a14c7",
+        "paired_n_val_sha256": "6ff8e8d1f48660181dd923be68d832aed00ebcdafa3cfb3f1be68e2776d9f7a1",
+        "paired_ap_delta": 0.03502934435215649
+      },
+      {
+        "seed": 20261007,
+        "ap": 0.3500569758704914,
+        "graph_sha256": "a7227cba31a1231c189fb2b8d24a401176f92c7b1fcb8dc1640c17e8cd706973",
+        "bytes": 38104599,
+        "val_sha256": "879a8394aaf9c8055cc053fa9d5b0286222d09beaf1d44c55dd4475d285784af",
+        "paired_n_val_sha256": "0450edb2146534e1afd391efc935f8158202c7f86f057f2dc3858250561598ac",
+        "paired_ap_delta": 0.02161078058802518
+      },
+      {
+        "seed": 20261008,
+        "ap": 0.35054699239640047,
+        "graph_sha256": "c044f0552c5cc32795e1cadb3b8d10ebe6f8549a0e98c0870ce6702d7004400d",
+        "bytes": 38104599,
+        "val_sha256": "2ca68fb27bbe71fcddd6df445529a49c85bf33491312dac0beb03f1f27d01b77",
+        "paired_n_val_sha256": "94610f0ce5fb7d6be63da237b6194354b7a8f8a5c34a37e525ad68bcb8c443dc",
+        "paired_ap_delta": 0.023219211146120633
+      },
+      {
+        "seed": 20261009,
+        "ap": 0.34714142734182385,
+        "graph_sha256": "4df1f5f8fbd90a9692ce351d19948742597161e7f525bbc5ac7b7bb7b5d0108f",
+        "bytes": 38104599,
+        "val_sha256": "7ebd51f528b8eaf43d69ba49ddb873fa70b2809060c1ca06230e9f2f4f51be5e",
+        "paired_n_val_sha256": "64cf3fbf90ce94bf7915a46f67676ceea505d40d9803af3d5b6f37f58494a73a",
+        "paired_ap_delta": 0.04647488586000098
+      },
+      {
+        "seed": 20261010,
+        "ap": 0.35425452600124374,
+        "graph_sha256": "4a25310ab69c748341c9cf389578f5c7bffbbcd3ebd8ea7bed050d5b71c81b54",
+        "bytes": 38104599,
+        "val_sha256": "00af27554eb5f52cd598c43d3790adaf07e9da307b10e820d3c7604198f6b2f3",
+        "paired_n_val_sha256": "b9c767c3754badafe0229402b2506c2d1008498de0e010c5fc8843bf24e01585",
+        "paired_ap_delta": 0.022589669591666806
+      },
+      {
+        "seed": 20261011,
+        "ap": 0.3430343371784884,
+        "graph_sha256": "75cf1b581f80125e8097b56371097e1a5918f6d81c0d738e6e37929fb1c98262",
+        "bytes": 38104599,
+        "val_sha256": "b16787145a123cb9f752b8515e8380d75b097ce2c4ca629e65d2175f09664522",
+        "paired_n_val_sha256": "3df12d4efcb3690c9bcd53f9bdf0b62a4f44c5dd0e3f0c969a380811c0a69b8c",
+        "paired_ap_delta": 0.027377028759760558
+      },
+      {
+        "seed": 20261012,
+        "ap": 0.34592830751798054,
+        "graph_sha256": "70a287a0cc4718c647431b1cef2d296687a8c555683903264ddb92ceacffd07a",
+        "bytes": 38104599,
+        "val_sha256": "6e6495b8ff3b93040ee1a870655cf4612a75e8f78c30d898ea9ff18b567d7334",
+        "paired_n_val_sha256": "8968153272e8d112f95279e17ef67585b397516f57d0784c650c886e56560ade",
+        "paired_ap_delta": 0.02344830793682945
+      }
+    ],
+    "rule": "Fixed historical YOLO26n12; select YOLO26s on all ten shared val reports before reading test; no resumed DETR or other example cohorts"
+  },
+  "locked_utc": "2026-10-04T22:03:32.622338+00:00"
+}

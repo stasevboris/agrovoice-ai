@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "source_fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "source": "dataset_clean_v2",
+  "classes": [
+    "Apple Scab Leaf",
+    "Apple leaf",
+    "Apple rust leaf",
+    "Bell_pepper leaf",
+    "Bell_pepper leaf spot",
+    "Blueberry leaf",
+    "Cherry leaf",
+    "Corn Gray leaf spot",
+    "Corn leaf blight",
+    "Corn rust leaf",
+    "Peach leaf",
+    "Potato leaf",
+    "Potato leaf early blight",
+    "Potato leaf late blight",
+    "Raspberry leaf",
+    "Soyabean leaf",
+    "Squash Powdery mildew leaf",
+    "Strawberry leaf",
+    "Tomato Early blight leaf",
+    "Tomato Septoria leaf spot",
+    "Tomato leaf",
+    "Tomato leaf bacterial spot",
+    "Tomato leaf late blight",
+    "Tomato leaf mosaic virus",
+    "Tomato leaf yellow virus",
+    "Tomato mold leaf",
+    "Tomato two spotted spider mites leaf",
+    "grape leaf",
+    "grape leaf black rot",
+    "Cucumber leaf (condition unknown)"
+  ],
+  "margin_each_side": 0.1,
+  "max_crop_side": 512,
+  "counts": {
+    "train": 7760,
+    "val_aux": 160,
+    "val": 1309,
+    "test": 452
+  },
+  "mask_counts": {
+    "train": 590,
+    "val_aux": 149
+  },
+  "split_policy": "Inherit original image/physical groups before cropping; test never used in model selection",
+  "new_external_training_data": false,
+  "warnings": [],
+  "limitations": [
+    "Original per-class field coverage and source label uncertainty remain",
+    "Leaf masks are only from accepted laboratory PlantVillage; no lesion masks or field mask ground truth"
+  ],
+  "manifest_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001"
+}

@@ -1,0 +1,12 @@
+{
+  "checked_utc": "2026-10-05T12:30:23.271054+00:00",
+  "processes": [
+    {
+      "ProcessId": 30884,
+      "CreationDate": "/Date(1791203423181)/",
+      "Name": "python.exe",
+      "CommandLine": "\"C:\\Users\\Boris\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" ml-pipeline/save_leaf_v3_audit_checkpoint.py"
+    }
+  ],
+  "note": "Includes this checkpoint Python process; PID alone never establishes an old worker identity."
+}

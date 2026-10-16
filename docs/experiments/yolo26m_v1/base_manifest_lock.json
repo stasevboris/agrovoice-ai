@@ -1,0 +1,408 @@
+{
+  "sha256": "482868e360e3c3a6fa91caa5877bac9c4d93b67adfe4dca0b4bd056955c42f62",
+  "manifest": {
+    "dataset": "clean v2",
+    "dataset_fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+    "seed": 20261003,
+    "input_side": 416,
+    "provisional": true,
+    "classes": [
+      "Apple Scab Leaf",
+      "Apple leaf",
+      "Apple rust leaf",
+      "Bell_pepper leaf",
+      "Bell_pepper leaf spot",
+      "Blueberry leaf",
+      "Cherry leaf",
+      "Corn Gray leaf spot",
+      "Corn leaf blight",
+      "Corn rust leaf",
+      "Peach leaf",
+      "Potato leaf",
+      "Potato leaf early blight",
+      "Potato leaf late blight",
+      "Raspberry leaf",
+      "Soyabean leaf",
+      "Squash Powdery mildew leaf",
+      "Strawberry leaf",
+      "Tomato Early blight leaf",
+      "Tomato Septoria leaf spot",
+      "Tomato leaf",
+      "Tomato leaf bacterial spot",
+      "Tomato leaf late blight",
+      "Tomato leaf mosaic virus",
+      "Tomato leaf yellow virus",
+      "Tomato mold leaf",
+      "Tomato two spotted spider mites leaf",
+      "grape leaf",
+      "grape leaf black rot",
+      "Cucumber leaf (condition unknown)"
+    ],
+    "labels_ru": [
+      "Яблоня: парша",
+      "Яблоня: лист без указанной болезни",
+      "Яблоня: ржавчина",
+      "Перец: лист без указанной болезни",
+      "Перец: пятнистость",
+      "Голубика: лист",
+      "Вишня: лист",
+      "Кукуруза: серая пятнистость",
+      "Кукуруза: ожог листа",
+      "Кукуруза: ржавчина",
+      "Персик: лист",
+      "Картофель: лист без указанной болезни",
+      "Картофель: альтернариоз",
+      "Картофель: фитофтороз",
+      "Малина: лист",
+      "Соя: лист",
+      "Тыквенные: мучнистая роса (класс Squash)",
+      "Клубника: лист",
+      "Томат: альтернариоз",
+      "Томат: септориоз",
+      "Томат: лист без указанной болезни",
+      "Томат: бактериальная пятнистость",
+      "Томат: фитофтороз",
+      "Томат: мозаика",
+      "Томат: вирус пожелтения (метка источника)",
+      "Томат: плесень листа",
+      "Томат: повреждение паутинным клещом",
+      "Виноград: лист",
+      "Виноград: чёрная гниль",
+      "Огурец: лист, состояние неизвестно"
+    ],
+    "models": [
+      {
+        "id": "yolo11n",
+        "name": "YOLO11n",
+        "asset": "models/yolo11n.onnx",
+        "sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+        "bytes": 10530938,
+        "source": "runs\\detect\\study10_v2_yolo11n_seed20261003\\weights\\best.onnx",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ],
+        "family": "yolo",
+        "seed": 20261003,
+        "detector_seed": 20261003,
+        "dataset": "clean v2",
+        "provisional": false,
+        "side": 416
+      },
+      {
+        "id": "yolo26n",
+        "name": "YOLO26n",
+        "asset": "models/yolo26n.onnx",
+        "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "bytes": 9719842,
+        "family": "yolo",
+        "side": 416,
+        "seed": 20261012,
+        "detector_seed": 20261012,
+        "dataset": "clean v2",
+        "provisional": false,
+        "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ]
+      },
+      {
+        "id": "mobilenet_v3_large",
+        "name": "Лист → MobileNet",
+        "asset": "models/yolo26n.onnx",
+        "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "bytes": 9719842,
+        "family": "two_stage",
+        "side": 416,
+        "seed": 20261003,
+        "detector_seed": 20261012,
+        "dataset": "clean v2 detector + accuracy_v1 inherited crops",
+        "provisional": true,
+        "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ],
+        "completed_runs": 1,
+        "paired_evaluations": 1,
+        "selection": "provisional GT-crop macro-F1",
+        "classifier": {
+          "id": "mobilenet_v3_large_classifier",
+          "kind": "mobilenet_v3_large",
+          "asset": "models/mobilenet_v3_large.onnx",
+          "sha256": "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e",
+          "bytes": 16956074,
+          "side": 224,
+          "seed": 20261003,
+          "source": "runs\\accuracy_v1\\mobilenet_v3_large_seed20261003",
+          "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+          "dependency": null,
+          "input_shape": [
+            1,
+            3,
+            224,
+            224
+          ],
+          "output_shape": [
+            1,
+            30
+          ],
+          "normalization": "ImageNet normalization embedded in graph"
+        }
+      },
+      {
+        "id": "efficientnet_b0",
+        "name": "Лист → EfficientNet",
+        "asset": "models/yolo26n.onnx",
+        "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "bytes": 9719842,
+        "family": "two_stage",
+        "side": 416,
+        "seed": 20261003,
+        "detector_seed": 20261012,
+        "dataset": "clean v2 detector + accuracy_v1 inherited crops",
+        "provisional": true,
+        "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ],
+        "completed_runs": 1,
+        "paired_evaluations": 1,
+        "selection": "provisional GT-crop macro-F1",
+        "classifier": {
+          "id": "efficientnet_b0_classifier",
+          "kind": "efficientnet_b0",
+          "asset": "models/efficientnet_b0.onnx",
+          "sha256": "2a7eea46067ed02ed791e56cc66f0096be0dc6da059999b4204a11bb9e6347e1",
+          "bytes": 16181437,
+          "side": 224,
+          "seed": 20261003,
+          "source": "runs\\accuracy_v1\\efficientnet_b0_seed20261003",
+          "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+          "dependency": null,
+          "input_shape": [
+            1,
+            3,
+            224,
+            224
+          ],
+          "output_shape": [
+            1,
+            30
+          ],
+          "normalization": "ImageNet normalization embedded in graph"
+        }
+      },
+      {
+        "id": "masked_mobilenet_v3_large",
+        "name": "Маска → диагноз",
+        "asset": "models/yolo26n.onnx",
+        "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "bytes": 9719842,
+        "family": "two_stage",
+        "side": 416,
+        "seed": 20261003,
+        "detector_seed": 20261012,
+        "dataset": "clean v2 detector + accuracy_v1 inherited crops",
+        "provisional": true,
+        "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ],
+        "completed_runs": 1,
+        "paired_evaluations": 1,
+        "selection": "provisional GT-crop macro-F1",
+        "classifier": {
+          "id": "masked_mobilenet_v3_large_classifier",
+          "kind": "masked_mobilenet_v3_large",
+          "asset": "models/masked_mobilenet_v3_large.onnx",
+          "sha256": "49c5c2f867b601848cbc33292f533f9d6f724db88e34b0b06395840f93c07265",
+          "bytes": 17442548,
+          "side": 224,
+          "seed": 20261003,
+          "source": "runs\\accuracy_v1\\masked_mobilenet_v3_large_seed20261003",
+          "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+          "dependency": "/mnt/f/agrovoice-ai/runs/accuracy_v1/leaf_mask_seed20261003/best.pt",
+          "input_shape": [
+            1,
+            3,
+            224,
+            224
+          ],
+          "output_shape": [
+            1,
+            30
+          ],
+          "normalization": "ImageNet normalization embedded in graph"
+        }
+      },
+      {
+        "id": "distilled_mobilenet_v3_large",
+        "name": "Ученик MobileNet",
+        "asset": "models/yolo26n.onnx",
+        "sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "bytes": 9719842,
+        "family": "two_stage",
+        "side": 416,
+        "seed": 20261003,
+        "detector_seed": 20261012,
+        "dataset": "clean v2 detector + accuracy_v1 inherited crops",
+        "provisional": true,
+        "source": "ml-pipeline\\exports\\study10_v2_yolo26n_seed20261012\\model.onnx",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ],
+        "completed_runs": 1,
+        "paired_evaluations": 1,
+        "selection": "provisional GT-crop macro-F1",
+        "classifier": {
+          "id": "distilled_mobilenet_v3_large_classifier",
+          "kind": "distilled_mobilenet_v3_large",
+          "asset": "models/distilled_mobilenet_v3_large.onnx",
+          "sha256": "597d5f0dd71787584220ef30fbe0a7a8574926527a5ab140db05fc36c47f4675",
+          "bytes": 16956074,
+          "side": 224,
+          "seed": 20261003,
+          "source": "runs\\accuracy_v1\\distilled_mobilenet_v3_large_seed20261003",
+          "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+          "dependency": "/mnt/f/agrovoice-ai/runs/accuracy_v1/teacher_efficientnet_v2_s_seed20261003/best.pt",
+          "input_shape": [
+            1,
+            3,
+            224,
+            224
+          ],
+          "output_shape": [
+            1,
+            30
+          ],
+          "normalization": "ImageNet normalization embedded in graph"
+        }
+      },
+      {
+        "id": "yolo26s",
+        "name": "YOLO26s",
+        "family": "yolo",
+        "side": 416,
+        "seed": 20261004,
+        "detector_seed": 20261004,
+        "asset": "models/yolo26s.onnx",
+        "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+        "bytes": 38104599,
+        "provisional": false,
+        "dataset": "clean v2",
+        "completed_runs": 10,
+        "paired_evaluations": 10,
+        "selection": "shared full-val end-to-end AP50-95; ten seeds; lower seed breaks ties",
+        "source": "runs/accuracy_v1/yolo26s_seed20261004",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          34,
+          3549
+        ]
+      },
+      {
+        "id": "deimv2_n",
+        "name": "DEIMv2-N",
+        "family": "detr",
+        "side": 416,
+        "seed": 20261003,
+        "detector_seed": 20261003,
+        "asset": "models/deimv2_n.onnx",
+        "sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0",
+        "bytes": 14633957,
+        "provisional": true,
+        "dataset": "clean v2",
+        "completed_runs": 1,
+        "paired_evaluations": 1,
+        "selection": "provisional native detector val",
+        "source": "runs\\accuracy_v1\\deimv2_n_seed20261003",
+        "input_shape": [
+          1,
+          3,
+          416,
+          416
+        ],
+        "output_shape": [
+          1,
+          300,
+          6
+        ],
+        "license": "DEIMv2 non-commercial; academic prototype"
+      }
+    ],
+    "schema": 2,
+    "updated_utc": "2026-10-04T22:03:28.011354+00:00",
+    "accuracy_dataset_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+    "two_stage_policy": {
+      "proposal_threshold": 0.1,
+      "nms_iou": 0.7,
+      "class_agnostic": true,
+      "max_classified": 32,
+      "margin_each_side": 0.1,
+      "score": "detector maximum class score times classifier softmax"
+    },
+    "active_study": "yolo26s_focus_v1",
+    "focus_selection": {
+      "models": [
+        "yolo26n",
+        "yolo26s"
+      ],
+      "complete_s_seeds": 10,
+      "examples_preserved_from": "APK0.8",
+      "validation_lock": "docs\\experiments\\yolo26s_focus_v1\\validation_selection.json"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "models_visible": [
+    "yolo11n",
+    "yolo26n",
+    "mobilenet_v3_large",
+    "yolo26s",
+    "deimv2_n"
+  ],
+  "selected_deim_evidence": "model_lab_ui_0.5_deim.xml",
+  "screenshot": "model_lab_ui_0.5.png",
+  "restored_mode": "yolo26s",
+  "preserved_confidence": 0.45,
+  "restored_evidence": "model_lab_ui_0.5_restored.xml"
+}

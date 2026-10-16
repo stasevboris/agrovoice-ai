@@ -1,0 +1,14 @@
+{
+  "pid": 13060,
+  "start_utc": "2026-10-05T05:48:24.8285851Z",
+  "script": "ml-pipeline/stage_plantvillage_pinned_archive.py",
+  "status_path": "ml-pipeline/source_candidates/yolo26s_data_v1/plantvillage_all_crops/archive_stage_status.json",
+  "gpu": false,
+  "launcher_pid": 13060,
+  "worker_pid": 4064,
+  "worker_start_utc": "2026-10-05T05:48:24.8677645Z",
+  "status": "completed_source_verification_not_training_ready",
+  "process_running": false,
+  "observed_exited_utc": "2026-10-05T06:30:10.422038+00:00",
+  "worker_start_correction": "Previous checkpoint copied launcher start; this is actual worker start observed before exit"
+}

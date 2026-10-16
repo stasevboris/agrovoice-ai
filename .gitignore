@@ -15,6 +15,7 @@ __pycache__/
 *.py[cod]
 venv/
 .venv/
+.venv-*/
 .env
 
 # Heavy ML artifacts (датасеты и тяжелые веса)
@@ -23,7 +24,45 @@ raw_images/
 runs/
 *.pt
 *.onnx
+/ml-pipeline/dataset*/
+/ml-pipeline/extracted/
+/ml-pipeline/runtime/
+/ml-pipeline/*.zip
+/ml-pipeline/logs/
+/ml-pipeline/.cache/
+/ml-pipeline/source_candidates/
+/ml-pipeline/exports/
+/ml-pipeline/third_party/
+/ml-pipeline/dataset_accuracy_v1/
+/Ultralytics/
 
 # Легковесные мобильные модели для приложения оставляем
 !android-app/app/src/main/assets/*.tflite
 !android-app/app/src/main/assets/*.ppn
+
+# Reproducible downloaded phone examples and debug tensor dumps
+/artifacts/field_photos/*.jpg
+/docs/android/phone_validation/*.bin
+/docs/android/phone_validation/fixtures/
+/docs/android/accuracy_v1/field_validation/*.bin
+/docs/android/accuracy_v1/field_validation/*.npy
+
+# Reproducible official offline speech model; manifests and licenses stay versioned.
+/android-app/app/src/main/assets/voice/ru/
+/ml-pipeline/downloads/voice/
+
+# Added to ignore nested builds
+**/build/
+**/.cxx/
+
+
+# Training kit archives for rented GPUs (rebuilt by ml-pipeline/pack_gpu_kit.py)
+/artifacts/gpu_kit/
+
+# Heavy review outputs: kept on disk / archived to E:\Перенесено_с_F, not in git (see docs/ARCHIVE.md)
+docs/**/previews/
+*.wav
+docs/**/*.bin
+docs/**/*.jsonl
+/artifacts/documents/
+/ml-pipeline/*.pt

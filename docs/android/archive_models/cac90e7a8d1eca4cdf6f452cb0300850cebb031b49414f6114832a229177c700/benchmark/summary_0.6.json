@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "series": 10,
+  "iterations_per_mode_per_series": 10,
+  "warmup_per_mode_per_series": 3,
+  "photo_sha256": [
+    "e01d96d3bbef4fa050c64fe0c4802c99363d802408e7e66df19f71ccacc6268c"
+  ],
+  "models": {
+    "yolo11n": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 136.03545315,
+        "sd_of_series_medians_ms": 9.080109095495507
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 168.3251797,
+        "sd_of_series_medians_ms": 10.54812744911171
+      },
+      "maximum_rss_bytes_after": 236490752,
+      "maximum_process_hwm_bytes": 328089600,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261003,
+        "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+        null
+      ]
+    },
+    "yolo26n": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 120.08202610000001,
+        "sd_of_series_medians_ms": 8.485962804646372
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 153.38848175,
+        "sd_of_series_medians_ms": 10.748331834488415
+      },
+      "maximum_rss_bytes_after": 237559808,
+      "maximum_process_hwm_bytes": 328089600,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261012,
+        20261012,
+        "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        null
+      ]
+    },
+    "mobilenet_v3_large": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 209.59631495,
+        "sd_of_series_medians_ms": 19.223441315130636
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 274.6889036,
+        "sd_of_series_medians_ms": 21.301584396262708
+      },
+      "maximum_rss_bytes_after": 284733440,
+      "maximum_process_hwm_bytes": 328089600,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261012,
+        "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e"
+      ]
+    },
+    "efficientnet_b0": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 269.1652682,
+        "sd_of_series_medians_ms": 27.22462872064405
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 335.9021563,
+        "sd_of_series_medians_ms": 32.460967663813015
+      },
+      "maximum_rss_bytes_after": 308322304,
+      "maximum_process_hwm_bytes": 328089600,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261012,
+        "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "2a7eea46067ed02ed791e56cc66f0096be0dc6da059999b4204a11bb9e6347e1"
+      ]
+    },
+    "yolo26s": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 386.3918593,
+        "sd_of_series_medians_ms": 30.287368360316954
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 420.40585899999996,
+        "sd_of_series_medians_ms": 32.27312056643861
+      },
+      "maximum_rss_bytes_after": 296964096,
+      "maximum_process_hwm_bytes": 328089600,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261003,
+        "9631b6073310657435eb30d93dcc7314b5e29dcce73498736a71021b132d2c1e",
+        null
+      ]
+    },
+    "deimv2_n": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 211.48507555,
+        "sd_of_series_medians_ms": 13.473549257866416
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 243.8162602,
+        "sd_of_series_medians_ms": 15.183959431274857
+      },
+      "maximum_rss_bytes_after": 238067712,
+      "maximum_process_hwm_bytes": 328089600,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261003,
+        "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0",
+        null
+      ]
+    }
+  },
+  "scope": "Warm decoded-bitmap analysis: preparation, detector, crops/classifier, postprocessing; excludes file decode/import, camera, saving and rendering. One potato photo, ten fresh processes, rotated mode order; not ten independent training runs"
+}

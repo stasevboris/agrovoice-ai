@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "series": 10,
+  "files": [
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_00.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_01.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_02.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_03.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_04.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_05.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_06.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_07.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_08.json",
+    "F:\\agrovoice-ai\\docs\\android\\accuracy_v1\\benchmark\\pipeline_20261004_120945_09.json"
+  ],
+  "phone": "b861c4e0",
+  "photo": "01_potato_late_blight.jpg",
+  "completed_utc": "2026-10-04T12:15:22.1207486+00:00"
+}

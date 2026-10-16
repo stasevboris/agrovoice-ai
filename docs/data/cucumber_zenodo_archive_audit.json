@@ -1,0 +1,229 @@
+{
+  "source": "https://zenodo.org/records/16816441",
+  "download": "Image tags.zip",
+  "license": "CC-BY-4.0",
+  "expected_md5": "0c0797650bfcdf66fdf528f5a605909e",
+  "bytes": 491706303,
+  "file_count": 7,
+  "extensions": {
+    ".zip": 7
+  },
+  "annotation_examples": [],
+  "included_in_training": false,
+  "nested_archives": [
+    {
+      "archive": "Image tags/anthracnose.zip",
+      "files": 322,
+      "extensions": {
+        ".txt": 161,
+        ".json": 1,
+        ".jpg": 160
+      },
+      "annotation_files": [
+        "classes.txt",
+        "notes.json",
+        "labels/010b141e-Anthracnose_117.txt",
+        "labels/019e1ae3-Anthracnose_109.txt",
+        "labels/054d308f-Anthracnose_133.txt",
+        "labels/05dcb4f3-Anthracnose_12.txt"
+      ],
+      "image_count": 160,
+      "label_count": 160,
+      "missing_label_stems": [],
+      "boxes": 284,
+      "row_lengths": {
+        "5": 284
+      },
+      "local_class_ids": {
+        "0": 284
+      },
+      "invalid_rows": 0,
+      "label_preview": "0 0.50104081266653 0.4963235294117647 0.9855182926829269 0.9595588235294117\r\n",
+      "annotation_preview": "Anthracnose\r\n"
+    },
+    {
+      "archive": "Image tags/bacterial_wilt.zip",
+      "files": 322,
+      "extensions": {
+        ".txt": 161,
+        ".json": 1,
+        ".jpg": 160
+      },
+      "annotation_files": [
+        "classes.txt",
+        "notes.json",
+        "labels/002f9901-Bacterial_Wilt_121.txt",
+        "labels/04b861d8-Bacterial_Wilt_78.txt",
+        "labels/056f02cf-Bacterial_Wilt_145.txt",
+        "labels/072ad7c4-Bacterial_Wilt_101.txt"
+      ],
+      "image_count": 160,
+      "label_count": 160,
+      "missing_label_stems": [],
+      "boxes": 1174,
+      "row_lengths": {
+        "5": 1174
+      },
+      "local_class_ids": {
+        "0": 1174
+      },
+      "invalid_rows": 0,
+      "label_preview": "0 0.3020836383333822 0.7121848739495799 0.26343586214973796 0.5378151260504203\r\n0 0.5505336280853806 0.6827731092436976 0.27763300442128086 0.6218487394957983\r\n0 0.6451812432289991 0.2531512605042017 ",
+      "annotation_preview": "Bacterial wilt\r\n"
+    },
+    {
+      "archive": "Image tags/belly rot.zip",
+      "files": 322,
+      "extensions": {
+        ".txt": 161,
+        ".json": 1,
+        ".jpg": 160
+      },
+      "annotation_files": [
+        "classes.txt",
+        "notes.json",
+        "labels/00067683-Belly_Rot_85.txt",
+        "labels/01002a00-Belly_Rot_140.txt",
+        "labels/024805c1-Belly_Rot_117.txt",
+        "labels/04876c95-Belly_Rot_47.txt"
+      ],
+      "image_count": 160,
+      "label_count": 160,
+      "missing_label_stems": [],
+      "boxes": 643,
+      "row_lengths": {
+        "5": 643
+      },
+      "local_class_ids": {
+        "0": 643
+      },
+      "invalid_rows": 0,
+      "label_preview": "0 0.31224341946389783 0.06930693069306927 0.27878876737848013 0.13861386138613854\r\n0 0.2871524303998342 0.2141089108910891 0.1319600165591469 0.15099009900990093\r\n0 0.3466273674405768 0.32797029702970",
+      "annotation_preview": "Belly Rot\r\n"
+    },
+    {
+      "archive": "Image tags/downy_mildew.zip",
+      "files": 322,
+      "extensions": {
+        ".txt": 161,
+        ".json": 1,
+        ".jpg": 160
+      },
+      "annotation_files": [
+        "classes.txt",
+        "notes.json",
+        "labels/02a05385-Downy_Mildew_129.txt",
+        "labels/031ebc88-Downy_Mildew_4.txt",
+        "labels/04bc596b-Downy_Mildew_124.txt",
+        "labels/05bd4a2d-Downy_Mildew_150.txt"
+      ],
+      "image_count": 160,
+      "label_count": 160,
+      "missing_label_stems": [],
+      "boxes": 2158,
+      "row_lengths": {
+        "5": 2158
+      },
+      "local_class_ids": {
+        "0": 2158
+      },
+      "invalid_rows": 0,
+      "label_preview": "0 0.261282842075525 0.365427927927928 0.52256568415105 0.721846846846847\r\n0 0.5935940295696394 0.45045045045045057 0.13698323759299386 0.873873873873874\r\n0 0.45576521643594814 0.7826576576576576 0.138",
+      "annotation_preview": "Downy Mildew\r\n"
+    },
+    {
+      "archive": "Image tags/fresh_cucumber.zip",
+      "files": 322,
+      "extensions": {
+        ".txt": 161,
+        ".json": 1,
+        ".jpg": 160
+      },
+      "annotation_files": [
+        "classes.txt",
+        "notes.json",
+        "labels/8696e7bf-Fresh_Cucumber_96.txt",
+        "labels/bc88570f-Fresh_Cucumber_75.txt",
+        "labels/58b71260-Fresh_Cucumber_142.txt",
+        "labels/a6010908-Fresh_Cucumber_109.txt"
+      ],
+      "image_count": 160,
+      "label_count": 160,
+      "missing_label_stems": [],
+      "boxes": 338,
+      "row_lengths": {
+        "5": 338
+      },
+      "local_class_ids": {
+        "0": 338
+      },
+      "invalid_rows": 0,
+      "label_preview": "0 0.48264792401309253 0.739508700102354 0.6963042290069 0.3080859774820881\n0 0.5944716364085697 0.21187311845821077 0.5172325694647528 0.204708215488901\n0 0.603309921973105 0.4365403904985724 0.777770",
+      "annotation_preview": "Fresh Cucumber\n"
+    },
+    {
+      "archive": "Image tags/fresh_leaf.zip",
+      "files": 322,
+      "extensions": {
+        ".txt": 161,
+        ".json": 1,
+        ".jpg": 160
+      },
+      "annotation_files": [
+        "classes.txt",
+        "notes.json",
+        "labels/040ef8b5-Fresh_Leaf_54.txt",
+        "labels/04326cf5-Fresh_Leaf_86.txt",
+        "labels/05d64ae8-Fresh_Leaf_67.txt",
+        "labels/07a9faad-Fresh_Leaf_25.txt"
+      ],
+      "image_count": 160,
+      "label_count": 160,
+      "missing_label_stems": [],
+      "boxes": 406,
+      "row_lengths": {
+        "5": 406
+      },
+      "local_class_ids": {
+        "0": 406
+      },
+      "invalid_rows": 0,
+      "label_preview": "0 0.5075915274646443 0.4090073529411764 0.9848169450707109 0.6672794117647056\r\n",
+      "annotation_preview": "Fresh leaf\r\n"
+    },
+    {
+      "archive": "Image tags/pythium_fruit_rot.zip",
+      "files": 340,
+      "extensions": {
+        ".txt": 170,
+        ".json": 1,
+        ".jpg": 169
+      },
+      "annotation_files": [
+        "classes.txt",
+        "notes.json",
+        "labels/00219f10-Pythium_Fruit_Rot__49.txt",
+        "labels/07d682d5-Pythium_Fruit_Rot__26.txt",
+        "labels/0a98bfb3-Pythium_Fruit_Rot__100.txt",
+        "labels/0b06643f-Pythium_Fruit_Rot__6.txt"
+      ],
+      "image_count": 169,
+      "label_count": 169,
+      "missing_label_stems": [],
+      "boxes": 338,
+      "row_lengths": {
+        "5": 338
+      },
+      "local_class_ids": {
+        "0": 338
+      },
+      "invalid_rows": 2,
+      "label_preview": "0 0.5837308732627114 0.12975391498881433 0.4821029082774049 0.23713646532438482\r\n0 0.5333368410385926 0.4809843400447427 0.9222107897013774 0.48322147651006714\r\n0 0.7953858086040111 0.8523489932885907",
+      "annotation_preview": "Pythium Fruit Rot\r\n"
+    }
+  ],
+  "actual_md5": "0c0797650bfcdf66fdf528f5a605909e",
+  "md5_verified": true,
+  "total_images": 1129,
+  "total_boxes": 5341
+}

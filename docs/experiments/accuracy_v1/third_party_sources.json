@@ -1,0 +1,20 @@
+[
+  {
+    "id": "deimv2",
+    "repo": "Intellindust-AI-Lab/DEIMv2",
+    "revision": "1d2ca42171570c713e78fc6a766ec5104b7f4724",
+    "license": "See pinned LICENSE; weights/data terms separately",
+    "archive": "https://api.github.com/repos/Intellindust-AI-Lab/DEIMv2/zipball/1d2ca42171570c713e78fc6a766ec5104b7f4724",
+    "archive_sha256": "d802edada56140100072cd6fb69afddc8b38c4320231db5cce3c70d5d1043eab",
+    "bytes": 930665
+  },
+  {
+    "id": "dfine",
+    "repo": "Peterande/D-FINE",
+    "revision": "956d1709314c2c6a4df6f34de232054578a7449f",
+    "license": "See pinned LICENSE; weights/data terms separately",
+    "archive": "https://api.github.com/repos/Peterande/D-FINE/zipball/956d1709314c2c6a4df6f34de232054578a7449f",
+    "archive_sha256": "e51faf74e061ec8cf67272a77158ccf0d771675e2d586497301d4df6edd4d8f3",
+    "bytes": 226967
+  }
+]

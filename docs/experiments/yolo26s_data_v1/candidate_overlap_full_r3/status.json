@@ -1,0 +1,50 @@
+{
+  "status": "completed_all_sources_screen_pending_annotation_and_split_acceptance",
+  "pid": 20768,
+  "gpu": false,
+  "training_accepted": 0,
+  "script_sha256": "8ddc6abb328f084e4fa54647e844c385f0240c7867966b99da2796edd07e070b",
+  "near_helper_sha256": "73cf8989e64097a772b343e3a10a6460966c9477fb489ac7087470c0ab84d088",
+  "inputs": {
+    "docs\\experiments\\yolo26s_data_v1\\plantvillage_full_geometry_r1\\records.jsonl": "de9c454e495ed86e06be6478eb3511c8da3016a139cc46c0db7b3a1cf4b65ff8",
+    "docs\\experiments\\yolo26s_data_v1\\cucumber_review\\inventory.json": "47700e9ce7609f7ac519f4bf76a082b4b73a35c99b2aa478e9ba6c0605445ef9",
+    "docs\\experiments\\yolo26s_data_v1\\olid_review_r2_chroma\\inventory.json": "61a7fcfbac0e1d3d4eb6270a99031bbbdf3656b5dd878bc338e9a2d90477db4f",
+    "ml-pipeline\\dataset_clean_v2\\manifest.json": "6eeb02546dfe35f48cd6a8f37931b325e74b8c338e62c0c18708e3784832abfe",
+    "docs\\experiments\\yolo26s_data_v1\\plantvillage_extra_conditions_r1\\records.jsonl": "aa904c12cf8a111262b75e9bd97bd163826ffef7ec1b1f19f0b2755efefb8c1a"
+  },
+  "previous_links_sha256": "368163d65a45b000a5852310e9f64c2f5da2b0c8f59bb38514a344e8fd56223d",
+  "counts": {
+    "records": 59346,
+    "inherited_records": 43735,
+    "incremental_records": 15611,
+    "incremental_checked": 15611,
+    "inherited_links": 857,
+    "additional_links": 0,
+    "candidate_records": 55992,
+    "label_conflict_groups": 5,
+    "label_conflict_records": 10,
+    "dispositions": {
+      "no_match_in_this_screen_still_pending_semantics_boxes_groups": 55144,
+      "internal_match_pending_dedup_group_and_label_review": 46,
+      "historical_exact_copy_not_a_new_independent_example": 792,
+      "quarantine_conflicting_publisher_labels": 10
+    },
+    "suggested_components": 58490,
+    "delta_exact_links": 0,
+    "delta_nonexact_links": 0
+  },
+  "algorithm": "Inherit r2 edges; five pHash bands with exact near() verification only for extra9",
+  "limitations": [
+    "Matches do not establish physical plant identity.",
+    "Rotations, crops and opposite leaf sides may be missed.",
+    "This audit does not accept labels, annotations or a split."
+  ],
+  "updated_utc": "2026-10-05T12:11:39.407742+00:00",
+  "output_sha256": {
+    "inherited_links.jsonl": "368163d65a45b000a5852310e9f64c2f5da2b0c8f59bb38514a344e8fd56223d",
+    "additional_links.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate_disposition.jsonl": "2d897578a84431bf0013723effa1b2875eac13d4b084f0d3b6086ffbdf47e23b",
+    "label_conflicts.json": "bd7f4b0693afe82b95dd5c7d5aa2fd0909d605f61080848ee85234b259af7c19",
+    "suggested_groups.jsonl": "c44e990436acfcc71a796ee257b47aae3944408760d83dd9217f6bda926d4b7b"
+  }
+}

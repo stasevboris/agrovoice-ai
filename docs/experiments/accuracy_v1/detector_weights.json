@@ -1,0 +1,28 @@
+{
+  "created_utc": "2026-10-04T05:57:14.781221+00:00",
+  "deimv2": {
+    "repository": "Intellindust/DEIMv2_HGNetv2_N_COCO",
+    "revision": "47f40396e40453719386cd5c238a57aae954e83f",
+    "files": [
+      {
+        "file": "ml-pipeline\\runtime\\detector_weights\\deimv2_n_config.json",
+        "bytes": 1326,
+        "sha256": "6eb57450791c8ada4b76811ad4fbcf040a58911ecf3dff5a785487389d4443f8",
+        "url": "https://huggingface.co/Intellindust/DEIMv2_HGNetv2_N_COCO/resolve/47f40396e40453719386cd5c238a57aae954e83f/config.json"
+      },
+      {
+        "file": "ml-pipeline\\runtime\\detector_weights\\deimv2_n_model.safetensors",
+        "bytes": 14574360,
+        "sha256": "0de14388a703d86c95200589b32a4497b0b00dceb1d2d381c6a14fbd958856cb",
+        "url": "https://huggingface.co/Intellindust/DEIMv2_HGNetv2_N_COCO/resolve/47f40396e40453719386cd5c238a57aae954e83f/model.safetensors"
+      }
+    ],
+    "license": "DEIMv2 non-commercial; source license retained"
+  },
+  "yolo26s": {
+    "file": "ml-pipeline\\yolo26s.pt",
+    "bytes": 20422725,
+    "sha256": "646f8bc3fe0a656803d95c294f7852321748cb29d13466a1af8862e2db384a1b",
+    "url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26s.pt"
+  }
+}

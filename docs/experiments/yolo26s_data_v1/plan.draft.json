@@ -1,0 +1,327 @@
+{
+  "status": "draft_not_training_ready",
+  "study": "yolo26s_data_v1",
+  "architecture": "YOLO26s Detect ordinary multiclass head",
+  "dataset_directory": "ml-pipeline/dataset_leaf_v3",
+  "dataset_fingerprint": null,
+  "source_weights": "ml-pipeline/yolo26s.pt",
+  "source_weights_sha256": "646f8bc3fe0a656803d95c294f7852321748cb29d13466a1af8862e2db384a1b",
+  "preserve_base_dataset_fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "preserve_original_PlantDoc_classes": 29,
+  "new_condition_policy": "Add disease/nutrition/pest classes only with trustworthy adequate support; approved by Boris",
+  "recipe": {
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 416,
+    "batch": 16,
+    "optimizer": "AdamW",
+    "lr0": 0.001,
+    "cos_lr": true,
+    "amp": false,
+    "dtype": "FP32",
+    "workers": 4,
+    "threads": 8
+  },
+  "seeds": [
+    20261003,
+    20261004
+  ],
+  "pilot_seed": 20261003,
+  "pilot_reuse": "Only if data/recipe remain exactly unchanged",
+  "test_policy": "Freeze new grouped test before model selection; no source augmented siblings split; old test historical only",
+  "protected_sources": {
+    "train_clean.py": "b7bd5296722c991deab36ac2b2481113cdccc6d96333b3fcb7731efbc16e59a5",
+    "evaluate_clean.py": "38706b2a05f9e83f9cbb75bc65f61a1893289208318d05ee77afbb6b949c36a7",
+    "run_study.py": "b0f1736dcb999df80edf3ba562e427745507fc0ea9a7d1139353052c7f8ec7ca",
+    "yolo_s_accuracy.py": "31c616878fa10b980b54f86eb6c41115079563e66dd7a8e90f1d6fbf98ec42d9",
+    "evaluate_accuracy_pipeline.py": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+    "yolo_m_accuracy.py": "a509e52ad78a313ddfa083c590a7341921ba6f40020dd950b4c8814a627b1083",
+    "evaluate_yolo26m.py": "47e174cb36cd78abfd78255cc5bed6dc5d90d6e1076968cb34ec8c86c973233b"
+  },
+  "sources_report": "docs/experiments/yolo26s_data_v1/PROTOCOL_DRAFT.md",
+  "scope": "All previous crops/classes, all accepted originals from each source; no crop-only truncation",
+  "launch_allowed": false,
+  "historical_base_class_support": [
+    {
+      "id": 0,
+      "name": "Apple Scab Leaf",
+      "train": 129,
+      "val": 29,
+      "test": 13,
+      "val_aux": 0
+    },
+    {
+      "id": 1,
+      "name": "Apple leaf",
+      "train": 192,
+      "val": 45,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 2,
+      "name": "Apple rust leaf",
+      "train": 123,
+      "val": 45,
+      "test": 11,
+      "val_aux": 0
+    },
+    {
+      "id": 3,
+      "name": "Bell_pepper leaf",
+      "train": 268,
+      "val": 44,
+      "test": 11,
+      "val_aux": 0
+    },
+    {
+      "id": 4,
+      "name": "Bell_pepper leaf spot",
+      "train": 213,
+      "val": 36,
+      "test": 15,
+      "val_aux": 0
+    },
+    {
+      "id": 5,
+      "name": "Blueberry leaf",
+      "train": 671,
+      "val": 155,
+      "test": 22,
+      "val_aux": 0
+    },
+    {
+      "id": 6,
+      "name": "Cherry leaf",
+      "train": 192,
+      "val": 29,
+      "test": 19,
+      "val_aux": 0
+    },
+    {
+      "id": 7,
+      "name": "Corn Gray leaf spot",
+      "train": 53,
+      "val": 20,
+      "test": 4,
+      "val_aux": 0
+    },
+    {
+      "id": 8,
+      "name": "Corn leaf blight",
+      "train": 309,
+      "val": 48,
+      "test": 12,
+      "val_aux": 0
+    },
+    {
+      "id": 9,
+      "name": "Corn rust leaf",
+      "train": 98,
+      "val": 19,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 10,
+      "name": "Peach leaf",
+      "train": 484,
+      "val": 126,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 11,
+      "name": "Potato leaf",
+      "train": 124,
+      "val": 7,
+      "test": 0,
+      "val_aux": 32
+    },
+    {
+      "id": 12,
+      "name": "Potato leaf early blight",
+      "train": 250,
+      "val": 54,
+      "test": 17,
+      "val_aux": 0
+    },
+    {
+      "id": 13,
+      "name": "Potato leaf late blight",
+      "train": 214,
+      "val": 22,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 14,
+      "name": "Raspberry leaf",
+      "train": 462,
+      "val": 77,
+      "test": 17,
+      "val_aux": 0
+    },
+    {
+      "id": 15,
+      "name": "Soyabean leaf",
+      "train": 216,
+      "val": 30,
+      "test": 20,
+      "val_aux": 0
+    },
+    {
+      "id": 16,
+      "name": "Squash Powdery mildew leaf",
+      "train": 203,
+      "val": 48,
+      "test": 6,
+      "val_aux": 0
+    },
+    {
+      "id": 17,
+      "name": "Strawberry leaf",
+      "train": 397,
+      "val": 65,
+      "test": 30,
+      "val_aux": 0
+    },
+    {
+      "id": 18,
+      "name": "Tomato Early blight leaf",
+      "train": 283,
+      "val": 28,
+      "test": 19,
+      "val_aux": 25
+    },
+    {
+      "id": 19,
+      "name": "Tomato Septoria leaf spot",
+      "train": 332,
+      "val": 76,
+      "test": 24,
+      "val_aux": 0
+    },
+    {
+      "id": 20,
+      "name": "Tomato leaf",
+      "train": 400,
+      "val": 47,
+      "test": 27,
+      "val_aux": 17
+    },
+    {
+      "id": 21,
+      "name": "Tomato leaf bacterial spot",
+      "train": 358,
+      "val": 26,
+      "test": 14,
+      "val_aux": 32
+    },
+    {
+      "id": 22,
+      "name": "Tomato leaf late blight",
+      "train": 179,
+      "val": 28,
+      "test": 14,
+      "val_aux": 0
+    },
+    {
+      "id": 23,
+      "name": "Tomato leaf mosaic virus",
+      "train": 212,
+      "val": 13,
+      "test": 36,
+      "val_aux": 0
+    },
+    {
+      "id": 24,
+      "name": "Tomato leaf yellow virus",
+      "train": 701,
+      "val": 81,
+      "test": 42,
+      "val_aux": 0
+    },
+    {
+      "id": 25,
+      "name": "Tomato mold leaf",
+      "train": 223,
+      "val": 54,
+      "test": 16,
+      "val_aux": 0
+    },
+    {
+      "id": 26,
+      "name": "Tomato two spotted spider mites leaf",
+      "train": 158,
+      "val": 1,
+      "test": 0,
+      "val_aux": 43
+    },
+    {
+      "id": 27,
+      "name": "grape leaf",
+      "train": 175,
+      "val": 30,
+      "test": 15,
+      "val_aux": 0
+    },
+    {
+      "id": 28,
+      "name": "grape leaf black rot",
+      "train": 99,
+      "val": 26,
+      "test": 8,
+      "val_aux": 0
+    },
+    {
+      "id": 29,
+      "name": "Cucumber leaf (condition unknown)",
+      "train": 42,
+      "val": 0,
+      "test": 0,
+      "val_aux": 11
+    }
+  ],
+  "class_contract": {
+    "preserve_original_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "new_conditions_start_at": 29,
+    "legacy_class_29": "Keep unchanged in old APK graphs only; source-backed healthy migration or exclusion in new graph, never unknown versus healthy competing labels",
+    "per_model_android_schema_required": true,
+    "migration_status": "pending individual annotation/provenance review"
+  },
+  "data_lock_policy": "Freeze data and executable recipe before first pilot; changed recipe requires a new locked revision, no mixed seed summary",
+  "requested_runs": 2,
+  "stage_policy": "Two initial independent runs requested by Boris; no automatic ten-run series; first technical run counts if recipe/data unchanged",
+  "epoch_budget_policy": "60 maximum as previous verified baseline, early stop after 15 epochs without val-fitness improvement; not claimed optimal for new data"
+}

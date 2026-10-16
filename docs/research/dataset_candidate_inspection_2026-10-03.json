@@ -1,0 +1,99 @@
+{
+  "checked_date": "2026-10-03",
+  "excluded_from_current_study": true,
+  "archives": [
+    {
+      "source": "wur_spider",
+      "file": "data.zip",
+      "images": 823,
+      "members": 826,
+      "md5": "4eca5f641c796e88cef120e1468ee021",
+      "folder_counts": {
+        "ImageDataset": 823
+      },
+      "first_image": {
+        "name": "ImageDataset/23-row10-102454993-0000.jpg",
+        "size": [
+          4104,
+          3006
+        ],
+        "mode": "RGB"
+      },
+      "annotation": {
+        "type": "299x299 tissue patches, not whole-leaf boxes",
+        "rows": 1114,
+        "statuses": {
+          "healthy": 593,
+          "damaged": 521
+        },
+        "splits": {
+          "test": 358,
+          "train": 756
+        },
+        "annotated_image_names": 78
+      }
+    },
+    {
+      "source": "olid",
+      "file": "cucumber.zip",
+      "images": 249,
+      "members": 249,
+      "md5": "ee699a9bc84dcdd9c78cba37f79bf900",
+      "folder_counts": {
+        "cucumber__healthy": 34,
+        "cucumber__K": 50,
+        "cucumber__N": 89,
+        "cucumber__N_K": 76
+      },
+      "first_image": {
+        "name": "cucumber__healthy/cucumber__healthy (1).JPG",
+        "size": [
+          3024,
+          3024
+        ],
+        "mode": "RGB"
+      }
+    },
+    {
+      "source": "olid",
+      "file": "tomato__part_1.zip",
+      "images": 359,
+      "members": 359,
+      "md5": "35607a338f08a0f2fe64406a48b5d5ef",
+      "folder_counts": {
+        "tomato__healthy": 236,
+        "tomato__K": 36,
+        "tomato__N": 47,
+        "tomato__N_K": 40
+      },
+      "first_image": {
+        "name": "tomato__healthy/tomato__healthy (1).JPG",
+        "size": [
+          3024,
+          3024
+        ],
+        "mode": "RGB"
+      }
+    },
+    {
+      "source": "olid",
+      "file": "tomato__part_2.zip",
+      "images": 439,
+      "members": 439,
+      "md5": "83730955bfd6b1628cd9a582e993a75b",
+      "folder_counts": {
+        "tomato__JAS_MIT": 32,
+        "tomato__LM": 207,
+        "tomato__MIT": 200
+      },
+      "first_image": {
+        "name": "tomato__JAS_MIT/tomato__JAS_MIT (1).JPG",
+        "size": [
+          3024,
+          3024
+        ],
+        "mode": "RGB"
+      }
+    }
+  ]
+}

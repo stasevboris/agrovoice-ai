@@ -1,0 +1,902 @@
+{
+  "ended_utc": "2026-10-03T18:16:46.7716561Z",
+  "changes_applied": false,
+  "computer_properties": [
+    "Hardware",
+    "IsBatteryEnabled",
+    "IsControllerEnabled",
+    "IsCpuEnabled",
+    "IsGpuEnabled",
+    "IsPowerMonitorEnabled",
+    "IsMemoryEnabled",
+    "IsMotherboardEnabled",
+    "IsNetworkEnabled",
+    "IsPsuEnabled",
+    "IsStorageEnabled",
+    "SMBios"
+  ],
+  "started_utc": "2026-10-03T18:16:42.0785489Z",
+  "status": "read_only_probe_complete",
+  "sensors": [
+    {
+      "sensor_type": "Control",
+      "value": 40.0,
+      "identifier": "/lpc/nct6687d/0/control/0",
+      "name": "CPU Fan",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/0/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Control",
+      "value": 100.0,
+      "identifier": "/lpc/nct6687d/0/control/1",
+      "name": "Pump Fan",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/1/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Control",
+      "value": 40.0,
+      "identifier": "/lpc/nct6687d/0/control/2",
+      "name": "System Fan #1",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/2/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Control",
+      "value": 40.0,
+      "identifier": "/lpc/nct6687d/0/control/3",
+      "name": "System Fan #2",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/3/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Control",
+      "value": 50.0,
+      "identifier": "/lpc/nct6687d/0/control/4",
+      "name": "System Fan #3",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/4/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Control",
+      "value": 100.0,
+      "identifier": "/lpc/nct6687d/0/control/5",
+      "name": "System Fan #4",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/5/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Control",
+      "value": 100.0,
+      "identifier": "/lpc/nct6687d/0/control/6",
+      "name": "System Fan #5",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/6/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Control",
+      "value": 50.0,
+      "identifier": "/lpc/nct6687d/0/control/7",
+      "name": "System Fan #6",
+      "control": {
+        "mode": "Undefined",
+        "maximum": 100.0,
+        "software_value": 0.0,
+        "identifier": "/lpc/nct6687d/0/control/7/control",
+        "minimum": 0.0
+      },
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 12.048,
+      "identifier": "/lpc/nct6687d/0/voltage/0",
+      "name": "+12V",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 5.14,
+      "identifier": "/lpc/nct6687d/0/voltage/1",
+      "name": "+5V",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 0.98200005,
+      "identifier": "/lpc/nct6687d/0/voltage/2",
+      "name": "Vcore",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 0.60200006,
+      "identifier": "/lpc/nct6687d/0/voltage/3",
+      "name": "Voltage #1",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 2.5760002,
+      "identifier": "/lpc/nct6687d/0/voltage/4",
+      "name": "DIMM",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 0.82600003,
+      "identifier": "/lpc/nct6687d/0/voltage/5",
+      "name": "CPU I/O",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 0.896,
+      "identifier": "/lpc/nct6687d/0/voltage/6",
+      "name": "CPU System Agent",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.5280001,
+      "identifier": "/lpc/nct6687d/0/voltage/7",
+      "name": "Voltage #2",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 3.3320003,
+      "identifier": "/lpc/nct6687d/0/voltage/8",
+      "name": "AVCC3",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.8360001,
+      "identifier": "/lpc/nct6687d/0/voltage/9",
+      "name": "CPU Termination",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 0.0,
+      "identifier": "/lpc/nct6687d/0/voltage/10",
+      "name": "VRef",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 3.3680003,
+      "identifier": "/lpc/nct6687d/0/voltage/11",
+      "name": "VSB",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 3.364,
+      "identifier": "/lpc/nct6687d/0/voltage/12",
+      "name": "AVSB",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 3.292,
+      "identifier": "/lpc/nct6687d/0/voltage/13",
+      "name": "CMOS Battery",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 85.0,
+      "identifier": "/lpc/nct6687d/0/temperature/0",
+      "name": "CPU",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 35.0,
+      "identifier": "/lpc/nct6687d/0/temperature/1",
+      "name": "System",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 51.5,
+      "identifier": "/lpc/nct6687d/0/temperature/2",
+      "name": "VRM MOS",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 32.0,
+      "identifier": "/lpc/nct6687d/0/temperature/3",
+      "name": "PCH",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 53.5,
+      "identifier": "/lpc/nct6687d/0/temperature/4",
+      "name": "CPU Socket",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 35.5,
+      "identifier": "/lpc/nct6687d/0/temperature/5",
+      "name": "PCIe x1",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 0.0,
+      "identifier": "/lpc/nct6687d/0/temperature/6",
+      "name": "M2 #1",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 727.0,
+      "identifier": "/lpc/nct6687d/0/fan/0",
+      "name": "CPU Fan",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 0.0,
+      "identifier": "/lpc/nct6687d/0/fan/1",
+      "name": "Pump Fan",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 1413.0,
+      "identifier": "/lpc/nct6687d/0/fan/2",
+      "name": "System Fan #1",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 1440.0,
+      "identifier": "/lpc/nct6687d/0/fan/3",
+      "name": "System Fan #2",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 0.0,
+      "identifier": "/lpc/nct6687d/0/fan/4",
+      "name": "System Fan #3",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 0.0,
+      "identifier": "/lpc/nct6687d/0/fan/5",
+      "name": "System Fan #4",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 0.0,
+      "identifier": "/lpc/nct6687d/0/fan/6",
+      "name": "System Fan #5",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Fan",
+      "value": 0.0,
+      "identifier": "/lpc/nct6687d/0/fan/7",
+      "name": "System Fan #6",
+      "hardware": "Nuvoton NCT6687D",
+      "hardware_identifier": "/lpc/nct6687d/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 87.88,
+      "identifier": "/amdcpu/0/load/2",
+      "name": "CPU Core #1",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 74.24,
+      "identifier": "/amdcpu/0/load/3",
+      "name": "CPU Core #2",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 69.7,
+      "identifier": "/amdcpu/0/load/4",
+      "name": "CPU Core #3",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 56.06,
+      "identifier": "/amdcpu/0/load/5",
+      "name": "CPU Core #4",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 74.24,
+      "identifier": "/amdcpu/0/load/6",
+      "name": "CPU Core #5",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 37.88,
+      "identifier": "/amdcpu/0/load/7",
+      "name": "CPU Core #6",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 51.52,
+      "identifier": "/amdcpu/0/load/8",
+      "name": "CPU Core #7",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 16.67,
+      "identifier": "/amdcpu/0/load/9",
+      "name": "CPU Core #8",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 24.24,
+      "identifier": "/amdcpu/0/load/10",
+      "name": "CPU Core #9",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 19.7,
+      "identifier": "/amdcpu/0/load/11",
+      "name": "CPU Core #10",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 59.09,
+      "identifier": "/amdcpu/0/load/12",
+      "name": "CPU Core #11",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 38.46,
+      "identifier": "/amdcpu/0/load/13",
+      "name": "CPU Core #12",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 66.67,
+      "identifier": "/amdcpu/0/load/14",
+      "name": "CPU Core #13",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 81.82,
+      "identifier": "/amdcpu/0/load/15",
+      "name": "CPU Core #14",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 43.94,
+      "identifier": "/amdcpu/0/load/16",
+      "name": "CPU Core #15",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 47.69,
+      "identifier": "/amdcpu/0/load/17",
+      "name": "CPU Core #16",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 53.11,
+      "identifier": "/amdcpu/0/load/0",
+      "name": "CPU Total",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Load",
+      "value": 87.88,
+      "identifier": "/amdcpu/0/load/1",
+      "name": "CPU Core Max",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 106.45285,
+      "identifier": "/amdcpu/0/power/0",
+      "name": "Package",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4491.0,
+      "identifier": "/amdcpu/0/clock/1",
+      "name": "Cores (Average)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 2586.0,
+      "identifier": "/amdcpu/0/clock/2",
+      "name": "Cores (Average Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4500.0,
+      "identifier": "/amdcpu/0/clock/3",
+      "name": "Core #1",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 3765.5,
+      "identifier": "/amdcpu/0/clock/4",
+      "name": "Core #1 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 45.0,
+      "identifier": "/amdcpu/0/factor/0",
+      "name": "Core #1",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 11.514621,
+      "identifier": "/amdcpu/0/power/1",
+      "name": "Core #1 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.2875,
+      "identifier": "/amdcpu/0/voltage/2",
+      "name": "Core #1 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4500.0,
+      "identifier": "/amdcpu/0/clock/5",
+      "name": "Core #2",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 2871.5,
+      "identifier": "/amdcpu/0/clock/6",
+      "name": "Core #2 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 45.0,
+      "identifier": "/amdcpu/0/factor/1",
+      "name": "Core #2",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 10.109699,
+      "identifier": "/amdcpu/0/power/2",
+      "name": "Core #2 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.26875,
+      "identifier": "/amdcpu/0/voltage/3",
+      "name": "Core #2 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4500.0,
+      "identifier": "/amdcpu/0/clock/7",
+      "name": "Core #3",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 2487.5,
+      "identifier": "/amdcpu/0/clock/8",
+      "name": "Core #3 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 45.0,
+      "identifier": "/amdcpu/0/factor/2",
+      "name": "Core #3",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 10.230236,
+      "identifier": "/amdcpu/0/power/3",
+      "name": "Core #3 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.26875,
+      "identifier": "/amdcpu/0/voltage/4",
+      "name": "Core #3 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4500.0,
+      "identifier": "/amdcpu/0/clock/9",
+      "name": "Core #4",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 1911.0,
+      "identifier": "/amdcpu/0/clock/10",
+      "name": "Core #4 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 45.0,
+      "identifier": "/amdcpu/0/factor/3",
+      "name": "Core #4",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 8.577044,
+      "identifier": "/amdcpu/0/power/4",
+      "name": "Core #4 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.26875,
+      "identifier": "/amdcpu/0/voltage/5",
+      "name": "Core #4 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4500.0,
+      "identifier": "/amdcpu/0/clock/11",
+      "name": "Core #5",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 1356.0,
+      "identifier": "/amdcpu/0/clock/12",
+      "name": "Core #5 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 45.0,
+      "identifier": "/amdcpu/0/factor/4",
+      "name": "Core #5",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 6.2577777,
+      "identifier": "/amdcpu/0/power/5",
+      "name": "Core #5 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.26875,
+      "identifier": "/amdcpu/0/voltage/6",
+      "name": "Core #5 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4475.0,
+      "identifier": "/amdcpu/0/clock/13",
+      "name": "Core #6",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 2271.5,
+      "identifier": "/amdcpu/0/clock/14",
+      "name": "Core #6 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 44.75,
+      "identifier": "/amdcpu/0/factor/5",
+      "name": "Core #6",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 9.569549,
+      "identifier": "/amdcpu/0/power/6",
+      "name": "Core #6 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.2875,
+      "identifier": "/amdcpu/0/voltage/7",
+      "name": "Core #6 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4475.0,
+      "identifier": "/amdcpu/0/clock/15",
+      "name": "Core #7",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 3645.0,
+      "identifier": "/amdcpu/0/clock/16",
+      "name": "Core #7 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 44.75,
+      "identifier": "/amdcpu/0/factor/6",
+      "name": "Core #7",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 12.010206,
+      "identifier": "/amdcpu/0/power/7",
+      "name": "Core #7 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.275,
+      "identifier": "/amdcpu/0/voltage/8",
+      "name": "Core #7 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 4475.0,
+      "identifier": "/amdcpu/0/clock/17",
+      "name": "Core #8",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 2381.5,
+      "identifier": "/amdcpu/0/clock/18",
+      "name": "Core #8 (Effective)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Factor",
+      "value": 44.75,
+      "identifier": "/amdcpu/0/factor/7",
+      "name": "Core #8",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Power",
+      "value": 10.168285,
+      "identifier": "/amdcpu/0/power/8",
+      "name": "Core #8 (SMU)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.275,
+      "identifier": "/amdcpu/0/voltage/9",
+      "name": "Core #8 VID",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 85.625,
+      "identifier": "/amdcpu/0/temperature/2",
+      "name": "Core (Tctl/Tdie)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Temperature",
+      "value": 84.25001,
+      "identifier": "/amdcpu/0/temperature/3",
+      "name": "CCD1 (Tdie)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 1.2875,
+      "identifier": "/amdcpu/0/voltage/0",
+      "name": "Core (SVI2 TFN)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Voltage",
+      "value": 0.9625,
+      "identifier": "/amdcpu/0/voltage/1",
+      "name": "SoC (SVI2 TFN)",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    },
+    {
+      "sensor_type": "Clock",
+      "value": 100.00113,
+      "identifier": "/amdcpu/0/clock/0",
+      "name": "Bus Speed",
+      "hardware": "AMD Ryzen 7 5700X",
+      "hardware_identifier": "/amdcpu/0"
+    }
+  ]
+}

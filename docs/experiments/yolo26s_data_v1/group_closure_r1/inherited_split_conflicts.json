@@ -1,0 +1,110 @@
+[
+  {
+    "component_id": "split:cd45491e15496a28a5e861831259eac966a8d33de92e8eb12327d1f0ed74b4dd",
+    "historical_splits": [
+      "train",
+      "val"
+    ],
+    "members": [
+      "HistoricalV2:pd_21ca6c719f5526231cc0.jpg",
+      "HistoricalV2:pd_289d6438e3195c7d0da2.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:926923b71a96818026f8aa4f3e08410f14fdb6dedccd151e705d749b059031f5",
+    "historical_splits": [
+      "test",
+      "train"
+    ],
+    "members": [
+      "HistoricalV2:pd_2cea0573fd6e5de424cd.jpg",
+      "HistoricalV2:pd_a7c74ba3038ed7b66ff7.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:e3f2abec98be60fb838bb5c4d99ca3fa7ae0acd3756e9e04ea5c1b6d4c42bf7a",
+    "historical_splits": [
+      "train",
+      "val"
+    ],
+    "members": [
+      "HistoricalV2:pd_477bb290a6f117c37a74.jpg",
+      "HistoricalV2:pd_6555aa92dae558d4b7de.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:46c8070ffa5938d400dda150474e55c9cb695dfd11127893e9401a63e648305b",
+    "historical_splits": [
+      "train",
+      "val"
+    ],
+    "members": [
+      "HistoricalV2:pd_5f92ab8c2597e295663d.jpg",
+      "HistoricalV2:pd_abfd5ef2231c3d0732de.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:b9944e633bf6cee286baa79df8c44e91b20123b47d46b6dcc7c61bfec0fff7b6",
+    "historical_splits": [
+      "test",
+      "train"
+    ],
+    "members": [
+      "HistoricalV2:pd_842860d9de758b14a3b6.jpg",
+      "HistoricalV2:pd_f66304fb3c1e0fac738a.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:a76353c312905368a2d4c0f259a6a81e07060e7f8069f1cb02081d6967fdfcdd",
+    "historical_splits": [
+      "train",
+      "val"
+    ],
+    "members": [
+      "HistoricalV2:pd_925d785c4b326fbc10f3.jpg",
+      "HistoricalV2:pd_9a58d0147c99265af34b.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:fe15ee3b149869a78bb4d925270d18eb6cd0efefa4a5ab31d262a46ee7da9c07",
+    "historical_splits": [
+      "train",
+      "val"
+    ],
+    "members": [
+      "HistoricalV2:pd_979eeb0ad72e88143e16.jpg",
+      "HistoricalV2:pd_bfb8478ff543ede099cc.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:8db387c4b9a21d81798fcf04ab1c31109c630d799d34833d252108871a973dd1",
+    "historical_splits": [
+      "train",
+      "val"
+    ],
+    "members": [
+      "HistoricalV2:pd_a2dc05f9e3d1aefae085.jpg",
+      "HistoricalV2:pd_c4be3e65467abf7bce53.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  },
+  {
+    "component_id": "split:6b03bc0978544b0cee8a6fe4cc43f01d745422df75282a37e375e730c6cbb018",
+    "historical_splits": [
+      "test",
+      "train"
+    ],
+    "members": [
+      "HistoricalV2:pd_e2ad3f4597b2637d7077.jpg",
+      "HistoricalV2:pd_f2e1b4f58cfedc8cb695.jpg"
+    ],
+    "decision": "quarantine_from_new_split_until_inherited_overlap_review"
+  }
+]

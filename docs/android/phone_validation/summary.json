@@ -1,0 +1,365 @@
+{
+  "status": "complete",
+  "results": [
+    {
+      "created_epoch_ms": 1791054959615,
+      "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/01_potato_late_blight.jpg",
+      "photo_sha256": "e01d96d3bbef4fa050c64fe0c4802c99363d802408e7e66df19f71ccacc6268c",
+      "decoded_width": 2048,
+      "decoded_height": 1536,
+      "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+      "model": "yolo11n",
+      "model_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "dataset": "clean v2",
+      "seed": 20261003,
+      "provisional": true,
+      "crop_filter": "all",
+      "confidence_threshold": 0.25,
+      "inference_ms": 126.53625,
+      "pipeline_ms": 385.985052,
+      "detections": [
+        {
+          "class_id": 13,
+          "class_name": "Potato leaf late blight",
+          "label_ru": "Картофель: фитофтороз",
+          "confidence": 0.7552781105041504,
+          "xyxy_pixels": [
+            601.74854,
+            287.991,
+            1339.0835,
+            1347.808
+          ]
+        },
+        {
+          "class_id": 13,
+          "class_name": "Potato leaf late blight",
+          "label_ru": "Картофель: фитофтороз",
+          "confidence": 0.2738710045814514,
+          "xyxy_pixels": [
+            3.1987681,
+            471.9677,
+            818.6699,
+            1373.342
+          ]
+        }
+      ],
+      "device": "Xiaomi Redmi Note 7",
+      "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+      "validation_photo": "01_potato_late_blight.jpg"
+    },
+    {
+      "created_epoch_ms": 1791054959965,
+      "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/01_potato_late_blight.jpg",
+      "photo_sha256": "e01d96d3bbef4fa050c64fe0c4802c99363d802408e7e66df19f71ccacc6268c",
+      "decoded_width": 2048,
+      "decoded_height": 1536,
+      "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+      "model": "yolo26n",
+      "model_sha256": "bcac42cadca698bde7ec3f05b690c953b742ba0bac00db609eee0ea69a17a6e2",
+      "dataset": "clean v2",
+      "seed": 20261003,
+      "provisional": true,
+      "crop_filter": "all",
+      "confidence_threshold": 0.25,
+      "inference_ms": 109.939583,
+      "pipeline_ms": 312.707187,
+      "detections": [
+        {
+          "class_id": 13,
+          "class_name": "Potato leaf late blight",
+          "label_ru": "Картофель: фитофтороз",
+          "confidence": 0.714179515838623,
+          "xyxy_pixels": [
+            595.2387,
+            282.40628,
+            1352.8984,
+            1349.1304
+          ]
+        },
+        {
+          "class_id": 13,
+          "class_name": "Potato leaf late blight",
+          "label_ru": "Картофель: фитофтороз",
+          "confidence": 0.4066176116466522,
+          "xyxy_pixels": [
+            6.0535607,
+            469.6633,
+            825.0882,
+            1369.6674
+          ]
+        },
+        {
+          "class_id": 13,
+          "class_name": "Potato leaf late blight",
+          "label_ru": "Картофель: фитофтороз",
+          "confidence": 0.27123069763183594,
+          "xyxy_pixels": [
+            1026.216,
+            329.83368,
+            1680.073,
+            1196.4865
+          ]
+        }
+      ],
+      "device": "Xiaomi Redmi Note 7",
+      "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+      "validation_photo": "01_potato_late_blight.jpg"
+    },
+    {
+      "created_epoch_ms": 1791054960462,
+      "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/05_tomato_septoria_2026.jpg",
+      "photo_sha256": "b2ed72767221afcc0d5cdd82e94f8b9651f19ea88fb82bf1dd973e1d2b0b0eae",
+      "decoded_width": 1920,
+      "decoded_height": 1080,
+      "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+      "model": "yolo11n",
+      "model_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "dataset": "clean v2",
+      "seed": 20261003,
+      "provisional": true,
+      "crop_filter": "all",
+      "confidence_threshold": 0.25,
+      "inference_ms": 127.327136,
+      "pipeline_ms": 333.127448,
+      "detections": [
+        {
+          "class_id": 20,
+          "class_name": "Tomato leaf",
+          "label_ru": "Томат: лист без указанной болезни",
+          "confidence": 0.7597975730895996,
+          "xyxy_pixels": [
+            4.613906,
+            156.18488,
+            379.82126,
+            785.59076
+          ]
+        },
+        {
+          "class_id": 23,
+          "class_name": "Tomato leaf mosaic virus",
+          "label_ru": "Томат: мозаика",
+          "confidence": 0.3421650826931,
+          "xyxy_pixels": [
+            339.14606,
+            305.1499,
+            707.6312,
+            658.06305
+          ]
+        },
+        {
+          "class_id": 23,
+          "class_name": "Tomato leaf mosaic virus",
+          "label_ru": "Томат: мозаика",
+          "confidence": 0.3402477502822876,
+          "xyxy_pixels": [
+            1046.4124,
+            514.307,
+            1530.7053,
+            1077.3969
+          ]
+        },
+        {
+          "class_id": 24,
+          "class_name": "Tomato leaf yellow virus",
+          "label_ru": "Томат: вирус пожелтения (метка источника)",
+          "confidence": 0.2568814158439636,
+          "xyxy_pixels": [
+            337.40533,
+            304.04678,
+            702.94684,
+            658.6708
+          ]
+        },
+        {
+          "class_id": 24,
+          "class_name": "Tomato leaf yellow virus",
+          "label_ru": "Томат: вирус пожелтения (метка источника)",
+          "confidence": 0.25442564487457275,
+          "xyxy_pixels": [
+            670.8224,
+            298.23175,
+            988.31134,
+            553.43756
+          ]
+        }
+      ],
+      "device": "Xiaomi Redmi Note 7",
+      "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+      "validation_photo": "05_tomato_septoria_2026.jpg"
+    },
+    {
+      "created_epoch_ms": 1791054960781,
+      "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/05_tomato_septoria_2026.jpg",
+      "photo_sha256": "b2ed72767221afcc0d5cdd82e94f8b9651f19ea88fb82bf1dd973e1d2b0b0eae",
+      "decoded_width": 1920,
+      "decoded_height": 1080,
+      "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+      "model": "yolo26n",
+      "model_sha256": "bcac42cadca698bde7ec3f05b690c953b742ba0bac00db609eee0ea69a17a6e2",
+      "dataset": "clean v2",
+      "seed": 20261003,
+      "provisional": true,
+      "crop_filter": "all",
+      "confidence_threshold": 0.25,
+      "inference_ms": 111.730625,
+      "pipeline_ms": 301.957864,
+      "detections": [
+        {
+          "class_id": 20,
+          "class_name": "Tomato leaf",
+          "label_ru": "Томат: лист без указанной болезни",
+          "confidence": 0.46215954422950745,
+          "xyxy_pixels": [
+            0.5601971,
+            757.0308,
+            166.46657,
+            955.64166
+          ]
+        },
+        {
+          "class_id": 20,
+          "class_name": "Tomato leaf",
+          "label_ru": "Томат: лист без указанной болезни",
+          "confidence": 0.39462214708328247,
+          "xyxy_pixels": [
+            347.27875,
+            302.12866,
+            708.30334,
+            641.8324
+          ]
+        },
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.3452267646789551,
+          "xyxy_pixels": [
+            0.8482713,
+            171.107,
+            458.13568,
+            773.7144
+          ]
+        },
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.2711111903190613,
+          "xyxy_pixels": [
+            344.123,
+            303.0725,
+            711.5755,
+            640.7598
+          ]
+        },
+        {
+          "class_id": 25,
+          "class_name": "Tomato mold leaf",
+          "label_ru": "Томат: плесень листа",
+          "confidence": 0.2628623843193054,
+          "xyxy_pixels": [
+            681.9732,
+            306.14996,
+            986.8969,
+            550.6507
+          ]
+        }
+      ],
+      "device": "Xiaomi Redmi Note 7",
+      "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+      "validation_photo": "05_tomato_septoria_2026.jpg"
+    },
+    {
+      "created_epoch_ms": 1791054961322,
+      "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/09_cucumber_downy_mildew_2024.jpg",
+      "photo_sha256": "86fa687998b921cbc114ab11df812c32277c93a4be2e2ee7afde53fc8bd1b187",
+      "decoded_width": 2000,
+      "decoded_height": 1500,
+      "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+      "model": "yolo11n",
+      "model_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "dataset": "clean v2",
+      "seed": 20261003,
+      "provisional": true,
+      "crop_filter": "all",
+      "confidence_threshold": 0.25,
+      "inference_ms": 125.861354,
+      "pipeline_ms": 309.455521,
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.29161888360977173,
+          "xyxy_pixels": [
+            1168.6105,
+            265.70306,
+            1894.1642,
+            682.8405
+          ]
+        }
+      ],
+      "device": "Xiaomi Redmi Note 7",
+      "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+      "validation_photo": "09_cucumber_downy_mildew_2024.jpg"
+    },
+    {
+      "created_epoch_ms": 1791054961641,
+      "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/09_cucumber_downy_mildew_2024.jpg",
+      "photo_sha256": "86fa687998b921cbc114ab11df812c32277c93a4be2e2ee7afde53fc8bd1b187",
+      "decoded_width": 2000,
+      "decoded_height": 1500,
+      "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+      "model": "yolo26n",
+      "model_sha256": "bcac42cadca698bde7ec3f05b690c953b742ba0bac00db609eee0ea69a17a6e2",
+      "dataset": "clean v2",
+      "seed": 20261003,
+      "provisional": true,
+      "crop_filter": "all",
+      "confidence_threshold": 0.25,
+      "inference_ms": 111.57599,
+      "pipeline_ms": 304.944323,
+      "detections": [
+        {
+          "class_id": 29,
+          "class_name": "Cucumber leaf (condition unknown)",
+          "label_ru": "Огурец: лист, состояние неизвестно",
+          "confidence": 0.7707768678665161,
+          "xyxy_pixels": [
+            812.18365,
+            734.82544,
+            1689.4525,
+            1215.9315
+          ]
+        },
+        {
+          "class_id": 14,
+          "class_name": "Raspberry leaf",
+          "label_ru": "Малина: лист",
+          "confidence": 0.3407363295555115,
+          "xyxy_pixels": [
+            1171.6199,
+            286.84906,
+            1645.8595,
+            710.23444
+          ]
+        },
+        {
+          "class_id": 27,
+          "class_name": "grape leaf",
+          "label_ru": "Виноград: лист",
+          "confidence": 0.2808280885219574,
+          "xyxy_pixels": [
+            241.89839,
+            819.9187,
+            654.00854,
+            1060.1631
+          ]
+        }
+      ],
+      "device": "Xiaomi Redmi Note 7",
+      "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+      "validation_photo": "09_cucumber_downy_mildew_2024.jpg"
+    }
+  ]
+}

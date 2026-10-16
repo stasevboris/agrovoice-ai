@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "attempt": "Start-Yolo26mPilot.ps1",
+  "result": "Refused: A GPU worker is already active.",
+  "active_worker_pid": 30236,
+  "second_gpu_started": false
+}

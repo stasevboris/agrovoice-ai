@@ -1,0 +1,80 @@
+{
+  "before": {
+    "celsius": 64.00001,
+    "control_percent": 40.0,
+    "rpm": 737.0,
+    "utc": "2026-10-03T18:21:27.6225488Z"
+  },
+  "requested_seconds": 60,
+  "started_utc": "2026-10-03T18:21:06.8415247Z",
+  "stop_reason": "fan_did_not_stop",
+  "study_resume_exit_code": 0,
+  "cutoff_celsius": 70,
+  "status": "default_control_restored",
+  "loaded_sample": {
+    "celsius": 86.375,
+    "control_percent": 40.0,
+    "rpm": 696.0,
+    "utc": "2026-10-03T18:21:10.2127087Z"
+  },
+  "elapsed_seconds": 16.2,
+  "restore_error": null,
+  "samples": [
+    {
+      "celsius": 64.87501,
+      "control_percent": 0.0,
+      "rpm": 709.0,
+      "utc": "2026-10-03T18:21:29.7860165Z"
+    },
+    {
+      "celsius": 66.00001,
+      "control_percent": 0.0,
+      "rpm": 698.0,
+      "utc": "2026-10-03T18:21:31.8000527Z"
+    },
+    {
+      "celsius": 65.50001,
+      "control_percent": 0.0,
+      "rpm": 694.0,
+      "utc": "2026-10-03T18:21:33.8293843Z"
+    },
+    {
+      "celsius": 62.625008,
+      "control_percent": 0.0,
+      "rpm": 693.0,
+      "utc": "2026-10-03T18:21:35.8568566Z"
+    },
+    {
+      "celsius": 62.375008,
+      "control_percent": 0.0,
+      "rpm": 694.0,
+      "utc": "2026-10-03T18:21:37.8735292Z"
+    },
+    {
+      "celsius": 62.375008,
+      "control_percent": 0.0,
+      "rpm": 694.0,
+      "utc": "2026-10-03T18:21:39.8990789Z"
+    },
+    {
+      "celsius": 61.875008,
+      "control_percent": 0.0,
+      "rpm": 695.0,
+      "utc": "2026-10-03T18:21:41.9170542Z"
+    },
+    {
+      "celsius": 60.500008,
+      "control_percent": 0.0,
+      "rpm": 694.0,
+      "utc": "2026-10-03T18:21:43.9420213Z"
+    }
+  ],
+  "restore_called": true,
+  "ended_utc": "2026-10-03T18:21:47.2309988Z",
+  "after": {
+    "celsius": 60.000008,
+    "control_percent": 40.0,
+    "rpm": 732.0,
+    "utc": "2026-10-03T18:21:47.0892605Z"
+  }
+}

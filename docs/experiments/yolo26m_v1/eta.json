@@ -1,0 +1,10 @@
+{
+  "observed_utc": "2026-10-05T04:06:58.263525+00:00",
+  "completed_jobs": 2,
+  "current_seed": 20261005,
+  "completed_native_epochs": 40,
+  "recent_median_native_epoch_seconds": 98.12000000000012,
+  "completed_M04_queue_seconds": 6052.411321,
+  "estimated_remaining_hours": 12.363688679722221,
+  "scope": "Rough estimate assuming current speed; includes approximate export/shared-val but excludes final APK/test/phone checks; not a guarantee"
+}

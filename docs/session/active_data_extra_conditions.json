@@ -1,0 +1,9 @@
+{
+  "pid": 28000,
+  "start_utc": "2026-10-05T06:39:31.9673323Z",
+  "script": "ml-pipeline/stage_plantvillage_extra_conditions.py",
+  "status_path": "docs/experiments/yolo26s_data_v1/plantvillage_extra_conditions_r1/status.json",
+  "gpu": false,
+  "worker_pid": 8356,
+  "worker_start_utc": "2026-10-05T06:39:32.0099210Z"
+}

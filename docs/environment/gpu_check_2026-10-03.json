@@ -1,0 +1,11 @@
+{
+  "gpu": "AMD Radeon RX 9060 XT",
+  "platform": "AgroVoice-ML / Ubuntu 24.04 / WSL2",
+  "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+  "hip": "7.2.53211-e1a6bc5663",
+  "rocdxg": "1.2.2",
+  "forward_backward_optimizer_steps": 3,
+  "status": "passed",
+  "test_script": "ml-pipeline/check_gpu.py",
+  "note": "This validates basic GPU training operations, not YOLO quality or mobile speed."
+}

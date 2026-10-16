@@ -1,0 +1,17 @@
+{
+  "checked_utc": "2026-10-05T01:03:44.108958+00:00",
+  "all_protected_sha_passed": {
+    "train_clean.py": true,
+    "evaluate_clean.py": true,
+    "run_study.py": true,
+    "yolo_s_accuracy.py": true,
+    "evaluate_accuracy_pipeline.py": true,
+    "yolo_m_accuracy.py": true,
+    "evaluate_yolo26m.py": true,
+    "plan": true
+  },
+  "pilot_seed": 20261003,
+  "completed_epochs": 60,
+  "native_cumulative_training_seconds": 6398.96,
+  "scope": "Native cumulative elapsed time includes training/validation/startup; not phone latency or complete multi-seed result"
+}

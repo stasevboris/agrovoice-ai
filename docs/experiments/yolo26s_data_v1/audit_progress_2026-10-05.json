@@ -1,0 +1,265 @@
+{
+  "status": "audited_sources_pending_final_annotations_splits",
+  "updated_utc": "2026-10-05T06:29:29.268537+00:00",
+  "new_training_started": false,
+  "new_training_images_accepted": 0,
+  "PlantVillage": {
+    "stage": {
+      "status": "all_indexed_source_candidates_staged_not_training_ready",
+      "pid": 4064,
+      "source_revision": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+      "url": "https://api.github.com/repos/spMohanty/PlantVillage-Dataset/zipball/7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+      "index_sha256": "3bbf8f929fc215174e0ea6acc1638b266df642e06ef58c999045239ad8a917ae",
+      "helper_sha256": "19e4147d529f1eb685eb154b3ee3f74872a62a31e8876ab018d4fc87c56b8494",
+      "gpu": false,
+      "training_accepted": 0,
+      "staged_files": 77388,
+      "reused_files": 506,
+      "final_url": "https://codeload.github.com/spMohanty/PlantVillage-Dataset/legacy.zip/7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+      "response_status": 200,
+      "downloaded_bytes": 2508320118,
+      "updated_utc": "2026-10-05T05:58:18.688438+00:00",
+      "archive": "ml-pipeline\\source_candidates\\yolo26s_data_v1\\plantvillage_all_crops\\publisher_snapshot_7f7ecc7e1eaca78107e3affe7cb5abd9427e139a.zip",
+      "archive_sha256": "08c1367853c3b4afe636755ea84d454f73920e82ffcfd3453bd26b1c5d26a070",
+      "archive_bytes": 2508320118
+    },
+    "geometry": {
+      "status": "completed_geometry_audit_not_training_ready",
+      "pid": 4844,
+      "source_revision": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+      "source_index_sha256": "3bbf8f929fc215174e0ea6acc1638b266df642e06ef58c999045239ad8a917ae",
+      "source_archive_sha256": "08c1367853c3b4afe636755ea84d454f73920e82ffcfd3453bd26b1c5d26a070",
+      "helper_sha256": "0851d96382ffa4c52d1b3873f1f4257677c25d049ecf0fb5aa93910a8912119f",
+      "planned_pairs": 38694,
+      "checked_pairs": 38694,
+      "training_accepted": 0,
+      "gpu": false,
+      "updated_utc": "2026-10-05T06:07:05.785847+00:00",
+      "counts": {
+        "pairs": 38694,
+        "no_flags": 27688,
+        "flagged": 11006
+      },
+      "flags": {
+        "mask_spans_background_or_truncated_leaf": 3048,
+        "mask_area_or_background_leakage": 413,
+        "multiple_components": 193,
+        "physical_leaf_group_unknown_or_ambiguous": 10295,
+        "empty_mask": 1,
+        "mask_rgb_geometry_mismatch": 1
+      },
+      "class_counts": {
+        "Apple___Apple_scab": {
+          "pairs": 630,
+          "no_flags": 608
+        },
+        "Apple___Cedar_apple_rust": {
+          "pairs": 275,
+          "no_flags": 275
+        },
+        "Apple___healthy": {
+          "pairs": 1645,
+          "no_flags": 1625
+        },
+        "Blueberry___healthy": {
+          "pairs": 1502,
+          "no_flags": 1499
+        },
+        "Cherry_(including_sour)___healthy": {
+          "pairs": 854,
+          "no_flags": 847
+        },
+        "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": {
+          "pairs": 513,
+          "no_flags": 0
+        },
+        "Corn_(maize)___Common_rust_": {
+          "pairs": 1192,
+          "no_flags": 0
+        },
+        "Corn_(maize)___Northern_Leaf_Blight": {
+          "pairs": 985,
+          "no_flags": 0
+        },
+        "Grape___Black_rot": {
+          "pairs": 1180,
+          "no_flags": 1165
+        },
+        "Grape___healthy": {
+          "pairs": 423,
+          "no_flags": 0
+        },
+        "Peach___healthy": {
+          "pairs": 360,
+          "no_flags": 356
+        },
+        "Pepper,_bell___Bacterial_spot": {
+          "pairs": 997,
+          "no_flags": 951
+        },
+        "Pepper,_bell___healthy": {
+          "pairs": 1478,
+          "no_flags": 1441
+        },
+        "Potato___Early_blight": {
+          "pairs": 1000,
+          "no_flags": 991
+        },
+        "Potato___Late_blight": {
+          "pairs": 1000,
+          "no_flags": 998
+        },
+        "Potato___healthy": {
+          "pairs": 152,
+          "no_flags": 152
+        },
+        "Raspberry___healthy": {
+          "pairs": 371,
+          "no_flags": 371
+        },
+        "Soybean___healthy": {
+          "pairs": 5090,
+          "no_flags": 4866
+        },
+        "Squash___Powdery_mildew": {
+          "pairs": 1835,
+          "no_flags": 0
+        },
+        "Strawberry___healthy": {
+          "pairs": 456,
+          "no_flags": 454
+        },
+        "Tomato___Bacterial_spot": {
+          "pairs": 2127,
+          "no_flags": 2117
+        },
+        "Tomato___Early_blight": {
+          "pairs": 1000,
+          "no_flags": 926
+        },
+        "Tomato___Late_blight": {
+          "pairs": 1909,
+          "no_flags": 817
+        },
+        "Tomato___Leaf_Mold": {
+          "pairs": 952,
+          "no_flags": 856
+        },
+        "Tomato___Septoria_leaf_spot": {
+          "pairs": 1771,
+          "no_flags": 987
+        },
+        "Tomato___Spider_mites Two-spotted_spider_mite": {
+          "pairs": 1676,
+          "no_flags": 1670
+        },
+        "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+          "pairs": 5357,
+          "no_flags": 2721
+        },
+        "Tomato___Tomato_mosaic_virus": {
+          "pairs": 373,
+          "no_flags": 0
+        },
+        "Tomato___healthy": {
+          "pairs": 1591,
+          "no_flags": 995
+        }
+      }
+    }
+  },
+  "OLID": {
+    "originals": 1047,
+    "class_counts": {
+      "cucumber__K": 50,
+      "cucumber__N": 89,
+      "cucumber__N_K": 76,
+      "cucumber__healthy": 34,
+      "tomato__K": 36,
+      "tomato__N": 47,
+      "tomato__N_K": 40,
+      "tomato__healthy": 236,
+      "tomato__JAS_MIT": 32,
+      "tomato__LM": 207,
+      "tomato__MIT": 200
+    },
+    "source_archives": [
+      {
+        "file": "cucumber.zip",
+        "bytes": 731075531,
+        "md5": "ee699a9bc84dcdd9c78cba37f79bf900"
+      },
+      {
+        "file": "tomato__part_1.zip",
+        "bytes": 1393633291,
+        "md5": "35607a338f08a0f2fe64406a48b5d5ef"
+      },
+      {
+        "file": "tomato__part_2.zip",
+        "bytes": 1500708392,
+        "md5": "83730955bfd6b1628cd9a582e993a75b"
+      }
+    ],
+    "visually_seen_proposals": 1047,
+    "sheets": 66,
+    "visual_review_sha256": "a73d32e75945075404b18467ab66604248fafa435783338758e9d63a2104e9ea",
+    "original_geometry": {
+      "status": "running",
+      "pid": 30692,
+      "gpu": false,
+      "checked": 352,
+      "planned": 1047,
+      "training_accepted": 0,
+      "parent_sha256": "61a7fcfbac0e1d3d4eb6270a99031bbbdf3656b5dd878bc338e9a2d90477db4f",
+      "visual_review_sha256": "a73d32e75945075404b18467ab66604248fafa435783338758e9d63a2104e9ea",
+      "helper_sha256": "7732077cb47e87269052c3b61ea90f986a1e2898be51235332f57f76a5b70574",
+      "updated_utc": "2026-10-05T06:29:17.798029+00:00",
+      "counts": {
+        "images": 352,
+        "with_capture_time": 274,
+        "flagged": 28
+      },
+      "flags": {
+        "visible_frame_truncation_review": 23,
+        "changed_box_review": 1,
+        "area_extreme_review": 4
+      }
+    }
+  },
+  "source_contract": "ANNOTATION_CONTRACT_DRAFT.md",
+  "contract_sha256": "7654135e84374b6521514a4412ab3f260c49665c826fd86fb638c308ebf8ed7f",
+  "protected_sources": {
+    "train_clean.py": "b7bd5296722c991deab36ac2b2481113cdccc6d96333b3fcb7731efbc16e59a5",
+    "evaluate_clean.py": "38706b2a05f9e83f9cbb75bc65f61a1893289208318d05ee77afbb6b949c36a7",
+    "run_study.py": "b0f1736dcb999df80edf3ba562e427745507fc0ea9a7d1139353052c7f8ec7ca",
+    "yolo_s_accuracy.py": "31c616878fa10b980b54f86eb6c41115079563e66dd7a8e90f1d6fbf98ec42d9",
+    "evaluate_accuracy_pipeline.py": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+    "yolo_m_accuracy.py": "a509e52ad78a313ddfa083c590a7341921ba6f40020dd950b4c8814a627b1083",
+    "evaluate_yolo26m.py": "47e174cb36cd78abfd78255cc5bed6dc5d90d6e1076968cb34ec8c86c973233b"
+  },
+  "requested_runs": 2,
+  "seeds": [
+    20261003,
+    20261004
+  ],
+  "recipe": {
+    "epochs": 60,
+    "patience": 15,
+    "imgsz": 416,
+    "batch": 16,
+    "optimizer": "AdamW",
+    "lr0": 0.001,
+    "cos_lr": true,
+    "amp": false,
+    "dtype": "FP32",
+    "workers": 4,
+    "threads": 8
+  },
+  "ready_dataset": false,
+  "ready_frozen_plan": false,
+  "budget": {
+    "remaining": 79,
+    "weekly_remaining": 19,
+    "checked_utc": "2026-10-05T06:27:10Z"
+  }
+}

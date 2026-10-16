@@ -1,0 +1,225 @@
+{
+  "status": "passed",
+  "real_microphone_sessions": true,
+  "decoded_pcm_to_production_callback": [
+    {
+      "file": "irina_note_camera.wav",
+      "screen": "note",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 0.66,
+            "start": 0,
+            "word": "сделай"
+          },
+          {
+            "conf": 1,
+            "end": 1.17,
+            "start": 0.66,
+            "word": "фото"
+          }
+        ],
+        "text": "сделай фото"
+      }
+    },
+    {
+      "file": "irina_note_phrase.wav",
+      "screen": "note",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 0.33,
+            "start": 0,
+            "word": "на"
+          },
+          {
+            "conf": 1,
+            "end": 0.66,
+            "start": 0.33,
+            "word": "этом"
+          },
+          {
+            "conf": 1,
+            "end": 1.05,
+            "start": 0.66,
+            "word": "кости"
+          },
+          {
+            "conf": 1,
+            "end": 1.32,
+            "start": 1.05,
+            "word": "три"
+          },
+          {
+            "conf": 0.914881,
+            "end": 1.74,
+            "start": 1.32,
+            "word": "листа"
+          },
+          {
+            "conf": 0.834356,
+            "end": 1.8,
+            "start": 1.74,
+            "word": "с"
+          },
+          {
+            "conf": 1,
+            "end": 2.49,
+            "start": 1.804969,
+            "word": "пятнами"
+          }
+        ],
+        "text": "на этом кости три листа с пятнами"
+      }
+    },
+    {
+      "file": "irina_note_end.wav",
+      "screen": "note",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 0.84,
+            "start": 0.09,
+            "word": "закончить"
+          },
+          {
+            "conf": 1,
+            "end": 1.56,
+            "start": 0.84,
+            "word": "заметку"
+          }
+        ],
+        "text": "закончить заметку"
+      }
+    },
+    {
+      "file": "irina_camera_confirm.wav",
+      "screen": "note_review",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 1.11,
+            "start": 0.21,
+            "word": "подтвердить"
+          }
+        ],
+        "text": "подтвердить"
+      }
+    },
+    {
+      "file": "pavel_note_camera.wav",
+      "screen": "note",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 0.6,
+            "start": 0,
+            "word": "сделай"
+          },
+          {
+            "conf": 1,
+            "end": 1.02,
+            "start": 0.6,
+            "word": "фото"
+          }
+        ],
+        "text": "сделай фото"
+      }
+    },
+    {
+      "file": "pavel_note_phrase.wav",
+      "screen": "note",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 0.3,
+            "start": 0,
+            "word": "на"
+          },
+          {
+            "conf": 1,
+            "end": 0.57,
+            "start": 0.3,
+            "word": "этом"
+          },
+          {
+            "conf": 1,
+            "end": 0.93,
+            "start": 0.57,
+            "word": "кости"
+          },
+          {
+            "conf": 1,
+            "end": 1.17,
+            "start": 0.93,
+            "word": "три"
+          },
+          {
+            "conf": 0.811078,
+            "end": 1.41,
+            "start": 1.17,
+            "word": "лист"
+          },
+          {
+            "conf": 0.811078,
+            "end": 1.59,
+            "start": 1.41,
+            "word": "раз"
+          },
+          {
+            "conf": 1,
+            "end": 2.22,
+            "start": 1.59,
+            "word": "пятнами"
+          }
+        ],
+        "text": "на этом кости три лист раз пятнами"
+      }
+    },
+    {
+      "file": "pavel_note_end.wav",
+      "screen": "note",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 0.75,
+            "start": 0.09,
+            "word": "закончить"
+          },
+          {
+            "conf": 1,
+            "end": 1.41,
+            "start": 0.757408,
+            "word": "заметку"
+          }
+        ],
+        "text": "закончить заметку"
+      }
+    },
+    {
+      "file": "pavel_camera_confirm.wav",
+      "screen": "note_review",
+      "hypothesis": {
+        "result": [
+          {
+            "conf": 1,
+            "end": 0.99,
+            "start": 0.15,
+            "word": "подтвердить"
+          }
+        ],
+        "text": "подтвердить"
+      }
+    }
+  ],
+  "camera_phrase_remained_text": true,
+  "background_stopped": true,
+  "scope": "Actual microphone sessions and actual Android Vosk PCM decoding routed through active production callbacks. WAVs were not played into the microphone; no acoustic\/live-human accuracy claim."
+}

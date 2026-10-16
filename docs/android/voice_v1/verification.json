@@ -1,0 +1,162 @@
+{
+  "status": "passed",
+  "updated_utc": "2026-10-04T15:27:35.941534+00:00",
+  "apk": {
+    "status": "verified",
+    "apk": "artifacts/apk/AgroVoice-model-lab-0.9.apk",
+    "version": "0.9-model-lab",
+    "version_code": 9,
+    "sha256": "da0da28e496c037c42f5fd2c2a6f3af064308e0ef5cc17d24934070d8a46b468",
+    "bytes": 262866048,
+    "installed": true,
+    "serial": "b861c4e0",
+    "phone_parity": "passed",
+    "updated_utc": "2026-10-04T15:20:02.1849945+00:00",
+    "verification": "docs/android/accuracy_v1/verification.json"
+  },
+  "model": {
+    "model": "vosk-model-small-ru-0.22",
+    "language": "ru",
+    "source": "https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip",
+    "license": "Apache-2.0",
+    "license_source": "https://alphacephei.com/vosk/models",
+    "archive_sha256": "961d5ff98a17f4aa6de69864d0aa71fa5bac682301d2b5d17a3f24c5c99a46d4",
+    "archive_bytes": 46236750,
+    "unpacked_bytes": 91289240,
+    "files": [
+      {
+        "path": "graph/phones/word_boundary.int",
+        "sha256": "23081404fe1cc7338c013a4beec133637147d60472c06ab64ff88ee3d028a7b5",
+        "bytes": 2166
+      },
+      {
+        "path": "graph/Gr.fst",
+        "sha256": "189b4f67c69eb34b9d8b47b12f184665e5445667ca5264579b61c6b9eb2cef1e",
+        "bytes": 32288259
+      },
+      {
+        "path": "graph/HCLr.fst",
+        "sha256": "0b096f4676f306aa3e60d2244ef1e24c5c699b8794acf3c3946b59bcc9dca831",
+        "bytes": 32993810
+      },
+      {
+        "path": "graph/disambig_tid.int",
+        "sha256": "c3af3dbc5eb301c4b282480d785c04b1642a8db83210a12332e9790e50146fd2",
+        "bytes": 25
+      },
+      {
+        "path": "am/final.mdl",
+        "sha256": "36d67b53dc90d96ea48097f9e17e7c5937689ad76cb8bed25091317bbaf25919",
+        "bytes": 15862383
+      },
+      {
+        "path": "README",
+        "sha256": "b662517cacda14945e159538d6dd8faff23bd706e024c4fb338b6013c9939b9e",
+        "bytes": 660
+      },
+      {
+        "path": "conf/model.conf",
+        "sha256": "dd7178da0e99fdbe489816c1e9702c3daa28e02accacc2993e0becb7af33b80c",
+        "bytes": 289
+      },
+      {
+        "path": "conf/mfcc.conf",
+        "sha256": "1e2228006d01d805ad1c267fee9f79709ca87ac51bd82b0e3f5c69ba543f0fc4",
+        "bytes": 131
+      },
+      {
+        "path": "ivector/final.dubm",
+        "sha256": "7dffe22bd992d7274fba925632bded4756d82dfd9b962d3c703110251fdf35b8",
+        "bytes": 168048
+      },
+      {
+        "path": "ivector/global_cmvn.stats",
+        "sha256": "c600cbf4acfbfac99d587040d48dc31129cd635b112ff15bfa2e9d3b0cece1f8",
+        "bytes": 1077
+      },
+      {
+        "path": "ivector/final.ie",
+        "sha256": "94f2558d00fe199ac01409281352eb16707ec075baaf9cc0d7b53011583cfa0e",
+        "bytes": 9927287
+      },
+      {
+        "path": "ivector/final.mat",
+        "sha256": "956577d396b636fe359b4321f10df5ed6a76bdfdec366b4a2b7d3242e524f04f",
+        "bytes": 44975
+      },
+      {
+        "path": "ivector/splice.conf",
+        "sha256": "9f0c5f7c82d18eaf25d8bce470efa9f7741f88411fe428774bc0a9bb69a24756",
+        "bytes": 35
+      },
+      {
+        "path": "ivector/online_cmvn.conf",
+        "sha256": "a2f3571754b64297cb7efb2e7ca3df61995c5a45fcbb97188f90613552bb2dfe",
+        "bytes": 95
+      }
+    ],
+    "prepared_utc": "2026-10-04T15:04:57.469508+00:00"
+  },
+  "samples": {
+    "accepted": 22,
+    "expected": 22,
+    "negative_or_unrelated": 6,
+    "false_actions": 0,
+    "voices": [
+      "Microsoft Irina Desktop",
+      "Microsoft Pavel"
+    ],
+    "real_field_speech_accuracy": null
+  },
+  "ui_test": "Actual microphone start/stop, help dialog, stop on background and return without automatic listening",
+  "camera_capture_by_voice": "Opens the existing system camera; shutter remains in the camera app",
+  "sources": [
+    {
+      "source": "android-app/app/src/main/java/com/agronomy/phytomonitor/FieldDemoActivity.kt",
+      "sha256": "051c4847eb3fd92ad8edb9e6aeb61ec12cd056564fab3b219e5e5651f863c796",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\FieldDemoActivity_051c4847eb3fd92a.kt"
+    },
+    {
+      "source": "android-app/app/src/main/java/com/agronomy/phytomonitor/voice/VoiceCommands.kt",
+      "sha256": "9f9d4bf35ea858f02ecd43eb11713fe690d060be7549e62b97dde042fd5e722d",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\VoiceCommands_9f9d4bf35ea858f0.kt"
+    },
+    {
+      "source": "android-app/app/src/main/java/com/agronomy/phytomonitor/voice/OfflineVoiceController.kt",
+      "sha256": "90d3c585f4cc4337774abbe4241ee466bb1f8902d19bb8e8446fb5a2c0e81365",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\OfflineVoiceController_90d3c585f4cc4337.kt"
+    },
+    {
+      "source": "android-app/app/src/test/java/com/agronomy/phytomonitor/VoiceCommandsTest.kt",
+      "sha256": "2b8b350c4897bfc85bac4e9141b13f7d237d557258e66fa989818febcd0dea8c",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\VoiceCommandsTest_2b8b350c4897bfc8.kt"
+    },
+    {
+      "source": "android-app/app/src/androidTest/java/com/agronomy/phytomonitor/VoiceRecognitionTest.kt",
+      "sha256": "66b9394fd257df9437f221923b856c4d06f2b7df8bf0e2e80119c35e12e2ab45",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\VoiceRecognitionTest_66b9394fd257df94.kt"
+    },
+    {
+      "source": "android-app/app/src/androidTest/java/com/agronomy/phytomonitor/VoiceUiTest.kt",
+      "sha256": "0566087b9dad8f69e6306355599d7ab82c301628c75f2ab577670bf1e265f992",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\VoiceUiTest_0566087b9dad8f69.kt"
+    },
+    {
+      "source": "ml-pipeline/prepare_voice_model.py",
+      "sha256": "e06944fed88889fa389ec934ba0c37d05c3252d949376918573ae9a916d6e660",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\prepare_voice_model_e06944fed88889fa.py"
+    },
+    {
+      "source": "ml-pipeline/Prepare-VoiceSamples.ps1",
+      "sha256": "749fd72b4efdb25ca15d1a5d6b597d3afd3f30e1df6aa921809b903bdfbae081",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\Prepare-VoiceSamples_749fd72b4efdb25c.ps1"
+    },
+    {
+      "source": "ml-pipeline/build_voice_report.py",
+      "sha256": "f938c06cdd5f225815d6fafa54a06663a1d16ccd75ba5338f1b58a6eeff12454",
+      "snapshot": "docs\\android\\voice_v1\\source_snapshots\\build_voice_report_f938c06cdd5f2258.py"
+    }
+  ],
+  "all_eight_plant_models_unchanged": true,
+  "constraints": "CPU only; active GPU training recipe/data unchanged; no audio recording files or network in production"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "no_photo_before_confirmation": true,
+  "confirmed_photo": "AgroVoice_20261005_011755_052.jpg",
+  "immediate_photo": "AgroVoice_20261005_011757_653.jpg",
+  "immediate_bytes": 3596920,
+  "shutter_button_clicks": 0,
+  "scope": "Actual camera + dispatcher, unattended test bench; ASR is checked separately"
+}

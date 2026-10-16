@@ -1,0 +1,343 @@
+{
+  "model": {
+    "id": "yolo26s",
+    "name": "YOLO26s",
+    "family": "yolo",
+    "side": 416,
+    "seed": 20261004,
+    "detector_seed": 20261004,
+    "asset": "models/yolo26s.onnx",
+    "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+    "bytes": 38104599,
+    "provisional": false,
+    "dataset": "clean v2",
+    "completed_runs": 10,
+    "paired_evaluations": 10,
+    "selection": "shared full-val end-to-end AP50-95; ten seeds; lower seed breaks ties",
+    "source": "runs/accuracy_v1/yolo26s_seed20261004",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ]
+  },
+  "split": "test",
+  "images": 236,
+  "partial": false,
+  "disease_detection": {
+    "map50_95": 0.4807873764150897,
+    "map50": 0.6042166026883599
+  },
+  "diagnosis_at_fixed_threshold": {
+    "threshold": 0.25,
+    "matching_iou": 0.5,
+    "gt_leaves": 452,
+    "matched_leaves": 383,
+    "correctly_diagnosed_gt_leaves": 273,
+    "leaf_localization_recall": 0.8473451327433629,
+    "correct_class_and_box_recall": 0.6039823008849557,
+    "classification_accuracy_on_matched_boxes": 0.7127937336814621,
+    "macro_f1": 0.5741001846166205,
+    "classes": [
+      {
+        "id": 0,
+        "tp": 9,
+        "fn": 4,
+        "fp": 4,
+        "precision": 0.6923076923076923,
+        "recall": 0.6923076923076923,
+        "f1": 0.6923076923076923
+      },
+      {
+        "id": 1,
+        "tp": 8,
+        "fn": 2,
+        "fp": 5,
+        "precision": 0.6153846153846154,
+        "recall": 0.8,
+        "f1": 0.6956521739130435
+      },
+      {
+        "id": 2,
+        "tp": 6,
+        "fn": 5,
+        "fp": 3,
+        "precision": 0.6666666666666666,
+        "recall": 0.5454545454545454,
+        "f1": 0.6
+      },
+      {
+        "id": 3,
+        "tp": 8,
+        "fn": 3,
+        "fp": 17,
+        "precision": 0.32,
+        "recall": 0.7272727272727273,
+        "f1": 0.4444444444444444
+      },
+      {
+        "id": 4,
+        "tp": 7,
+        "fn": 8,
+        "fp": 7,
+        "precision": 0.5,
+        "recall": 0.4666666666666667,
+        "f1": 0.4827586206896552
+      },
+      {
+        "id": 5,
+        "tp": 15,
+        "fn": 7,
+        "fp": 8,
+        "precision": 0.6521739130434783,
+        "recall": 0.6818181818181818,
+        "f1": 0.6666666666666666
+      },
+      {
+        "id": 6,
+        "tp": 12,
+        "fn": 7,
+        "fp": 7,
+        "precision": 0.631578947368421,
+        "recall": 0.631578947368421,
+        "f1": 0.631578947368421
+      },
+      {
+        "id": 7,
+        "tp": 2,
+        "fn": 2,
+        "fp": 3,
+        "precision": 0.4,
+        "recall": 0.5,
+        "f1": 0.4444444444444445
+      },
+      {
+        "id": 8,
+        "tp": 9,
+        "fn": 3,
+        "fp": 2,
+        "precision": 0.8181818181818182,
+        "recall": 0.75,
+        "f1": 0.7826086956521738
+      },
+      {
+        "id": 9,
+        "tp": 10,
+        "fn": 0,
+        "fp": 1,
+        "precision": 0.9090909090909091,
+        "recall": 1.0,
+        "f1": 0.9523809523809523
+      },
+      {
+        "id": 10,
+        "tp": 8,
+        "fn": 2,
+        "fp": 1,
+        "precision": 0.8888888888888888,
+        "recall": 0.8,
+        "f1": 0.8421052631578948
+      },
+      {
+        "id": 11,
+        "tp": 0,
+        "fn": 0,
+        "fp": 1,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      },
+      {
+        "id": 12,
+        "tp": 6,
+        "fn": 11,
+        "fp": 16,
+        "precision": 0.2727272727272727,
+        "recall": 0.35294117647058826,
+        "f1": 0.30769230769230765
+      },
+      {
+        "id": 13,
+        "tp": 3,
+        "fn": 7,
+        "fp": 6,
+        "precision": 0.3333333333333333,
+        "recall": 0.3,
+        "f1": 0.3157894736842105
+      },
+      {
+        "id": 14,
+        "tp": 13,
+        "fn": 4,
+        "fp": 8,
+        "precision": 0.6190476190476191,
+        "recall": 0.7647058823529411,
+        "f1": 0.6842105263157895
+      },
+      {
+        "id": 15,
+        "tp": 15,
+        "fn": 5,
+        "fp": 4,
+        "precision": 0.7894736842105263,
+        "recall": 0.75,
+        "f1": 0.7692307692307692
+      },
+      {
+        "id": 16,
+        "tp": 5,
+        "fn": 1,
+        "fp": 3,
+        "precision": 0.625,
+        "recall": 0.8333333333333334,
+        "f1": 0.7142857142857143
+      },
+      {
+        "id": 17,
+        "tp": 30,
+        "fn": 0,
+        "fp": 6,
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091
+      },
+      {
+        "id": 18,
+        "tp": 2,
+        "fn": 17,
+        "fp": 3,
+        "precision": 0.4,
+        "recall": 0.10526315789473684,
+        "f1": 0.16666666666666666
+      },
+      {
+        "id": 19,
+        "tp": 20,
+        "fn": 4,
+        "fp": 35,
+        "precision": 0.36363636363636365,
+        "recall": 0.8333333333333334,
+        "f1": 0.5063291139240507
+      },
+      {
+        "id": 20,
+        "tp": 9,
+        "fn": 18,
+        "fp": 14,
+        "precision": 0.391304347826087,
+        "recall": 0.3333333333333333,
+        "f1": 0.36
+      },
+      {
+        "id": 21,
+        "tp": 3,
+        "fn": 11,
+        "fp": 16,
+        "precision": 0.15789473684210525,
+        "recall": 0.21428571428571427,
+        "f1": 0.18181818181818182
+      },
+      {
+        "id": 22,
+        "tp": 8,
+        "fn": 6,
+        "fp": 19,
+        "precision": 0.2962962962962963,
+        "recall": 0.5714285714285714,
+        "f1": 0.3902439024390244
+      },
+      {
+        "id": 23,
+        "tp": 8,
+        "fn": 28,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.2222222222222222,
+        "f1": 0.3636363636363636
+      },
+      {
+        "id": 24,
+        "tp": 29,
+        "fn": 13,
+        "fp": 37,
+        "precision": 0.4393939393939394,
+        "recall": 0.6904761904761905,
+        "f1": 0.537037037037037
+      },
+      {
+        "id": 25,
+        "tp": 6,
+        "fn": 10,
+        "fp": 7,
+        "precision": 0.46153846153846156,
+        "recall": 0.375,
+        "f1": 0.41379310344827586
+      },
+      {
+        "id": 26,
+        "tp": 0,
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      },
+      {
+        "id": 27,
+        "tp": 15,
+        "fn": 0,
+        "fp": 3,
+        "precision": 0.8333333333333334,
+        "recall": 1.0,
+        "f1": 0.9090909090909091
+      },
+      {
+        "id": 28,
+        "tp": 7,
+        "fn": 1,
+        "fp": 4,
+        "precision": 0.6363636363636364,
+        "recall": 0.875,
+        "f1": 0.7368421052631579
+      },
+      {
+        "id": 29,
+        "tp": 0,
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    ],
+    "matching": "Score-ordered class-agnostic IoU matching, one prediction per GT; unmatched leaves penalized"
+  },
+  "proposed_leaves": 0,
+  "skipped_leaves": 0,
+  "desktop_pipeline_ms": {
+    "median": 43.37232999999685,
+    "p95": 80.961496999997
+  },
+  "note": "One selected S and one fixed N checkpoint; not ten-seed test mean. Historical test already seen. Fresh external field control still required; absent classes unassessed.",
+  "protocol": {
+    "detector_nms_iou": 0.7,
+    "proposal_threshold": 0.1,
+    "max_classified": 32,
+    "max_detections": 300,
+    "field_matching_iou": 0.5,
+    "confidence_for_f1": 0.25,
+    "score": "detector score * classifier softmax for two-stage",
+    "preprocessing": "cv2 detector letterbox; PIL square crop for classifier, unresized original photo",
+    "original_study_comparability": "Original Ultralytics multi-label evaluator differs; compare all modes under this shared protocol"
+  },
+  "code_sha256": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+  "selection_lock_sha256": "f74a36b98d35e352b15704771a3188827b2c065581764b64e48c7f3a9afbca10",
+  "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+  "launcher_sha256": "00043fd24f7b0c45390f62152fa56afd59e65662bc22d4cc0819c780d1077816"
+}

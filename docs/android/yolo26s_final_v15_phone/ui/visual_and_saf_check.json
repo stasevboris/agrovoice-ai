@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "reviewed_screens": [
+    "main.png",
+    "tools.png",
+    "note.png",
+    "journal.png",
+    "export_picker.png"
+  ],
+  "actual_saf_export": {
+    "file": "saf_export.json",
+    "bytes": 3042,
+    "sha256": "ca44917d24529865b8432a7b70c5c22b937a1d559cab0b7ea1e5e51ac63f421a",
+    "records": 1,
+    "model_seed": 20261004,
+    "scope": "Actual system CreateDocument picker → local Downloads file → intact UTF8 JSON; photos not embedded"
+  },
+  "cleanup": {
+    "own_uuid": "ed79b95b-6e14-4abb-9a16-a7c6bfd7a833",
+    "own_download_media_id": 1000000077,
+    "only_new_TEST_entry_and_file_removed": true,
+    "working_photo_model_settings_preserved": true
+  },
+  "initial_empty_pull": "Asynchronous write was still pending at immediate first pull; final complete3042bytes readback checked. Original empty pull retained.",
+  "checked_utc": "2026-10-04T22:33:52.044336+00:00"
+}

@@ -1,0 +1,18 @@
+{
+  "old_wav_sha_unchanged": 142,
+  "new_wav": [
+    {
+      "file": "irina_model9.wav",
+      "text": "модель девять",
+      "value": "yolo26m",
+      "sha256": "970d15d43657a5bbfa03710a5c385c2be55aab49ffc466ce05c76f3a255e8721"
+    },
+    {
+      "file": "pavel_model9.wav",
+      "text": "модель девять",
+      "value": "yolo26m",
+      "sha256": "e0b0bd358211e784d84c9585291d9e0baf25e1608e608d7a4f9dab45fb8264e2"
+    }
+  ],
+  "created_utc": "2026-10-05T01:07:33.741154+00:00"
+}

@@ -1,0 +1,92 @@
+{
+  "created_epoch_ms": 1791162492291,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/09_cucumber_downy_mildew_2024.jpg",
+  "photo_sha256": "86fa687998b921cbc114ab11df812c32277c93a4be2e2ee7afde53fc8bd1b187",
+  "decoded_width": 2000,
+  "decoded_height": 1500,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo26s",
+  "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+  "dataset": "clean v2",
+  "seed": 20261004,
+  "provisional": false,
+  "detector_seed": 20261004,
+  "family": "yolo",
+  "proposed_leaves": 0,
+  "classified_leaves": 0,
+  "skipped_leaves": 0,
+  "score_policy": "detector class score",
+  "model_metadata": {
+    "id": "yolo26s",
+    "name": "YOLO26s",
+    "family": "yolo",
+    "side": 416,
+    "seed": 20261004,
+    "detector_seed": 20261004,
+    "asset": "models\/yolo26s.onnx",
+    "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+    "bytes": 38104599,
+    "provisional": false,
+    "dataset": "clean v2",
+    "completed_runs": 10,
+    "paired_evaluations": 10,
+    "selection": "shared full-val end-to-end AP50-95; ten seeds; lower seed breaks ties",
+    "source": "runs\/accuracy_v1\/yolo26s_seed20261004",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ]
+  },
+  "crop_filter": "all",
+  "confidence_threshold": 0.25,
+  "inference_ms": 340.110677,
+  "pipeline_ms": 642.484323,
+  "detections": [
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.4240390658378601,
+      "xyxy_pixels": [
+        493.41547,
+        206.42978,
+        749.7493,
+        380.72653
+      ]
+    },
+    {
+      "class_id": 27,
+      "class_name": "grape leaf",
+      "label_ru": "Виноград: лист",
+      "confidence": 0.3912935256958008,
+      "xyxy_pixels": [
+        481.58984,
+        424.11502,
+        720.8059,
+        618.74164
+      ]
+    },
+    {
+      "class_id": 28,
+      "class_name": "grape leaf black rot",
+      "label_ru": "Виноград: чёрная гниль",
+      "confidence": 0.2759874761104584,
+      "xyxy_pixels": [
+        1169.2908,
+        239.64023,
+        1923.0802,
+        706.554
+      ]
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+  "validation_photo": "09_cucumber_downy_mildew_2024.jpg"
+}

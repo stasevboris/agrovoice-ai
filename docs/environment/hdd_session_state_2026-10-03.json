@@ -1,0 +1,14 @@
+﻿{
+    "present_after":  false,
+    "note":  "Electrical power and spindle state are not measured. Hardware re-scan may restore the device before reboot.",
+    "exit_code":  3010,
+    "utc":  "2026-10-03T17:21:32.0786219Z",
+    "output":  "╤ыєцхсэр  яЁюуЁрььр PnP (╠рщъЁюёюЇЄ)\r\n\r\n╙фрыхэшх єёЄЁющёЄтр:          SCSI\\Disk\u0026Ven_WDC\u0026Prod_WD20EZRZ-22Z5HB0\\5\u0026221baba8\u00260\u0026010000\r\n═хюсїюфшью яхЁхчруЁєчшЄ№ ёшёЄхьє фы  чртхЁ°хэш  юяхЁрЎшщ ъюэЇшуєЁрЎшш!",
+    "volumes":  [
+                    "E:"
+                ],
+    "instance":  "SCSI\\DISK\u0026VEN_WDC\u0026PROD_WD20EZRZ-22Z5HB0\\5\u0026221BABA8\u00260\u0026010000",
+    "model":  "WDC WD20EZRZ-22Z5HB0",
+    "requested":  "temporary removal until hardware re-enumeration/reboot",
+    "status":  "removed_from_windows"
+}

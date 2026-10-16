@@ -1,0 +1,68 @@
+{
+  "checked_utc": "2026-10-03T17:28:59.085183+00:00",
+  "purpose": "Candidates only; excluded from dataset_clean_v2 and study10_v2",
+  "files": [
+    {
+      "source": "wur_spider",
+      "metadata_api": "https://api.figshare.com/v2/articles/12712289",
+      "title": "Tomato plant spider mite damage images",
+      "license": {
+        "value": 2,
+        "name": "CC0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+      },
+      "file": "data.zip",
+      "bytes": 810931928,
+      "expected_md5": "4eca5f641c796e88cef120e1468ee021",
+      "url": "https://ndownloader.figshare.com/files/24068198",
+      "path": "ml-pipeline\\source_candidates\\research_2026-10-03\\wur_spider\\data.zip",
+      "status": "verified_existing"
+    },
+    {
+      "source": "olid",
+      "metadata_api": "https://zenodo.org/api/records/8105154",
+      "title": "OLID I: An Open Leaf Image Dataset of Bangladesh's Major Crops",
+      "license": {
+        "id": "cc-by-4.0"
+      },
+      "file": "cucumber.zip",
+      "bytes": 731075531,
+      "expected_md5": "ee699a9bc84dcdd9c78cba37f79bf900",
+      "url": "https://zenodo.org/api/records/8105154/files/cucumber.zip/content",
+      "path": "ml-pipeline\\source_candidates\\research_2026-10-03\\olid\\cucumber.zip",
+      "status": "downloaded_verified",
+      "actual_md5": "ee699a9bc84dcdd9c78cba37f79bf900",
+      "completed_utc": "2026-10-03T17:31:02.412937+00:00"
+    },
+    {
+      "source": "olid",
+      "metadata_api": "https://zenodo.org/api/records/8105154",
+      "title": "OLID I: An Open Leaf Image Dataset of Bangladesh's Major Crops",
+      "license": {
+        "id": "cc-by-4.0"
+      },
+      "file": "tomato__part_1.zip",
+      "bytes": 1393633291,
+      "expected_md5": "35607a338f08a0f2fe64406a48b5d5ef",
+      "url": "https://zenodo.org/api/records/8105154/files/tomato__part_1.zip/content",
+      "path": "ml-pipeline\\source_candidates\\research_2026-10-03\\olid\\tomato__part_1.zip",
+      "status": "downloaded_verified",
+      "actual_md5": "35607a338f08a0f2fe64406a48b5d5ef",
+      "completed_utc": "2026-10-03T17:36:30.382654+00:00"
+    },
+    {
+      "source": "olid",
+      "metadata_api": "https://zenodo.org/api/records/8105154",
+      "title": "OLID I: An Open Leaf Image Dataset of Bangladesh's Major Crops",
+      "license": {
+        "id": "cc-by-4.0"
+      },
+      "file": "tomato__part_2.zip",
+      "bytes": 1500708392,
+      "expected_md5": "83730955bfd6b1628cd9a582e993a75b",
+      "url": "https://zenodo.org/api/records/8105154/files/tomato__part_2.zip/content",
+      "path": "ml-pipeline\\source_candidates\\research_2026-10-03\\olid\\tomato__part_2.zip",
+      "status": "verified_existing"
+    }
+  ]
+}

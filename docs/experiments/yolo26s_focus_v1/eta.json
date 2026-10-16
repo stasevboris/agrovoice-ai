@@ -1,0 +1,44 @@
+{
+  "generated_utc": "2026-10-04T22:28:28.278121+00:00",
+  "generated_local": "2026-10-05T01:28:28.278121+03:00",
+  "status": "planning_estimate_not_guarantee",
+  "completed_exports": 10,
+  "total": 10,
+  "current": {
+    "id": "yolo26s_seed20261012",
+    "kind": "yolo26s",
+    "seed": 20261012
+  },
+  "progress": {
+    "seed": 20261012,
+    "epoch": 60,
+    "epochs": 60,
+    "recorded_training_seconds": 2721.97,
+    "recent_epoch_seconds": 44.63499999999999,
+    "source": "runs\\detect\\accuracy_v1_yolo26s_seed20261012\\results.csv",
+    "updated_utc": "2026-10-04T19:46:35.268611+00:00"
+  },
+  "completed_training_seconds": [
+    2906.04,
+    2749.441,
+    2721.02,
+    2745.31,
+    2746.36,
+    2778.72,
+    2776.82,
+    2725.67,
+    2727.43,
+    2721.97
+  ],
+  "mean_completed_epoch_seconds": 45.99796833333333,
+  "remaining_training_seconds": 0,
+  "clock_rule": "Sum positive cumulative increments; after resume clock reset use current cumulative value. Off-process pause excluded.",
+  "exports_and_native_checks_allowance_minutes_per_unfinished": [
+    1,
+    12
+  ],
+  "basis_note": "YOLO S actual CSV clocks; only a few completed seeds. First native export/check included manual delay, not extrapolated as guaranteed cost.",
+  "remaining_series_hours_low": 0.0,
+  "remaining_series_hours_high": 0.0,
+  "excludes": "Final shared-val/test, APK build/installation/parity and phone timings; power-off/other pauses"
+}

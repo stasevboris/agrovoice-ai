@@ -1,0 +1,24 @@
+{
+  "jobs": {
+    "mobilenet_v3_large_seed20261003": {
+      "status": "completed",
+      "updated_utc": "2026-10-04T06:05:44.342998+00:00"
+    },
+    "mobilenet_v3_large_seed20261004": {
+      "status": "stopped",
+      "updated_utc": "2026-10-04T06:10:18.035843+00:00"
+    }
+  },
+  "started_utc": "2026-10-04T05:47:17.617775+00:00",
+  "status": "stopped",
+  "requested": 60,
+  "pid": 296,
+  "gpu": "AMD Radeon RX 9060 XT",
+  "current": {
+    "id": "mobilenet_v3_large_seed20261004",
+    "kind": "mobilenet_v3_large",
+    "seed": 20261004
+  },
+  "completed": 1,
+  "updated_utc": "2026-10-04T06:10:18.035889+00:00"
+}

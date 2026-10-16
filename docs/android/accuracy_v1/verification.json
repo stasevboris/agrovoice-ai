@@ -1,0 +1,424 @@
+{
+  "status": "passed",
+  "apk": "artifacts\\apk\\AgroVoice-model-lab-0.16.apk",
+  "apk_sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+  "apk_bytes": 332738706,
+  "modes": [
+    "deimv2_n",
+    "distilled_mobilenet_v3_large",
+    "efficientnet_b0",
+    "masked_mobilenet_v3_large",
+    "mobilenet_v3_large",
+    "yolo11n",
+    "yolo26m",
+    "yolo26n",
+    "yolo26s"
+  ],
+  "photos": [
+    "01_potato_late_blight.jpg",
+    "05_tomato_septoria_2026.jpg",
+    "09_cucumber_downy_mildew_2024.jpg"
+  ],
+  "results": 27,
+  "comparisons": [
+    {
+      "mode": "yolo11n",
+      "stage": "detector",
+      "graph_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00115966796875,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "yolo26n",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "mobilenet_v3_large",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "mobilenet_v3_large",
+      "stage": "classifier",
+      "graph_sha256": "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 5.245208740234375e-06,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "efficientnet_b0",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "efficientnet_b0",
+      "stage": "classifier",
+      "graph_sha256": "2a7eea46067ed02ed791e56cc66f0096be0dc6da059999b4204a11bb9e6347e1",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 1.0073184967041016e-05,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "masked_mobilenet_v3_large",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "masked_mobilenet_v3_large",
+      "stage": "classifier",
+      "graph_sha256": "49c5c2f867b601848cbc33292f533f9d6f724db88e34b0b06395840f93c07265",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 5.662441253662109e-06,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "distilled_mobilenet_v3_large",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "distilled_mobilenet_v3_large",
+      "stage": "classifier",
+      "graph_sha256": "597d5f0dd71787584220ef30fbe0a7a8574926527a5ab140db05fc36c47f4675",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 4.76837158203125e-06,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "yolo26s",
+      "stage": "detector",
+      "graph_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.0009002685546875,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "deimv2_n",
+      "stage": "detector",
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0",
+      "output_shape": [
+        1,
+        300,
+        6
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 3.0517578125e-05,
+      "compared_values": 42,
+      "parity_scope": "Unordered detections with score >=0.1, the minimum APK threshold; raw background TopK tensors retained without an equality claim"
+    },
+    {
+      "mode": "yolo26m",
+      "stage": "detector",
+      "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.0003662109375,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    }
+  ],
+  "android_ort": "1.30.0",
+  "desktop_ort": "1.26.0",
+  "scope": "Actual Android tensors and graphs, three manual examples; DETR parity covers all potentially visible score>=0.1 rows, other stages all raw values; not an accuracy sample",
+  "manual_results": [
+    {
+      "model": "yolo11n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 126.827448,
+      "pipeline_ms": 549.477917,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 113.033542,
+      "pipeline_ms": 388.750625,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 180.38901,
+      "pipeline_ms": 583.802291,
+      "skipped": 0
+    },
+    {
+      "model": "efficientnet_b0",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 246.237969,
+      "pipeline_ms": 652.971302,
+      "skipped": 0
+    },
+    {
+      "model": "masked_mobilenet_v3_large",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 407.383438,
+      "pipeline_ms": 879.874791,
+      "skipped": 0
+    },
+    {
+      "model": "distilled_mobilenet_v3_large",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 181.266458,
+      "pipeline_ms": 630.563385,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 379.777656,
+      "pipeline_ms": 739.509635,
+      "skipped": 0
+    },
+    {
+      "model": "deimv2_n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 194.082812,
+      "pipeline_ms": 1145.281874,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26m",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 1003.233125,
+      "pipeline_ms": 1528.965051,
+      "skipped": 0
+    },
+    {
+      "model": "yolo11n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 5,
+      "inference_ms": 126.506511,
+      "pipeline_ms": 327.011667,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 2,
+      "inference_ms": 111.525052,
+      "pipeline_ms": 314.010417,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 1,
+      "inference_ms": 262.489375,
+      "pipeline_ms": 628.39927,
+      "skipped": 0
+    },
+    {
+      "model": "efficientnet_b0",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 2,
+      "inference_ms": 368.39901,
+      "pipeline_ms": 764.016562,
+      "skipped": 0
+    },
+    {
+      "model": "masked_mobilenet_v3_large",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 1,
+      "inference_ms": 673.538959,
+      "pipeline_ms": 1078.164062,
+      "skipped": 0
+    },
+    {
+      "model": "distilled_mobilenet_v3_large",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 1,
+      "inference_ms": 250.978646,
+      "pipeline_ms": 638.616197,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 4,
+      "inference_ms": 344.878385,
+      "pipeline_ms": 647.765156,
+      "skipped": 0
+    },
+    {
+      "model": "deimv2_n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 10,
+      "inference_ms": 193.129947,
+      "pipeline_ms": 1154.016145,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26m",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 6,
+      "inference_ms": 996.841719,
+      "pipeline_ms": 1460.95677,
+      "skipped": 0
+    },
+    {
+      "model": "yolo11n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 1,
+      "inference_ms": 124.868698,
+      "pipeline_ms": 332.741198,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 110.910625,
+      "pipeline_ms": 314.549895,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 253.26724,
+      "pipeline_ms": 616.873021,
+      "skipped": 0
+    },
+    {
+      "model": "efficientnet_b0",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 363.636302,
+      "pipeline_ms": 740.162187,
+      "skipped": 0
+    },
+    {
+      "model": "masked_mobilenet_v3_large",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 677.611509,
+      "pipeline_ms": 1091.676354,
+      "skipped": 0
+    },
+    {
+      "model": "distilled_mobilenet_v3_large",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 248.344999,
+      "pipeline_ms": 622.546875,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 3,
+      "inference_ms": 340.110677,
+      "pipeline_ms": 642.484323,
+      "skipped": 0
+    },
+    {
+      "model": "deimv2_n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 15,
+      "inference_ms": 193.360417,
+      "pipeline_ms": 1167.192499,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26m",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 3,
+      "inference_ms": 999.418332,
+      "pipeline_ms": 1460.245311,
+      "skipped": 0
+    }
+  ]
+}

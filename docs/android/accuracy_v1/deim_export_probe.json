@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "label": "deimv2_n_probe",
+  "run_id": "legacy_single_series",
+  "completed_epoch_ms": 1791095855462,
+  "device": "Xiaomi Redmi Note 7",
+  "android": "13",
+  "sdk": 33,
+  "runtime": "ONNX Runtime Android 1.30.0 CPU FP32",
+  "threads": 4,
+  "input_shape": [
+    1,
+    3,
+    416,
+    416
+  ],
+  "output_shape": [
+    1,
+    300,
+    6
+  ],
+  "model_bytes": 14633887,
+  "warmup": 10,
+  "iterations": 5,
+  "inference": {
+    "median_ms": 185.283698,
+    "p95_ms": 191.577823
+  },
+  "inference_and_postprocess": {
+    "median_ms": 185.782865,
+    "p95_ms": 192.0716352
+  },
+  "memory": {
+    "baseline_process_rss_bytes": 116817920,
+    "process_rss_bytes": 199290880,
+    "peak_process_rss_bytes": 199426048
+  },
+  "last_image_detections": 0,
+  "scope": "Prepared tensors; excludes photo decode\/resize, camera and rendering. Absolute process RAM."
+}

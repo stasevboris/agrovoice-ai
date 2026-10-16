@@ -1,0 +1,47 @@
+{
+  "selection": {
+    "study": "yolo26m_v1",
+    "stage": "technical_pilot",
+    "plan_sha256": "9a255219ea841924f11d4db2a6daa5d92006f87243c83e6a11571b518d24a6e2",
+    "base_manifest_sha256": "482868e360e3c3a6fa91caa5877bac9c4d93b67adfe4dca0b4bd056955c42f62",
+    "model": {
+      "id": "yolo26m",
+      "name": "YOLO26m",
+      "family": "yolo",
+      "side": 416,
+      "seed": 20261003,
+      "detector_seed": 20261003,
+      "asset": "models/model_lab/yolo26m.onnx",
+      "sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+      "bytes": 81699764,
+      "provisional": true,
+      "dataset": "clean v2",
+      "completed_runs": 1,
+      "paired_evaluations": 1,
+      "selection": "Technical seed03; not a ten-run architectural result",
+      "source": "runs\\yolo26m_v1\\yolo26m_seed20261003",
+      "input_shape": [
+        1,
+        3,
+        416,
+        416
+      ],
+      "output_shape": [
+        1,
+        34,
+        3549
+      ]
+    },
+    "cohort": [
+      {
+        "seed": 20261003,
+        "ap": 0.3691082210166482,
+        "graph_sha256": "c68786cbf67b634d6c0ff40968c039d256d760e64e69252dc29b28a24e462cb6",
+        "bytes": 81699764,
+        "val_sha256": "50d70ea986797445eb1c769978d0413bb88d60d542539336235a8d47c534b9ea",
+        "source": "runs\\yolo26m_v1\\yolo26m_seed20261003"
+      }
+    ]
+  },
+  "locked_utc": "2026-10-05T01:04:01.068144+00:00"
+}

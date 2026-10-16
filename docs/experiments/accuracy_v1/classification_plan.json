@@ -1,0 +1,321 @@
+{
+  "jobs": [
+    {
+      "id": "mobilenet_v3_large_seed20261003",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261003
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261004",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261004
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261005",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261005
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261006",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261006
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261007",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261007
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261008",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261008
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261009",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261009
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261010",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261010
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261011",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261011
+    },
+    {
+      "id": "mobilenet_v3_large_seed20261012",
+      "kind": "mobilenet_v3_large",
+      "seed": 20261012
+    },
+    {
+      "id": "efficientnet_b0_seed20261003",
+      "kind": "efficientnet_b0",
+      "seed": 20261003
+    },
+    {
+      "id": "efficientnet_b0_seed20261004",
+      "kind": "efficientnet_b0",
+      "seed": 20261004
+    },
+    {
+      "id": "efficientnet_b0_seed20261005",
+      "kind": "efficientnet_b0",
+      "seed": 20261005
+    },
+    {
+      "id": "efficientnet_b0_seed20261006",
+      "kind": "efficientnet_b0",
+      "seed": 20261006
+    },
+    {
+      "id": "efficientnet_b0_seed20261007",
+      "kind": "efficientnet_b0",
+      "seed": 20261007
+    },
+    {
+      "id": "efficientnet_b0_seed20261008",
+      "kind": "efficientnet_b0",
+      "seed": 20261008
+    },
+    {
+      "id": "efficientnet_b0_seed20261009",
+      "kind": "efficientnet_b0",
+      "seed": 20261009
+    },
+    {
+      "id": "efficientnet_b0_seed20261010",
+      "kind": "efficientnet_b0",
+      "seed": 20261010
+    },
+    {
+      "id": "efficientnet_b0_seed20261011",
+      "kind": "efficientnet_b0",
+      "seed": 20261011
+    },
+    {
+      "id": "efficientnet_b0_seed20261012",
+      "kind": "efficientnet_b0",
+      "seed": 20261012
+    },
+    {
+      "id": "leaf_mask_seed20261003",
+      "kind": "leaf_mask",
+      "seed": 20261003
+    },
+    {
+      "id": "leaf_mask_seed20261004",
+      "kind": "leaf_mask",
+      "seed": 20261004
+    },
+    {
+      "id": "leaf_mask_seed20261005",
+      "kind": "leaf_mask",
+      "seed": 20261005
+    },
+    {
+      "id": "leaf_mask_seed20261006",
+      "kind": "leaf_mask",
+      "seed": 20261006
+    },
+    {
+      "id": "leaf_mask_seed20261007",
+      "kind": "leaf_mask",
+      "seed": 20261007
+    },
+    {
+      "id": "leaf_mask_seed20261008",
+      "kind": "leaf_mask",
+      "seed": 20261008
+    },
+    {
+      "id": "leaf_mask_seed20261009",
+      "kind": "leaf_mask",
+      "seed": 20261009
+    },
+    {
+      "id": "leaf_mask_seed20261010",
+      "kind": "leaf_mask",
+      "seed": 20261010
+    },
+    {
+      "id": "leaf_mask_seed20261011",
+      "kind": "leaf_mask",
+      "seed": 20261011
+    },
+    {
+      "id": "leaf_mask_seed20261012",
+      "kind": "leaf_mask",
+      "seed": 20261012
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261003",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261003
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261004",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261004
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261005",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261005
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261006",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261006
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261007",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261007
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261008",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261008
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261009",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261009
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261010",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261010
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261011",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261011
+    },
+    {
+      "id": "teacher_efficientnet_v2_s_seed20261012",
+      "kind": "teacher_efficientnet_v2_s",
+      "seed": 20261012
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261003",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261003
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261004",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261004
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261005",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261005
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261006",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261006
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261007",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261007
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261008",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261008
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261009",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261009
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261010",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261010
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261011",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261011
+    },
+    {
+      "id": "masked_mobilenet_v3_large_seed20261012",
+      "kind": "masked_mobilenet_v3_large",
+      "seed": 20261012
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261003",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261003
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261004",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261004
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261005",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261005
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261006",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261006
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261007",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261007
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261008",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261008
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261009",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261009
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261010",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261010
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261011",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261011
+    },
+    {
+      "id": "distilled_mobilenet_v3_large_seed20261012",
+      "kind": "distilled_mobilenet_v3_large",
+      "seed": 20261012
+    }
+  ],
+  "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+  "seeds": [
+    20261003,
+    20261004,
+    20261005,
+    20261006,
+    20261007,
+    20261008,
+    20261009,
+    20261010,
+    20261011,
+    20261012
+  ],
+  "input": 224,
+  "classification_epochs": 30,
+  "mask_epochs": 20,
+  "scope": "Six components covering classifier, leaf segmentation and teacher/distillation; detector adapters handled separately"
+}

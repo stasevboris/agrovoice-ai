@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "created_utc": "2026-10-03T19:25:43.232442+00:00",
+  "apk": {
+    "path": "F:\\agrovoice-ai\\artifacts\\apk\\AgroVoice-field-demo-0.2.apk",
+    "bytes": 90173739,
+    "sha256": "9600d3e8cc8b98476bb792ca5260b73894089ab20b43e43d4a46e8e75615c8c0",
+    "version": "0.2-field-demo",
+    "debug": true
+  },
+  "device": {
+    "serial": "b861c4e0",
+    "model": "Redmi Note 7",
+    "android": "13",
+    "original_rotation_settings_restored": true
+  },
+  "checks": {
+    "build": "passed",
+    "lint_errors": 0,
+    "lint_warnings": 33,
+    "install": "adb install -r; no data clear",
+    "model_assets_checksums": "passed",
+    "on_device_photo_inference": {
+      "photos": 3,
+      "models": 2,
+      "outputs": 6
+    },
+    "desktop_ort_and_upstream_nms_parity": "passed",
+    "instrumentation": {
+      "status": "passed",
+      "tests": 3,
+      "runner_output": "OK (3 tests)",
+      "cases": [
+        "8 EXIF orientations",
+        "4097-pixel odd width downsample bound",
+        "broken JPEG error"
+      ]
+    },
+    "photo_picker_import_and_private_copy_sha256": "passed",
+    "model_switching": "passed",
+    "crop_filter_no_detections_message": "passed",
+    "orientation": "0 -> 1 -> 0; photo/model preserved",
+    "camera_launch_and_cancel": "passed",
+    "gallery_original_sha256_matches": 10,
+    "network_permissions_absent": true,
+    "automatic_telemetry_initializer_absent": true,
+    "frozen_study_scripts_and_dataset_manifest_unchanged": true
+  },
+  "scope": "Integration and manual examples; not an accuracy or repeated speed benchmark.",
+  "limitations": [
+    "Physical camera capture of a leaf pending user trial",
+    "A56 and Redmi 9T untested",
+    "Provisional matched seed pair while 10-seed training continues",
+    "Cucumber diseases unsupported; observed incorrect tomato conditions and crop guesses"
+  ]
+}

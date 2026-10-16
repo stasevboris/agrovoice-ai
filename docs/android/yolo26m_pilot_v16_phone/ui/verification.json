@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "observed_selections": {
+    "model9_selected": [
+      "9. YOLO26m",
+      "Томат"
+    ],
+    "restored": [
+      "7. YOLO26s",
+      "Томат"
+    ]
+  },
+  "screenshot": "model9_selected.png",
+  "note": "Ninth chip visible and selected; original S/Tomato settings restored; microphone remains off"
+}

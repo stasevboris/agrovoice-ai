@@ -1,0 +1,325 @@
+{
+  "models": {
+    "deimv2_n": {
+      "seeds": [
+        20261003
+      ],
+      "complete_ten": false,
+      "map50_95": {
+        "n": 1,
+        "mean": 0.2868956068331384,
+        "sd": null
+      },
+      "macro_f1": {
+        "n": 1,
+        "mean": 0.361947734645571,
+        "sd": null
+      },
+      "correct_class_and_box_recall": {
+        "n": 1,
+        "mean": 0.492742551566081,
+        "sd": null
+      }
+    },
+    "distilled_mobilenet_v3_large": {
+      "seeds": [
+        20261003
+      ],
+      "complete_ten": false,
+      "map50_95": {
+        "n": 1,
+        "mean": 0.30900586301185423,
+        "sd": null
+      },
+      "macro_f1": {
+        "n": 1,
+        "mean": 0.4851936866264181,
+        "sd": null
+      },
+      "correct_class_and_box_recall": {
+        "n": 1,
+        "mean": 0.5485103132161956,
+        "sd": null
+      }
+    },
+    "efficientnet_b0": {
+      "seeds": [
+        20261003
+      ],
+      "complete_ten": false,
+      "map50_95": {
+        "n": 1,
+        "mean": 0.3087965322007256,
+        "sd": null
+      },
+      "macro_f1": {
+        "n": 1,
+        "mean": 0.48227910817987196,
+        "sd": null
+      },
+      "correct_class_and_box_recall": {
+        "n": 1,
+        "mean": 0.5584415584415584,
+        "sd": null
+      }
+    },
+    "masked_mobilenet_v3_large": {
+      "seeds": [
+        20261003
+      ],
+      "complete_ten": false,
+      "map50_95": {
+        "n": 1,
+        "mean": 0.3015008059805216,
+        "sd": null
+      },
+      "macro_f1": {
+        "n": 1,
+        "mean": 0.4765310155676672,
+        "sd": null
+      },
+      "correct_class_and_box_recall": {
+        "n": 1,
+        "mean": 0.5187165775401069,
+        "sd": null
+      }
+    },
+    "mobilenet_v3_large": {
+      "seeds": [
+        20261003,
+        20261004
+      ],
+      "complete_ten": false,
+      "map50_95": {
+        "n": 2,
+        "mean": 0.30676426290108905,
+        "sd": 0.005372585927048747
+      },
+      "macro_f1": {
+        "n": 2,
+        "mean": 0.478839847580158,
+        "sd": 0.008386803606501961
+      },
+      "correct_class_and_box_recall": {
+        "n": 2,
+        "mean": 0.5351413292589763,
+        "sd": 0.004861696738486573
+      }
+    },
+    "teacher_efficientnet_v2_s": {
+      "seeds": [
+        20261003
+      ],
+      "complete_ten": false,
+      "map50_95": {
+        "n": 1,
+        "mean": 0.31598703187177574,
+        "sd": null
+      },
+      "macro_f1": {
+        "n": 1,
+        "mean": 0.48075006053610503,
+        "sd": null
+      },
+      "correct_class_and_box_recall": {
+        "n": 1,
+        "mean": 0.5706646294881589,
+        "sd": null
+      }
+    },
+    "yolo11n": {
+      "seeds": [
+        20261003,
+        20261004,
+        20261005,
+        20261006,
+        20261007,
+        20261008,
+        20261009,
+        20261010,
+        20261011,
+        20261012
+      ],
+      "complete_ten": true,
+      "map50_95": {
+        "n": 10,
+        "mean": 0.2991024749298847,
+        "sd": 0.009302421648046491
+      },
+      "macro_f1": {
+        "n": 10,
+        "mean": 0.4144438739700255,
+        "sd": 0.0056481682515771795
+      },
+      "correct_class_and_box_recall": {
+        "n": 10,
+        "mean": 0.5553093964858671,
+        "sd": 0.017566789134272797
+      }
+    },
+    "yolo26n": {
+      "seeds": [
+        20261003,
+        20261004,
+        20261005,
+        20261006,
+        20261007,
+        20261008,
+        20261009,
+        20261010,
+        20261011,
+        20261012
+      ],
+      "complete_ten": true,
+      "map50_95": {
+        "n": 10,
+        "mean": 0.32161298561075297,
+        "sd": 0.009278369366677995
+      },
+      "macro_f1": {
+        "n": 10,
+        "mean": 0.44477957928266865,
+        "sd": 0.01501878556039066
+      },
+      "correct_class_and_box_recall": {
+        "n": 10,
+        "mean": 0.5911382734912147,
+        "sd": 0.01307310797485311
+      }
+    },
+    "yolo26s": {
+      "seeds": [
+        20261003,
+        20261004,
+        20261005,
+        20261006,
+        20261007,
+        20261008,
+        20261009,
+        20261010,
+        20261011,
+        20261012
+      ],
+      "complete_ten": true,
+      "map50_95": {
+        "n": 10,
+        "mean": 0.3528671885438367,
+        "sd": 0.006553451636367074
+      },
+      "macro_f1": {
+        "n": 10,
+        "mean": 0.48752194506842794,
+        "sd": 0.011660403451026688
+      },
+      "correct_class_and_box_recall": {
+        "n": 10,
+        "mean": 0.6233766233766234,
+        "sd": 0.010779735415592932
+      }
+    }
+  },
+  "paired_vs_yolo26n": {
+    "deimv2_n": {
+      "seeds": [
+        20261003
+      ],
+      "ap50_95_delta": {
+        "n": 1,
+        "mean": -0.04149833855796203,
+        "sd": null
+      }
+    },
+    "distilled_mobilenet_v3_large": {
+      "seeds": [
+        20261003
+      ],
+      "ap50_95_delta": {
+        "n": 1,
+        "mean": -0.01938808237924622,
+        "sd": null
+      }
+    },
+    "efficientnet_b0": {
+      "seeds": [
+        20261003
+      ],
+      "ap50_95_delta": {
+        "n": 1,
+        "mean": -0.019597413190374835,
+        "sd": null
+      }
+    },
+    "masked_mobilenet_v3_large": {
+      "seeds": [
+        20261003
+      ],
+      "ap50_95_delta": {
+        "n": 1,
+        "mean": -0.02689313941057886,
+        "sd": null
+      }
+    },
+    "mobilenet_v3_large": {
+      "seeds": [
+        20261003,
+        20261004
+      ],
+      "ap50_95_delta": {
+        "n": 2,
+        "mean": -0.019556613373794246,
+        "sd": 0.008304348386939896
+      }
+    },
+    "teacher_efficientnet_v2_s": {
+      "seeds": [
+        20261003
+      ],
+      "ap50_95_delta": {
+        "n": 1,
+        "mean": -0.012406913519324714,
+        "sd": null
+      }
+    },
+    "yolo11n": {
+      "seeds": [
+        20261003,
+        20261004,
+        20261005,
+        20261006,
+        20261007,
+        20261008,
+        20261009,
+        20261010,
+        20261011,
+        20261012
+      ],
+      "ap50_95_delta": {
+        "n": 10,
+        "mean": -0.02251051068086829,
+        "sd": 0.013598081988321978
+      }
+    },
+    "yolo26s": {
+      "seeds": [
+        20261003,
+        20261004,
+        20261005,
+        20261006,
+        20261007,
+        20261008,
+        20261009,
+        20261010,
+        20261011,
+        20261012
+      ],
+      "ap50_95_delta": {
+        "n": 10,
+        "mean": 0.03125420293308374,
+        "sd": 0.00898765264907363
+      }
+    }
+  },
+  "evaluator_code_sha256": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a",
+  "skipped_stale_code": [],
+  "scope": "Seed variability on the same field val, not independent field samples or real-world confidence interval"
+}

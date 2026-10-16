@@ -1,0 +1,13 @@
+{
+  "status": "verified",
+  "apk": "artifacts/apk/AgroVoice-model-lab-0.16.apk",
+  "version": "0.16-model-lab",
+  "version_code": 16,
+  "sha256": "f2d93747539244a1dd85ee5bba03bd0def350dcb9a18055b7723d1af22e910fd",
+  "bytes": 332738706,
+  "installed": true,
+  "serial": "b861c4e0",
+  "phone_parity": "passed",
+  "updated_utc": "2026-10-05T01:05:40.5484761+00:00",
+  "verification": "docs/android/accuracy_v1/verification.json"
+}

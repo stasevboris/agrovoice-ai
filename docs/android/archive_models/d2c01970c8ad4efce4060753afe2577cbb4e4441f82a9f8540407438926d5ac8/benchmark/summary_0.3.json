@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "series": 10,
+  "iterations_per_mode_per_series": 10,
+  "warmup_per_mode_per_series": 3,
+  "photo_sha256": [
+    "e01d96d3bbef4fa050c64fe0c4802c99363d802408e7e66df19f71ccacc6268c"
+  ],
+  "models": {
+    "yolo11n": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 119.7770026,
+        "sd_of_series_medians_ms": 0.5758169046085188
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 151.20510685,
+        "sd_of_series_medians_ms": 0.66567237796423
+      },
+      "maximum_rss_bytes_after": 236351488,
+      "maximum_process_hwm_bytes": 333611008,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261003,
+        "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+        null
+      ]
+    },
+    "yolo26n": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 105.5956953,
+        "sd_of_series_medians_ms": 0.5679052909861052
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 137.06648175,
+        "sd_of_series_medians_ms": 0.5718092733860116
+      },
+      "maximum_rss_bytes_after": 237436928,
+      "maximum_process_hwm_bytes": 333611008,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261012,
+        20261012,
+        "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        null
+      ]
+    },
+    "mobilenet_v3_large": {
+      "series": 10,
+      "inference": {
+        "mean_of_series_medians_ms": 181.91324980000002,
+        "sd_of_series_medians_ms": 2.7781827665652004
+      },
+      "pipeline": {
+        "mean_of_series_medians_ms": 244.680919,
+        "sd_of_series_medians_ms": 2.926807893678442
+      },
+      "maximum_rss_bytes_after": 266162176,
+      "maximum_process_hwm_bytes": 333611008,
+      "memory_unit_note": "memory() returns bytes; older helper incorrectly named the raw fields kb",
+      "provenance": [
+        20261003,
+        20261012,
+        "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+        "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e"
+      ]
+    }
+  },
+  "scope": "Warm complete photo pipeline; one potato photo, ten fresh processes, rotated mode order; not ten independent training runs"
+}

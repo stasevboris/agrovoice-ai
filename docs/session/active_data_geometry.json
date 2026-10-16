@@ -1,0 +1,13 @@
+{
+  "pid": 17300,
+  "start_utc": "2026-10-05T06:00:08.9709837Z",
+  "script": "ml-pipeline/audit_plantvillage_full_geometry.py",
+  "status_path": "docs/experiments/yolo26s_data_v1/plantvillage_full_geometry_r1/status.json",
+  "gpu": false,
+  "status": "completed_geometry_audit_not_training_ready",
+  "process_running": false,
+  "observed_exited_utc": "2026-10-05T06:30:10.422038+00:00",
+  "worker_pid": 4844,
+  "worker_start_utc": null,
+  "worker_start_note": "Not recorded before exit; no guessed timestamp"
+}

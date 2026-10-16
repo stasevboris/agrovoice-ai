@@ -1,0 +1,81 @@
+{
+  "created_epoch_ms": 1791053943711,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/05_tomato_septoria_2026.jpg",
+  "photo_sha256": "b2ed72767221afcc0d5cdd82e94f8b9651f19ea88fb82bf1dd973e1d2b0b0eae",
+  "decoded_width": 1920,
+  "decoded_height": 1080,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo26n",
+  "model_sha256": "bcac42cadca698bde7ec3f05b690c953b742ba0bac00db609eee0ea69a17a6e2",
+  "dataset": "clean v2",
+  "seed": 20261003,
+  "provisional": true,
+  "crop_filter": "all",
+  "confidence_threshold": 0.25,
+  "inference_ms": 111.547604,
+  "pipeline_ms": 307.308437,
+  "detections": [
+    {
+      "class_id": 20,
+      "class_name": "Tomato leaf",
+      "label_ru": "Томат: лист без указанной болезни",
+      "confidence": 0.46215954422950745,
+      "xyxy_pixels": [
+        0.5601971,
+        757.0308,
+        166.46657,
+        955.64166
+      ]
+    },
+    {
+      "class_id": 20,
+      "class_name": "Tomato leaf",
+      "label_ru": "Томат: лист без указанной болезни",
+      "confidence": 0.39462214708328247,
+      "xyxy_pixels": [
+        347.27875,
+        302.12866,
+        708.30334,
+        641.8324
+      ]
+    },
+    {
+      "class_id": 25,
+      "class_name": "Tomato mold leaf",
+      "label_ru": "Томат: плесень листа",
+      "confidence": 0.3452267646789551,
+      "xyxy_pixels": [
+        0.8482713,
+        171.107,
+        458.13568,
+        773.7144
+      ]
+    },
+    {
+      "class_id": 25,
+      "class_name": "Tomato mold leaf",
+      "label_ru": "Томат: плесень листа",
+      "confidence": 0.2711111903190613,
+      "xyxy_pixels": [
+        344.123,
+        303.0725,
+        711.5755,
+        640.7598
+      ]
+    },
+    {
+      "class_id": 25,
+      "class_name": "Tomato mold leaf",
+      "label_ru": "Томат: плесень листа",
+      "confidence": 0.2628623843193054,
+      "xyxy_pixels": [
+        681.9732,
+        306.14996,
+        986.8969,
+        550.6507
+      ]
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area."
+}

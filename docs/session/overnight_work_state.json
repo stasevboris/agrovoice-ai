@@ -1,0 +1,80 @@
+{
+  "status": "complete",
+  "updated_local": "2026-10-04T03:09:58.767872+03:00",
+  "resume_not_before_local": null,
+  "budget_stop_remaining_percent": 15,
+  "budget_window_minutes": 300,
+  "last_known_remaining_percent": 98,
+  "next_known_reset_local": "2026-10-04T06:01:15+03:00",
+  "automation_id": "agrovoice",
+  "device_serial": "b861c4e0",
+  "device_model": "Redmi Note 7",
+  "objective": "Offline Android APK with camera, photo picker, YOLO11n/YOLO26n choice, visible boxes/results, real public-source field photos in phone gallery, and training monitoring.",
+  "models": {
+    "seed": 20261003,
+    "dataset": "dataset_clean_v2",
+    "classes": 30,
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ],
+    "yolo11": "runs/detect/study10_v2_yolo11n_seed20261003/weights/best.onnx",
+    "yolo26": "runs/detect/study10_v2_yolo26n_seed20261003/weights/best.onnx",
+    "note": "Provisional matched seed pair, not final ten-seed comparison; cucumber is condition unknown. Do not claim YOLO26 is universally better."
+  },
+  "completed": [
+    "Offline APK implemented, built and installed without data clear",
+    "Both matched seed models packaged and SHA-256 verified",
+    "Camera launch/cancel and real Photo Picker import verified",
+    "10 original licensed photos copied to gallery and checksums matched",
+    "Three photo inference checks per model; CPU ORT and upstream NMS parity passed",
+    "Three instrumentation tests including all eight EXIF orientations passed",
+    "Model switch, crop filter and orientation state verified",
+    "Instruction and PROJECT_GUIDE updated; hourly training heartbeat active",
+    "20/20 study runs completed; selected-model test and package audited; final report saved; heartbeat paused"
+  ],
+  "pending": [],
+  "constraints": [
+    "Leave FanControl closed and hardware unchanged",
+    "Do not change frozen study scripts/data",
+    "Avoid any second GPU workload",
+    "No store publishing/accounts/payments",
+    "Keep all changes in PROJECT_GUIDE.md",
+    "When remaining short-window limit <=15%, stop development and wait until 01:00 next calendar day Europe/Minsk, preserving reserve for essential training checks"
+  ],
+  "apk": {
+    "path": "artifacts/apk/AgroVoice-field-demo-0.2.apk",
+    "bytes": 90173739,
+    "sha256": "9600d3e8cc8b98476bb792ca5260b73894089ab20b43e43d4a46e8e75615c8c0",
+    "installed": true,
+    "device_serial": "b861c4e0",
+    "guide": "docs/android/FIELD_DEMO_2026-10-03.md",
+    "verification": "docs/android/phone_validation/verification.json",
+    "model_note": "Verified matched pair seed 20261003 retained; final selected seed 20261012 is a separate package."
+  },
+  "user_manual_checks": [
+    "Actual leaf photo through camera lens",
+    "A56 and Redmi 9T field trials"
+  ],
+  "last_known_weekly_remaining_percent": 77,
+  "training_snapshot": {
+    "status": "completed",
+    "completed": 20,
+    "requested": 20,
+    "selected": "study10_v2_yolo26n_seed20261012",
+    "epochs_each": 60,
+    "completed_utc": "2026-10-03T23:32:15.377186+00:00",
+    "report": "docs/experiments/study10_v2/FINAL_REPORT_2026-10-04.md",
+    "audit": "docs/experiments/study10_v2/completion_audit.json"
+  },
+  "last_heartbeat_checked_local": "2026-10-04T03:09:58.767872+03:00",
+  "automation_status": "PAUSED",
+  "final_model_package": "ml-pipeline/exports/study10_v2_yolo26n_seed20261012"
+}

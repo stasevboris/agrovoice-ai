@@ -1,0 +1,117 @@
+[
+  {
+    "source": "OLID",
+    "decoded_hash": "46edae3b63ae92c222c093def046832adcd28e5142316376bec81e14d349d85b",
+    "records": [
+      {
+        "source": "OLID",
+        "id": "b448ed34db61bd8ec735",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__K",
+        "audit_subset": "original1047"
+      },
+      {
+        "source": "OLID",
+        "id": "2536cc7e42f03efce8ec",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__N",
+        "audit_subset": "original1047"
+      }
+    ],
+    "decision": "quarantine_all_conflicting_records_pending_publisher_metadata"
+  },
+  {
+    "source": "OLID",
+    "decoded_hash": "326f618188b14a1ee9a651c575384700f8d5703910e221c4d372b84b4a5147a6",
+    "records": [
+      {
+        "source": "OLID",
+        "id": "b2569612c7bb75b3e06d",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__K",
+        "audit_subset": "original1047"
+      },
+      {
+        "source": "OLID",
+        "id": "4e66d2d08e29c7c87bde",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__N",
+        "audit_subset": "original1047"
+      }
+    ],
+    "decision": "quarantine_all_conflicting_records_pending_publisher_metadata"
+  },
+  {
+    "source": "OLID",
+    "decoded_hash": "f41d1f2739b8f6205e87b829a4b97ae00b6190231a5b5eba132ebf212e4cdc82",
+    "records": [
+      {
+        "source": "OLID",
+        "id": "0ef0d5e8e27c209ec43a",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__K",
+        "audit_subset": "original1047"
+      },
+      {
+        "source": "OLID",
+        "id": "820d8c122cb0a1a4ec27",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__N",
+        "audit_subset": "original1047"
+      }
+    ],
+    "decision": "quarantine_all_conflicting_records_pending_publisher_metadata"
+  },
+  {
+    "source": "OLID",
+    "decoded_hash": "5965568b17775e9e60e736e48dba60fa66769d557c7959b3b86bc86ab7265463",
+    "records": [
+      {
+        "source": "OLID",
+        "id": "dc153ecb91e53dcd585f",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__N",
+        "audit_subset": "original1047"
+      },
+      {
+        "source": "OLID",
+        "id": "b9fdc8a2fc5d688370ed",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__MIT",
+        "audit_subset": "original1047"
+      }
+    ],
+    "decision": "quarantine_all_conflicting_records_pending_publisher_metadata"
+  },
+  {
+    "source": "OLID",
+    "decoded_hash": "829e26884262c81e26c2237203d267bb9d56e8b5050e8a3ee5f2fc602fec2d9a",
+    "records": [
+      {
+        "source": "OLID",
+        "id": "893b58d3bcacab041dd1",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__N",
+        "audit_subset": "original1047"
+      },
+      {
+        "source": "OLID",
+        "id": "1861f583e06e58078ec7",
+        "split": null,
+        "group": null,
+        "source_class": "tomato__MIT",
+        "audit_subset": "original1047"
+      }
+    ],
+    "decision": "quarantine_all_conflicting_records_pending_publisher_metadata"
+  }
+]

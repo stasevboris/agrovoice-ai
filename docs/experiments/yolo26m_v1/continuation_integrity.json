@@ -1,0 +1,15 @@
+{
+  "checked_utc": "2026-10-05T01:28:23.020922+00:00",
+  "protected_sources": {
+    "train_clean.py": true,
+    "evaluate_clean.py": true,
+    "run_study.py": true,
+    "yolo_s_accuracy.py": true,
+    "evaluate_accuracy_pipeline.py": true,
+    "yolo_m_accuracy.py": true,
+    "evaluate_yolo26m.py": true
+  },
+  "automation_active": true,
+  "new_prompt_confirmed": true,
+  "current_apk": 16
+}

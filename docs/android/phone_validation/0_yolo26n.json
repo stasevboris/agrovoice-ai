@@ -1,0 +1,58 @@
+{
+  "created_epoch_ms": 1791054959965,
+  "photo": "\/storage\/emulated\/0\/Android\/data\/com.agronomy.phytomonitor\/files\/photos\/01_potato_late_blight.jpg",
+  "photo_sha256": "e01d96d3bbef4fa050c64fe0c4802c99363d802408e7e66df19f71ccacc6268c",
+  "decoded_width": 2048,
+  "decoded_height": 1536,
+  "coordinate_space": "EXIF-oriented decoded image, maximum side 2048",
+  "model": "yolo26n",
+  "model_sha256": "bcac42cadca698bde7ec3f05b690c953b742ba0bac00db609eee0ea69a17a6e2",
+  "dataset": "clean v2",
+  "seed": 20261003,
+  "provisional": true,
+  "crop_filter": "all",
+  "confidence_threshold": 0.25,
+  "inference_ms": 109.939583,
+  "pipeline_ms": 312.707187,
+  "detections": [
+    {
+      "class_id": 13,
+      "class_name": "Potato leaf late blight",
+      "label_ru": "Картофель: фитофтороз",
+      "confidence": 0.714179515838623,
+      "xyxy_pixels": [
+        595.2387,
+        282.40628,
+        1352.8984,
+        1349.1304
+      ]
+    },
+    {
+      "class_id": 13,
+      "class_name": "Potato leaf late blight",
+      "label_ru": "Картофель: фитофтороз",
+      "confidence": 0.4066176116466522,
+      "xyxy_pixels": [
+        6.0535607,
+        469.6633,
+        825.0882,
+        1369.6674
+      ]
+    },
+    {
+      "class_id": 13,
+      "class_name": "Potato leaf late blight",
+      "label_ru": "Картофель: фитофтороз",
+      "confidence": 0.27123069763183594,
+      "xyxy_pixels": [
+        1026.216,
+        329.83368,
+        1680.073,
+        1196.4865
+      ]
+    }
+  ],
+  "device": "Xiaomi Redmi Note 7",
+  "scope": "Whole leaf with crop\/condition. Confidence is not disease probability or damaged area.",
+  "validation_photo": "01_potato_late_blight.jpg"
+}

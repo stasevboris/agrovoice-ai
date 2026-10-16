@@ -1,0 +1,343 @@
+{
+  "status": "base_namespace_preserved_new_data_pending",
+  "classes": [
+    {
+      "id": 0,
+      "name": "Apple Scab Leaf",
+      "train": 129,
+      "val": 29,
+      "test": 13,
+      "val_aux": 0
+    },
+    {
+      "id": 1,
+      "name": "Apple leaf",
+      "train": 192,
+      "val": 45,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 2,
+      "name": "Apple rust leaf",
+      "train": 123,
+      "val": 45,
+      "test": 11,
+      "val_aux": 0
+    },
+    {
+      "id": 3,
+      "name": "Bell_pepper leaf",
+      "train": 268,
+      "val": 44,
+      "test": 11,
+      "val_aux": 0
+    },
+    {
+      "id": 4,
+      "name": "Bell_pepper leaf spot",
+      "train": 213,
+      "val": 36,
+      "test": 15,
+      "val_aux": 0
+    },
+    {
+      "id": 5,
+      "name": "Blueberry leaf",
+      "train": 671,
+      "val": 155,
+      "test": 22,
+      "val_aux": 0
+    },
+    {
+      "id": 6,
+      "name": "Cherry leaf",
+      "train": 192,
+      "val": 29,
+      "test": 19,
+      "val_aux": 0
+    },
+    {
+      "id": 7,
+      "name": "Corn Gray leaf spot",
+      "train": 53,
+      "val": 20,
+      "test": 4,
+      "val_aux": 0
+    },
+    {
+      "id": 8,
+      "name": "Corn leaf blight",
+      "train": 309,
+      "val": 48,
+      "test": 12,
+      "val_aux": 0
+    },
+    {
+      "id": 9,
+      "name": "Corn rust leaf",
+      "train": 98,
+      "val": 19,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 10,
+      "name": "Peach leaf",
+      "train": 484,
+      "val": 126,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 11,
+      "name": "Potato leaf",
+      "train": 124,
+      "val": 7,
+      "test": 0,
+      "val_aux": 32
+    },
+    {
+      "id": 12,
+      "name": "Potato leaf early blight",
+      "train": 250,
+      "val": 54,
+      "test": 17,
+      "val_aux": 0
+    },
+    {
+      "id": 13,
+      "name": "Potato leaf late blight",
+      "train": 214,
+      "val": 22,
+      "test": 10,
+      "val_aux": 0
+    },
+    {
+      "id": 14,
+      "name": "Raspberry leaf",
+      "train": 462,
+      "val": 77,
+      "test": 17,
+      "val_aux": 0
+    },
+    {
+      "id": 15,
+      "name": "Soyabean leaf",
+      "train": 216,
+      "val": 30,
+      "test": 20,
+      "val_aux": 0
+    },
+    {
+      "id": 16,
+      "name": "Squash Powdery mildew leaf",
+      "train": 203,
+      "val": 48,
+      "test": 6,
+      "val_aux": 0
+    },
+    {
+      "id": 17,
+      "name": "Strawberry leaf",
+      "train": 397,
+      "val": 65,
+      "test": 30,
+      "val_aux": 0
+    },
+    {
+      "id": 18,
+      "name": "Tomato Early blight leaf",
+      "train": 283,
+      "val": 28,
+      "test": 19,
+      "val_aux": 25
+    },
+    {
+      "id": 19,
+      "name": "Tomato Septoria leaf spot",
+      "train": 332,
+      "val": 76,
+      "test": 24,
+      "val_aux": 0
+    },
+    {
+      "id": 20,
+      "name": "Tomato leaf",
+      "train": 400,
+      "val": 47,
+      "test": 27,
+      "val_aux": 17
+    },
+    {
+      "id": 21,
+      "name": "Tomato leaf bacterial spot",
+      "train": 358,
+      "val": 26,
+      "test": 14,
+      "val_aux": 32
+    },
+    {
+      "id": 22,
+      "name": "Tomato leaf late blight",
+      "train": 179,
+      "val": 28,
+      "test": 14,
+      "val_aux": 0
+    },
+    {
+      "id": 23,
+      "name": "Tomato leaf mosaic virus",
+      "train": 212,
+      "val": 13,
+      "test": 36,
+      "val_aux": 0
+    },
+    {
+      "id": 24,
+      "name": "Tomato leaf yellow virus",
+      "train": 701,
+      "val": 81,
+      "test": 42,
+      "val_aux": 0
+    },
+    {
+      "id": 25,
+      "name": "Tomato mold leaf",
+      "train": 223,
+      "val": 54,
+      "test": 16,
+      "val_aux": 0
+    },
+    {
+      "id": 26,
+      "name": "Tomato two spotted spider mites leaf",
+      "train": 158,
+      "val": 1,
+      "test": 0,
+      "val_aux": 43
+    },
+    {
+      "id": 27,
+      "name": "grape leaf",
+      "train": 175,
+      "val": 30,
+      "test": 15,
+      "val_aux": 0
+    },
+    {
+      "id": 28,
+      "name": "grape leaf black rot",
+      "train": 99,
+      "val": 26,
+      "test": 8,
+      "val_aux": 0
+    },
+    {
+      "id": 29,
+      "name": "Cucumber leaf (condition unknown)",
+      "train": 42,
+      "val": 0,
+      "test": 0,
+      "val_aux": 11
+    }
+  ],
+  "splits": {
+    "train": {
+      "images": 2609,
+      "boxes": 7760,
+      "absent_classes": [],
+      "sources": {
+        "Cucumber": 42,
+        "PlantDoc": 1977,
+        "PlantVillage": 590
+      }
+    },
+    "val": {
+      "images": 349,
+      "boxes": 1309,
+      "absent_classes": [
+        "Cucumber leaf (condition unknown)"
+      ],
+      "sources": {
+        "PlantDoc": 349
+      }
+    },
+    "test": {
+      "images": 236,
+      "boxes": 452,
+      "absent_classes": [
+        "Potato leaf",
+        "Tomato two spotted spider mites leaf",
+        "Cucumber leaf (condition unknown)"
+      ],
+      "sources": {
+        "PlantDoc": 236
+      }
+    },
+    "val_aux": {
+      "images": 160,
+      "boxes": 160,
+      "absent_classes": [
+        "Apple Scab Leaf",
+        "Apple leaf",
+        "Apple rust leaf",
+        "Bell_pepper leaf",
+        "Bell_pepper leaf spot",
+        "Blueberry leaf",
+        "Cherry leaf",
+        "Corn Gray leaf spot",
+        "Corn leaf blight",
+        "Corn rust leaf",
+        "Peach leaf",
+        "Potato leaf early blight",
+        "Potato leaf late blight",
+        "Raspberry leaf",
+        "Soyabean leaf",
+        "Squash Powdery mildew leaf",
+        "Strawberry leaf",
+        "Tomato Septoria leaf spot",
+        "Tomato leaf late blight",
+        "Tomato leaf mosaic virus",
+        "Tomato leaf yellow virus",
+        "Tomato mold leaf",
+        "grape leaf",
+        "grape leaf black rot"
+      ],
+      "sources": {
+        "Cucumber": 11,
+        "PlantVillage": 149
+      }
+    }
+  },
+  "fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "new_accepted_images": 0,
+  "cucumber_review_candidates": {
+    "anthracnose": {
+      "originals": 160,
+      "single_large_box_review_candidates": 103
+    },
+    "bacterial_wilt": {
+      "originals": 160,
+      "single_large_box_review_candidates": 0
+    },
+    "downy_mildew": {
+      "originals": 160,
+      "single_large_box_review_candidates": 0
+    },
+    "fresh_leaf": {
+      "originals": 160,
+      "single_large_box_review_candidates": 62
+    }
+  },
+  "note": "Not a combined training dataset; geometry candidates are not accepted annotations",
+  "source_audit_progress": {
+    "PlantVillage_pairs_verified": 38694,
+    "PlantVillage_files_verified": 77388,
+    "PlantVillage_geometry_checked": 38694,
+    "OLID_originals": 1047,
+    "OLID_proposals_visually_seen": 1047,
+    "accepted_new_training": 0,
+    "report": "docs/experiments/yolo26s_data_v1/SOURCE_AUDIT_REPORT_2026-10-05.md"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "requested_by": "Boris direct request2026-10-05: stop M, prepare new YOLO26s data/training; M deferred",
+  "observed_utc": "2026-10-05T04:30:46.314189+00:00",
+  "queue_status": "stopped",
+  "adapter_status": "stopped",
+  "old_worker": {
+    "pid": 29748,
+    "backend": "wsl",
+    "started_utc": "2026-10-05T01:19:14.0150943+00:00",
+    "name": "yolo26m_v1",
+    "study": "yolo26m_v1",
+    "stdout": "F:\\agrovoice-ai\\ml-pipeline\\logs\\20261005_011913_975.yolo26m_study.stdout.log",
+    "stderr": "F:\\agrovoice-ai\\ml-pipeline\\logs\\20261005_011913_975.yolo26m_study.stderr.log",
+    "stop_file": "F:\\agrovoice-ai\\ml-pipeline\\logs\\20261005_011913_975.yolo26m_study.stop",
+    "status_path": "docs/experiments/yolo26m_v1/queue_status.json"
+  },
+  "completed_full_M_runs": 2,
+  "incomplete_seed": 20261005,
+  "saved_complete_epoch": 53,
+  "native_manifest_status": "stopped",
+  "checkpoint": "runs\\detect\\accuracy_v1_yolo26m_seed20261005\\weights\\last_complete.pt",
+  "checkpoint_bytes": 175386287,
+  "checkpoint_sha256": "d6e5010b840b3d354755bab39ff326b49941ad53726f2450720a6d25627d13a8",
+  "protected_sources_unchanged": {
+    "train_clean.py": true,
+    "evaluate_clean.py": true,
+    "run_study.py": true,
+    "yolo_s_accuracy.py": true,
+    "evaluate_accuracy_pipeline.py": true,
+    "yolo_m_accuracy.py": true,
+    "evaluate_yolo26m.py": true
+  },
+  "M_plan_unchanged": true,
+  "new_training_started": false,
+  "existing_apk": "artifacts/apk/AgroVoice-model-lab-0.16.apk"
+}

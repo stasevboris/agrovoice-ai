@@ -1,0 +1,142 @@
+{
+  "protocol_version": 1,
+  "dataset_fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+    "hip": "7.2.53211-e1a6bc5663",
+    "ultralytics": "8.4.164",
+    "onnxruntime": "1.30.0",
+    "gpu": "AMD Radeon RX 9060 XT"
+  },
+  "implementation_sha256": {
+    "train_clean.py": "b7bd5296722c991deab36ac2b2481113cdccc6d96333b3fcb7731efbc16e59a5",
+    "evaluate_clean.py": "38706b2a05f9e83f9cbb75bc65f61a1893289208318d05ee77afbb6b949c36a7",
+    "run_study.py": "b0f1736dcb999df80edf3ba562e427745507fc0ea9a7d1139353052c7f8ec7ca"
+  },
+  "dataset": "dataset_clean_v2",
+  "input_weights": {
+    "yolo11n": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1",
+    "yolo26n": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef"
+  },
+  "training": {
+    "epochs": 60,
+    "patience": 60,
+    "image_size": 416,
+    "batch": 16,
+    "optimizer": "AdamW",
+    "lr0": 0.001,
+    "cos_lr": true,
+    "amp": false,
+    "deterministic": true,
+    "workers": 4,
+    "threads": 8
+  },
+  "seed_policy": "Ten paired seeds 20261003..20261012; fresh COCO weights each run. Architecture order alternates by seed.",
+  "primary_validation": "Unchanged 349 PlantDoc images, 29 represented classes; no supplemental lab images.",
+  "auxiliary_validation": "160 grouped supplemental holdout images, reported separately; no test selection.",
+  "selection": "Architecture with highest mean primary val mAP50-95 across 10 runs; choose its checkpoint with highest primary val mAP50-95. This selection is optimistic on val. Test once selected run, report as final selected-model test only.",
+  "statistics": "Sample standard deviation across independent training seeds; paired differences by seed. Same data split, not ten independent field test sets.",
+  "jobs": [
+    {
+      "model": "yolo11n",
+      "seed": 20261003,
+      "name": "study10_v2_yolo11n_seed20261003"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261003,
+      "name": "study10_v2_yolo26n_seed20261003"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261004,
+      "name": "study10_v2_yolo26n_seed20261004"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261004,
+      "name": "study10_v2_yolo11n_seed20261004"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261005,
+      "name": "study10_v2_yolo11n_seed20261005"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261005,
+      "name": "study10_v2_yolo26n_seed20261005"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261006,
+      "name": "study10_v2_yolo26n_seed20261006"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261006,
+      "name": "study10_v2_yolo11n_seed20261006"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261007,
+      "name": "study10_v2_yolo11n_seed20261007"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261007,
+      "name": "study10_v2_yolo26n_seed20261007"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261008,
+      "name": "study10_v2_yolo26n_seed20261008"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261008,
+      "name": "study10_v2_yolo11n_seed20261008"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261009,
+      "name": "study10_v2_yolo11n_seed20261009"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261009,
+      "name": "study10_v2_yolo26n_seed20261009"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261010,
+      "name": "study10_v2_yolo26n_seed20261010"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261010,
+      "name": "study10_v2_yolo11n_seed20261010"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261011,
+      "name": "study10_v2_yolo11n_seed20261011"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261011,
+      "name": "study10_v2_yolo26n_seed20261011"
+    },
+    {
+      "model": "yolo26n",
+      "seed": 20261012,
+      "name": "study10_v2_yolo26n_seed20261012"
+    },
+    {
+      "model": "yolo11n",
+      "seed": 20261012,
+      "name": "study10_v2_yolo11n_seed20261012"
+    }
+  ]
+}

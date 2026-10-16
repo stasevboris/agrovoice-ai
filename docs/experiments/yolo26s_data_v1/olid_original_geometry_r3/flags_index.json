@@ -1,0 +1,67 @@
+{
+  "status": "rendered_pending_visual_review",
+  "records_sha256": "643dd1e54e30c4f987156fa19344873ee94d3636a87bdcefd832b9b596429372",
+  "sheets": [
+    {
+      "path": "docs\\experiments\\yolo26s_data_v1\\olid_original_geometry_r3\\flags_01.jpg",
+      "ids": [
+        "2ee9139f6a1b6e00c777",
+        "9c866d271fda2d797399",
+        "52c62337a335d4e7cc4a",
+        "6d3d257f59109ac65705",
+        "19fbe6f216fc1cdb8f72",
+        "fc63b835f85af4647ce8",
+        "4bc891240823149908ce",
+        "109e9bcd09d0d7b5d3cd",
+        "154484cdf54e4d32c0ad",
+        "97744e2623a2d8099306",
+        "55700ffe5fb67ac39b09",
+        "bfd1d4c39d0ac84d7072",
+        "b8f93af14c5c925d3ded",
+        "53648be828b2c0fecd69",
+        "b278c7a96769b2a4b6ca",
+        "4411c646b6bb20d0890c"
+      ],
+      "visually_seen": false
+    },
+    {
+      "path": "docs\\experiments\\yolo26s_data_v1\\olid_original_geometry_r3\\flags_02.jpg",
+      "ids": [
+        "2a5a8d481afc24774832",
+        "935787846cd7072c4170",
+        "65b923538c0fa5020d84",
+        "1cb5891a82cc90c8007a",
+        "e98a76fe41a5d8da8979",
+        "b9fd47fc25b7eb607dbb",
+        "92ebe68ed32363714d92",
+        "b6d18007798a21476ac3",
+        "19470a91e5eed7f28dc6",
+        "4baec69f7e90f5af49bf",
+        "6d782d6668fb0f5ba5d7",
+        "73afa613790ae9dfe2ad",
+        "626b98dafceab7d45dd0",
+        "256c35b52b681c442354",
+        "483fa61b5a35c8bf14e4",
+        "74af0ecf339f583b9a41"
+      ],
+      "visually_seen": false
+    },
+    {
+      "path": "docs\\experiments\\yolo26s_data_v1\\olid_original_geometry_r3\\flags_03.jpg",
+      "ids": [
+        "8c6eb0df93e4ae3663cd",
+        "d7de1d4f5f436c916c43",
+        "84c9064be8436849a211",
+        "aea400f9205edc619bad",
+        "0521c382a546ec88afbe",
+        "c7f2af7e0b6b96707c2e",
+        "ec021ba5d1ae237b324d",
+        "07df65b6e65722b343bc",
+        "5e27567ce17be8d5fce8",
+        "65abf1aca642f4046fb2"
+      ],
+      "visually_seen": false
+    }
+  ],
+  "training_accepted": 0
+}

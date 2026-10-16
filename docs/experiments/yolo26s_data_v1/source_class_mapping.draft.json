@@ -1,0 +1,196 @@
+{
+  "status": "proposed_not_training_accepted",
+  "updated_utc": "2026-10-05T05:04:16.929655+00:00",
+  "original_PlantDoc_ids_preserved": 29,
+  "PlantVillage_revision": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+  "PlantVillage_role": "laboratory supplement across all previous PlantDoc crops; whole-leaf masks and semantic mapping need audit, not an independent field test",
+  "PlantVillage_mapping": [
+    {
+      "source_class": "Apple___Apple_scab",
+      "proposed_existing_id": 0,
+      "proposed_existing_name": "Apple Scab Leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Apple___healthy",
+      "proposed_existing_id": 1,
+      "proposed_existing_name": "Apple leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Apple___Cedar_apple_rust",
+      "proposed_existing_id": 2,
+      "proposed_existing_name": "Apple rust leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Pepper,_bell___healthy",
+      "proposed_existing_id": 3,
+      "proposed_existing_name": "Bell_pepper leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Pepper,_bell___Bacterial_spot",
+      "proposed_existing_id": 4,
+      "proposed_existing_name": "Bell_pepper leaf spot",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Blueberry___healthy",
+      "proposed_existing_id": 5,
+      "proposed_existing_name": "Blueberry leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Cherry_(including_sour)___healthy",
+      "proposed_existing_id": 6,
+      "proposed_existing_name": "Cherry leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+      "proposed_existing_id": 7,
+      "proposed_existing_name": "Corn Gray leaf spot",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Corn_(maize)___Northern_Leaf_Blight",
+      "proposed_existing_id": 8,
+      "proposed_existing_name": "Corn leaf blight",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Corn_(maize)___Common_rust_",
+      "proposed_existing_id": 9,
+      "proposed_existing_name": "Corn rust leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Peach___healthy",
+      "proposed_existing_id": 10,
+      "proposed_existing_name": "Peach leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Potato___healthy",
+      "proposed_existing_id": 11,
+      "proposed_existing_name": "Potato leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Potato___Early_blight",
+      "proposed_existing_id": 12,
+      "proposed_existing_name": "Potato leaf early blight",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Potato___Late_blight",
+      "proposed_existing_id": 13,
+      "proposed_existing_name": "Potato leaf late blight",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Raspberry___healthy",
+      "proposed_existing_id": 14,
+      "proposed_existing_name": "Raspberry leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Soybean___healthy",
+      "proposed_existing_id": 15,
+      "proposed_existing_name": "Soyabean leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Squash___Powdery_mildew",
+      "proposed_existing_id": 16,
+      "proposed_existing_name": "Squash Powdery mildew leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Strawberry___healthy",
+      "proposed_existing_id": 17,
+      "proposed_existing_name": "Strawberry leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Early_blight",
+      "proposed_existing_id": 18,
+      "proposed_existing_name": "Tomato Early blight leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Septoria_leaf_spot",
+      "proposed_existing_id": 19,
+      "proposed_existing_name": "Tomato Septoria leaf spot",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___healthy",
+      "proposed_existing_id": 20,
+      "proposed_existing_name": "Tomato leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Bacterial_spot",
+      "proposed_existing_id": 21,
+      "proposed_existing_name": "Tomato leaf bacterial spot",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Late_blight",
+      "proposed_existing_id": 22,
+      "proposed_existing_name": "Tomato leaf late blight",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Tomato_mosaic_virus",
+      "proposed_existing_id": 23,
+      "proposed_existing_name": "Tomato leaf mosaic virus",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+      "proposed_existing_id": 24,
+      "proposed_existing_name": "Tomato leaf yellow virus",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Leaf_Mold",
+      "proposed_existing_id": 25,
+      "proposed_existing_name": "Tomato mold leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Tomato___Spider_mites Two-spotted_spider_mite",
+      "proposed_existing_id": 26,
+      "proposed_existing_name": "Tomato two spotted spider mites leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Grape___healthy",
+      "proposed_existing_id": 27,
+      "proposed_existing_name": "grape leaf",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    },
+    {
+      "source_class": "Grape___Black_rot",
+      "proposed_existing_id": 28,
+      "proposed_existing_name": "grape leaf black rot",
+      "acceptance": "pending source semantics/mask/physical-group review"
+    }
+  ],
+  "PlantVillage_additional_source_classes": [
+    "Apple___Black_rot",
+    "Cherry_(including_sour)___Powdery_mildew",
+    "Corn_(maize)___healthy",
+    "Grape___Esca_(Black_Measles)",
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "Orange___Haunglongbing_(Citrus_greening)",
+    "Peach___Bacterial_spot",
+    "Strawberry___Leaf_scorch",
+    "Tomato___Target_Spot"
+  ],
+  "legacy_cucumber_unknown_migration": "source-backed healthy review or exclusion; no automatic healthy inference; old nine graph labels unchanged",
+  "new_condition_policy": "source-confirmed diseases/nutrition/pest states with adequate independent support; mixed or uncertain classes never forced into a simpler disease"
+}

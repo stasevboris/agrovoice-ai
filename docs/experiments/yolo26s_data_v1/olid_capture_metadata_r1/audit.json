@@ -1,0 +1,258 @@
+{
+  "status": "metadata_audit_complete_physical_plant_grouping_unresolved",
+  "updated_utc": "2026-10-05T08:47:10.788377+00:00",
+  "input": "docs\\experiments\\yolo26s_data_v1\\olid_original_geometry_r3\\records.jsonl",
+  "input_sha256": "643dd1e54e30c4f987156fa19344873ee94d3636a87bdcefd832b9b596429372",
+  "records": 1047,
+  "counts": {
+    "without_exif_time": 109,
+    "with_exif_time": 938,
+    "tag_disagreements": 8
+  },
+  "capture_day_counts": {
+    "2022-03-17": {
+      "tomato__K": 7,
+      "tomato__N": 23,
+      "tomato__N_K": 11,
+      "tomato__healthy": 161,
+      "tomato__LM": 207
+    },
+    "2022-04-25": {
+      "tomato__N": 17,
+      "tomato__N_K": 10,
+      "tomato__healthy": 13
+    },
+    "2022-08-16": {
+      "tomato__K": 7,
+      "tomato__N": 7,
+      "tomato__healthy": 62,
+      "tomato__JAS_MIT": 10,
+      "tomato__MIT": 200
+    },
+    "2023-05-04": {
+      "cucumber__K": 8,
+      "cucumber__N": 53,
+      "cucumber__N_K": 46,
+      "cucumber__healthy": 7
+    },
+    "2023-05-06": {
+      "cucumber__K": 16,
+      "cucumber__N": 36,
+      "cucumber__N_K": 30,
+      "cucumber__healthy": 7
+    }
+  },
+  "capture_day_totals": {
+    "2022-03-17": 409,
+    "2022-04-25": 40,
+    "2022-08-16": 286,
+    "2023-05-04": 114,
+    "2023-05-06": 89
+  },
+  "duplicate_second_groups": 8,
+  "records_in_duplicate_second_groups": 16,
+  "duplicate_second_details": [
+    {
+      "capture_time": "2022:03:17 13:53:40",
+      "ids": [
+        "2a5ac7daef69e73e7624",
+        "70974683f3cdb78fbecd"
+      ],
+      "classes": [
+        "tomato__healthy",
+        "tomato__healthy"
+      ],
+      "source_sha256": [
+        "b1b8fed7bba821b8b830b49c817d91231903f1bbbb311554e42188113e55cb3d",
+        "93e38cadc8b54f8610f7737a21132238e2d32c4f9d07bc519faf0f4701d0f827"
+      ],
+      "exact_file_bytes": false,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    },
+    {
+      "capture_time": "2022:08:16 11:44:37",
+      "ids": [
+        "b2569612c7bb75b3e06d",
+        "4e66d2d08e29c7c87bde"
+      ],
+      "classes": [
+        "tomato__K",
+        "tomato__N"
+      ],
+      "source_sha256": [
+        "b35feddb65008fd76748a4bb9e35ca47da9bb51ef9bdb6924a1ca39916d98a3e",
+        "b35feddb65008fd76748a4bb9e35ca47da9bb51ef9bdb6924a1ca39916d98a3e"
+      ],
+      "exact_file_bytes": true,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    },
+    {
+      "capture_time": "2022:08:16 12:00:56",
+      "ids": [
+        "b448ed34db61bd8ec735",
+        "2536cc7e42f03efce8ec"
+      ],
+      "classes": [
+        "tomato__K",
+        "tomato__N"
+      ],
+      "source_sha256": [
+        "28511586e038610e38771eac56f22fc3d44e51495e2ae7bab3dd645a3891db89",
+        "28511586e038610e38771eac56f22fc3d44e51495e2ae7bab3dd645a3891db89"
+      ],
+      "exact_file_bytes": true,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    },
+    {
+      "capture_time": "2022:08:16 12:03:16",
+      "ids": [
+        "dc153ecb91e53dcd585f",
+        "b9fdc8a2fc5d688370ed"
+      ],
+      "classes": [
+        "tomato__N",
+        "tomato__MIT"
+      ],
+      "source_sha256": [
+        "6923e80a8a9b0e8a5e44724228765ccae4ccadc82b293528841d0d1dc0238e8b",
+        "6923e80a8a9b0e8a5e44724228765ccae4ccadc82b293528841d0d1dc0238e8b"
+      ],
+      "exact_file_bytes": true,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    },
+    {
+      "capture_time": "2022:08:16 12:05:45",
+      "ids": [
+        "0ef0d5e8e27c209ec43a",
+        "820d8c122cb0a1a4ec27"
+      ],
+      "classes": [
+        "tomato__K",
+        "tomato__N"
+      ],
+      "source_sha256": [
+        "9a5cff1927054f31858963cd77f5f0b2a5a1548fb539035199a22f29982ae62f",
+        "9a5cff1927054f31858963cd77f5f0b2a5a1548fb539035199a22f29982ae62f"
+      ],
+      "exact_file_bytes": true,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    },
+    {
+      "capture_time": "2022:08:16 12:05:59",
+      "ids": [
+        "893b58d3bcacab041dd1",
+        "1861f583e06e58078ec7"
+      ],
+      "classes": [
+        "tomato__N",
+        "tomato__MIT"
+      ],
+      "source_sha256": [
+        "5c05ae81e5345f790f6df2bfc305232f1eadd02356f05de836fb29226f13f2fb",
+        "5c05ae81e5345f790f6df2bfc305232f1eadd02356f05de836fb29226f13f2fb"
+      ],
+      "exact_file_bytes": true,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    },
+    {
+      "capture_time": "2023:05:06 09:58:57",
+      "ids": [
+        "6dbc5a9a2fca6287be35",
+        "ab9b3058b788eee1081e"
+      ],
+      "classes": [
+        "cucumber__healthy",
+        "cucumber__healthy"
+      ],
+      "source_sha256": [
+        "470112cc5ad4c4e139165c3b86fccdd301060f0b4d45b744cc8813b266cb2d68",
+        "d2c37190f3ec25516dea27b09eb5536a5de2bcdbbb0eab859654b94447b85ef2"
+      ],
+      "exact_file_bytes": false,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    },
+    {
+      "capture_time": "2023:05:06 10:02:07",
+      "ids": [
+        "6c7d8d62e6bdb762c628",
+        "5161544b68f1541d0ef8"
+      ],
+      "classes": [
+        "cucumber__healthy",
+        "cucumber__healthy"
+      ],
+      "source_sha256": [
+        "623cd01536980a2499f7c0c80e47e87b7325b13caf20bfdefdd6a6ecc91ad4fc",
+        "623cd01536980a2499f7c0c80e47e87b7325b13caf20bfdefdd6a6ecc91ad4fc"
+      ],
+      "exact_file_bytes": true,
+      "decision": "keep_same_second captures in one conservative capture-time group; not proof of same plant"
+    }
+  ],
+  "time_tag_findings": {
+    "DateTimeOriginal_equals_DateTimeDigitized_for_all_records_with_both": true,
+    "records_where_generic_DateTime_differs_from_DateTimeOriginal": [
+      {
+        "id": "5d440d9fcbfe50210fc1",
+        "image_member": "tomato__healthy/tomato__healthy (144).JPG",
+        "DateTime": "2022:03:19 13:10:16",
+        "DateTimeOriginal": "2022:03:17 14:17:03",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      },
+      {
+        "id": "c953fb0f0f6d8096863b",
+        "image_member": "tomato__healthy/tomato__healthy (146).JPG",
+        "DateTime": "2022:03:19 13:09:52",
+        "DateTimeOriginal": "2022:03:17 14:17:16",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      },
+      {
+        "id": "f3c26d931fa8537186c1",
+        "image_member": "tomato__healthy/tomato__healthy (149).JPG",
+        "DateTime": "2022:03:19 13:01:29",
+        "DateTimeOriginal": "2022:03:17 14:17:36",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      },
+      {
+        "id": "9f5855499ddafbc504a4",
+        "image_member": "tomato__healthy/tomato__healthy (150).JPG",
+        "DateTime": "2022:03:19 13:01:12",
+        "DateTimeOriginal": "2022:03:17 14:17:48",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      },
+      {
+        "id": "15d48ebe9bd8722580c2",
+        "image_member": "tomato__healthy/tomato__healthy (151).JPG",
+        "DateTime": "2022:03:19 13:00:43",
+        "DateTimeOriginal": "2022:03:17 14:17:56",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      },
+      {
+        "id": "4e83b8cc9f57e615f1b4",
+        "image_member": "tomato__healthy/tomato__healthy (152).JPG",
+        "DateTime": "2022:03:19 13:00:24",
+        "DateTimeOriginal": "2022:03:17 14:18:09",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      },
+      {
+        "id": "3eb1319760fbfa8f127a",
+        "image_member": "tomato__healthy/tomato__healthy (153).JPG",
+        "DateTime": "2022:03:19 12:57:49",
+        "DateTimeOriginal": "2022:03:17 14:18:18",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      },
+      {
+        "id": "635769a7f4d092a7a3f7",
+        "image_member": "tomato__healthy/tomato__healthy (154).JPG",
+        "DateTime": "2022:03:19 12:56:55",
+        "DateTimeOriginal": "2022:03:17 14:18:29",
+        "interpretation": "Use DateTimeOriginal for capture chronology; generic DateTime differs and likely reflects metadata/edit time, not original capture."
+      }
+    ],
+    "make_model_offset_gps": "Not present in the audited EXIF subset; camera clock/time-zone accuracy cannot be verified"
+  },
+  "split_assessment": "Five dates are strongly crop/state clustered (tomato on three dates, cucumber on two). Holding out one date would remove crop/state support and is not a valid all-class independent split by itself. Capture timestamps help form conservative session groups, but they do not reveal physical plant identity. 109 files have no EXIF time. Publisher archives contain image files in category folders only; no per-image plant/session key was found in the local archive listing.",
+  "training_accepted": 0,
+  "physical_plant_ids_confirmed": 0,
+  "new_gpu_runs": 0
+}

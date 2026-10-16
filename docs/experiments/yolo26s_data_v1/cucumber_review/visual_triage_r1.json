@@ -1,0 +1,111 @@
+{
+  "status": "initial_visual_triage_not_annotation_acceptance",
+  "updated_utc": "2026-10-05T05:04:16.929655+00:00",
+  "sheets_inspected": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "candidates_seen": 165,
+  "new_train_accepted": 0,
+  "limitations": "Contact sheets are coarse review. Full-resolution annotation/provenance review still required. No diagnosis generated from appearance. Truncation alone is not exclusion when the full visible leaf extent is correctly annotated.",
+  "observations": [
+    {
+      "type": "possible_related_views_not_confirmed",
+      "indexes": [
+        49,
+        98
+      ],
+      "action": "check exact/near duplicates and same-leaf grouping",
+      "source_ids": [
+        "anthracnose_582b3cf2-Anthracnose_16",
+        "anthracnose_9fc887c3-Anthracnose_15"
+      ],
+      "training_acceptance": "pending, no new labels assigned"
+    },
+    {
+      "type": "possible_related_views_not_confirmed",
+      "indexes": [
+        68,
+        83
+      ],
+      "action": "check exact/near duplicates and same-leaf grouping",
+      "source_ids": [
+        "anthracnose_680a21cb-Anthracnose_107",
+        "anthracnose_87e0cc31-Anthracnose_106"
+      ],
+      "training_acceptance": "pending, no new labels assigned"
+    },
+    {
+      "type": "possible_related_views_not_confirmed",
+      "indexes": [
+        155,
+        156
+      ],
+      "action": "check exact/near duplicates and same-leaf grouping",
+      "source_ids": [
+        "anthracnose_fb6e85e4-Anthracnose_48",
+        "anthracnose_fc0a3738-Anthracnose_49"
+      ],
+      "training_acceptance": "pending, no new labels assigned"
+    },
+    {
+      "type": "source_box_may_cover_only_part_of_visible_leaf",
+      "indexes": [
+        51,
+        66,
+        102,
+        113,
+        127,
+        145,
+        150,
+        493,
+        504,
+        589
+      ],
+      "action": "review full-resolution visible-leaf extent; do not accept source box automatically",
+      "source_ids": [
+        "anthracnose_5bea2ccc-Anthracnose_51",
+        "anthracnose_660ac47e-Anthracnose_40",
+        "anthracnose_a333bb30-Anthracnose_137",
+        "anthracnose_b09afe90-Anthracnose_157",
+        "anthracnose_c65bc5aa-Anthracnose_62",
+        "anthracnose_edddd56d-Anthracnose_43",
+        "anthracnose_f41173bb-Anthracnose_97",
+        "fresh_leaf_20b124f8-Fresh_Leaf_103",
+        "fresh_leaf_2d282f05-Fresh_Leaf_125",
+        "fresh_leaf_af1db50d-Fresh_Leaf_43"
+      ],
+      "training_acceptance": "pending, no new labels assigned"
+    },
+    {
+      "type": "fresh_leaf_label_needs_health_review",
+      "indexes": [
+        515,
+        545,
+        569,
+        602,
+        625,
+        630
+      ],
+      "action": "visible yellowing/mottling or damage, cause unverified; do not infer nutrient/disease class from appearance; do not accept healthy solely from folder name",
+      "source_ids": [
+        "fresh_leaf_3c2e238c-Fresh_Leaf_155",
+        "fresh_leaf_6b6c1ced-Fresh_Leaf_149",
+        "fresh_leaf_87444d1e-Fresh_Leaf_129",
+        "fresh_leaf_c994b516-Fresh_Leaf_127",
+        "fresh_leaf_e96c826a-Fresh_Leaf_150",
+        "fresh_leaf_f5a4c234-Fresh_Leaf_142"
+      ],
+      "training_acceptance": "pending, no new labels assigned"
+    }
+  ]
+}

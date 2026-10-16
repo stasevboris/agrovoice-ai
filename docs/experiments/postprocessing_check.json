@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "reference": "Ultralytics class-aware NMS",
+  "confidence": 0.25,
+  "iou": 0.7,
+  "checks": [
+    {
+      "image": "pd_00e805902ce2d2f74ea5.jpg",
+      "detections": 3
+    },
+    {
+      "image": "pd_01382244d92c90251bd5.jpg",
+      "detections": 2
+    },
+    {
+      "image": "pd_01777008e72402bc2e95.jpg",
+      "detections": 8
+    },
+    {
+      "image": "pd_019ee22658c87be63a86.jpg",
+      "detections": 4
+    },
+    {
+      "image": "pd_01ca9311cdefb807941c.jpg",
+      "detections": 14
+    }
+  ]
+}

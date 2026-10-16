@@ -1,0 +1,1172 @@
+{
+  "accepted_commands": 34,
+  "expected_commands": 42,
+  "false_actions_on_negative_or_unrelated": 0,
+  "samples": [
+    {
+      "sample": {
+        "text": "сделай фото",
+        "sha256": "5c38e931bb9702ba11466b3e3ff2c50cf82822082ad5ffa7c875c52f00c37c24",
+        "file": "irina_camera.wav",
+        "action": "CAMERA",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "сделай",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "открой галерею",
+        "sha256": "426b2d6a9d6ae68a3ab723f6eb1f1478a26c63e6dcec7b5fb756aff492ce2b38",
+        "file": "irina_gallery.wav",
+        "action": "GALLERY",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "открой галерею",
+          "confidence": 1,
+          "action": "GALLERY",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "проверь фото",
+        "sha256": "e90e38b67f6b2f3279748b312bbad3a3e37c327d7d6b7a3d6882c60853fa99db",
+        "file": "irina_analyze.wav",
+        "action": "ANALYZE",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "проверь фото",
+          "confidence": 1,
+          "action": "ANALYZE",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "быстрая модель",
+        "sha256": "d626c34575fd3346f5b85e1acf9c0956389237b5f5fc079b1ebd64ca74d33069",
+        "file": "irina_small.wav",
+        "action": "MODEL",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": "yolo26n"
+      },
+      "hypotheses": [
+        {
+          "text": "быстрая модель",
+          "confidence": 1,
+          "action": "MODEL",
+          "value": "yolo26n"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "большая модель",
+        "sha256": "5062832e70653ef1888fd5b0bc92fdaae07f0a2fbfd78a19cdc872ddd7016a8a",
+        "file": "irina_large.wav",
+        "action": "MODEL",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": "yolo26s"
+      },
+      "hypotheses": [
+        {
+          "text": "большая модель",
+          "confidence": 1,
+          "action": "MODEL",
+          "value": "yolo26s"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "старая модель",
+        "sha256": "0a24b5778f2e7960b929e724ea125afdfdde34022ed9501af41e14f798323253",
+        "file": "irina_old.wav",
+        "action": "MODEL",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": "yolo11n"
+      },
+      "hypotheses": [
+        {
+          "text": "старая модель",
+          "confidence": 0.8333035,
+          "action": "MODEL",
+          "value": "yolo11n"
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "все культуры",
+        "sha256": "a316506c4a517ca98fe68fa8a8b030fd7637cde29b316748a927a1c813f1e1ba",
+        "file": "irina_all.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": "all"
+      },
+      "hypotheses": [
+        {
+          "text": "все культуры",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "all"
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "картофель",
+        "sha256": "0cb0c4123e31217c9448feb95dc74aa4c411ba2ae0c0239812002acbad4eda65",
+        "file": "irina_potato.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": "Potato"
+      },
+      "hypotheses": [
+        {
+          "text": "картофель",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "Potato"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "томаты",
+        "sha256": "d8674048f83b7f2b5e90e505a850e3ce440a7bfa1c9b9147ad5c58158807d566",
+        "file": "irina_tomato.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": "Tomato"
+      },
+      "hypotheses": [
+        {
+          "text": "томаты",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "Tomato"
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "огурцы",
+        "sha256": "e4f1d77a5581d2b2900d07d84d542432de1465091b2ec5d36ce4e056a63a880a",
+        "file": "irina_cucumber.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": "Cucumber"
+      },
+      "hypotheses": [
+        {
+          "text": "огурцы",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "Cucumber"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "отмена",
+        "sha256": "c14a36ffdb172aca2a7c58537da0767d9dd4729b2c2fcc74692413f7c388369d",
+        "file": "irina_cancel.wav",
+        "action": "CANCEL",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "отмена",
+          "confidence": 1,
+          "action": "CANCEL",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не делай фото",
+        "sha256": "b983b57d4f52255827c85c4a142b8ee9d22d79dd4546c69b7b6e99b3cc19062d",
+        "file": "irina_negative_camera.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не делай фото",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не открывай галерею",
+        "sha256": "7640c1ba729cffd46e373e7eb98ab28540cf2256f36fe3faa7ce4cbbb87074a7",
+        "file": "irina_negative_gallery.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не открывай галерею",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "сегодня хорошая погода",
+        "sha256": "54ccfcdd11b29918fd1138d9549e8b38cefb0317002ac0fed4babecec187f68f",
+        "file": "irina_unrelated.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "все не",
+          "confidence": 0.5446335,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "фото номер один",
+        "sha256": "64130ae03fca36c244767a7e49254ca5154c6c4728025aca5fcb6320e2fbdd8a",
+        "file": "irina_number_one.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": "1"
+      },
+      "hypotheses": [
+        {
+          "text": "восемь не [unk] [unk] [unk] [unk] [unk] [unk] [unk] [unk] [unk] [unk] [unk] восемь",
+          "confidence": 0.9654756428571429,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "фото номер три",
+        "sha256": "e337892175b60dec636b8f4f4310766c62290fe161af0181b339c379ebda63fc",
+        "file": "irina_number_three.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": "3"
+      },
+      "hypotheses": [
+        {
+          "text": "фото не [unk] [unk] [unk] [unk] не",
+          "confidence": 0.9704317142857143,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "номер двадцать один",
+        "sha256": "fb8db872a1d613759d2432267d2102e78cc96c4513e997511d074c4cd26fe612",
+        "file": "irina_number_21.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": "21"
+      },
+      "hypotheses": [
+        {
+          "text": "номер [unk]",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "не",
+          "confidence": 0.84415,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "фото номер сто двадцать пять",
+        "sha256": "5ae4ade8d1ef9754f172acaf6ffa3c78074acc0a7a6fbf5f486b7a52887bbffa",
+        "file": "irina_number_125.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": "125"
+      },
+      "hypotheses": [
+        {
+          "text": "фото не",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "фото номер одна тысяча",
+        "sha256": "b54e0a158492dde4045f2a7a9b099fc20320d0012a123901244854193306dde0",
+        "file": "irina_number_1000.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": "1000"
+      },
+      "hypotheses": [
+        {
+          "text": "фото не [unk]",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "первое фото",
+        "sha256": "67f51ab0848df28048c5c88838b980e3471b29636c9b85e69eaedcdeb58a6210",
+        "file": "irina_first.wav",
+        "action": "FIRST_PHOTO",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "первое фото",
+          "confidence": 1,
+          "action": "FIRST_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "последнее фото",
+        "sha256": "95caaeb316b02f1fdc39ffd1203241394cab7b141aac60ca6d8e127c13bd4546",
+        "file": "irina_last.wav",
+        "action": "LAST_PHOTO",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "последнее фото",
+          "confidence": 1,
+          "action": "LAST_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "следующее фото",
+        "sha256": "efc9ad5c052c4c452d03f88dc6e833d513f075b83db4dd34c637724448cbeef3",
+        "file": "irina_next.wav",
+        "action": "NEXT_PHOTO",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "следующее фото",
+          "confidence": 1,
+          "action": "NEXT_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "предыдущее фото",
+        "sha256": "f23d296a10a432e4fe757e5e2991f343c9031af52733b4e6cd5e9b29f899b26a",
+        "file": "irina_previous.wav",
+        "action": "PREVIOUS_PHOTO",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "предыдущее фото",
+          "confidence": 1,
+          "action": "PREVIOUS_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "подтвердить",
+        "sha256": "8f89e4e3a7217c1edcd3c5b65c0419f8c27eebdaa5007df3a54f04ee5b348c34",
+        "file": "irina_confirm.wav",
+        "action": "CONFIRM",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "подтвердить",
+          "confidence": 1,
+          "action": "CONFIRM",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не подтверждать",
+        "sha256": "e19e2a0a17530156820fa8ede344c0ae784668d8d2a9069841ebbba778bb0d80",
+        "file": "irina_negative_confirm.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не подтверждать",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не выбирай фото",
+        "sha256": "e5522a8f7a92444423335ba35cd4c021826790a8c4b9d0f0c66b0dca4eee6a2f",
+        "file": "irina_negative_number.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не выбирай фото",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "сегодня хорошая погода",
+        "sha256": "54ccfcdd11b29918fd1138d9549e8b38cefb0317002ac0fed4babecec187f68f",
+        "file": "irina_gallery_unrelated.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Irina Desktop",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "сегодня",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "сделай фото",
+        "sha256": "506a9637d13322ac6d572646a6530efd1bc7b2434222649f5a85d1b0cfff12d2",
+        "file": "pavel_camera.wav",
+        "action": "CAMERA",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "сделай фото",
+          "confidence": 1,
+          "action": "CAMERA",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "открой галерею",
+        "sha256": "ab18462422c2e8c1c850d150cee5c5b49579466c3446b965cb00ac28a9d277f2",
+        "file": "pavel_gallery.wav",
+        "action": "GALLERY",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "открой галерею",
+          "confidence": 1,
+          "action": "GALLERY",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "проверь фото",
+        "sha256": "a1f9e13fad857d73490c81c62b278eed963d95a0a16bff062d83234012ba8a63",
+        "file": "pavel_analyze.wav",
+        "action": "ANALYZE",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "проверь фото",
+          "confidence": 1,
+          "action": "ANALYZE",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "быстрая модель",
+        "sha256": "1b83c981ad8a4a48a9d2881572ea29eb5dcd18809f71825d975ec72ae777fde7",
+        "file": "pavel_small.wav",
+        "action": "MODEL",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": "yolo26n"
+      },
+      "hypotheses": [
+        {
+          "text": "быструю [unk]",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "не",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "большая модель",
+        "sha256": "428f4c723f631832cb26e43cfba7278a61d9f33bc6e6e66e1f542e8901901361",
+        "file": "pavel_large.wav",
+        "action": "MODEL",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": "yolo26s"
+      },
+      "hypotheses": [
+        {
+          "text": "большая модель",
+          "confidence": 1,
+          "action": "MODEL",
+          "value": "yolo26s"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "старая модель",
+        "sha256": "ffd7049b00d1f2bf16ce3d6f1287d304172af303fe11eca9c6c0b920e0cfaa76",
+        "file": "pavel_old.wav",
+        "action": "MODEL",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": "yolo11n"
+      },
+      "hypotheses": [
+        {
+          "text": "старую не [unk]",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": false
+    },
+    {
+      "sample": {
+        "text": "все культуры",
+        "sha256": "fe196127abb16dd42b9e184b87e21caada262d51a36654d05709745107413389",
+        "file": "pavel_all.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": "all"
+      },
+      "hypotheses": [
+        {
+          "text": "все культуры",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "all"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "картофель",
+        "sha256": "ac0ae5296fe392403a60f74c6fe91d1a57e340900e663b20619f0e2c33e0e574",
+        "file": "pavel_potato.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": "Potato"
+      },
+      "hypotheses": [
+        {
+          "text": "картофель",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "Potato"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "томаты",
+        "sha256": "76e73faa0642165bc4e13a40e3b1b95ae20b91e08e14cc4ff85c63d5d5a6eee3",
+        "file": "pavel_tomato.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": "Tomato"
+      },
+      "hypotheses": [
+        {
+          "text": "томаты",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "Tomato"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "огурцы",
+        "sha256": "796d671be8044b993bc015a7a937faa110636ed26068ab6cf4d43ecf9698deb4",
+        "file": "pavel_cucumber.wav",
+        "action": "CROP",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": "Cucumber"
+      },
+      "hypotheses": [
+        {
+          "text": "огурцы",
+          "confidence": 1,
+          "action": "CROP",
+          "value": "Cucumber"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "отмена",
+        "sha256": "07848c7597e20cc863794638c29a2f24821625d834a1dc2b182356584aacef66",
+        "file": "pavel_cancel.wav",
+        "action": "CANCEL",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "отмена",
+          "confidence": 1,
+          "action": "CANCEL",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не делай фото",
+        "sha256": "6ec72cd906373031bf12eb31c5ae5001e379cdb4d93c47295f4b7e636056c0de",
+        "file": "pavel_negative_camera.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не делай фото",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не открывай галерею",
+        "sha256": "645f5bfa01823de04d075bcf04bb5d1e857bb7799ae2a7714b0c25965f25aa8c",
+        "file": "pavel_negative_gallery.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не открывай галерею",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "сегодня хорошая погода",
+        "sha256": "f1ff0f6e29fc25601dd4d242cbd0ad5854d4500d2c284504a9ae69f6bf900dda",
+        "file": "pavel_unrelated.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "main",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "все не фото",
+          "confidence": 0.8239350000000001,
+          "action": "",
+          "value": ""
+        },
+        {
+          "text": "",
+          "confidence": 0,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "фото номер один",
+        "sha256": "95bf75676fc7b96aa88f7d16afc3df5cbb02bdd6c2750e12070f1d6988af9265",
+        "file": "pavel_number_one.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": "1"
+      },
+      "hypotheses": [
+        {
+          "text": "фото номер один",
+          "confidence": 1,
+          "action": "PHOTO_NUMBER",
+          "value": "1"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "фото номер три",
+        "sha256": "9dc98cdd30ff3bdf035ee34c7126c2ec72a30d591739141ebceca6c0107d1865",
+        "file": "pavel_number_three.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": "3"
+      },
+      "hypotheses": [
+        {
+          "text": "фото номер три",
+          "confidence": 1,
+          "action": "PHOTO_NUMBER",
+          "value": "3"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "номер двадцать один",
+        "sha256": "42e30ccc6b7e1fde54832053d6c2beb00dc378349c8c3fb86b3600d6eca31f85",
+        "file": "pavel_number_21.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": "21"
+      },
+      "hypotheses": [
+        {
+          "text": "номер двадцать один",
+          "confidence": 1,
+          "action": "PHOTO_NUMBER",
+          "value": "21"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "фото номер сто двадцать пять",
+        "sha256": "76043e06b9be1a8961522de141da24969a82bfc7f9c326848e76865d22c2ff6d",
+        "file": "pavel_number_125.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": "125"
+      },
+      "hypotheses": [
+        {
+          "text": "фото номер сто двадцать пять",
+          "confidence": 1,
+          "action": "PHOTO_NUMBER",
+          "value": "125"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "фото номер одна тысяча",
+        "sha256": "eedb9b22b3c6d90af308d983b5faa21d9da840c630494cd60420ff4e78610609",
+        "file": "pavel_number_1000.wav",
+        "action": "PHOTO_NUMBER",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": "1000"
+      },
+      "hypotheses": [
+        {
+          "text": "фото номер одна тысяча",
+          "confidence": 1,
+          "action": "PHOTO_NUMBER",
+          "value": "1000"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "первое фото",
+        "sha256": "137a5ea8c17930b344341d5f9b6c895e39855ae34a4641ee31a6834baf5c5e12",
+        "file": "pavel_first.wav",
+        "action": "FIRST_PHOTO",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "первое фото",
+          "confidence": 1,
+          "action": "FIRST_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "последнее фото",
+        "sha256": "bb39dfdb58a2197ce133cdd1141f0a6807a5479de53114d2400fc8977e67f88f",
+        "file": "pavel_last.wav",
+        "action": "LAST_PHOTO",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "последнее фото",
+          "confidence": 1,
+          "action": "LAST_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "следующее фото",
+        "sha256": "175e58e94e518629fa6c39d854af31dd0c7084cedcc4713565d742fae0dbaa12",
+        "file": "pavel_next.wav",
+        "action": "NEXT_PHOTO",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "следующее фото",
+          "confidence": 1,
+          "action": "NEXT_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "предыдущее фото",
+        "sha256": "222afec2d5e2ac8e622cdee1be710aaa00faca774136aa524b700a009fba67e6",
+        "file": "pavel_previous.wav",
+        "action": "PREVIOUS_PHOTO",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "предыдущее фото",
+          "confidence": 1,
+          "action": "PREVIOUS_PHOTO",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "подтвердить",
+        "sha256": "957cd0f93dcdb89ae3b89d8aff3bde7a32d527c0ec9c8b3236244e5f554a40c2",
+        "file": "pavel_confirm.wav",
+        "action": "CONFIRM",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "подтвердить",
+          "confidence": 1,
+          "action": "CONFIRM",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не подтверждать",
+        "sha256": "aa3fe27a4c1f7719ba86658573bdaaf902c7eb9e6564f68a6a41587feedea328",
+        "file": "pavel_negative_confirm.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не подтверждать",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "не выбирай фото",
+        "sha256": "200004d8e151cc97b9bc792006371aac6a293d23b605ea570eaba812f1371ce0",
+        "file": "pavel_negative_number.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "не выбирай фото",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    },
+    {
+      "sample": {
+        "text": "сегодня хорошая погода",
+        "sha256": "f1ff0f6e29fc25601dd4d242cbd0ad5854d4500d2c284504a9ae69f6bf900dda",
+        "file": "pavel_gallery_unrelated.wav",
+        "action": "",
+        "synthetic_voice": "Microsoft Pavel",
+        "context": "gallery",
+        "value": ""
+      },
+      "hypotheses": [
+        {
+          "text": "сегодня хорошая погода",
+          "confidence": 1,
+          "action": "",
+          "value": ""
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "scope": "Synthetic Russian WAVs decoded on actual Android CPU; not microphone acoustics or real field WER"
+}

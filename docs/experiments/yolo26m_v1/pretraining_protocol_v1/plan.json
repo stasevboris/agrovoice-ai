@@ -1,0 +1,95 @@
+{
+  "status": "authorized_waiting_for_s",
+  "model": "yolo26m",
+  "pretrained_url": "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26m.pt",
+  "data_fingerprint": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "derived_manifest_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+  "epochs": 60,
+  "patience": 60,
+  "imgsz": 416,
+  "batch": 16,
+  "amp": false,
+  "optimizer": "AdamW",
+  "lr0": 0.001,
+  "seeds": [
+    20261003,
+    20261004,
+    20261005,
+    20261006,
+    20261007,
+    20261008,
+    20261009,
+    20261010,
+    20261011,
+    20261012
+  ],
+  "first_seed_technical_only_until_ten": true,
+  "selection": "Max shared full val AP50-95, smaller seed on tie; never test selection",
+  "mobile_gate": "Native ONNX export and actual Note7 parity, no OOM; report latency/memory before continuing9",
+  "fallback": "If batch16 OOM, stop and record; separate revised whole M recipe, do not change frozen S",
+  "authorized_utc": "2026-10-04T16:50:52.585086+00:00",
+  "pretrained_sha256": "401cea9ab23ad19246ff7744859816bc599f350e93c9dd30367b6f0a0745d0b7",
+  "pretrained_bytes": 44255705,
+  "jobs": [
+    {
+      "id": "yolo26m_seed20261003",
+      "kind": "yolo26m",
+      "seed": 20261003
+    },
+    {
+      "id": "yolo26m_seed20261004",
+      "kind": "yolo26m",
+      "seed": 20261004
+    },
+    {
+      "id": "yolo26m_seed20261005",
+      "kind": "yolo26m",
+      "seed": 20261005
+    },
+    {
+      "id": "yolo26m_seed20261006",
+      "kind": "yolo26m",
+      "seed": 20261006
+    },
+    {
+      "id": "yolo26m_seed20261007",
+      "kind": "yolo26m",
+      "seed": 20261007
+    },
+    {
+      "id": "yolo26m_seed20261008",
+      "kind": "yolo26m",
+      "seed": 20261008
+    },
+    {
+      "id": "yolo26m_seed20261009",
+      "kind": "yolo26m",
+      "seed": 20261009
+    },
+    {
+      "id": "yolo26m_seed20261010",
+      "kind": "yolo26m",
+      "seed": 20261010
+    },
+    {
+      "id": "yolo26m_seed20261011",
+      "kind": "yolo26m",
+      "seed": 20261011
+    },
+    {
+      "id": "yolo26m_seed20261012",
+      "kind": "yolo26m",
+      "seed": 20261012
+    }
+  ],
+  "evaluation": {
+    "split": "val",
+    "images": 349,
+    "gt_leaves": 1309,
+    "score_threshold": 0.25,
+    "matching_iou": 0.5,
+    "nms_iou": 0.7,
+    "provider": "CPUExecutionProvider"
+  },
+  "continuation_gate": "phone_gate.json: passed, pilot graph SHA, immutable plan SHA, actual installed APK and ten phone series"
+}

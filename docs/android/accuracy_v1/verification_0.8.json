@@ -1,0 +1,385 @@
+{
+  "status": "passed",
+  "apk": "artifacts\\apk\\AgroVoice-model-lab-0.8.apk",
+  "apk_sha256": "e15c43914329ced466a6bf4bdd863d890586d7f67b9433ddcff5fa12879dad0f",
+  "apk_bytes": 195341969,
+  "modes": [
+    "deimv2_n",
+    "distilled_mobilenet_v3_large",
+    "efficientnet_b0",
+    "masked_mobilenet_v3_large",
+    "mobilenet_v3_large",
+    "yolo11n",
+    "yolo26n",
+    "yolo26s"
+  ],
+  "photos": [
+    "01_potato_late_blight.jpg",
+    "05_tomato_septoria_2026.jpg",
+    "09_cucumber_downy_mildew_2024.jpg"
+  ],
+  "results": 24,
+  "comparisons": [
+    {
+      "mode": "yolo11n",
+      "stage": "detector",
+      "graph_sha256": "ea100bf4efa28b8d751c5b8e27526bbefaa5eb0c052999ebd9acb895bc5134c3",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00115966796875,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "yolo26n",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "mobilenet_v3_large",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "mobilenet_v3_large",
+      "stage": "classifier",
+      "graph_sha256": "50d086ea17c69928254fb0c5b2067b75fb524317f8a2e2ff95fef07a976bda3e",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 5.245208740234375e-06,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "efficientnet_b0",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "efficientnet_b0",
+      "stage": "classifier",
+      "graph_sha256": "2a7eea46067ed02ed791e56cc66f0096be0dc6da059999b4204a11bb9e6347e1",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 1.0073184967041016e-05,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "masked_mobilenet_v3_large",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "masked_mobilenet_v3_large",
+      "stage": "classifier",
+      "graph_sha256": "49c5c2f867b601848cbc33292f533f9d6f724db88e34b0b06395840f93c07265",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 5.662441253662109e-06,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "distilled_mobilenet_v3_large",
+      "stage": "detector",
+      "graph_sha256": "0ccf00a13dabcfd86980440cddbf4acc465ef25fed71d1c49751cdab9afbbe0e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.00048828125,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "distilled_mobilenet_v3_large",
+      "stage": "classifier",
+      "graph_sha256": "597d5f0dd71787584220ef30fbe0a7a8574926527a5ab140db05fc36c47f4675",
+      "output_shape": [
+        1,
+        30
+      ],
+      "input_sha256": "d4462d3e563df5fd7a862f5e8acabe7afa79348eb0a25aa345cc2ffddcbcf3b3",
+      "max_absolute_error": 4.76837158203125e-06,
+      "compared_values": 30,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "yolo26s",
+      "stage": "detector",
+      "graph_sha256": "9631b6073310657435eb30d93dcc7314b5e29dcce73498736a71021b132d2c1e",
+      "output_shape": [
+        1,
+        34,
+        3549
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 0.000396728515625,
+      "compared_values": 120666,
+      "parity_scope": "All raw output values"
+    },
+    {
+      "mode": "deimv2_n",
+      "stage": "detector",
+      "graph_sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0",
+      "output_shape": [
+        1,
+        300,
+        6
+      ],
+      "input_sha256": "57b0ca197ad0ae4d19885b6229a85e968a299412b4fb47fe1d3a55fe6e343afc",
+      "max_absolute_error": 3.0517578125e-05,
+      "compared_values": 42,
+      "parity_scope": "Unordered detections with score >=0.1, the minimum APK threshold; raw background TopK tensors retained without an equality claim"
+    }
+  ],
+  "android_ort": "1.30.0",
+  "desktop_ort": "1.26.0",
+  "scope": "Actual Android tensors and graphs, three manual examples; DETR parity covers all potentially visible score>=0.1 rows, other stages all raw values; not an accuracy sample",
+  "manual_results": [
+    {
+      "model": "yolo11n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 132.701511,
+      "pipeline_ms": 551.813281,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 113.820157,
+      "pipeline_ms": 392.12151,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 182.834636,
+      "pipeline_ms": 586.778645,
+      "skipped": 0
+    },
+    {
+      "model": "efficientnet_b0",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 238.672031,
+      "pipeline_ms": 645.209792,
+      "skipped": 0
+    },
+    {
+      "model": "masked_mobilenet_v3_large",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 407.312135,
+      "pipeline_ms": 886.321302,
+      "skipped": 0
+    },
+    {
+      "model": "distilled_mobilenet_v3_large",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 181.814999,
+      "pipeline_ms": 909.43224,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 1,
+      "inference_ms": 339.237344,
+      "pipeline_ms": 702.16,
+      "skipped": 0
+    },
+    {
+      "model": "deimv2_n",
+      "photo": "01_potato_late_blight.jpg",
+      "boxes": 2,
+      "inference_ms": 191.520364,
+      "pipeline_ms": 1142.373594,
+      "skipped": 0
+    },
+    {
+      "model": "yolo11n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 5,
+      "inference_ms": 125.353125,
+      "pipeline_ms": 319.953333,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 2,
+      "inference_ms": 111.34474,
+      "pipeline_ms": 326.712448,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 1,
+      "inference_ms": 253.337708,
+      "pipeline_ms": 614.893385,
+      "skipped": 0
+    },
+    {
+      "model": "efficientnet_b0",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 2,
+      "inference_ms": 367.546147,
+      "pipeline_ms": 741.355261,
+      "skipped": 0
+    },
+    {
+      "model": "masked_mobilenet_v3_large",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 1,
+      "inference_ms": 672.572394,
+      "pipeline_ms": 1099.244323,
+      "skipped": 0
+    },
+    {
+      "model": "distilled_mobilenet_v3_large",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 1,
+      "inference_ms": 251.026773,
+      "pipeline_ms": 632.424739,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 4,
+      "inference_ms": 343.474167,
+      "pipeline_ms": 654.743698,
+      "skipped": 0
+    },
+    {
+      "model": "deimv2_n",
+      "photo": "05_tomato_septoria_2026.jpg",
+      "boxes": 10,
+      "inference_ms": 193.223229,
+      "pipeline_ms": 1164.40724,
+      "skipped": 0
+    },
+    {
+      "model": "yolo11n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 1,
+      "inference_ms": 124.319011,
+      "pipeline_ms": 321.640417,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 112.169531,
+      "pipeline_ms": 317.833229,
+      "skipped": 0
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 257.608698,
+      "pipeline_ms": 632.872187,
+      "skipped": 0
+    },
+    {
+      "model": "efficientnet_b0",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 364.790468,
+      "pipeline_ms": 755.418021,
+      "skipped": 0
+    },
+    {
+      "model": "masked_mobilenet_v3_large",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 676.650469,
+      "pipeline_ms": 1100.021406,
+      "skipped": 0
+    },
+    {
+      "model": "distilled_mobilenet_v3_large",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 0,
+      "inference_ms": 251.346875,
+      "pipeline_ms": 635.783645,
+      "skipped": 0
+    },
+    {
+      "model": "yolo26s",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 9,
+      "inference_ms": 345.396146,
+      "pipeline_ms": 662.385937,
+      "skipped": 0
+    },
+    {
+      "model": "deimv2_n",
+      "photo": "09_cucumber_downy_mildew_2024.jpg",
+      "boxes": 15,
+      "inference_ms": 194.140937,
+      "pipeline_ms": 1163.437865,
+      "skipped": 0
+    }
+  ]
+}

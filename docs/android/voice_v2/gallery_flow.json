@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "photos": 24,
+  "newest": "347448097343996.webp",
+  "oldest": "02_potato_late_blight_garden.jpg",
+  "selected_number": 3,
+  "import_only_after_confirmation": true,
+  "stable_numbers": true,
+  "bounds_check": true,
+  "import_bytes_equal": true,
+  "scope": "Real MediaStore + preview + voice dispatcher, acoustic decoder tested separately"
+}

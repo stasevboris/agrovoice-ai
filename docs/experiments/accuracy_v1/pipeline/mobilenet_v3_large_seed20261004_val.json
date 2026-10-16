@@ -1,0 +1,365 @@
+{
+  "model": {
+    "id": "mobilenet_v3_large",
+    "name": "Лист → MobileNet",
+    "asset": "/mnt/f/agrovoice-ai/runs/detect/study10_v2_yolo26n_seed20261004/weights/best.onnx",
+    "sha256": "bd9f72a85ea7290e82212686feb450f4d04ad4f12be06f98afa5d9b714c7ab40",
+    "bytes": 9719842,
+    "family": "two_stage",
+    "side": 416,
+    "seed": 20261004,
+    "detector_seed": 20261004,
+    "dataset": "clean v2 detector + accuracy_v1 inherited crops",
+    "provisional": true,
+    "source": "Paired YOLO26n detector and classifier with the same seed",
+    "input_shape": [
+      1,
+      3,
+      416,
+      416
+    ],
+    "output_shape": [
+      1,
+      34,
+      3549
+    ],
+    "completed_runs": 1,
+    "paired_evaluations": 1,
+    "selection": "provisional GT-crop macro-F1",
+    "classifier": {
+      "id": "mobilenet_v3_large_classifier",
+      "kind": "mobilenet_v3_large",
+      "asset": "/mnt/f/agrovoice-ai/runs/accuracy_v1/mobilenet_v3_large_seed20261004/model.onnx",
+      "sha256": "93313479165096c63dacfe65dab417b793e9fbaaa658546b00595448dde70ba7",
+      "bytes": 16956074,
+      "side": 224,
+      "seed": 20261004,
+      "source": "/mnt/f/agrovoice-ai/runs/accuracy_v1/mobilenet_v3_large_seed20261004",
+      "data_sha256": "8a3531cd1aee00a7092f7d59b832694d470088b344970a418149b7f288ea8001",
+      "dependency": null,
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "output_shape": [
+        1,
+        30
+      ],
+      "normalization": "ImageNet normalization embedded in graph"
+    },
+    "evaluation_pairing": "same seed across detector and classifier, independently repeated training; shared val data"
+  },
+  "split": "val",
+  "images": 349,
+  "partial": false,
+  "disease_detection": {
+    "map50_95": 0.3105632548426126,
+    "map50": 0.4546687437820514
+  },
+  "diagnosis_at_fixed_threshold": {
+    "threshold": 0.25,
+    "matching_iou": 0.5,
+    "gt_leaves": 1309,
+    "matched_leaves": 814,
+    "correctly_diagnosed_gt_leaves": 696,
+    "leaf_localization_recall": 0.6218487394957983,
+    "correct_class_and_box_recall": 0.5317035905271199,
+    "classification_accuracy_on_matched_boxes": 0.855036855036855,
+    "macro_f1": 0.4729094818775207,
+    "classes": [
+      {
+        "id": 0,
+        "tp": 9,
+        "fn": 20,
+        "fp": 12,
+        "precision": 0.42857142857142855,
+        "recall": 0.3103448275862069,
+        "f1": 0.36000000000000004
+      },
+      {
+        "id": 1,
+        "tp": 26,
+        "fn": 19,
+        "fp": 6,
+        "precision": 0.8125,
+        "recall": 0.5777777777777777,
+        "f1": 0.6753246753246752
+      },
+      {
+        "id": 2,
+        "tp": 23,
+        "fn": 22,
+        "fp": 4,
+        "precision": 0.8518518518518519,
+        "recall": 0.5111111111111111,
+        "f1": 0.6388888888888888
+      },
+      {
+        "id": 3,
+        "tp": 22,
+        "fn": 22,
+        "fp": 36,
+        "precision": 0.3793103448275862,
+        "recall": 0.5,
+        "f1": 0.4313725490196078
+      },
+      {
+        "id": 4,
+        "tp": 13,
+        "fn": 23,
+        "fp": 15,
+        "precision": 0.4642857142857143,
+        "recall": 0.3611111111111111,
+        "f1": 0.40625000000000006
+      },
+      {
+        "id": 5,
+        "tp": 87,
+        "fn": 68,
+        "fp": 41,
+        "precision": 0.6796875,
+        "recall": 0.5612903225806452,
+        "f1": 0.6148409893992932
+      },
+      {
+        "id": 6,
+        "tp": 13,
+        "fn": 16,
+        "fp": 13,
+        "precision": 0.5,
+        "recall": 0.4482758620689655,
+        "f1": 0.4727272727272727
+      },
+      {
+        "id": 7,
+        "tp": 4,
+        "fn": 16,
+        "fp": 6,
+        "precision": 0.4,
+        "recall": 0.2,
+        "f1": 0.26666666666666666
+      },
+      {
+        "id": 8,
+        "tp": 34,
+        "fn": 14,
+        "fp": 20,
+        "precision": 0.6296296296296297,
+        "recall": 0.7083333333333334,
+        "f1": 0.6666666666666667
+      },
+      {
+        "id": 9,
+        "tp": 18,
+        "fn": 1,
+        "fp": 5,
+        "precision": 0.782608695652174,
+        "recall": 0.9473684210526315,
+        "f1": 0.8571428571428571
+      },
+      {
+        "id": 10,
+        "tp": 92,
+        "fn": 34,
+        "fp": 36,
+        "precision": 0.71875,
+        "recall": 0.7301587301587301,
+        "f1": 0.7244094488188977
+      },
+      {
+        "id": 11,
+        "tp": 0,
+        "fn": 7,
+        "fp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "id": 12,
+        "tp": 14,
+        "fn": 40,
+        "fp": 10,
+        "precision": 0.5833333333333334,
+        "recall": 0.25925925925925924,
+        "f1": 0.358974358974359
+      },
+      {
+        "id": 13,
+        "tp": 9,
+        "fn": 13,
+        "fp": 16,
+        "precision": 0.36,
+        "recall": 0.4090909090909091,
+        "f1": 0.3829787234042554
+      },
+      {
+        "id": 14,
+        "tp": 65,
+        "fn": 12,
+        "fp": 55,
+        "precision": 0.5416666666666666,
+        "recall": 0.8441558441558441,
+        "f1": 0.6598984771573604
+      },
+      {
+        "id": 15,
+        "tp": 16,
+        "fn": 14,
+        "fp": 14,
+        "precision": 0.5333333333333333,
+        "recall": 0.5333333333333333,
+        "f1": 0.5333333333333333
+      },
+      {
+        "id": 16,
+        "tp": 28,
+        "fn": 20,
+        "fp": 26,
+        "precision": 0.5185185185185185,
+        "recall": 0.5833333333333334,
+        "f1": 0.5490196078431373
+      },
+      {
+        "id": 17,
+        "tp": 60,
+        "fn": 5,
+        "fp": 11,
+        "precision": 0.8450704225352113,
+        "recall": 0.9230769230769231,
+        "f1": 0.8823529411764706
+      },
+      {
+        "id": 18,
+        "tp": 1,
+        "fn": 27,
+        "fp": 5,
+        "precision": 0.16666666666666666,
+        "recall": 0.03571428571428571,
+        "f1": 0.058823529411764705
+      },
+      {
+        "id": 19,
+        "tp": 32,
+        "fn": 44,
+        "fp": 12,
+        "precision": 0.7272727272727273,
+        "recall": 0.42105263157894735,
+        "f1": 0.5333333333333333
+      },
+      {
+        "id": 20,
+        "tp": 20,
+        "fn": 27,
+        "fp": 20,
+        "precision": 0.5,
+        "recall": 0.425531914893617,
+        "f1": 0.4597701149425288
+      },
+      {
+        "id": 21,
+        "tp": 10,
+        "fn": 16,
+        "fp": 17,
+        "precision": 0.37037037037037035,
+        "recall": 0.38461538461538464,
+        "f1": 0.3773584905660377
+      },
+      {
+        "id": 22,
+        "tp": 20,
+        "fn": 8,
+        "fp": 12,
+        "precision": 0.625,
+        "recall": 0.7142857142857143,
+        "f1": 0.6666666666666666
+      },
+      {
+        "id": 23,
+        "tp": 5,
+        "fn": 8,
+        "fp": 15,
+        "precision": 0.25,
+        "recall": 0.38461538461538464,
+        "f1": 0.30303030303030304
+      },
+      {
+        "id": 24,
+        "tp": 28,
+        "fn": 53,
+        "fp": 53,
+        "precision": 0.345679012345679,
+        "recall": 0.345679012345679,
+        "f1": 0.345679012345679
+      },
+      {
+        "id": 25,
+        "tp": 14,
+        "fn": 40,
+        "fp": 7,
+        "precision": 0.6666666666666666,
+        "recall": 0.25925925925925924,
+        "f1": 0.37333333333333335
+      },
+      {
+        "id": 26,
+        "tp": 0,
+        "fn": 1,
+        "fp": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      {
+        "id": 27,
+        "tp": 22,
+        "fn": 8,
+        "fp": 24,
+        "precision": 0.4782608695652174,
+        "recall": 0.7333333333333333,
+        "f1": 0.5789473684210527
+      },
+      {
+        "id": 28,
+        "tp": 11,
+        "fn": 15,
+        "fp": 4,
+        "precision": 0.7333333333333333,
+        "recall": 0.4230769230769231,
+        "f1": 0.5365853658536585
+      },
+      {
+        "id": 29,
+        "tp": 0,
+        "fn": 0,
+        "fp": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    ],
+    "matching": "Score-ordered class-agnostic IoU matching, one prediction per GT; unmatched leaves penalized"
+  },
+  "proposed_leaves": 2495,
+  "skipped_leaves": 220,
+  "desktop_pipeline_ms": {
+    "median": 39.51838699867949,
+    "p95": 156.75505719955245
+  },
+  "note": "Shared desktop ONNX protocol. Desktop timing is not Android timing. Seed03 prototype is not ten-run result.",
+  "protocol": {
+    "detector_nms_iou": 0.7,
+    "proposal_threshold": 0.1,
+    "max_classified": 32,
+    "max_detections": 300,
+    "field_matching_iou": 0.5,
+    "confidence_for_f1": 0.25,
+    "score": "detector score * classifier softmax for two-stage",
+    "preprocessing": "cv2 detector letterbox; PIL square crop for classifier, unresized original photo",
+    "original_study_comparability": "Original Ultralytics multi-label evaluator differs; compare all modes under this shared protocol"
+  },
+  "manifest_sha256": "7db7e426315808657a975da3809d4201c84e3c828e373ab9318d5d06ef14a4f4",
+  "code_sha256": "84d1b8cb13094aac55baaf23ae81f252e8f10828f3662415254a5dcc82a0127a"
+}

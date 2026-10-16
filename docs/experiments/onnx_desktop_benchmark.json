@@ -1,0 +1,131 @@
+{
+  "hardware": "Ryzen 7 5700X, 32 GB DDR4 2666",
+  "device": "desktop CPU",
+  "limitation": "No phone measurements. Prepared tensors; excludes camera, decoding, resize and rendering.",
+  "memory_note": "Absolute worker process memory includes Python/OpenCV/ONNX Runtime; this is not Android app RAM.",
+  "models": [
+    {
+      "model": "F:\\agrovoice-ai\\runs\\detect\\plantdoc_clean_v1_yolo11n_416\\weights\\best.onnx",
+      "model_bytes": 10530117,
+      "input_shape": [
+        1,
+        3,
+        416,
+        416
+      ],
+      "output_shape": [
+        1,
+        33,
+        3549
+      ],
+      "onnxruntime": "1.26.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "threads": 4,
+      "warmup": 20,
+      "iterations": 100,
+      "inference": {
+        "median_ms": 8.749399989028461,
+        "p95_ms": 10.212970011343714
+      },
+      "inference_and_postprocess": {
+        "median_ms": 9.128600009717047,
+        "p95_ms": 10.77069002058124
+      },
+      "postprocess": {
+        "confidence": 0.25,
+        "iou": 0.7,
+        "class_aware": true,
+        "max_detections": 300
+      },
+      "memory": {
+        "baseline_process_rss_bytes": 59555840,
+        "final_process_rss_bytes": 131080192,
+        "peak_process_rss_bytes": 147140608,
+        "peak_minus_imported_runtime_bytes": 87584768
+      },
+      "label": "yolo11n_416"
+    },
+    {
+      "model": "F:\\agrovoice-ai\\runs\\detect\\plantdoc_clean_v1_yolo26n_416\\weights\\best.onnx",
+      "model_bytes": 9719021,
+      "input_shape": [
+        1,
+        3,
+        416,
+        416
+      ],
+      "output_shape": [
+        1,
+        33,
+        3549
+      ],
+      "onnxruntime": "1.26.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "threads": 4,
+      "warmup": 20,
+      "iterations": 100,
+      "inference": {
+        "median_ms": 6.956050012377091,
+        "p95_ms": 7.313039980363101
+      },
+      "inference_and_postprocess": {
+        "median_ms": 7.369250015472062,
+        "p95_ms": 7.764180006051902
+      },
+      "postprocess": {
+        "confidence": 0.25,
+        "iou": 0.7,
+        "class_aware": true,
+        "max_detections": 300
+      },
+      "memory": {
+        "baseline_process_rss_bytes": 59064320,
+        "final_process_rss_bytes": 131698688,
+        "peak_process_rss_bytes": 146501632,
+        "peak_minus_imported_runtime_bytes": 87437312
+      },
+      "label": "yolo26n_416"
+    },
+    {
+      "model": "F:\\agrovoice-ai\\runs\\detect\\plantdoc_clean_v1_yolo26n_416\\weights\\nms_free\\best.onnx",
+      "model_bytes": 9730749,
+      "input_shape": [
+        1,
+        3,
+        416,
+        416
+      ],
+      "output_shape": [
+        1,
+        300,
+        6
+      ],
+      "onnxruntime": "1.26.0",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "threads": 4,
+      "warmup": 20,
+      "iterations": 100,
+      "inference": {
+        "median_ms": 7.38794999779202,
+        "p95_ms": 7.968584998161532
+      },
+      "inference_and_postprocess": {
+        "median_ms": 7.434099985403009,
+        "p95_ms": 8.006344994646497
+      },
+      "postprocess": {
+        "confidence": 0.25,
+        "iou": 0.7,
+        "class_aware": true,
+        "max_detections": 300
+      },
+      "memory": {
+        "baseline_process_rss_bytes": 59367424,
+        "final_process_rss_bytes": 132194304,
+        "peak_process_rss_bytes": 146284544,
+        "peak_minus_imported_runtime_bytes": 86917120
+      },
+      "label": "yolo26n_416_nms_free"
+    }
+  ]
+}
