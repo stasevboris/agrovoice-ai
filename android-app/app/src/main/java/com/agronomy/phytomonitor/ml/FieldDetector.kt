@@ -52,16 +52,31 @@ class FieldDetector(private val context: Context) : Closeable {
     private val sessions=mutableMapOf<String,OrtSession>()
     private var currentModel: String? = null
 
+    private val modelFolder by lazy { File(context.filesDir,"models").apply {mkdirs();removeStaleCopies(this)} }
+
+    /** One copy per graph file: several modes share yolo26n.onnx, so the name is the asset digest, not the mode id. */
+    private fun modelFile(asset: String, digest: String): File {
+        val file=File(modelFolder,"$digest.onnx")
+        val verified=File(modelFolder,"$digest.verified")
+        if(file.isFile && verified.isFile && verified.readText()==file.length().toString())return file
+        val part=File(modelFolder,"$digest.part")
+        context.assets.open(asset).use {source -> part.outputStream().use {source.copyTo(it)}}
+        require(sha256(part)==digest){"Повреждён файл модели"}
+        file.delete()
+        check(part.renameTo(file)){"Не удалось сохранить модель"}
+        verified.writeText(file.length().toString())
+        return file
+    }
+
+    /** Deletes copies left by older app versions (id-prefixed names, superseded digests). */
+    private fun removeStaleCopies(folder: File) {
+        val wanted=models.flatMap {listOfNotNull(it.sha256,it.classifier?.sha256)}.toSet()
+        folder.listFiles()?.filter {it.nameWithoutExtension !in wanted}?.forEach {it.delete()}
+    }
+
     private fun graph(id: String, asset: String, digest: String, side: Int, shape: (LongArray)->Boolean): OrtSession {
         sessions[id]?.let {return it}
-        val folder=File(context.filesDir,"models").apply {mkdirs()}
-        val file=File(folder,"${id}_${digest.take(12)}.onnx")
-        if(!file.isFile || sha256(file)!=digest){
-            val part=File(folder,"${file.name}.part")
-            context.assets.open(asset).use {source -> part.outputStream().use {source.copyTo(it)}}
-            require(sha256(part)==digest){"Повреждён файл модели"}
-            check(part.renameTo(file)){"Не удалось сохранить модель"}
-        }
+        val file=modelFile(asset,digest)
         val loaded=OrtSession.SessionOptions().use {
             it.setIntraOpNumThreads(4);it.setInterOpNumThreads(1)
             environment.createSession(file.absolutePath,it)

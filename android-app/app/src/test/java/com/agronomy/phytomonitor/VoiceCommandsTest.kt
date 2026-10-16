@@ -37,7 +37,7 @@ class VoiceCommandsTest {
         assertEquals("all",VoiceCommands.parse("все культуры")!!.value)
     }
     @Test fun fieldToolsAreExplicitAndRejectedOutsideMain() {
-        val phrases=listOf("добавь заметку","открой журнал","сохрани осмотр","результат верный","результат неверный","не уверен","сравни модели","прочитай результат","скрой рамки","покажи рамки")
+        val phrases=listOf("добавь заметку","открой журнал","сохрани осмотр","результат верный","результат неверный","не уверен","сравни модели","прочитай результат","спрячь рамки","покажи рамки")
         phrases.forEach {assertNotNull(it,VoiceCommands.parseForScreen(it,"main"));assertNull(it,VoiceCommands.parseForScreen(it,"camera"));assertNull(it,VoiceCommands.parseForScreen(it,"gallery"))}
         listOf("не сохраняй осмотр","не открывай журнал","не сравнивай модели","я думаю что результат верный").forEach {assertNull(it,VoiceCommands.parse(it))}
     }

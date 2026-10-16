@@ -58,7 +58,7 @@ class InspectionToolsTest {
     }
     @Test fun comparisonKeepsCurrentPhotoAndSettingsAndReturnsAllRealModes() {
         idle();val model=compose.activity.fieldModel;val photo=model.photo;val chosen=model.selectedModel;val threshold=model.threshold
-        say("скрой рамки");assertFalse(model.showBoxes);say("покажи рамки");assertTrue(model.showBoxes)
+        say("спрячь рамки");assertFalse(model.showBoxes);say("покажи рамки");assertTrue(model.showBoxes)
         say("сравни модели");compose.waitUntil(120000){!model.busy && model.comparison.size==model.detector.models.size}
         assertEquals(photo,model.photo);assertEquals(chosen,model.selectedModel);assertEquals(threshold,model.threshold)
         assertEquals(model.detector.models.map {it.id},model.comparison.map {it.second.model.id})

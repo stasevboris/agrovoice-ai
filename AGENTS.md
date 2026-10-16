@@ -53,7 +53,7 @@
 ## 5. Команды (проверены 16.10.2026 на Windows этого ПК)
 
 ```powershell
-# Python-тесты (29 шт., ~1 с)
+# Python-тесты (30 шт., ~1 с)
 .\ml-pipeline\venv\Scripts\python.exe -X utf8 -m unittest discover -s ml-pipeline\tests
 
 # Android: JVM-тесты и сборка (JDK 25 в PATH, SDK в local.properties)

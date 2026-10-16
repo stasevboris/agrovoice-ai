@@ -21,6 +21,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     private val worker=Executors.newSingleThreadExecutor()
     private val main=Handler(Looper.getMainLooper())
     private var cleared=false
+    private var unsavedReport: File?=null // touched only on the worker thread
     private val journal=InspectionJournal(application)
     var noteDraft by mutableStateOf(""); private set
     var review by mutableStateOf("unrated"); private set
@@ -66,9 +67,11 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         preferences.edit().putString("crop",value).apply()
         if(bitmap!=null && analyzePhoto) analyze()
     }
+    /** Keeps the current result on screen while the slider moves; analyze() replaces it when the drag ends. */
     fun changeThreshold(value: Float) {
         if(busy)return
-        threshold=value; result=null;reportName=null;review="unrated";comparison=emptyList()
+        threshold=value
+        comparison=emptyList()
         preferences.edit().putFloat("threshold",value).apply()
     }
 
@@ -121,9 +124,18 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             try {
                 val detection=detector.detect(source,model,cropSnapshot,thresholdSnapshot)
                 val report=PhotoFiles.saveResult(getApplication(),file,source,detection,detector,cropSnapshot,thresholdSnapshot)
+                replaceUnsavedReport(report)
                 main.post {if(!cleared){result=detection;reportName=report.name;busy=false}}
             }catch(error:Exception){postFailure(error)}
         }
+    }
+    /**
+     * Only a report saved to the journal is kept. Each new analysis deletes the previous unsaved report,
+     * so results/ no longer grows with every re-check, model switch or app start. Runs on the worker thread.
+     */
+    private fun replaceUnsavedReport(report: File?) {
+        unsavedReport?.delete()
+        unsavedReport=report
     }
     fun editNote(text: String){noteDraft=text.take(4000)}
     fun editPlot(text: String){plotName=text.take(120);preferences.edit().putString("plot",plotName).apply()}
@@ -135,7 +147,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         val note=noteDraft;val rating=review;val plot=plotName
         busy=true
         worker.execute {try {
-            journal.save(report,note,rating,plot);val entries=journal.list()
+            journal.save(report,note,rating,plot)
+            if(unsavedReport?.name==report.name)unsavedReport=null
+            val entries=journal.list()
             main.post {if(!cleared){journalEntries=entries;busy=false;message="Осмотр сохранён в журнале"}}
         }catch(error: Exception){postFailure(error)}}
     }
@@ -156,11 +170,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         val filter=crop;val score=threshold
         busy=true;message=null;comparison=emptyList()
         worker.execute {try {
-            val rows=detector.models.map {m ->
-                val detected=detector.detect(source,m,filter,score)
-                PhotoFiles.saveResult(getApplication(),file,source,detected,detector,filter,score)
-                m.name to detected
-            }
+            // Comparison results are shown on screen only; they are not journal records.
+            val rows=detector.models.map {m -> m.name to detector.detect(source,m,filter,score)}
             main.post {if(!cleared){comparison=rows;busy=false;message="Модели проверены на одном фото при одинаковом пороге"}}
         }catch(error: Exception){postFailure(error)}}
     }
@@ -172,7 +183,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     private fun postFailure(error:Exception){main.post {if(!cleared){busy=false;message=error.message ?: "Не удалось обработать фото"}}}
     override fun onCleared(){
         cleared=true
-        worker.execute {detector.close()}
+        worker.execute {replaceUnsavedReport(null);detector.close()}
         worker.shutdown()
         super.onCleared()
     }

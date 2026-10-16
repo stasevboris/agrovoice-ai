@@ -13,8 +13,8 @@ android {
         applicationId = "com.agronomy.phytomonitor"
         minSdk = 26
         targetSdk = 37
-        versionCode = 16
-        versionName = "0.16-model-lab"
+        versionCode = 17
+        versionName = "0.17-model-lab"
 
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")

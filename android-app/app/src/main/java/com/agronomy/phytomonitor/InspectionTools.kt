@@ -12,6 +12,19 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+/** «1 рамка», «3 рамки», «5 рамок», «11 рамок», «21 рамка». */
+internal fun boxesLabel(count: Int): String {
+    val lastTwo = count % 100
+    val last = count % 10
+    val word = when {
+        lastTwo in 11..14 -> "рамок"
+        last == 1 -> "рамка"
+        last in 2..4 -> "рамки"
+        else -> "рамок"
+    }
+    return "$count $word"
+}
+
 @Composable
 internal fun InspectionTools(model: FieldDemoViewModel,onNote: ()->Unit,onSpeak: ()->Unit,speaking: Boolean,speakerStatus: String) {
     Card(Modifier.fillMaxWidth()) {
@@ -38,7 +51,7 @@ internal fun InspectionTools(model: FieldDemoViewModel,onNote: ()->Unit,onSpeak:
                 Switch(checked=model.showBoxes,onCheckedChange={model.showBoxes=it})
             }
             model.comparison.forEach {(name,result)->
-                Text("$name · ${result.boxes.size} рамок · ${result.pipelineMs.toInt()} мс")
+                Text("$name · ${boxesLabel(result.boxes.size)} · ${result.pipelineMs.toInt()} мс")
                 Text(result.boxes.take(3).joinToString("; "){model.detector.labels[it.classId]}.ifBlank {"Нет уверенного результата"},style=MaterialTheme.typography.bodySmall)
             }
             if(model.comparison.isNotEmpty())Text("Один снимок и одинаковые настройки. Совпадение моделей не доказывает диагноз; время — один запуск, не эталон скорости.",style=MaterialTheme.typography.bodySmall)
@@ -70,8 +83,9 @@ internal fun InspectionDialogs(model: FieldDemoViewModel,onDictation: ()->Unit,o
             if(model.journalEntries.isEmpty())Text("Пока нет сохранённых осмотров. Дождись анализа и нажми «Сохранить осмотр».")
             model.visibleInspections.forEach {entry->
                 val review=when(entry.review){"correct"->"Верно";"incorrect"->"Неверно";"uncertain"->"Не уверен";else->"Без оценки"}
-                Text("${SimpleDateFormat("dd.MM HH:mm",Locale.getDefault()).format(Date(entry.created))} · ${entry.model}")
-                Text("${entry.detections} рамок · $review")
+                val modelName=model.detector.models.firstOrNull {it.id==entry.model}?.name ?: entry.model
+                Text("${SimpleDateFormat("dd.MM HH:mm",Locale.getDefault()).format(Date(entry.created))} · $modelName")
+                Text("${boxesLabel(entry.detections)} · $review")
                 if(entry.plot.isNotBlank())Text("Участок: ${entry.plot}")
                 if(entry.note.isNotBlank())Text(entry.note)
                 TextButton(onClick={model.journalOpen=false;model.openFile(java.io.File(entry.photo))}){Text("Открыть снимок")}

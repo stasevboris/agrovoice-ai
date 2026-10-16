@@ -19,6 +19,8 @@ import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -356,9 +358,15 @@ private fun FieldDemoScreen(model: FieldDemoViewModel, modifier: Modifier,
 private fun VoiceCommandPanel(voice: OfflineVoiceController, flow: PhotoFlowViewModel, onVoice: ()->Unit, onContinuous: (Boolean)->Unit, context: String="main") {
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(10.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
-            Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically) {
+            // The whole row toggles: a large target for gloves, and TalkBack reads the label with the switch.
+            Row(
+                Modifier.fillMaxWidth()
+                    .toggleable(value=flow.continuousVoice,role=Role.Switch,onValueChange=onContinuous)
+                    .testTag("continuous_voice"),
+                verticalAlignment=Alignment.CenterVertically
+            ) {
                 Text("Постоянно слушать",modifier=Modifier.weight(1f),style=MaterialTheme.typography.bodyMedium)
-                Switch(checked=flow.continuousVoice,onCheckedChange=onContinuous,modifier=Modifier.testTag("continuous_voice"))
+                Switch(checked=flow.continuousVoice,onCheckedChange=null)
             }
             Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp),verticalAlignment=Alignment.CenterVertically) {
                 Button(onClick=onVoice,modifier=Modifier.weight(1f)) {
