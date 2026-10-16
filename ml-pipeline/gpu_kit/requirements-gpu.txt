@@ -1,0 +1,7 @@
+# PyTorch is installed separately from the CUDA index (see setup scripts).
+ultralytics==8.4.164
+onnx>=1.17
+onnxslim>=0.1.71
+onnxruntime>=1.20
+pyyaml
+psutil
