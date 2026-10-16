@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "dataset_id": "agrovoice-leaf-v3",
+  "status": "review_pending",
+  "purpose": "Human-reviewed acceptance decisions for the future Leaf v3 manifest. This registry is not a training manifest.",
+  "frozen_base": {
+    "dataset_id": "dataset_clean_v2",
+    "manifest_sha256": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+    "policy": "Never edit or relabel the frozen base in place. Any inherited record used by Leaf v3 must have its own provenance and acceptance decision; historical validation/test records are not eligible for new training."
+  },
+  "decision_policy": {
+    "allowed_decisions": [
+      "pending",
+      "accepted",
+      "excluded",
+      "quarantined"
+    ],
+    "accepted_requires": [
+      "record_id",
+      "origin_kind",
+      "source_id",
+      "source_revision",
+      "source_member",
+      "source_payload_path",
+      "source_sha256",
+      "license_reference",
+      "source_class",
+      "annotation_kind",
+      "annotation_sha256",
+      "reviewed_annotation_path",
+      "geometry_status",
+      "semantics_status",
+      "group_id",
+      "split_eligibility",
+      "class_ids",
+      "decision_reason",
+      "reviewer_id",
+      "reviewed_utc",
+      "evidence_references"
+    ],
+    "required_accepted_values": {
+      "geometry_status": "whole_visible_leaf_accepted",
+      "semantics_status": "source_semantics_accepted"
+    },
+    "conditional_inherited_train_record_fields": ["legacy_record_ref"],
+    "source_payload_roots": {"new_source_record": "ml-pipeline/source_candidates/", "inherited_train_record": "ml-pipeline/dataset_clean_v2/images/train/"},
+    "conditional_new_source_record_fields": ["candidate_source", "candidate_id", "group_review_status"],
+    "pinned_group_constraints_sha256": "69d173b12dc806d3ca41921612c2ad2b216c798a42f641f095646c004e9dba04",
+    "legacy_class_29_migration": "The registry must contain exactly one decision per frozen clean_v2 manifest record containing legacy class ID 29. Each decision must be migrated, excluded, quarantined, or pending; a locked registry may contain no pending decisions. A migrated record must join to one accepted inherited_train_record with matching frozen image/label hashes, group, and reviewed new class IDs.",
+    "prohibitions": [
+      "A source-class proposal, visual triage, geometry audit, or no-match result is not acceptance.",
+      "Do not infer a disease, healthy state, or crop from appearance alone when the source label is unknown or contradictory.",
+      "Do not treat a candidate overlap/group-closure disposition as a final split assignment.",
+      "Do not accept a source copy as a new independent example when its decoded image is already in the frozen base.",
+      "Do not migrate legacy cucumber class 29 to healthy or a disease without a per-record, source-backed decision."
+    ]
+  },
+  "source_revisions": {"PlantVillage": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a", "OLID": "OLID-I-1.1.0", "CucumberZenodo": "Zenodo-16816441"},
+  "source_licenses": {"PlantVillage": "CC-BY-SA-3.0", "OLID": "CC-BY-4.0", "CucumberZenodo": "CC-BY-4.0"},
+  "source_audit_references": [
+    "candidate_overlap_full_r3/status.json",
+    "group_closure_r1/status.json",
+    "annotation_review_queue_r2/report.json",
+    "source_class_mapping.draft.json",
+    "preflight_pending_data_r3.json"
+  ],
+  "legacy_migrations": [],
+  "records": []
+}

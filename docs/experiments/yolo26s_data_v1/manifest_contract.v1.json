@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "dataset_id": "agrovoice-leaf-v3",
+  "status": "contract_only_not_training_ready",
+  "purpose": "Fail-closed contract for future accepted-record decisions and a future immutable prepared dataset manifest. This file contains no candidate acceptance or split assignment.",
+  "required_files": {
+    "plan": "plan.json",
+    "plan_lock": "protocol_lock.json",
+    "class_mapping": "class_mapping.v1.json",
+    "acceptance_registry": "acceptance_registry.v1.json",
+    "dataset_manifest": "<plan.dataset_directory>/manifest.json",
+    "dataset_report": "<plan.dataset_directory>/report.json",
+    "dataset_classes": "<plan.dataset_directory>/classes.json",
+    "dataset_yaml": "<plan.dataset_directory>/data.yaml"
+  },
+  "allowed_splits": ["train", "val", "test"],
+  "manifest_format": {
+    "root_fields": ["schema_version", "dataset_id", "class_mapping_sha256", "acceptance_registry_sha256", "manifest_contract_sha256", "records"],
+    "record_fields": ["record_id", "acceptance_record_id", "origin_kind", "source_id", "source_revision", "source_member", "source_payload_path", "source_sha256", "source_class", "annotation_sha256", "class_ids", "group_id", "split", "filename", "prepared_sha256", "label_sha256"],
+    "new_source_record_extra_fields": ["candidate_source", "candidate_id", "group_review_status"],
+    "origin_kinds": ["inherited_train_record", "new_source_record"],
+    "split_policy": "Every record must have exactly one of train, val, or test. No implicit val_aux or unknown split is allowed in the training manifest."
+  },
+  "acceptance_registry_fields": ["schema_version", "dataset_id", "status", "frozen_base", "legacy_migrations", "records"],
+  "acceptance_record_fields": ["record_id", "origin_kind", "source_id", "source_revision", "source_member", "source_payload_path", "source_sha256", "license_reference", "source_class", "annotation_kind", "annotation_sha256", "reviewed_annotation_path", "geometry_status", "semantics_status", "group_id", "split_eligibility", "decision", "class_ids", "decision_reason", "reviewer_id", "reviewed_utc", "evidence_references"],
+  "inherited_record_extra_fields": ["legacy_record_ref"],
+  "source_payload_path_policy": "The referenced original bytes must be staged under ml-pipeline/source_candidates for external sources or equal the frozen train image path for inherited records; resolved paths and SHA-256 are verified by preflight.",
+  "new_source_record_extra_fields": ["candidate_source", "candidate_id", "group_review_status"],
+  "candidate_group_policy": {
+    "group_review_status": "Must be source_group_reviewed before acceptance; registry and manifest group_id must equal the pinned group-closure component_id.",
+    "training_only_if_other_checks_pass_never_new_independent_holdout": "Only train split is allowed.",
+    "historical_holdout_family_never_train_or_new_independent_test": "Only val may be used, and it must be reported as historically linked rather than independent; never train/test.",
+    "quarantine_source_label_conflict_component": "Never accepted under this contract revision.",
+    "historical_exact_copy_not_a_new_independent_example": "Never accepted as a new-source record; retain at most the separately reviewed frozen-base record.",
+    "internal_match_pending_dedup_group_and_label_review": "Never accepted until a later versioned review ledger resolves the duplicate group."
+  },
+  "directory_integrity_policy": "Every file directly present in a train/val/test image or label directory must correspond to exactly one manifest row; unknown files and subdirectories block the gate. data.yaml split paths must point exactly to images/<split>.",
+  "historical_quarantine": "No inherited record in the pinned 71-record legacy visual quarantine or nine inherited cross-split components may be used in the new base pending separate object-level review and a new contract revision.",
+  "legacy_migration_fields": ["legacy_record_ref", "legacy_class_id", "frozen_source_sha256", "frozen_annotation_sha256", "group_id", "decision", "assigned_split", "acceptance_record_id", "final_class_ids", "reviewed_annotation_sha256", "decision_reason", "reviewer_id", "reviewed_utc", "evidence_references"],
+  "legacy_class_29_migration": {
+    "coverage": "Exactly one registry decision per frozen clean_v2 manifest record whose label contains class ID 29.",
+    "allowed_decisions": ["pending", "migrate", "exclude", "quarantine"],
+    "locked_policy": "A locked acceptance registry may contain no pending legacy migration decisions.",
+    "migration_join": "A migrate decision must reference one accepted inherited_train_record with matching frozen image SHA, annotation SHA, and group ID; its final class_ids must not contain legacy ID 29.",
+    "exclude_policy": "Excluded or quarantined legacy records must not appear in the new training manifest."
+  },
+  "reviewed_annotation_artifact": {
+    "path_root": "docs/experiments/yolo26s_data_v1/accepted_annotations",
+    "fields": ["schema_version", "record_id", "source_sha256", "class_ids", "boxes_xywh", "geometry_status", "semantics_status", "reviewer_id", "reviewed_utc", "evidence_references"],
+    "boxes_xywh": "List of [class_id,cx,cy,width,height] normalized to the corrected source image after EXIF orientation. These rows must equal the prepared YOLO label rows within the declared tolerance.",
+    "tolerance": 0.00001
+  },
+  "accepted_record_requirements": {
+    "decision": "accepted",
+    "geometry_status": "whole_visible_leaf_accepted",
+    "semantics_status": "source_semantics_accepted",
+    "split_eligibility": "Must explicitly contain the assigned manifest split.",
+    "identity": "The registry record ID must be unique and the manifest's source hashes, class ID, and group ID must match it exactly.",
+    "review": "Reviewer, timestamp, rationale, annotation provenance, and evidence references are mandatory."
+  },
+  "class_mapping_policy": {
+    "legacy_namespace": "IDs 0-28 and names must exactly match frozen dataset_clean_v2/classes.json positions 0-28.",
+    "legacy_cucumber_id_29": "Forbidden in the new head. Each old cucumber unknown record requires source-backed migration or explicit exclusion; no automatic healthy inference.",
+    "new_class_ids": "Append only, contiguous, unique IDs after 28; each entry must declare source_semantics_accepted, evidence_references, minimum_train_groups, minimum_val_groups and minimum_test_groups before the plan is locked.",
+    "yaml": "data.yaml names must exactly match the ordered canonical class mapping; mapping/object keys must be contiguous IDs starting at zero."
+  },
+  "provenance_and_split_policy": {
+    "source_hash": "SHA-256 of immutable original image bytes or explicitly documented source payload.",
+    "annotation_hash": "SHA-256 of the source annotation or accepted reviewed annotation artifact.",
+    "prepared_hashes": "SHA-256 of the prepared image and YOLO label file.",
+    "groups": "Known related views, source-identified plant/session groups, exact duplicates, and accepted near-duplicate constraints stay within one split. Unknown physical identity must remain explicitly recorded; absence of a match is not proof of independence.",
+    "historical_holdout": "No record linked to a historical val/test family may enter new train or be claimed as a new independent test.",
+    "conflicts": "Conflicting publisher-label groups remain quarantined until source evidence resolves them; no diagnosis is inferred from pixels by the validator."
+  },
+  "review_evidence_expected_candidate_records": 55992,
+  "review_evidence_expected_counts": {"annotation_review_queue": 55992, "candidate_split_constraints": 55992, "candidate_dispositions": 55992, "plantvillage_previous29_provenance": 38694, "plantvillage_extra9_provenance": 15611, "olid_source_provenance": 1047, "cucumber_source_provenance": 640},
+  "source_revisions": {"PlantVillage": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a", "OLID": "OLID-I-1.1.0", "CucumberZenodo": "Zenodo-16816441"},
+  "source_licenses": {"PlantVillage": "CC-BY-SA-3.0", "OLID": "CC-BY-4.0", "CucumberZenodo": "CC-BY-4.0"},
+  "review_evidence": [
+    {"id": "annotation_review_queue", "path": "docs/experiments/yolo26s_data_v1/annotation_review_queue_r2/queue.jsonl", "sha256": "6b43098fde77978b35ab8a6ce20dc04797f39dd312cc37c417ba4b907c6e86c3"},
+    {"id": "candidate_split_constraints", "path": "docs/experiments/yolo26s_data_v1/group_closure_r1/candidate_split_constraints.jsonl", "sha256": "69d173b12dc806d3ca41921612c2ad2b216c798a42f641f095646c004e9dba04"},
+    {"id": "candidate_dispositions", "path": "docs/experiments/yolo26s_data_v1/candidate_overlap_full_r3/candidate_disposition.jsonl", "sha256": "2d897578a84431bf0013723effa1b2875eac13d4b084f0d3b6086ffbdf47e23b"},
+    {"id": "plantvillage_previous29_provenance", "path": "docs/experiments/yolo26s_data_v1/plantvillage_full_geometry_r1/records.jsonl", "sha256": "de9c454e495ed86e06be6478eb3511c8da3016a139cc46c0db7b3a1cf4b65ff8"},
+    {"id": "plantvillage_extra9_provenance", "path": "docs/experiments/yolo26s_data_v1/plantvillage_extra_conditions_r1/records.jsonl", "sha256": "aa904c12cf8a111262b75e9bd97bd163826ffef7ec1b1f19f0b2755efefb8c1a"},
+    {"id": "olid_source_provenance", "path": "docs/experiments/yolo26s_data_v1/olid_original_geometry_r3/records.jsonl", "sha256": "643dd1e54e30c4f987156fa19344873ee94d3636a87bdcefd832b9b596429372"},
+    {"id": "cucumber_source_provenance", "path": "docs/experiments/yolo26s_data_v1/cucumber_review/inventory.json", "sha256": "47700e9ce7609f7ac519f4bf76a082b4b73a35c99b2aa478e9ba6c0605445ef9"},
+    {"id": "legacy_visual_quarantine", "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/visual_adjudication.json", "sha256": "22c963fcc42c88b534bcdd0e61febd3c1c09b045af7e83e4741ff7772c09e8ed"},
+    {"id": "inherited_split_conflicts", "path": "docs/experiments/yolo26s_data_v1/group_closure_r1/inherited_split_conflicts.json", "sha256": "14bdf9fa0efcc1defe13180c139b066efc5a7c7dc756023d75dba200b78d4694"}
+  ],
+  "review_evidence_policy": "These pinned review ledgers are constraints only, never acceptance decisions. A changed audit requires a new contract revision and hash lock.",
+  "protocol_lock_fields": ["status", "plan_sha256", "dataset_fingerprint", "dataset_report_sha256", "frozen_base_manifest_sha256", "class_mapping_sha256", "acceptance_registry_sha256", "manifest_contract_sha256", "review_evidence_sha256", "test_manifest_sha256", "test_sealed_utc", "protected_sources"],
+  "report_fields": ["status", "fingerprint", "non_independent_validation_group_ids", "physical_independence_status"],
+  "physical_independence_status_values": ["source_verified", "approximate_group_constraints_only", "not_established"],
+  "test_manifest_digest": "SHA-256 of UTF-8 canonical JSON for the test records sorted by record_id, using sorted object keys and compact separators.",
+  "non_goals": [
+    "This contract does not accept any of the 55,992 candidate records.",
+    "This contract does not build, train, export, quantize, or package a model.",
+    "This contract does not make the historical clean_v2 test an independent field test.",
+    "This contract does not certify agronomic diagnosis correctness or field generalization."
+  ]
+}

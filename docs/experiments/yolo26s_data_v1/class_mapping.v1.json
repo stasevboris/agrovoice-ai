@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "dataset_id": "agrovoice-leaf-v3",
+  "status": "draft",
+  "base_dataset_id": "dataset_clean_v2",
+  "base_dataset_manifest_sha256": "7306a09a94cfccb1854707d86e45de654a403145dffc59d92d38cbc5b694d5bc",
+  "base_classes_source": "ml-pipeline/dataset_clean_v2/classes.json",
+  "policy": "IDs 0-28 and names are preserved as the legacy namespace only. This mapping does not accept any candidate image or claim that new-source labels are semantically equivalent.",
+  "legacy_classes": [
+    {"id": 0, "name": "Apple Scab Leaf", "status": "preserved_legacy_id_name"},
+    {"id": 1, "name": "Apple leaf", "status": "preserved_legacy_id_name"},
+    {"id": 2, "name": "Apple rust leaf", "status": "preserved_legacy_id_name"},
+    {"id": 3, "name": "Bell_pepper leaf", "status": "preserved_legacy_id_name"},
+    {"id": 4, "name": "Bell_pepper leaf spot", "status": "preserved_legacy_id_name"},
+    {"id": 5, "name": "Blueberry leaf", "status": "preserved_legacy_id_name"},
+    {"id": 6, "name": "Cherry leaf", "status": "preserved_legacy_id_name"},
+    {"id": 7, "name": "Corn Gray leaf spot", "status": "preserved_legacy_id_name"},
+    {"id": 8, "name": "Corn leaf blight", "status": "preserved_legacy_id_name"},
+    {"id": 9, "name": "Corn rust leaf", "status": "preserved_legacy_id_name"},
+    {"id": 10, "name": "Peach leaf", "status": "preserved_legacy_id_name"},
+    {"id": 11, "name": "Potato leaf", "status": "preserved_legacy_id_name"},
+    {"id": 12, "name": "Potato leaf early blight", "status": "preserved_legacy_id_name"},
+    {"id": 13, "name": "Potato leaf late blight", "status": "preserved_legacy_id_name"},
+    {"id": 14, "name": "Raspberry leaf", "status": "preserved_legacy_id_name"},
+    {"id": 15, "name": "Soyabean leaf", "status": "preserved_legacy_id_name"},
+    {"id": 16, "name": "Squash Powdery mildew leaf", "status": "preserved_legacy_id_name"},
+    {"id": 17, "name": "Strawberry leaf", "status": "preserved_legacy_id_name"},
+    {"id": 18, "name": "Tomato Early blight leaf", "status": "preserved_legacy_id_name"},
+    {"id": 19, "name": "Tomato Septoria leaf spot", "status": "preserved_legacy_id_name"},
+    {"id": 20, "name": "Tomato leaf", "status": "preserved_legacy_id_name"},
+    {"id": 21, "name": "Tomato leaf bacterial spot", "status": "preserved_legacy_id_name"},
+    {"id": 22, "name": "Tomato leaf late blight", "status": "preserved_legacy_id_name"},
+    {"id": 23, "name": "Tomato leaf mosaic virus", "status": "preserved_legacy_id_name"},
+    {"id": 24, "name": "Tomato leaf yellow virus", "status": "preserved_legacy_id_name"},
+    {"id": 25, "name": "Tomato mold leaf", "status": "preserved_legacy_id_name"},
+    {"id": 26, "name": "Tomato two spotted spider mites leaf", "status": "preserved_legacy_id_name"},
+    {"id": 27, "name": "grape leaf", "status": "preserved_legacy_id_name"},
+    {"id": 28, "name": "grape leaf black rot", "status": "preserved_legacy_id_name"}
+  ],
+  "legacy_classes_not_carried_into_new_head": [
+    {
+      "legacy_id": 29,
+      "name": "Cucumber leaf (condition unknown)",
+      "status": "per_record_migration_or_exclusion_pending",
+      "rule": "Not a disease or healthy diagnosis. Do not automatically map to healthy. Preserve existing APK/model class map unchanged."
+    }
+  ],
+  "new_conditions": [],
+  "next_available_id": 29,
+  "acceptance_registry": "acceptance_registry.v1.json",
+  "manifest_contract": "manifest_contract.v1.json",
+  "note": "No new classes or candidate annotations have been accepted by this draft class map."
+}
