@@ -5,6 +5,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ColorSpace
 import android.graphics.Matrix
+import android.media.ThumbnailUtils
+import android.os.Build
+import android.util.Size
 import androidx.exifinterface.media.ExifInterface
 import android.net.Uri
 import org.json.JSONArray
@@ -36,6 +39,20 @@ object PhotoFiles {
         } catch(error: Exception){target.delete();throw error}
     }
 
+    /** Small preview of a saved photo for the journal list. */
+    fun thumbnail(file: File, maxSize: Int): Bitmap {
+        if (Build.VERSION.SDK_INT >= 29) {
+            return ThumbnailUtils.createImageThumbnail(file, Size(maxSize, maxSize), null)
+        }
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeFile(file.absolutePath, bounds)
+        var sample = 1
+        while (max(bounds.outWidth, bounds.outHeight) > maxSize * sample * 2) {
+            sample *= 2
+        }
+        val options = BitmapFactory.Options().apply { inSampleSize = sample }
+        return BitmapFactory.decodeFile(file.absolutePath, options) ?: error("Не удалось открыть фото")
+    }
     fun decode(file: File): Bitmap {
         val bounds=BitmapFactory.Options().apply {inJustDecodeBounds=true}
         BitmapFactory.decodeFile(file.absolutePath,bounds)
