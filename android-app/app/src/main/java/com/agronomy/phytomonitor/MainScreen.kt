@@ -8,6 +8,11 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -116,43 +121,145 @@ internal fun FieldDemoScreen(
             }
         }
     }
-    Column(modifier.fillMaxSize()) {
-        TopBar(
-            onJournal = { model.openJournal() },
-            onSettings = { settingsOpen = true },
-            status = if (model.busy) "Анализ…" else model.selectedModelName()
-        )
-        Column(
-            Modifier
-                .weight(1f)
-                .verticalScroll(scroll)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            val image = model.bitmap
-            if (image == null) {
-                Spacer(Modifier.height(4.dp))
-                EmptyPhoto()
-            } else {
-                PhotoWithDetections(image, model.result?.boxes.orEmpty(), model.showBoxes, busy = model.busy)
-            }
-            if (model.busy) {
-                BusyLine()
-            }
-            model.message?.takeIf { model.messageIsError }?.let { MessageBanner(it, isError = true) }
-            val result = model.result
-            ResultReveal(result != null, reducedMotion = reducedMotion) {
-                if (result != null) {
-                    ResultSection(model, result, controlsEnabled)
+    BoxWithConstraints(modifier.fillMaxSize()) {
+        // Tablets and landscape get two columns and a side rail: the photo should not sit above the result
+        // with wide empty margins on both sides.
+        val wide = maxWidth >= 600.dp
+        Column(Modifier.fillMaxSize()) {
+            TopBar(
+                onJournal = { model.openJournal() },
+                onSettings = { settingsOpen = true },
+                status = if (model.busy) "Анализ…" else model.selectedModelName()
+            )
+            if (wide) {
+                val scrollPhoto = rememberScrollState()
+                Row(Modifier.weight(1f)) {
+                    Column(
+                        Modifier
+                            .weight(1.25f)
+                            .verticalScroll(scrollPhoto)
+                            .padding(start = 16.dp, end = 8.dp, bottom = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        PhotoZone(model, maxHeight = 640.dp)
+                        ErrorBanner(model)
+                    }
+                    Column(
+                        Modifier
+                            .weight(1f)
+                            .verticalScroll(scroll)
+                            .padding(start = 8.dp, end = 16.dp, bottom = 16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        ResultReveal(model.result != null, reducedMotion) {
+                            model.result?.let { ResultSection(model, it, controlsEnabled) }
+                        }
+                        InspectionTools(model, onNote, onSpeak, speaking, speakerStatus)
+                        VoiceStatusLine(voice, flow, listening = voice.active || flow.dialogVoice || flow.continuousVoice)
+                    }
+                    ActionRail(
+                        voice = voice,
+                        flow = flow,
+                        enabled = controlsEnabled,
+                        onCamera = onCamera,
+                        onGallery = onGallery,
+                        onVoice = onVoice,
+                        onContinuous = onContinuous
+                    )
                 }
+            } else {
+                Column(
+                    Modifier
+                        .weight(1f)
+                        .verticalScroll(scroll)
+                        .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    PhotoZone(model)
+                    if (model.busy) {
+                        BusyLine()
+                    }
+                    ErrorBanner(model)
+                    ResultReveal(model.result != null, reducedMotion) {
+                        model.result?.let { ResultSection(model, it, controlsEnabled) }
+                    }
+                    InspectionTools(model, onNote, onSpeak, speaking, speakerStatus)
+                    Spacer(Modifier.height(8.dp))
+                }
+                BottomArea(voice, flow, onVoice, onContinuous, controlsEnabled, onCamera, onGallery)
             }
-            InspectionTools(model, onNote, onSpeak, speaking, speakerStatus)
-            Spacer(Modifier.height(8.dp))
         }
-        BottomArea(voice, flow, onVoice, onContinuous, controlsEnabled, onCamera, onGallery)
     }
     if (settingsOpen) {
         AnalysisSheet(model, controlsEnabled) { settingsOpen = false }
+    }
+}
+
+@Composable
+private fun PhotoZone(model: FieldDemoViewModel, maxHeight: androidx.compose.ui.unit.Dp = 340.dp) {
+    val image = model.bitmap
+    if (image == null) {
+        Spacer(Modifier.height(4.dp))
+        EmptyPhoto()
+    } else {
+        PhotoWithDetections(image, model.result?.boxes.orEmpty(), model.showBoxes, busy = model.busy, maxHeight = maxHeight)
+    }
+}
+
+@Composable
+private fun ErrorBanner(model: FieldDemoViewModel) {
+    model.message?.takeIf { model.messageIsError }?.let { MessageBanner(it, isError = true) }
+}
+
+/** Icons along the right edge: the same three actions as the bottom bar, laid out for a tablet or landscape. */
+@Composable
+private fun ActionRail(
+    voice: OfflineVoiceController,
+    flow: PhotoFlowViewModel,
+    enabled: Boolean,
+    onCamera: () -> Unit,
+    onGallery: () -> Unit,
+    onVoice: () -> Unit,
+    onContinuous: (Boolean) -> Unit
+) {
+    val listening = voice.active || flow.dialogVoice || flow.continuousVoice
+    Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxHeight()) {
+        Column(
+            Modifier
+                .width(88.dp)
+                .padding(vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            FilledIconButton(onClick = onCamera, enabled = enabled, modifier = Modifier.size(64.dp)) {
+                Icon(AgroIcons.Camera, contentDescription = "Сделать фото")
+            }
+            FilledTonalIconButton(onClick = onGallery, enabled = enabled, modifier = Modifier.size(56.dp)) {
+                Icon(AgroIcons.Gallery, contentDescription = "Из галереи")
+            }
+            FilledTonalIconButton(
+                onClick = onVoice,
+                modifier = Modifier
+                    .size(56.dp)
+                    .then(if (listening) Modifier.background(MaterialTheme.colorScheme.tertiary, CircleShape) else Modifier)
+            ) {
+                Icon(
+                    if (listening) AgroIcons.Stop else AgroIcons.Mic,
+                    contentDescription = if (listening) "Остановить микрофон" else "Голосовая команда",
+                    tint = if (listening) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+            Switch(
+                checked = flow.continuousVoice,
+                onCheckedChange = onContinuous,
+                modifier = Modifier
+                    .semantics { contentDescription = "Постоянно слушать" }
+                    .testTag("continuous_voice")
+            )
+            TextButton(onClick = { flow.helpOpen = true }) {
+                Text("Фразы", style = MaterialTheme.typography.labelSmall)
+            }
+        }
     }
 }
 

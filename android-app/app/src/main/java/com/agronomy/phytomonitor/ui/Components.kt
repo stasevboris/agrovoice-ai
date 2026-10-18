@@ -61,6 +61,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.agronomy.phytomonitor.ml.LeafDetection
 import com.agronomy.phytomonitor.ui.theme.DetectionAmber
@@ -213,6 +214,7 @@ fun PhotoWithDetections(
     boxes: List<LeafDetection>,
     showBoxes: Boolean,
     busy: Boolean = false,
+    maxHeight: Dp = PhotoMaxHeight,
     modifier: Modifier = Modifier
 ) {
     val reducedMotion = rememberReducedMotion()
@@ -229,7 +231,7 @@ fun PhotoWithDetections(
         // Explicit size: with fillMaxWidth + aspectRatio the photo could grow past its cap and overlap the result.
         // When the cap bites (a tall phone photo), the frame shrinks to the photo's own width instead of letterboxing.
         val aspect = photoAspect(image.width, image.height)
-        val height = minOf(maxWidth / aspect, PhotoMaxHeight)
+        val height = minOf(maxWidth / aspect, maxHeight)
         Box(
             Modifier
                 .align(Alignment.Center)

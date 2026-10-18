@@ -7,6 +7,8 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -91,6 +93,7 @@ private fun reviewLabel(review: String) = when (review) {
  * The agronomist's own record: a rating of the whole photo, the plot and a dictated note.
  * It sits on the page background without a card: it is the second task of the screen, not a widget.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSpeak: () -> Unit, speaking: Boolean, speakerStatus: String) {
     val hasResult = !model.busy && model.reportName != null
@@ -101,7 +104,7 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             reviewOptions.forEach { (id, label) ->
                 FilterChip(
                     selected = model.review == id,
@@ -142,8 +145,8 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
             Spacer(Modifier.width(8.dp))
             Text("Сохранить осмотр")
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            ToolButton("Заметка", AgroIcons.Edit, enabled = !model.busy, onClick = onNote, modifier = Modifier.weight(1f))
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            ToolButton("Заметка", AgroIcons.Edit, enabled = !model.busy, onClick = onNote, modifier = Modifier.width(104.dp))
             ToolButton(
                 if (speaking) "Стоп" else "Прочитать",
                 if (speaking) AgroIcons.Stop else AgroIcons.Speaker,
@@ -151,7 +154,7 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
                 onClick = onSpeak,
                 modifier = Modifier.weight(1f)
             )
-            ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { model.openJournal() }, modifier = Modifier.weight(1f))
+            ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { model.openJournal() }, modifier = Modifier.width(104.dp))
         }
         Text(speakerStatus, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
@@ -220,7 +223,7 @@ internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExpo
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) { Icon(AgroIcons.Back, contentDescription = "Закрыть журнал") }
-            Text("Журнал осмотров", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+            Text("Журнал осмотров", style = MaterialTheme.typography.titleLarge, modifier = Modifier.width(104.dp))
             TextButton(onClick = onExport, enabled = !model.busy && model.journalEntries.isNotEmpty()) {
                 Icon(AgroIcons.Download, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(6.dp))
