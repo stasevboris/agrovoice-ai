@@ -394,8 +394,9 @@ def assign_parts(train_records, part_size):
         for code in sorted(queues):
             if queues[code]:
                 ordered.append(queues[code].pop(0))
+    count = max(1, round(len(ordered) / part_size))  # about part_size each, no tiny last part
     for position, record in enumerate(ordered):
-        record["part"] = f"part{position // part_size + 1:02d}"
+        record["part"] = f"part{position * count // len(ordered) + 1:02d}"
     return ordered
 
 

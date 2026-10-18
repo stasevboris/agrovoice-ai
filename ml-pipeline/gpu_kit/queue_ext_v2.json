@@ -1,0 +1,31 @@
+{
+  "dataset": "datasets/allcrops_v2_all",
+  "smoke_dataset": "datasets/allcrops_v2_smoke",
+  "comment": "Fine-tuning of the finished allcrops_v1 runs on allcrops_v1 + ext_v2. Start it after queue.json. If time is short, set 'dataset' to datasets/allcrops_v2_p1 (or p2, ...): fewer ext_v2 parts, shorter epochs. A run whose v1 weights are missing fails and the queue moves on.",
+  "defaults": {
+    "imgsz": 416,
+    "epochs": 30,
+    "patience": 10,
+    "optimizer": "AdamW",
+    "lr0": 0.0005,
+    "warmup_epochs": 1,
+    "cos_lr": true,
+    "hsv_h": 0.015,
+    "hsv_s": 0.7,
+    "hsv_v": 0.4,
+    "degrees": 10.0,
+    "fliplr": 0.5,
+    "amp": true,
+    "deterministic": false,
+    "save_period": 5,
+    "close_mosaic": 5
+  },
+  "runs": [
+    {"name": "allcrops_v2_yolo26s_416_ft_s20261003", "model": "runs/allcrops_v1_yolo26s_416_s20261003/weights/best.pt",
+     "family": "yolo26s", "seed": 20261003, "hours": 1.2,
+     "why": "Main phone candidate fine-tuned on more field photos (ext_v2); compare with the v1 S run on the same v1 val/test."},
+    {"name": "allcrops_v2_yolo26n_416_ft_s20261003", "model": "runs/allcrops_v1_yolo26n_416_s20261003/weights/best.pt",
+     "family": "yolo26n", "seed": 20261003, "hours": 0.7,
+     "why": "Fast model fine-tuned the same way, only if time remains."}
+  ]
+}

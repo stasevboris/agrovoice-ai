@@ -55,16 +55,8 @@
         "Cherry/Powdery Mildew": "cherry__powdery_mildew"
       }
     },
-    "corn_nlb": {
-      "domain": "field",
-      "closeup": true,
-      "folders": {
-        "Corn Healthy and Disease/healthy": "corn__healthy",
-        "Corn Healthy and Disease/diseased": "corn__northern_leaf_blight"
-      }
-    },
     "corn_polagan": {
-      "domain": "field",
+      "domain": "lab",
       "closeup": true,
       "folders": {
         "Daun Sehat": "corn__healthy",
@@ -268,6 +260,7 @@
   "rejected_sources": {
     "escab": "macro photos of lesions, no whole leaf in frame; 'Background' is blurry plant parts, not clean negatives",
     "tomato_slif": "wide field shots with one label per photo; its detection boxes mark lesions, not leaves",
-    "citrus_hlb": "GPL-2.0; HLB already has ~5 000 PlantVillage images in v1"
+    "citrus_hlb": "GPL-2.0; HLB already has ~5 000 PlantVillage images in v1",
+    "corn_nlb": "leaf fragments cut out by a mask and pasted on black, arbitrary rotation; not whole leaves and not what a phone camera sees (preview 18.10.2026)"
   }
 }

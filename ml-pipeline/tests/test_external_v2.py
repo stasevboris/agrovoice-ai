@@ -1,5 +1,6 @@
 """Unit tests for the external dataset builder (box policy, parts, mapping) without images."""
 import json
+from collections import Counter
 from pathlib import Path
 import sys
 import unittest
@@ -63,6 +64,12 @@ class PartsAndHashTest(unittest.TestCase):
         ext.assign_parts(train, part_size=4)
         first = [r["class"] for r in train if r["part"] == "part01"]
         self.assertEqual(sorted(first), ["a", "a", "b", "b"])
+
+    def test_no_tiny_last_part(self):
+        train = [{"id": f"a{i}", "class": "a", "domain": "lab"} for i in range(31)]
+        ext.assign_parts(train, part_size=10)
+        sizes = sorted(Counter(r["part"] for r in train).values())
+        self.assertEqual(sizes, [10, 10, 11])
 
     def test_field_images_come_first_within_class(self):
         train = [{"id": "lab", "class": "a", "domain": "lab"}, {"id": "field", "class": "a", "domain": "field"}]

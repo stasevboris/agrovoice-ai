@@ -2,7 +2,7 @@
 
   python package_results.py            -> results_<host>_<YYYYmmdd_HHMM>.zip in the kit root
 Includes per run: best.pt, last.pt, best.onnx, results.csv, args.yaml, plots, eval/, run_summary.json,
-android_manifest_entry.json; plus env.json, queue.json and logs/. Skips epoch*.pt snapshots.
+android_manifest_entry.json; plus env.json, queue*.json and logs/. Skips epoch*.pt snapshots.
 """
 from __future__ import annotations
 
@@ -27,7 +27,8 @@ def main():
     target = KIT/f"results_{platform.node() or 'gpu'}_{datetime.now():%Y%m%d_%H%M}.zip"
     files = [p for p in (KIT/"runs").rglob("*") if p.is_file() and wanted(p)]
     files += [p for p in (KIT/"logs").rglob("*") if p.is_file()] if (KIT/"logs").exists() else []
-    files += [KIT/name for name in ("env.json", "queue.json") if (KIT/name).exists()]
+    files += [KIT/"env.json"] if (KIT/"env.json").exists() else []
+    files += sorted(KIT.glob("queue*.json"))
     with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED, allowZip64=True) as archive:
         for path in files:
             compress = zipfile.ZIP_STORED if path.suffix in (".png", ".jpg") else zipfile.ZIP_DEFLATED
