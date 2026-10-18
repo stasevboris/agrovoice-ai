@@ -66,7 +66,9 @@ def recommended():
 def evaluate(best: Path, dataset: Path, imgsz: int, out: Path, classes, device):
     from ultralytics import YOLO
     results = {}
-    for domain in ("field", "lab"):
+    # data_field.yaml and data_lab.yaml in v1; a v2 part dataset adds data_ext_field.yaml etc.
+    domains = sorted(path.stem.removeprefix("data_") for path in dataset.glob("data_*.yaml"))
+    for domain in domains:
         data = runtime_yaml(dataset, f"data_{domain}.yaml")
         for split in ("val", "test"):
             metrics = YOLO(str(best)).val(data=str(data), split=split, imgsz=imgsz, batch=32, device=device,
@@ -116,12 +118,23 @@ def export_android(best: Path, imgsz: int, classes):
                 input_shape=input_shape, output_shape=output_shape, parity_max_abs_diff=differences)
 
 
-def android_entry(run_name: str, model_file: str, seed: int, imgsz: int, export: dict, taxonomy: dict):
+def android_entry(run_name: str, family: str, seed: int, imgsz: int, export: dict, taxonomy: dict, dataset_name="allcrops_v1"):
     classes = [c["code"] for c in taxonomy["classes"]]
-    return dict(id=run_name, name=f"{model_file.removesuffix('.pt').upper()} allcrops v1", asset=f"models/{run_name}.onnx",
+    return dict(id=run_name, name=f"{family.upper()} {dataset_name}", asset=f"models/{run_name}.onnx",
                 sha256=export["sha256"], family="yolo", side=imgsz, seed=seed, detector_seed=seed,
-                dataset="allcrops_v1", provisional=True, classes=classes, labels_ru=[c["ru"] for c in taxonomy["classes"]],
+                dataset=dataset_name, provisional=True, classes=classes, labels_ru=[c["ru"] for c in taxonomy["classes"]],
                 crops=sorted({c["crop"] for c in taxonomy["classes"]}), crops_ru=taxonomy["crops_ru"])
+
+
+def start_weights(model: str) -> Path:
+    """COCO weights from weights/, or a path inside the kit (e.g. runs/<v1 run>/weights/best.pt) to fine-tune."""
+    bundled = KIT/"weights"/model
+    if bundled.exists():
+        return bundled
+    inside = KIT/model
+    if not inside.exists():
+        raise FileNotFoundError(f"{model}: neither weights/{model} nor {inside} exists")
+    return inside
 
 
 def resumable(checkpoint: Path) -> bool:
@@ -144,8 +157,8 @@ def train_one(run: dict, defaults: dict, dataset: Path, hours: float, smoke: boo
         log(f"{run['name']}: already done, skipping")
         return "skipped"
     rec = recommended()
-    family = Path(run["model"]).stem
-    options = dict(defaults) | {k: v for k, v in run.items() if k not in ("name", "model", "hours", "why", "batch")}
+    family = run.get("family") or Path(run["model"]).stem
+    options = dict(defaults) | {k: v for k, v in run.items() if k not in ("name", "model", "hours", "why", "batch", "dataset", "family")}
     options["batch"] = run.get("batch") or rec.get("batch", {}).get(family, 32)
     options["workers"] = rec.get("workers", 8)
     options["cache"] = rec.get("cache", False)
@@ -210,7 +223,7 @@ def train_one(run: dict, defaults: dict, dataset: Path, hours: float, smoke: boo
         train_args = dict(data=str(runtime_yaml(dataset, "data.yaml")), project=str(project), name=run["name"],
                           exist_ok=True, device=device, plots=True, **options)
         log(f"{run['name']}: training, cap {hours:.2f} h, batch {options['batch']}, cache {options['cache']}")
-        attach(YOLO(str(KIT/"weights"/run["model"]))).train(**train_args)
+        attach(YOLO(str(start_weights(run["model"])))).train(**train_args)
     best = run_dir/"weights/best.pt"
     if not best.exists():
         raise RuntimeError("best.pt was not produced")
@@ -223,7 +236,8 @@ def train_one(run: dict, defaults: dict, dataset: Path, hours: float, smoke: boo
     evaluation = evaluate(best, dataset, options["imgsz"], run_dir/"eval", classes, device)
     log(f"{run['name']}: exporting Android ONNX")
     export = export_android(best, options["imgsz"], classes)
-    write_json(run_dir/"android_manifest_entry.json", android_entry(run["name"], run["model"], options.get("seed", 0), options["imgsz"], export, taxonomy))
+    dataset_name = json.loads((dataset/"report.json").read_text(encoding="utf-8")).get("dataset", "allcrops_v1")
+    write_json(run_dir/"android_manifest_entry.json", android_entry(run["name"], family, options.get("seed", 0), options["imgsz"], export, taxonomy, dataset_name))
     write_json(summary_path, meta | dict(status="done", ended=datetime.now().isoformat(), evaluation=evaluation, export=export))
     log(f"{run['name']}: done in {(time.time()-started)/60:.1f} min")
     return "done"
@@ -265,8 +279,9 @@ def main():
             log(f"Not enough time left for {run['name']} ({remaining:.2f} h). Queue finished.")
             break
         hours = min(run["hours"], remaining)
+        run_dataset = (KIT/run["dataset"]).resolve() if "dataset" in run else dataset
         try:
-            status = train_one(run, queue["defaults"], dataset, hours, smoke=False, device=args.device)
+            status = train_one(run, queue["defaults"], run_dataset, hours, smoke=False, device=args.device)
         except Exception:
             traceback.print_exc()
             log(f"{run['name']} FAILED; continuing with the next run")

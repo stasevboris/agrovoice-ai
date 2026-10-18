@@ -1,0 +1,273 @@
+{
+  "schema": "agrovoice-external-mapping-v1",
+  "notes": "Folder (relative to ml-pipeline/.cache/external/raw/<source>/) -> class code of taxonomy_v1. A folder maps every image below it. 'closeup': the leaf fills the frame, so a whole-frame box is used when the leaf detector finds nothing. Unlisted folders are not used; 'excluded' lists the reasons for folders that were looked at and rejected.",
+  "sources": {
+    "pp2021": {
+      "domain": "field",
+      "csv_labels": {
+        "file": "train.csv",
+        "images": "train_images_640p",
+        "map": {
+          "healthy": "apple__healthy",
+          "scab": "apple__scab",
+          "rust": "apple__cedar_rust"
+        }
+      },
+      "excluded": {
+        "frog_eye_leaf_spot, powdery_mildew, complex and any multi-label row": "not in taxonomy v1 or more than one disease"
+      }
+    },
+    "dkap": {
+      "domain": "field",
+      "folders": {
+        "APPLE_DISEASE_DATASET/HEALTHY LEAVES": "apple__healthy",
+        "APPLE_DISEASE_DATASET/SCAB LEAVES": "apple__scab"
+      },
+      "excluded": {
+        "APPLE ROT LEAVES": "rot is not necessarily black rot",
+        "LEAF BLOTCH": "Alternaria blotch, not in taxonomy v1"
+      }
+    },
+    "apple_pc": {
+      "domain": "lab",
+      "folders": {
+        "Apple/train/Apple Normal": "apple__healthy",
+        "Apple/test/Apple Normal": "apple__healthy"
+      },
+      "excluded": {
+        "Brown_spot, black_spot": "not in taxonomy v1"
+      }
+    },
+    "cherry_pc": {
+      "domain": "lab",
+      "folders": {
+        "Cherry/train/Cherry Normal leaf": "cherry__healthy",
+        "Cherry/test/Cherry Normal leaf": "cherry__healthy"
+      },
+      "excluded": {
+        "Leaf Scorch, brown_spot, purple leaf spot, shot hole": "not in taxonomy v1"
+      }
+    },
+    "cherry_kh": {
+      "domain": "lab",
+      "folders": {
+        "Cherry/Healthy": "cherry__healthy",
+        "Cherry/Powdery Mildew": "cherry__powdery_mildew"
+      }
+    },
+    "corn_nlb": {
+      "domain": "field",
+      "closeup": true,
+      "folders": {
+        "Corn Healthy and Disease/healthy": "corn__healthy",
+        "Corn Healthy and Disease/diseased": "corn__northern_leaf_blight"
+      }
+    },
+    "corn_polagan": {
+      "domain": "field",
+      "closeup": true,
+      "folders": {
+        "Daun Sehat": "corn__healthy",
+        "Bercak Daun": "corn__gray_leaf_spot",
+        "Hawar Daun": "corn__northern_leaf_blight",
+        "Karat Daun": "corn__common_rust"
+      }
+    },
+    "cucumber_bd": {
+      "domain": "field",
+      "folders": {
+        "Cucumber Disease Recognition Dataset/Original Image/Original Image/Fresh Leaf": "cucumber__healthy",
+        "Cucumber Disease Recognition Dataset/Original Image/Original Image/Anthracnose": "cucumber__anthracnose",
+        "Cucumber Disease Recognition Dataset/Original Image/Original Image/Bacterial Wilt": "cucumber__bacterial_wilt",
+        "Cucumber Disease Recognition Dataset/Original Image/Original Image/Downy Mildew": "cucumber__downy_mildew"
+      },
+      "excluded": {
+        "Augmented Image": "offline augmentations of the originals",
+        "Belly Rot, Fresh Cucumber, Gummy Stem Blight, Pythium Fruit Rot": "fruit or stem, not leaf"
+      }
+    },
+    "cucumber_lk": {
+      "domain": "lab",
+      "folders": {
+        "cucumber_Leaf_Disease/train/Healthy_leaves": "cucumber__healthy",
+        "cucumber_Leaf_Disease/test/Healthy_leaves": "cucumber__healthy",
+        "cucumber_Leaf_Disease/train/Downy_mildew": "cucumber__downy_mildew",
+        "cucumber_Leaf_Disease/test/Downy_mildew": "cucumber__downy_mildew"
+      },
+      "excluded": {
+        "Powdery_mildew": "cucumber powdery mildew is not in taxonomy v1"
+      }
+    },
+    "esca": {
+      "domain": "field",
+      "folders": {
+        "healthy": "grape__healthy",
+        "esca": "grape__esca"
+      },
+      "notes": "whole-canopy photos; for 'esca' only the dominant leaves are kept (see build_external_v2.py)"
+    },
+    "grape_pc": {
+      "domain": "field",
+      "folders": {
+        "train/train/Grape Normal_leaf": "grape__healthy",
+        "test/test/Grape Normal_leaf": "grape__healthy"
+      },
+      "excluded": {
+        "Anthracnose, Brown spot, Downy mildew, Mites, Powdery mildew, shot hole": "not in taxonomy v1 (candidates for v2: downy and powdery mildew matter in Belarus)"
+      }
+    },
+    "pepper_bell": {
+      "domain": "lab",
+      "folders": {
+        "PepperBell_Healthy": "pepper__healthy",
+        "PepperBell_Bacterial Spot": "pepper__bacterial_spot"
+      },
+      "excluded": {
+        "Cercospora, Leaf Curl, Nutrition Deficiency, Powdery Mildew": "not in taxonomy v1"
+      }
+    },
+    "potato_eth": {
+      "domain": "field",
+      "folders": {
+        "Healthy": "potato__healthy",
+        "Late Blight": "potato__late_blight"
+      }
+    },
+    "potato_pld": {
+      "domain": "lab",
+      "folders": {
+        "PLD_3_Classes_256/Training/Healthy": "potato__healthy",
+        "PLD_3_Classes_256/Validation/Healthy": "potato__healthy",
+        "PLD_3_Classes_256/Testing/Healthy": "potato__healthy",
+        "PLD_3_Classes_256/Training/Early_Blight": "potato__early_blight",
+        "PLD_3_Classes_256/Validation/Early_Blight": "potato__early_blight",
+        "PLD_3_Classes_256/Testing/Early_Blight": "potato__early_blight",
+        "PLD_3_Classes_256/Training/Late_Blight": "potato__late_blight",
+        "PLD_3_Classes_256/Validation/Late_Blight": "potato__late_blight",
+        "PLD_3_Classes_256/Testing/Late_Blight": "potato__late_blight"
+      }
+    },
+    "potato_ue": {
+      "domain": "field",
+      "folders": {
+        "Potato Leaf Disease Dataset in Uncontrolled Environment/Healthy": "potato__healthy",
+        "Potato Leaf Disease Dataset in Uncontrolled Environment/Phytopthora": "potato__late_blight"
+      },
+      "excluded": {
+        "Fungi": "mixed fungal diseases, early blight not separated",
+        "Bacteria, Nematode, Pest, Virus": "not in taxonomy v1"
+      }
+    },
+    "pumpkin_bd": {
+      "domain": "field",
+      "folders": {
+        "Pumpkin Leaf Diseases Dataset From Bangladesh/Original Dataset/Powdery_Mildew": "squash__powdery_mildew"
+      },
+      "excluded": {
+        "Healthy Leaf, Downy Mildew, Mosaic, Bacterial Leaf Spot": "taxonomy v1 has only squash powdery mildew"
+      }
+    },
+    "smartberry": {
+      "domain": "field",
+      "folders": {
+        "SmartBerry Dataset/train/healthy leaves": "strawberry__healthy",
+        "SmartBerry Dataset/test/healthy leaves": "strawberry__healthy"
+      },
+      "excluded": {
+        "dark spot, drought, leaf powdery mildew, fruit classes": "not in taxonomy v1"
+      }
+    },
+    "soy_in": {
+      "domain": "field",
+      "folders": {
+        "soyabean_dataset/Healthy_Soyabean": "soybean__healthy"
+      },
+      "excluded": {
+        "Frog eye, Mosaic, Septoria brown spot": "taxonomy v1 has only healthy soybean"
+      }
+    },
+    "tomato_mites": {
+      "domain": "lab",
+      "folders": {
+        "Tomato Spider Mites Dataset/images": "tomato__mite_damage"
+      }
+    },
+    "tomato_pc": {
+      "domain": "field",
+      "folders": {
+        "train/train/tomato_healthy_leaf": "tomato__healthy",
+        "test/test/tomato_healthy_leaf": "tomato__healthy",
+        "train/train/tomato_bacterial_spot": "tomato__bacterial_spot",
+        "test/test/tomato_bacterial_spot": "tomato__bacterial_spot",
+        "train/train/tomato_early_blight": "tomato__early_blight",
+        "test/test/tomato_early_blight": "tomato__early_blight",
+        "train/train/tomato_late_blight": "tomato__late_blight",
+        "test/test/tomato_late_blight": "tomato__late_blight",
+        "train/train/tomato_leaf_mold": "tomato__leaf_mold",
+        "test/test/tomato_leaf_mold": "tomato__leaf_mold",
+        "train/train/tomato_septoria_leaf": "tomato__septoria_leaf_spot",
+        "test/test/tomato_septoria_leaf": "tomato__septoria_leaf_spot",
+        "train/train/tomato spider mites": "tomato__mite_damage",
+        "test/test/tomato spider mites": "tomato__mite_damage",
+        "train/train/tomato_leaf_miner": "tomato__leaf_miner",
+        "test/test/tomato_leaf_miner": "tomato__leaf_miner",
+        "train/train/tomato_leaf_curl": "tomato__yellow_leaf_curl_virus",
+        "test/test/tomato_leaf_curl": "tomato__yellow_leaf_curl_virus"
+      },
+      "excluded": {
+        "Fusarium Wilt, verticillium wilt": "not in taxonomy v1"
+      },
+      "notes": "'tomato_leaf_curl' is mapped to yellow leaf curl virus as the source describes; check with a specialist"
+    },
+    "tomato_real": {
+      "domain": "lab",
+      "folders": {
+        "Healthy": "tomato__healthy",
+        "Early Blight": "tomato__early_blight",
+        "Late Blight": "tomato__late_blight",
+        "Leaf Miner": "tomato__leaf_miner",
+        "Mosiac Virus": "tomato__mosaic_virus",
+        "Septoria": "tomato__septoria_leaf_spot"
+      },
+      "excluded": {
+        "New Real Images": "offline augmentations (edge-stretched borders)",
+        "Powdery Mildew": "not in taxonomy v1"
+      }
+    },
+    "tomato_vn": {
+      "domain": "field",
+      "yolo_boxes": {
+        "yaml": "data.yaml",
+        "map": {
+          "Early Blight": "tomato__early_blight",
+          "Healthy": "tomato__healthy",
+          "Late Blight": "tomato__late_blight",
+          "Leaf Miner": "tomato__leaf_miner",
+          "Leaf Mold": "tomato__leaf_mold",
+          "Mosaic Virus": "tomato__mosaic_virus",
+          "Septoria": "tomato__septoria_leaf_spot",
+          "Spider Mites": "tomato__mite_damage",
+          "Yellow Leaf Curl Virus": "tomato__yellow_leaf_curl_virus"
+        }
+      },
+      "notes": "Roboflow export with whole-leaf boxes; part of it is PlantVillage (PSU_CG names) and is dropped by the pHash check"
+    },
+    "bbox4": {
+      "domain": "lab",
+      "yolo_boxes": {
+        "yaml": "data.yaml",
+        "map": {
+          "Corn Common Rust": "corn__common_rust",
+          "Peach_Bacterial_Spot": "peach__bacterial_spot",
+          "Strawberry leaf scorch": "strawberry__leaf_scorch",
+          "Tomato Late Blight": "tomato__late_blight"
+        }
+      }
+    }
+  },
+  "rejected_sources": {
+    "escab": "macro photos of lesions, no whole leaf in frame; 'Background' is blurry plant parts, not clean negatives",
+    "tomato_slif": "wide field shots with one label per photo; its detection boxes mark lesions, not leaves",
+    "citrus_hlb": "GPL-2.0; HLB already has ~5 000 PlantVillage images in v1"
+  }
+}

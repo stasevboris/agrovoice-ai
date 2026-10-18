@@ -14,6 +14,8 @@
 
 ## Следующее
 
+0. **В работе (агент): внешние наборы ext_v2.** Скачаны 26 наборов Kaggle (`ml-pipeline/external/sources_v2.json`, данные — `ml-pipeline/.cache/external/raw/`), сопоставление с taxonomy_v1 — `mapping_v2.json`. `build_external_v2.py`: collect и hash выполнены — 65 143 снимка, из них 19 155 повторяют текущие источники, 16 452 — внутренние копии, уникальных 29 536 (`.cache/external/work/dedup.json`). Дальше: `select` → `boxes` (авторазметка листьев yolo26s clean v2, CPU) → `write --part-size 3000` → просмотр `previews/` → дополнение к комплекту GPU (части `allcrops_v2_pK`, дообучение с весов v1; `train_queue.py` уже умеет `dataset`/путь к весам, на реальном прогоне не проверен) → `docs/data/SOURCES.md`.
+
 1. **M-03 (Борис, пн 20.10):** сеанс на 5090 по README комплекта, привезти `results_*.zip`.
 2. **После M-03:** `prepare_model_release.py` → Борис создаёт релиз `models-allcrops-v1` на GitHub.
 3. **M-04 → A-01 → A-02 → A-03:** разбор результатов, манифест v3, культуры из манифеста, модель в APK.
@@ -33,3 +35,4 @@
 - 16–17.10 — архивы перенесены на E:, корзина F: очищена; G-01…G-04: git почищен и отправлен, мусор в корне убран, новый README, PROJECT_GUIDE → docs/history.
 - 17.10 — лицензия AGPL-3.0, ATTRIBUTION, fetch_assets.py, prepare_model_release.py + 6 тестов.
 - 17.10 — проверка APK на Redmi Note 7, исправления 0.17 (голосовые фразы, рост results/, копии моделей, мелкие UI).
+- 17–18.10 — новый дизайн приложения (62f3528), проверен на Note 7; поиск, скачивание и отсев дублей внешних наборов (не закончено).

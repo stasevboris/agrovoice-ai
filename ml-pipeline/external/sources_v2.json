@@ -1,0 +1,32 @@
+{
+  "schema": "agrovoice-external-sources-v1",
+  "notes": "Shortlist chosen 17.10.2026 from ml-pipeline/.cache/external/search (Kaggle + Hugging Face search over 15 crops). Only datasets whose images are not PlantVillage/PlantDoc/OLID/Zenodo re-uploads by description; the rest is checked by pHash against current sources. Class mapping lives in external/mapping_v2.json.",
+  "sources": [
+    {"id": "pp2021", "host": "kaggle", "ref": "thatgeeman/640p-plant-pathology-2021-resized-to-w-x-640", "crops": ["apple"], "domain": "field", "license": "Plant Pathology 2021 FGVC8 (Thapa et al., Cornell); Kaggle copy CC0", "origin": "https://www.kaggle.com/c/plant-pathology-2021-fgvc8"},
+    {"id": "escab", "host": "kaggle", "ref": "projectlzp201910094/eapplescab", "crops": ["apple"], "domain": "field", "license": "CC BY 4.0", "origin": "LatHort, Latvia, project lzp-2019/1-0094"},
+    {"id": "dkap", "host": "kaggle", "ref": "hsmcaju/d-kap", "crops": ["apple"], "domain": "field", "license": "DbCL 1.0", "origin": "Sharma et al. 2022, Kashmir orchards"},
+    {"id": "esca", "host": "kaggle", "ref": "nirmalsankalana/esca-grapes-black-measles-dataset", "crops": ["grape"], "domain": "field", "license": "CC BY 4.0 (Mendeley 89cnxc58kj)", "origin": "Alessandrini et al., Marche, Italy"},
+    {"id": "corn_polagan", "host": "kaggle", "ref": "ndisan/corn-leaf-disease", "crops": ["corn"], "domain": "field", "license": "MIT", "origin": "Polagan village corn field, Indonesia + smaranjitghose (PV/PlantDoc, removed by pHash)"},
+    {"id": "corn_nlb", "host": "kaggle", "ref": "rabbityashow/corn-leaf-diseasesnlb", "crops": ["corn"], "domain": "field", "license": "CC0", "origin": "author's field photos, NLB vs healthy"},
+    {"id": "potato_ue", "host": "kaggle", "ref": "warcoder/potato-leaf-disease-dataset", "crops": ["potato"], "domain": "field", "license": "CC BY 4.0 (Mendeley ptz377bwb8)", "origin": "Shabrina et al. 2023, Indonesia, uncontrolled environment"},
+    {"id": "potato_eth", "host": "kaggle", "ref": "nirmalsankalana/potato-leaf-healthy-and-late-blight", "crops": ["potato"], "domain": "field", "license": "CC0", "origin": "Ethiopia potato fields"},
+    {"id": "potato_pld", "host": "kaggle", "ref": "rizwan123456789/potato-disease-leaf-datasetpld", "crops": ["potato"], "domain": "lab", "license": "DbCL 1.0", "origin": "Rashid et al. 2021, Central Punjab"},
+    {"id": "tomato_vn", "host": "kaggle", "ref": "aresusayhi/vietnameses-tomato-disease-dataset", "crops": ["tomato"], "domain": "field", "license": "Apache 2.0", "origin": "VTLD, Vietnam"},
+    {"id": "tomato_slif", "host": "kaggle", "ref": "romiyalgeorge/slif-tomato-dataset", "crops": ["tomato"], "domain": "field", "license": "CC BY 4.0", "origin": "George et al. 2026, Sri Lanka in-field"},
+    {"id": "tomato_real", "host": "kaggle", "ref": "vidyawaykule/real-image-tomato-leaf-disease-dataset", "crops": ["tomato"], "domain": "field", "license": "CC BY 4.0", "origin": "real-field, expert-verified labels"},
+    {"id": "tomato_mites", "host": "kaggle", "ref": "mohammeda5/tomato-spider-mites-dataset", "crops": ["tomato"], "domain": "field", "license": "Apache 2.0", "origin": "real photos of two-spotted spider mite damage"},
+    {"id": "cucumber_lk", "host": "kaggle", "ref": "kaushigihanml/cucumber-leaf-disease-dataset", "crops": ["cucumber"], "domain": "field", "license": "Apache 2.0", "origin": "author's field photos, 1366x768"},
+    {"id": "cucumber_bd", "host": "kaggle", "ref": "sujaykapadnis/cucumber-disease-recognition-dataset", "crops": ["cucumber"], "domain": "field", "license": "CC BY 4.0", "origin": "Sultana et al., Bangladesh (parent of Zenodo set; overlap removed by pHash)"},
+    {"id": "pumpkin_bd", "host": "kaggle", "ref": "tahmidmir/pumpkin-leaf-diseases-dataset-from-bangladesh", "crops": ["squash"], "domain": "field", "license": "CC BY 4.0", "origin": "Bangladesh pumpkin fields"},
+    {"id": "smartberry", "host": "kaggle", "ref": "isiborihianle/smartberry-strawberry-field-image-dataset", "crops": ["strawberry"], "domain": "field", "license": "CC BY 4.0", "origin": "Ihianle, SmartBerry, Nigeria"},
+    {"id": "bbox4", "host": "kaggle", "ref": "mahin661/plant-disease-detection-bounding-box-dataset", "crops": ["corn", "peach", "strawberry", "tomato"], "domain": "lab", "license": "CC BY 4.0", "origin": "YOLO boxes; images probably PlantVillage (checked by pHash)"},
+    {"id": "cherry_pc", "host": "kaggle", "ref": "codewithsk/cherry-leaf-disease-on-plantcity-2025", "crops": ["cherry"], "domain": "field", "license": "ODbL 1.0", "origin": "PlantCity, Khan et al. 2025, Pakistan"},
+    {"id": "apple_pc", "host": "kaggle", "ref": "codewithsk/apple-leaf-disease-dataset-plantcity-2025", "crops": ["apple"], "domain": "field", "license": "ODbL 1.0", "origin": "PlantCity, Khan et al. 2025, Pakistan"},
+    {"id": "grape_pc", "host": "kaggle", "ref": "codewithsk/grapes-leafs-disease-7-classes-plantcity-2025", "crops": ["grape"], "domain": "field", "license": "ODbL 1.0", "origin": "PlantCity, Khan et al. 2025, Pakistan"},
+    {"id": "tomato_pc", "host": "kaggle", "ref": "codewithsk/tomato-leaf-disease-from-plantcity-2025", "crops": ["tomato"], "domain": "field", "license": "ODbL 1.0", "origin": "PlantCity, Khan et al. 2025, Pakistan"},
+    {"id": "cherry_kh", "host": "kaggle", "ref": "khalil18/cherry-dataset", "crops": ["cherry"], "domain": "lab", "license": "Apache 2.0", "origin": "unknown; checked by pHash"},
+    {"id": "pepper_bell", "host": "kaggle", "ref": "kafilatmusa11/pepper-bell-leaf-disease", "crops": ["pepper"], "domain": "unknown", "license": "CC BY 4.0", "origin": "unknown; checked by pHash"},
+    {"id": "citrus_hlb", "host": "kaggle", "ref": "oarcanjomiguel/citrus-greening", "crops": ["orange"], "domain": "field", "license": "GPL-2.0 (decision needed before weights release)", "origin": "field greening/healthy"},
+    {"id": "soy_in", "host": "kaggle", "ref": "syraverma/soyabean-4-class-leaf-disease-dataset", "crops": ["soybean"], "domain": "field", "license": "MIT", "origin": "subset of Soyabean Leaf Disease Image Dataset, real fields"}
+  ]
+}
