@@ -9,6 +9,9 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -215,17 +218,23 @@ class FieldDemoActivity : ComponentActivity() {
                     }
                 }
                 val exportJournal: ()->Unit={voice.stop();export.launch("AgroVoice-journal-${System.currentTimeMillis()}.json")}
-                Scaffold(containerColor=MaterialTheme.colorScheme.background) { padding ->
+                // Confirmations of finished actions («сохранено», «снято») appear for a moment; errors stay as banners.
+                val snackbar=remember {SnackbarHostState()}
+                val notice=model.message?.takeIf {!model.messageIsError}
+                LaunchedEffect(notice) {
+                    if(notice!=null){snackbar.showSnackbar(notice,withDismissAction=false,duration=SnackbarDuration.Short);model.clearMessage()}
+                }
+                Scaffold(containerColor=MaterialTheme.colorScheme.background,snackbarHost={SnackbarHost(snackbar)}) { padding ->
                     Box(Modifier.padding(padding)) {
                         when {
                             photoFlow.cameraOpen->PlantCamera(photoFlow,onSaved={uri->
                                 if(foreground && photoFlow.cameraOpen){closePhotoFlow();model.importPhoto(uri)}
-                            },onCancel=::closePhotoFlow) {VoiceCommandPanel(voice,photoFlow,::voiceButton,::setContinuous,context="camera",compact=true)}
+                            },onCancel=::closePhotoFlow) {VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Наведи камеру → «подтвердить».",onDark=true)}
                             photoFlow.galleryOpen->NumberedGallery(photoFlow,::confirmGallery,::closePhotoFlow,systemPicker) {
-                                VoiceCommandPanel(voice,photoFlow,::voiceButton,::setContinuous,context="gallery",compact=true)
+                                VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Номер → просмотр → «подтвердить».")
                             }
                             model.journalOpen->JournalScreen(model,onBack={model.journalOpen=false},onExport=exportJournal)
-                            else->FieldDemoScreen(model,Modifier,onGallery={openGallery(false)},onCamera={openCamera(false)},voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,onSystemGallery=systemPicker,onNote={openNote()},onSpeak={readResult()},speaking=speaker.active,speakerStatus=speaker.status)
+                            else->FieldDemoScreen(model,Modifier,onGallery={openGallery(false)},onCamera={openCamera(false)},voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,onNote={openNote()},onSpeak={readResult()},speaking=speaker.active,speakerStatus=speaker.status)
                         }
                         InspectionDialogs(model,::dictateNote,::closeNote)
                     }

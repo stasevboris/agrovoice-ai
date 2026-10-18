@@ -1,5 +1,10 @@
 package com.agronomy.phytomonitor
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,12 +14,16 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
@@ -22,44 +31,58 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Slider
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.agronomy.phytomonitor.ml.DetectionResult
 import com.agronomy.phytomonitor.photos.PhotoFlowViewModel
 import com.agronomy.phytomonitor.ui.AgroIcons
+import com.agronomy.phytomonitor.ui.ComparisonRow
+import com.agronomy.phytomonitor.ui.ConfidenceDialog
 import com.agronomy.phytomonitor.ui.EmptyPhoto
 import com.agronomy.phytomonitor.ui.LeafResultRow
 import com.agronomy.phytomonitor.ui.MessageBanner
 import com.agronomy.phytomonitor.ui.PhotoWithDetections
-import com.agronomy.phytomonitor.ui.Pill
-import com.agronomy.phytomonitor.ui.SectionCard
-import com.agronomy.phytomonitor.ui.preliminaryColors
+import com.agronomy.phytomonitor.ui.BlockHeader
+import com.agronomy.phytomonitor.ui.AgroMotion
+import com.agronomy.phytomonitor.ui.rememberReducedMotion
 import com.agronomy.phytomonitor.voice.OfflineVoiceController
 import com.agronomy.phytomonitor.voice.VoiceCommands
 import java.util.Locale
 
+/**
+ * One screen, two zones: what the camera sees (photo and its result) and what the agronomist adds
+ * (rating, plot, note). Capture and voice live in a pinned bar at thumb height, so the result never
+ * moves away while the hand reaches for the next photo.
+ */
 @Composable
 internal fun FieldDemoScreen(
     model: FieldDemoViewModel,
@@ -70,14 +93,15 @@ internal fun FieldDemoScreen(
     flow: PhotoFlowViewModel,
     onVoice: () -> Unit,
     onContinuous: (Boolean) -> Unit,
-    onSystemGallery: () -> Unit,
     onNote: () -> Unit,
     onSpeak: () -> Unit,
     speaking: Boolean,
     speakerStatus: String
 ) {
     val controlsEnabled = !model.busy
+    val reducedMotion = rememberReducedMotion()
     val scroll = rememberScrollState()
+    var settingsOpen by rememberSaveable { mutableStateOf(false) }
     var handledScroll by remember { mutableIntStateOf(flow.scrollEvent) }
     LaunchedEffect(flow.scrollEvent) {
         if (handledScroll != flow.scrollEvent) {
@@ -92,127 +116,100 @@ internal fun FieldDemoScreen(
             }
         }
     }
-    Column(
-        modifier
-            .fillMaxSize()
-            .verticalScroll(scroll)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        AppHeader()
-        VoiceCommandPanel(voice, flow, onVoice, onContinuous, compact = model.bitmap != null)
-        val image = model.bitmap
-        if (image == null) {
-            EmptyPhoto()
-        } else {
-            PhotoWithDetections(image, model.result?.boxes.orEmpty(), model.showBoxes)
-        }
-        CaptureActions(controlsEnabled, onCamera, onGallery, onSystemGallery)
-        if (model.busy) {
-            BusyCard()
-        }
-        model.message?.let { MessageBanner(it, isError = true) }
-        model.result?.let { ResultSection(model, it, controlsEnabled) }
-        InspectionTools(model, onNote, onSpeak, speaking, speakerStatus)
-        AnalysisSettings(model, controlsEnabled)
-        Text(
-            "Предварительные модели. Результат нужно проверять: уверенность не означает вероятность болезни или процент повреждения.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+    Column(modifier.fillMaxSize()) {
+        TopBar(
+            onJournal = { model.openJournal() },
+            onSettings = { settingsOpen = true },
+            status = if (model.busy) "Анализ…" else model.selectedModelName()
         )
-        Text(
-            "Огурец: модель пока определяет лист без диагноза болезни.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Spacer(Modifier.height(8.dp))
+        Column(
+            Modifier
+                .weight(1f)
+                .verticalScroll(scroll)
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            val image = model.bitmap
+            if (image == null) {
+                Spacer(Modifier.height(4.dp))
+                EmptyPhoto()
+            } else {
+                PhotoWithDetections(image, model.result?.boxes.orEmpty(), model.showBoxes, busy = model.busy)
+            }
+            if (model.busy) {
+                BusyLine()
+            }
+            model.message?.takeIf { model.messageIsError }?.let { MessageBanner(it, isError = true) }
+            val result = model.result
+            ResultReveal(result != null, reducedMotion = reducedMotion) {
+                if (result != null) {
+                    ResultSection(model, result, controlsEnabled)
+                }
+            }
+            InspectionTools(model, onNote, onSpeak, speaking, speakerStatus)
+            Spacer(Modifier.height(8.dp))
+        }
+        BottomArea(voice, flow, onVoice, onContinuous, controlsEnabled, onCamera, onGallery)
+    }
+    if (settingsOpen) {
+        AnalysisSheet(model, controlsEnabled) { settingsOpen = false }
     }
 }
 
+/** Compact top bar: the product name, the journal and the analysis settings. Nothing else competes with the photo. */
 @Composable
-private fun AppHeader() {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+private fun TopBar(onJournal: () -> Unit, onSettings: () -> Unit, status: String) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 4.dp, top = 4.dp, bottom = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Box(
             Modifier
-                .size(48.dp)
+                .size(32.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.primary),
             contentAlignment = Alignment.Center
         ) {
-            Icon(AgroIcons.Leaf, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(28.dp))
+            Icon(AgroIcons.Leaf, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(20.dp))
         }
-        Spacer(Modifier.width(12.dp))
+        Spacer(Modifier.width(10.dp))
         Column(Modifier.weight(1f)) {
-            Text("AgroVoice AI", style = MaterialTheme.typography.headlineMedium)
+            Text("AgroVoice", style = MaterialTheme.typography.titleLarge)
             Text(
-                "Проверка листьев голосом",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                status,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1
             )
         }
-        Pill("без интернета", MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
-    }
-}
-
-@Composable
-private fun CaptureActions(enabled: Boolean, onCamera: () -> Unit, onGallery: () -> Unit, onSystemGallery: () -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Button(
-                onClick = onCamera,
-                enabled = enabled,
-                contentPadding = PaddingValues(horizontal = 12.dp),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(60.dp)
-            ) {
-                Icon(AgroIcons.Camera, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text("Сделать фото", maxLines = 1)
-            }
-            FilledTonalButton(
-                onClick = onGallery,
-                enabled = enabled,
-                contentPadding = PaddingValues(horizontal = 12.dp),
-                modifier = Modifier
-                    .weight(1f)
-                    .height(60.dp)
-            ) {
-                Icon(AgroIcons.Gallery, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text("Из галереи", maxLines = 1)
-            }
+        IconButton(onClick = onJournal) {
+            Icon(AgroIcons.Journal, contentDescription = "Журнал")
         }
-        TextButton(onClick = onSystemGallery, enabled = enabled) {
-            Text("Системный выбор фото")
+        IconButton(onClick = onSettings) {
+            Icon(AgroIcons.Tune, contentDescription = "Настройки анализа")
         }
     }
 }
 
 @Composable
-private fun BusyCard() {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-        shape = MaterialTheme.shapes.medium,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            Text("Обрабатываю фото…", style = MaterialTheme.typography.titleSmall)
-            LinearProgressIndicator(Modifier.fillMaxWidth())
-        }
+private fun BusyLine() {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        LinearProgressIndicator(Modifier.weight(1f))
+        Spacer(Modifier.width(12.dp))
+        Text("Обрабатываю фото…", style = MaterialTheme.typography.bodySmall)
     }
 }
 
 @Composable
 private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, controlsEnabled: Boolean) {
-    val (pillContainer, pillContent) = preliminaryColors()
-    SectionCard(
-        title = "Результат",
-        icon = AgroIcons.Leaf,
-        trailing = { Pill("предварительно", pillContainer, pillContent) }
-    ) {
+    var explain by remember { mutableStateOf(false) }
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        BlockHeader(title = "Результат", icon = AgroIcons.Leaf)
         Text(
-            "${result.model.name} · ${String.format(Locale.US, "%.0f", result.inferenceMs)} мс",
+            "${result.model.name} · ${formatSeconds(result.inferenceMs)} · предварительная модель: " +
+                "уверенность не означает вероятность болезни",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -222,14 +219,21 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
                 style = MaterialTheme.typography.bodySmall
             )
             if (result.skippedLeaves > 0) {
-                MessageBanner("Ещё ${result.skippedLeaves} листьев не обработаны. Сними участок крупнее.", isError = true)
+                MessageBanner("Ещё ${result.skippedLeaves} листьев не обработаны. Сними участок крупнее.", isError = false)
             }
         }
         if (result.boxes.isEmpty()) {
             MessageBanner("Не нашёл лист с достаточной уверенностью. Попробуй другой ракурс, модель или порог.", isError = false)
         } else {
             result.boxes.forEachIndexed { index, box ->
-                LeafResultRow(index + 1, model.detector.labels[box.classId], box.confidence)
+                LeafResultRow(
+                    number = index + 1,
+                    label = model.detector.labels[box.classId],
+                    confidence = box.confidence,
+                    prominent = index == 0,
+                    showCrop = true,
+                    onExplain = { explain = true }
+                )
             }
         }
         OutlinedButton(
@@ -241,87 +245,112 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
             Spacer(Modifier.width(8.dp))
             Text("Проверить ещё раз")
         }
-        Text(
-            "Результат сохранён на телефоне.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+    }
+    if (explain) {
+        ConfidenceDialog { explain = false }
     }
 }
 
+private val Russian = Locale.forLanguageTag("ru")
+
+/** «1136 мс» is hard to read in the field: show tenths of a second with a Russian decimal comma. */
+internal fun formatSeconds(milliseconds: Double): String =
+    String.format(Russian, "%.1f с", milliseconds / 1000.0)
+
+/**
+ * Pinned capture bar: the camera is the one wide action; the gallery and the microphone are
+ * icon actions with accessible names. The voice line sits just above, so the status never pushes
+ * the buttons around while listening.
+ */
 @Composable
-internal fun VoiceCommandPanel(
+private fun BottomArea(
     voice: OfflineVoiceController,
     flow: PhotoFlowViewModel,
     onVoice: () -> Unit,
     onContinuous: (Boolean) -> Unit,
-    context: String = "main",
-    compact: Boolean = false
+    enabled: Boolean,
+    onCamera: () -> Unit,
+    onGallery: () -> Unit
 ) {
     val listening = voice.active || flow.dialogVoice || flow.continuousVoice
-    val colors = MaterialTheme.colorScheme
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.cardColors(
-            containerColor = if (listening) colors.primaryContainer else colors.surfaceContainerLow
-        )
-    ) {
-        Column(Modifier.padding(if (compact) 10.dp else 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+    Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(horizontal = 16.dp, vertical = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            VoiceStatusLine(voice, flow, listening)
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalAlignment = Alignment.CenterVertically) {
                 Button(
-                    onClick = onVoice,
+                    onClick = onCamera,
+                    enabled = enabled,
                     modifier = Modifier
                         .weight(1f)
-                        .height(if (compact) 48.dp else 56.dp),
-                    colors = if (listening) {
-                        ButtonDefaults.buttonColors(containerColor = colors.tertiary, contentColor = colors.onTertiary)
-                    } else {
-                        ButtonDefaults.buttonColors()
-                    }
+                        .height(56.dp)
                 ) {
-                    Icon(if (listening) AgroIcons.Stop else AgroIcons.Mic, contentDescription = null)
+                    Icon(AgroIcons.Camera, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
-                    Text(if (listening) "Остановить микрофон" else "Голосовая команда")
+                    Text("Сделать фото", maxLines = 1)
+                }
+                FilledTonalIconButton(
+                    onClick = onGallery,
+                    enabled = enabled,
+                    modifier = Modifier.size(56.dp)
+                ) {
+                    Icon(AgroIcons.Gallery, contentDescription = "Из галереи", modifier = Modifier.size(24.dp))
+                }
+                FilledTonalIconButton(
+                    onClick = onVoice,
+                    modifier = Modifier
+                        .size(56.dp)
+                        .then(if (listening) Modifier.background(MaterialTheme.colorScheme.tertiary, CircleShape) else Modifier)
+                ) {
+                    Icon(
+                        if (listening) AgroIcons.Stop else AgroIcons.Mic,
+                        contentDescription = if (listening) "Остановить микрофон" else "Голосовая команда",
+                        tint = if (listening) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onSecondaryContainer,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                val wholeRow = Modifier
+                    .weight(1f)
+                    .clip(MaterialTheme.shapes.small)
+                    .toggleable(value = flow.continuousVoice, role = Role.Switch, onValueChange = onContinuous)
+                    .padding(vertical = 2.dp)
+                    .testTag("continuous_voice")
+                Row(wholeRow, verticalAlignment = Alignment.CenterVertically) {
+                    Text("Постоянно слушать", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+                    Switch(checked = flow.continuousVoice, onCheckedChange = null)
                 }
                 TextButton(onClick = { flow.helpOpen = true }) {
                     Text("Фразы")
                 }
             }
-            // The whole row toggles: a large target for gloves, and TalkBack reads the label with the switch.
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.small)
-                    .toggleable(value = flow.continuousVoice, role = Role.Switch, onValueChange = onContinuous)
-                    .padding(horizontal = 4.dp, vertical = 2.dp)
-                    .testTag("continuous_voice"),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Постоянно слушать", modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-                Switch(checked = flow.continuousVoice, onCheckedChange = null)
-            }
-            Text(voice.status, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-            if (voice.heard.isNotBlank()) {
-                Text("Услышал: ${voice.heard}", style = MaterialTheme.typography.bodyMedium)
-            }
-            if (!compact) {
-                val hint = when (context) {
-                    "camera" -> "Наведи камеру → «подтвердить»."
-                    "gallery" -> "Номер → просмотр → «подтвердить»."
-                    else -> "«Сделай фото» или «открой галерею»."
-                }
-                Text(hint, style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
-            }
         }
     }
     if (flow.helpOpen) {
-        VoiceHelpDialog(onClose = { flow.helpOpen = false })
+        VoiceHelpDialog { flow.helpOpen = false }
     }
+}
+
+/** One line of context for the microphone: status while idle, «Услышал» while listening. */
+@Composable
+private fun VoiceStatusLine(voice: OfflineVoiceController, flow: PhotoFlowViewModel, listening: Boolean) {
+    val text = when {
+        voice.heard.isNotBlank() -> "Услышал: ${voice.heard}"
+        listening -> voice.status
+        else -> "Голос работает без интернета"
+    }
+    Text(
+        text,
+        style = MaterialTheme.typography.bodySmall,
+        color = if (listening) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+        maxLines = 1
+    )
 }
 
 @Composable
@@ -372,5 +401,134 @@ internal fun ModelChips(model: FieldDemoViewModel, enabled: Boolean) {
                 enabled = enabled
             )
         }
+    }
+}
+
+/**
+ * Analysis settings live in a sheet, not on the main screen: nine experimental models and a
+ * threshold are a laboratory tool, the field screen needs the photo.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun AnalysisSheet(model: FieldDemoViewModel, enabled: Boolean, onDismiss: () -> Unit) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
+        AnalysisSheetContent(model, enabled)
+        Spacer(Modifier.height(24.dp))
+    }
+}
+
+@Composable
+private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(max = 560.dp)
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Text("Настройки анализа", style = MaterialTheme.typography.titleLarge)
+        Text(
+            "${model.selectedModelName()} · ${cropName(model.crop)} · порог ${thresholdPercent(model.threshold)}",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text("Модель", style = MaterialTheme.typography.labelLarge)
+        ModelChips(model, enabled)
+        Text("Культура", style = MaterialTheme.typography.labelLarge)
+        CropChips(model, enabled)
+        Text("Порог уверенности: ${thresholdPercent(model.threshold)}", style = MaterialTheme.typography.labelLarge)
+        Slider(
+            value = model.threshold,
+            onValueChange = { model.changeThreshold(it) },
+            valueRange = 0.1f..0.8f,
+            onValueChangeFinished = { model.analyze() },
+            enabled = enabled
+        )
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.small)
+                .toggleable(value = model.showBoxes, role = Role.Switch, onValueChange = { model.showBoxes = it })
+                .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Рамки на фото", modifier = Modifier.weight(1f))
+            Switch(checked = model.showBoxes, onCheckedChange = null)
+        }
+        OutlinedButton(
+            onClick = { model.compareModels() },
+            enabled = enabled && model.bitmap != null,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(AgroIcons.Compare, contentDescription = null, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(6.dp))
+            Text("Сравнить модели")
+        }
+        ComparisonList(model)
+        Text(
+            "Огурец: модель пока определяет лист без диагноза болезни.",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun CropChips(model: FieldDemoViewModel, enabled: Boolean) {
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        cropOptions.forEach { (id, label) ->
+            FilterChip(selected = model.crop == id, onClick = { model.selectCrop(id) }, label = { Text(label) }, enabled = enabled)
+        }
+    }
+}
+
+@Composable
+private fun ComparisonList(model: FieldDemoViewModel) {
+    if (model.comparison.isEmpty()) {
+        return
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text("Сравнение моделей", style = MaterialTheme.typography.titleMedium)
+        model.comparison.forEach { (name, result) ->
+            val labels = result.boxes.take(3).joinToString("; ") { model.detector.labels[it.classId] }
+            ComparisonRow(
+                name = name,
+                summary = labels.ifBlank { "Нет уверенного результата" },
+                meta = "${boxesLabel(result.boxes.size)} · ${formatSeconds(result.pipelineMs)}"
+            )
+        }
+        Text(
+            "Один снимок и одинаковые настройки. Совпадение моделей не доказывает диагноз; время — один запуск, не эталон скорости.",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+/**
+ * The result block appears with one short slide: the eye follows the photo downwards to the diagnosis.
+ * With system animations off the block is simply there.
+ */
+@Composable
+private fun ResultReveal(visible: Boolean, reducedMotion: Boolean, content: @Composable () -> Unit) {
+    if (reducedMotion) {
+        if (visible) {
+            content()
+        }
+        return
+    }
+    AnimatedVisibility(
+        visible = visible,
+        enter = fadeIn(tween(AgroMotion.RESULT_MS)) +
+            slideInVertically(tween(AgroMotion.RESULT_MS)) { height -> height / 6 },
+        exit = fadeOut(tween(AgroMotion.RESULT_MS / 2))
+    ) {
+        content()
     }
 }

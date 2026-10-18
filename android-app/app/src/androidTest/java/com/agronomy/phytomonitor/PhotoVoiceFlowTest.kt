@@ -57,7 +57,7 @@ class PhotoVoiceFlowTest {
         val imported=compose.activity.fieldModel.photo!!
         val expected=compose.activity.contentResolver.openInputStream(uri)!!.use {it.readBytes()}
         assertArrayEquals(expected,imported.readBytes())
-        compose.onNodeWithText("Голосовая команда").assertIsEnabled()
+        compose.onNodeWithContentDescription("Голосовая команда").assertIsEnabled()
         evidence("gallery_flow.json",JSONObject().put("status","passed").put("photos",photos.size)
             .put("newest",photos.first().name).put("oldest",photos.last().name).put("selected_number",desired)
             .put("import_only_after_confirmation",true).put("stable_numbers",true).put("bounds_check",true)
@@ -89,7 +89,7 @@ class PhotoVoiceFlowTest {
         compose.activityRule.scenario.moveToState(Lifecycle.State.CREATED)
         compose.activityRule.scenario.moveToState(Lifecycle.State.RESUMED)
         assertFalse(compose.activity.photoFlow.dialogVoice)
-        compose.onNodeWithText("Голосовая команда").assertIsEnabled()
+        compose.onNodeWithContentDescription("Голосовая команда").assertIsEnabled()
         say("отмена")
         assertFalse(compose.activity.photoFlow.galleryOpen)
     }

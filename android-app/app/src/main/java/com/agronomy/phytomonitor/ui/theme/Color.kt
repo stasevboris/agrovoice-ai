@@ -21,6 +21,13 @@ val Amber40 = Color(0xFF835400)
 val Amber80 = Color(0xFFFFB951)
 val Amber90 = Color(0xFFFFDDB3)
 
+// Rust is the condition colour: a disease or a pest is named in this ink, never filled with it.
+// 7.0:1 on white, 11.3:1 on the dark surface (WCAG AA and AAA for text).
+val Rust30 = Color(0xFF6B2A12)
+val Rust40 = Color(0xFF9A3B1B)
+val Rust80 = Color(0xFFFFB59B)
+val Rust90 = Color(0xFFFFDBCF)
+
 val Field98 = Color(0xFFF6FBF3)
 val Field95 = Color(0xFFEAF0E7)
 val Field92 = Color(0xFFE2EAE0)

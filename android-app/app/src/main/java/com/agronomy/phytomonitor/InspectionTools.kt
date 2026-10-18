@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -32,16 +31,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,13 +45,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.agronomy.phytomonitor.ml.PhotoFiles
 import com.agronomy.phytomonitor.ui.AgroIcons
+import com.agronomy.phytomonitor.ui.BlockHeader
 import com.agronomy.phytomonitor.ui.Pill
-import com.agronomy.phytomonitor.ui.SectionCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -76,8 +71,14 @@ internal fun boxesLabel(count: Int): String {
     return "$count $word"
 }
 
+internal val cropOptions = listOf("all" to "Все культуры", "Potato" to "Картофель", "Tomato" to "Томат", "Cucumber" to "Огурец")
+
+internal fun cropName(id: String) = cropOptions.firstOrNull { it.first == id }?.second ?: id
+
+/** The threshold is spoken and set in percents; the screen shows the same unit. */
+internal fun thresholdPercent(value: Float) = "${(value * 100).toInt()} %"
+
 private val reviewOptions = listOf("correct" to "Верно", "incorrect" to "Неверно", "uncertain" to "Не уверен")
-private val cropOptions = listOf("all" to "Все культуры", "Potato" to "Картофель", "Tomato" to "Томат", "Cucumber" to "Огурец")
 
 private fun reviewLabel(review: String) = when (review) {
     "correct" -> "Верно"
@@ -86,11 +87,20 @@ private fun reviewLabel(review: String) = when (review) {
     else -> "Без оценки"
 }
 
+/**
+ * The agronomist's own record: a rating of the whole photo, the plot and a dictated note.
+ * It sits on the page background without a card: it is the second task of the screen, not a widget.
+ */
 @Composable
 internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSpeak: () -> Unit, speaking: Boolean, speakerStatus: String) {
     val hasResult = !model.busy && model.reportName != null
-    SectionCard(title = "Осмотр", icon = AgroIcons.Edit) {
-        Text("Твоя оценка результата на всём снимке", style = MaterialTheme.typography.bodyMedium)
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        BlockHeader("Осмотр", AgroIcons.Edit)
+        Text(
+            "Твоя оценка результата на всём снимке",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             reviewOptions.forEach { (id, label) ->
                 FilterChip(
@@ -115,15 +125,16 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
             modifier = Modifier.fillMaxWidth()
         )
         Surface(
-            color = MaterialTheme.colorScheme.surfaceContainerLowest,
-            shape = MaterialTheme.shapes.medium,
+            color = MaterialTheme.colorScheme.surfaceContainerLow,
+            shape = MaterialTheme.shapes.small,
+            onClick = onNote,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                if (model.noteDraft.isBlank()) "Заметка пока пустая" else model.noteDraft,
+                if (model.noteDraft.isBlank()) "Добавить заметку" else model.noteDraft,
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (model.noteDraft.isBlank()) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(12.dp)
+                modifier = Modifier.padding(14.dp)
             )
         }
         Button(onClick = { model.saveInspection() }, enabled = hasResult, modifier = Modifier.fillMaxWidth().height(52.dp)) {
@@ -133,7 +144,13 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
         }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             ToolButton("Заметка", AgroIcons.Edit, enabled = !model.busy, onClick = onNote, modifier = Modifier.weight(1f))
-            ToolButton(if (speaking) "Стоп" else "Прочитать", if (speaking) AgroIcons.Stop else AgroIcons.Speaker, enabled = true, onClick = onSpeak, modifier = Modifier.weight(1f))
+            ToolButton(
+                if (speaking) "Стоп" else "Прочитать",
+                if (speaking) AgroIcons.Stop else AgroIcons.Speaker,
+                enabled = true,
+                onClick = onSpeak,
+                modifier = Modifier.weight(1f)
+            )
             ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { model.openJournal() }, modifier = Modifier.weight(1f))
         }
         Text(speakerStatus, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -146,7 +163,7 @@ private fun ToolButton(label: String, icon: ImageVector, enabled: Boolean, onCli
     OutlinedButton(
         onClick = onClick,
         enabled = enabled,
-        shape = MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.small,
         contentPadding = PaddingValues(horizontal = 4.dp, vertical = 10.dp),
         modifier = modifier
     ) {
@@ -155,91 +172,6 @@ private fun ToolButton(label: String, icon: ImageVector, enabled: Boolean, onCli
             Spacer(Modifier.height(4.dp))
             Text(label, style = MaterialTheme.typography.labelMedium, maxLines = 1)
         }
-    }
-}
-
-/** Model, crop filter, threshold and comparison: folded by default so the photo and result stay on top. */
-@Composable
-internal fun AnalysisSettings(model: FieldDemoViewModel, enabled: Boolean) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
-    val selectedName = model.detector.models.firstOrNull { it.id == model.selectedModel }?.name ?: model.selectedModel
-    val cropName = cropOptions.firstOrNull { it.first == model.crop }?.second ?: model.crop
-    val threshold = String.format(Locale.US, "%.2f", model.threshold)
-    SectionCard(
-        title = "Настройки анализа",
-        icon = AgroIcons.Tune,
-        trailing = {
-            IconButton(onClick = { expanded = !expanded }) {
-                Icon(
-                    if (expanded) AgroIcons.ExpandLess else AgroIcons.ExpandMore,
-                    contentDescription = if (expanded) "Свернуть настройки" else "Развернуть настройки"
-                )
-            }
-        },
-        onHeaderClick = { expanded = !expanded }
-    ) {
-        Text(
-            "$selectedName · $cropName · порог $threshold",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        if (expanded) {
-            Text("Модель", style = MaterialTheme.typography.labelLarge)
-            ModelChips(model, enabled)
-            Text("Культура", style = MaterialTheme.typography.labelLarge)
-            Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                cropOptions.forEach { (id, label) ->
-                    FilterChip(selected = model.crop == id, onClick = { model.selectCrop(id) }, label = { Text(label) }, enabled = enabled)
-                }
-            }
-            Text("Порог уверенности: $threshold", style = MaterialTheme.typography.labelLarge)
-            Slider(
-                value = model.threshold,
-                onValueChange = { model.changeThreshold(it) },
-                valueRange = 0.1f..0.8f,
-                onValueChangeFinished = { model.analyze() },
-                enabled = enabled
-            )
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .clip(MaterialTheme.shapes.small)
-                    .toggleable(value = model.showBoxes, role = Role.Switch, onValueChange = { model.showBoxes = it }),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Рамки на фото", modifier = Modifier.weight(1f))
-                Switch(checked = model.showBoxes, onCheckedChange = null)
-            }
-            OutlinedButton(onClick = { model.compareModels() }, enabled = enabled && model.bitmap != null, modifier = Modifier.fillMaxWidth()) {
-                Icon(AgroIcons.Compare, contentDescription = null, modifier = Modifier.size(18.dp))
-                Spacer(Modifier.width(6.dp))
-                Text("Сравнить модели")
-            }
-        }
-        ComparisonList(model)
-    }
-}
-
-@Composable
-private fun ComparisonList(model: FieldDemoViewModel) {
-    if (model.comparison.isEmpty()) {
-        return
-    }
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        model.comparison.forEach { (name, result) ->
-            Surface(color = MaterialTheme.colorScheme.surfaceContainerLowest, shape = MaterialTheme.shapes.medium, modifier = Modifier.fillMaxWidth()) {
-                Column(Modifier.padding(12.dp)) {
-                    Text("$name · ${boxesLabel(result.boxes.size)} · ${result.pipelineMs.toInt()} мс", style = MaterialTheme.typography.titleSmall)
-                    val labels = result.boxes.take(3).joinToString("; ") { model.detector.labels[it.classId] }
-                    Text(labels.ifBlank { "Нет уверенного результата" }, style = MaterialTheme.typography.bodySmall)
-                }
-            }
-        }
-        Text(
-            "Один снимок и одинаковые настройки. Совпадение моделей не доказывает диагноз; время — один запуск, не эталон скорости.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
     }
 }
 
@@ -350,7 +282,7 @@ private fun JournalEntryCard(model: FieldDemoViewModel, entry: InspectionEntry, 
         else -> colors.surfaceVariant to colors.onSurfaceVariant
     }
     Card(
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(containerColor = colors.surfaceContainerLow),
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -385,7 +317,7 @@ private fun JournalThumbnail(path: String) {
     Box(
         Modifier
             .size(84.dp)
-            .clip(MaterialTheme.shapes.medium)
+            .clip(MaterialTheme.shapes.small)
             .background(MaterialTheme.colorScheme.primaryContainer),
         contentAlignment = Alignment.Center
     ) {

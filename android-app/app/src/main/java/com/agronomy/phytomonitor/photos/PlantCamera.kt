@@ -94,6 +94,10 @@ fun PlantCamera(flow: PhotoFlowViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit
     CameraLayout(previewView, shooting, ready, flow.message, onShoot={takePhoto()}, onCancel=onCancel, voicePanel=voicePanel)
 }
 
+/**
+ * Camera screen: the viewfinder owns the screen, the controls sit on a thin dark strip at the bottom.
+ * The voice state is a single line above the shutter, so the preview is never covered by a card.
+ */
 @Composable
 private fun CameraLayout(
     previewView: PreviewView,
@@ -131,9 +135,8 @@ private fun CameraLayout(
             Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
-                .background(Color.Black.copy(alpha = 0.45f))
-                .padding(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+                .padding(bottom = 12.dp, start = 12.dp, end = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             message?.let { MessageBanner(it, isError = true) }

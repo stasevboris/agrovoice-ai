@@ -44,6 +44,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     var result by mutableStateOf<DetectionResult?>(null); private set
     var busy by mutableStateOf(false); private set
     var message by mutableStateOf<String?>(null); private set
+    /** Errors stop the task; confirmations of a finished action do not. */
+    var messageIsError by mutableStateOf(true); private set
     var reportName by mutableStateOf<String?>(null); private set
     var selectedModel by mutableStateOf(preferences.getString("model","yolo26n") ?: "yolo26n"); private set
     var crop by mutableStateOf(preferences.getString("crop","all") ?: "all"); private set
@@ -83,9 +85,14 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         preferences.edit().remove("pending_camera").apply()
         val file=path?.let(::File)
         if(success && file?.isFile==true && file.length()>0) openFile(file)
-        else {file?.delete();message="Съёмка отменена"}
+        else {file?.delete();notify("Съёмка отменена")}
     }
-    fun showError(text: String){message=text}
+    fun showError(text: String){message=text;messageIsError=true}
+    /** A finished action («сохранено»): shown briefly at the bottom, not as a banner in the page. */
+    private fun notify(text: String){message=text;messageIsError=false}
+    fun clearMessage(){message=null;messageIsError=true}
+    /** The model shown in the top bar: «YOLO26n · 25 %». */
+    fun selectedModelName(): String = detector.models.firstOrNull {it.id==selectedModel}?.name ?: selectedModel
     fun importPhoto(uri: Uri) {
         if(busy)return
         busy=true;message=null;result=null;reportName=null
@@ -141,7 +148,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     fun editPlot(text: String){plotName=text.take(120);preferences.edit().putString("plot",plotName).apply()}
     fun assess(value: String){if(value in setOf("unrated","correct","incorrect","uncertain")){review=value;saveInspection()}}
     fun saveInspection(){
-        val name=reportName ?: run {message="Сначала дождись результата анализа";return}
+        val name=reportName ?: run {showError("Сначала дождись результата анализа");return}
         if(busy)return
         val report=File(getApplication<Application>().getExternalFilesDir(null) ?: getApplication<Application>().filesDir,"results/$name")
         val note=noteDraft;val rating=review;val plot=plotName
@@ -150,7 +157,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             journal.save(report,note,rating,plot)
             if(unsavedReport?.name==report.name)unsavedReport=null
             val entries=journal.list()
-            main.post {if(!cleared){journalEntries=entries;busy=false;message="Осмотр сохранён в журнале"}}
+            main.post {if(!cleared){journalEntries=entries;busy=false;notify("Осмотр сохранён в журнале")}}
         }catch(error: Exception){postFailure(error)}}
     }
     fun openJournal(){journalOpen=true;worker.execute {val entries=journal.list();main.post {if(!cleared)journalEntries=entries}}}
@@ -161,18 +168,18 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             val json=journal.export()
             requireNotNull(getApplication<Application>().contentResolver.openOutputStream(uri,"wt")) {"Не удалось открыть файл"}
                 .bufferedWriter(Charsets.UTF_8).use {it.write(json)}
-            main.post {if(!cleared){busy=false;message="Журнал сохранён в выбранный файл JSON. Фотографии остаются отдельно."}}
+            main.post {if(!cleared){busy=false;notify("Журнал сохранён в файл JSON. Фотографии остаются отдельно.")}}
         }catch(error: Exception){postFailure(error)}}
     }
     fun compareModels(){
-        val source=bitmap ?: run {message="Сначала выбери фото";return};val file=photo ?: return
+        val source=bitmap ?: run {showError("Сначала выбери фото");return};val file=photo ?: return
         if(busy)return
         val filter=crop;val score=threshold
         busy=true;message=null;comparison=emptyList()
         worker.execute {try {
             // Comparison results are shown on screen only; they are not journal records.
             val rows=detector.models.map {m -> m.name to detector.detect(source,m,filter,score)}
-            main.post {if(!cleared){comparison=rows;busy=false;message="Модели проверены на одном фото при одинаковом пороге"}}
+            main.post {if(!cleared){comparison=rows;busy=false;notify("Модели проверены на одном фото при одинаковом пороге")}}
         }catch(error: Exception){postFailure(error)}}
     }
     fun spokenResult(): String {
@@ -180,7 +187,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(found.boxes.isEmpty())return "Лист с достаточной уверенностью не найден. Попробуй другой ракурс."
         return "Предварительный результат. "+found.boxes.take(5).mapIndexed {i,b ->"Лист ${i+1}. ${detector.labels[b.classId]}."}.joinToString(" ")+" Результат нужно проверить."
     }
-    private fun postFailure(error:Exception){main.post {if(!cleared){busy=false;message=error.message ?: "Не удалось обработать фото"}}}
+    private fun postFailure(error:Exception){main.post {if(!cleared){busy=false;showError(error.message ?: "Не удалось обработать фото")}}}
     override fun onCleared(){
         cleared=true
         worker.execute {replaceUnsavedReport(null);detector.close()}
