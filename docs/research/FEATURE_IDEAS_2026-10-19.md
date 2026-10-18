@@ -128,3 +128,25 @@ Google Play Games и облачный сервис достижений не о�
 раньше добавления сложных функций. Это интервью о чужом продукте, а не
 независимое испытание нашей модели; заявления о коммерческой эффективности
 не переносим в диплом как собственные результаты.
+
+## Дополнительный отбор GitHub: полевой ввод, камера и голос
+
+| Источник | Проверено | Конкретная польза / решение |
+|---|---|---|
+| [ODK Collect](https://github.com/getodk/collect) | README и `LICENSE.md`, Apache-2.0 | Формы и сохранение наблюдений при нестабильной связи/питании. Полезны черновик осмотра, завершение формы и повтор отправки. XForms-платформу целиком внедрять ради одного журнала не требуется |
+| [Android Camera samples](https://github.com/android/camera-samples) | README и [контроллер luminosity](https://github.com/android/camera-samples/blob/main/samples/camerax-luminosity/src/main/java/com/android/camerax/luminosity/CameraXLuminosityController.kt); в файле Apache-2.0 | `ImageAnalysis`, `KEEP_ONLY_LATEST`, закрытие `ImageProxy` в `finally` — пример для живых подсказок качества. Средняя яркость всего кадра не доказывает пригодность листа: нужны ROI, пересвет и размытость; учитывать strides/cropRect Y-плоскости |
+| [ONNX Runtime inference examples](https://github.com/microsoft/onnxruntime-inference-examples) | README, MIT по API репозитория | Мобильные примеры и quantization. Проверить операторы и preprocessing/postprocessing; пример инференса не подтверждает скорость на наших телефонах |
+| [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) | README, Apache-2.0 кода | Офлайн-ASR/TTS/VAD, уже связан с направлением голоса. Русский checkpoint требует отдельной лицензии и замеров памяти/задержки |
+| [ZXing](https://github.com/zxing/zxing) | README, Apache-2.0 | Декодирование QR для привязки растения/участка. Сначала сравнить удобство с голосовым названием участка |
+| [MapLibre Native](https://github.com/maplibre/maplibre-native) | README, BSD-2-Clause | Будущая карта участков. Лицензия движка не даёт прав на тайлы и не означает бесплатную офлайн-загрузку любых карт |
+| [android-voice-navigation](https://github.com/katoki-dev/android-voice-navigation) | README и [VoiceRecognitionService.kt](https://github.com/katoki-dev/android-voice-navigation/blob/main/app/src/main/java/com/katoki/voicenavigation/service/VoiceRecognitionService.kt), MIT | **Не выбран как доказанное офлайн-решение.** README обещает local/offline, код вызывает `createSpeechRecognizer`, не `createOnDeviceSpeechRecognizer`; провайдер может отправлять речь на сервер. Сетка координат не решает свободный русский диалог |
+| [Raf3-Tech/vca](https://github.com/Raf3-Tech/vca), [Voice-controlled-android-application](https://github.com/chanduseeram/Voice-controlled-android-application) | Карточки и README; лицензия не установлена | Кандидаты по выдаче, не рекомендации для интеграции. Заявления об офлайн-работе здесь не проверены запуском |
+
+Расхождение голосового примера проверено по
+[официальному SpeechRecognizer API](https://developer.android.com/reference/android/speech/SpeechRecognizer):
+обычный сервис может использовать удалённое распознавание; API не предназначен
+для бесконечного непрерывного слушания. Для системного on-device режима требуется
+проверка доступности сервиса и языка, а для встроенного Vosk/sherpa — проверка
+выбранного пакета. Внутри AgroVoice надёжнее вызывать собственные действия по ID,
+чем нажимать экран через AccessibilityService. Системное управление вне приложения
+— отдельное разрешение/сценарий, не обязательное условие своего hands-free UI.
