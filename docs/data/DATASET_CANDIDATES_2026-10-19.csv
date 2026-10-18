@@ -1,0 +1,741 @@
+﻿url,title,host,license_metadata,discovered,review
+https://data.4tu.nl/articles/dataset/3rd_Autonomous_Greenhouse_Challenge_Online_Challenge_Lettuce_Images/15023088/1,autonomous_greenhouse_regression,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://data.mendeley.com/datasets/3fmjm7ncc6/2,soybean_weed_uav_brazil,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://data.mendeley.com/datasets/bycbh73438/1,soybean_insect_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://data.mendeley.com/datasets/hxsnvwty3r/1,mango_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://data.mendeley.com/datasets/s8x6jn5cvr/1,guava_disease_pakistan,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://data.nal.usda.gov/dataset/data-multi-species-fruit-flower-detection-using-refined-semantic-segmentation-network,apple_flower_segmentation,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://drive.google.com/drive/folders/1CmsZb1caggLRN7ANfika8WuPiywo4mBb,fruit_detection_worldwide,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AI-Lab-Makerere/ibean/,bean_disease_uganda,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AUAgroup/early-crop-weed,crop_weeds_greece,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AlexOlsen/DeepWeeds,rangeland_weeds_australia,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AxisAg/GHAIDatasets/blob/main/datasets/broccoli.md,ghai_broccoli_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AxisAg/GHAIDatasets/blob/main/datasets/green_cabbage.md,ghai_green_cabbage_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AxisAg/GHAIDatasets/blob/main/datasets/iceberg.md,ghai_iceberg_lettuce_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AxisAg/GHAIDatasets/blob/main/datasets/romaine.md,ghai_romaine_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/AxisAg/GHAIDatasets/blob/main/datasets/strawberry.md,ghai_strawberry_fruit_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/Project-AgML/AgML/blob/main/docs/datasets/bean_synthetic_earlygrowth_aerial.md,bean_synthetic_earlygrowth_aerial,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/The77Lab/SugarcaneBilletsDataset,sugarcane_damage_usa,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/ctyeong/Riseholme-2021,riseholme_strawberry_classification_2021,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/cwfid/dataset,carrot_weeds_germany,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/inkyusa/weedNet,sugarbeet_weed_segmentation,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/kabbas570/CED-Net-Crops-and-Weeds-Segmentation-for-Smart-Farming-Using-a-Small-Cascaded-Encoder-Decoder-Archi,rice_seedling_segmentation,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/pratikkayal/PlantDoc-Dataset,plant_doc_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/pratikkayal/PlantDoc-Object-Detection-Dataset,plant_doc_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/spMohanty/PlantVillage-Dataset,plant_village_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/thsant/add256/tree/zenodo-1.0,apple_detection_drone_brazil,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://github.com/thsant/wgisd/tree/master,embrapa_wgisd_grape_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://hdl.handle.net/2376/17721,apple_detection_usa,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://huggingface.co/datasets/12Qi89/rice-disease-02,12Qi89/rice-disease-02,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/A2H0H0R1/plant-disease,A2H0H0R1/plant-disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/A2H0H0R1/plant-disease-new,A2H0H0R1/plant-disease-new,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AMead10/fleurs_2_sec_chunks,AMead10/fleurs_2_sec_chunks,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Abhinand00001/plant_disease_prediction,Abhinand00001/plant_disease_prediction,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AfiqN/mango-leaf-disease,AfiqN/mango-leaf-disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AfiqN/mango-leaf-disease-.7-.15-.15,AfiqN/mango-leaf-disease-.7-.15-.15,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AfiqN/mango-leaf-disease-.75-.1-.15,AfiqN/mango-leaf-disease-.75-.1-.15,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AfiqN/mango-leaf-disease-extended,AfiqN/mango-leaf-disease-extended,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AfiqN/mango-leaf-disease-test,AfiqN/mango-leaf-disease-test,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AfiqN/mango-leaf-disease2,AfiqN/mango-leaf-disease2,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Akram-11/plant-disease-model,Akram-11/plant-disease-model,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AldoSN/lemon-leaf-disease-dataset,AldoSN/lemon-leaf-disease-dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AlvaroVasquezAI/Maize_Leaf_Diseases,AlvaroVasquezAI/Maize_Leaf_Diseases,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AndriiPets/autotrain-data-plant-disease-classification,AndriiPets/autotrain-data-plant-disease-classification,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AndriiPets/plant-disease-modified,AndriiPets/plant-disease-modified,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AnuradhaPoddar/AgricultureDataset,AnuradhaPoddar/AgricultureDataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AnuradhaPoddar/agriculture_llama_6k,AnuradhaPoddar/agriculture_llama_6k,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Arciomwww/ru_common_voice_sova_rudevices_golos_fleurs,Arciomwww/ru_common_voice_sova_rudevices_golos_fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/AxonData/russian-speech-recognition-dataset,AxonData/russian-speech-recognition-dataset,huggingface,cc-by-nc-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/BAAI/IndustryCorpus2_agriculture_forestry_animal_husbandry_fishery,BAAI/IndustryCorpus2_agriculture_forestry_animal_husbandry_fishery,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/BAAI/IndustryCorpus_agriculture,BAAI/IndustryCorpus_agriculture,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/BashMocha/Plant-Segmentation,BashMocha/Plant-Segmentation,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/BekiTila/Testing_AgriCultureDataset,BekiTila/Testing_AgriCultureDataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Bluelilyflower/agriculture_laws_and_regulations,Bluelilyflower/agriculture_laws_and_regulations,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ButterChicken98/controlnet_canny_segmented_tomato_Tomato_Spider_mites_Two_spotted_spider_mite,ButterChicken98/controlnet_canny_segmented_tomato_Tomato_Spider_mites_Two_spotted_spider_mite,huggingface,,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/ButterChicken98/deepweeds_clip_corpus_90_10,ButterChicken98/deepweeds_clip_corpus_90_10,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/CGIAR/AgricultureVideosQnA,CGIAR/AgricultureVideosQnA,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/CGIAR/AgricultureVideosQnA2,CGIAR/AgricultureVideosQnA2,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/CGIAR/AgricultureVideosTranscript,CGIAR/AgricultureVideosTranscript,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Chhabi/Nepali-Agriculture-QA,Chhabi/Nepali-Agriculture-QA,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ClarkQuinn/Plant-Seg,ClarkQuinn/Plant-Seg,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/CopyleftCultivars/SemiSynthetic_Composting_Knowledge_For_Agriculture,CopyleftCultivars/SemiSynthetic_Composting_Knowledge_For_Agriculture,huggingface,other,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/CopyleftCultivars/SemiSynthetic_Data_For_Regenerative_Farming_Agriculture,CopyleftCultivars/SemiSynthetic_Data_For_Regenerative_Farming_Agriculture,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/CrAnish07/Plant_Disease,CrAnish07/Plant_Disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/CyberCraze/leaf_disease_watermark_images,CyberCraze/leaf_disease_watermark_images,huggingface,unknown,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/DataoceanAI/Dolphin_Model_Russian-Conversational-Speech-Recognition-Corpus,DataoceanAI/Dolphin_Model_Russian-Conversational-Speech-Recognition-Corpus,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/DataoceanAI/Dolphin_Model_Russian-Speech-Recognition,DataoceanAI/Dolphin_Model_Russian-Speech-Recognition,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Debasis123/paddy-potato-tomato-rice-disease,Debasis123/paddy-potato-tomato-rice-disease,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Dharine/agriculture-10k,Dharine/agriculture-10k,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Dharine/agriculture-5k,Dharine/agriculture-5k,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/DigiGreen/AgricultureVideosQnA,DigiGreen/AgricultureVideosQnA,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/DigiGreen/AgricultureVideosQnA2,DigiGreen/AgricultureVideosQnA2,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/DigiGreen/AgricultureVideosTranscript,DigiGreen/AgricultureVideosTranscript,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/EGOISTyrh/plantwildcaptions5,EGOISTyrh/plantwildcaptions5,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Engineer101/cassava-leaf-disease-classification,Engineer101/cassava-leaf-disease-classification,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/FacelessLake/golos-annotation-length-based,FacelessLake/golos-annotation-length-based,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Francesco/cotton-plant-disease,Francesco/cotton-plant-disease,huggingface,cc,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Francesco/leaf-disease-nsdsr,Francesco/leaf-disease-nsdsr,huggingface,cc,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/FrancophonIA/Protection_of_culture_in_ecological_agriculture,FrancophonIA/Protection_of_culture_in_ecological_agriculture,huggingface,cc-by-nd-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Golos11/dbpub,Golos11/dbpub,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Hemg/AgricultureLLM,Hemg/AgricultureLLM,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Hemg/new-plant-diseases-dataset,Hemg/new-plant-diseases-dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Hercule66/agriculture-dataset-for-falcon-7b-instruct-cleaned,Hercule66/agriculture-dataset-for-falcon-7b-instruct-cleaned,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Ibrahim125/Cassava-TensorFlow,Ibrahim125/Cassava-TensorFlow,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Indic-LLM-Labs/Fleurs-Kn,Indic-LLM-Labs/Fleurs-Kn,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/JONRFewf/my_golos,JONRFewf/my_golos,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/JRHuy/cntt2-fleurs,JRHuy/cntt2-fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/JRHuy/vivos-fleurs,JRHuy/vivos-fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Jayashakpjmp/sri_lankan_tea_leaf_diseases,Jayashakpjmp/sri_lankan_tea_leaf_diseases,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Joker5800/Tobacco_Leaf_Diseases,Joker5800/Tobacco_Leaf_Diseases,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Kannada-LLM-Labs/Fleurs-Kn,Kannada-LLM-Labs/Fleurs-Kn,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Karan-1211/Bean_leaf_stage_wise_disease_prediction,Karan-1211/Bean_leaf_stage_wise_disease_prediction,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/KisanVaani/agriculture-qa-english-only,KisanVaani/agriculture-qa-english-only,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Kobi-01/tamil_agriculture_QA,Kobi-01/tamil_agriculture_QA,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/KoddaDuck/fleurs,KoddaDuck/fleurs,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/LeafNet75/Leaf-Disease-Segmentation-masks,LeafNet75/Leaf-Disease-Segmentation-masks,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/LeafNet75/Rice-Disease-Classification-Dataset,LeafNet75/Rice-Disease-Classification-Dataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/LibreYOLO/leaf-disease-nsdsr,LibreYOLO/leaf-disease-nsdsr,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Lindll/maize-leaf-disease,Lindll/maize-leaf-disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Luxem/Plant-Disease-Classification,Luxem/Plant-Disease-Classification,huggingface,bigscience-openrail-m,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Mahesh2841/Agriculture,Mahesh2841/Agriculture,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Manaasaa/plant_stem_disease,Manaasaa/plant_stem_disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MaratDV/russian-call-center-speech-ru,MaratDV/russian-call-center-speech-ru,huggingface,other,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Mauregato/leaf_disease_segmentation,Mauregato/leaf_disease_segmentation,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MennaEssam/plant_disease,MennaEssam/plant_disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Mobiusi/Durian-Plantation-Disease-Leaf-Rot-Detection-Image-Dataset,Mobiusi/Durian-Plantation-Disease-Leaf-Rot-Detection-Image-Dataset,huggingface,cc-by-nc-sa-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MohammadJamalaldeen/google_fleurs_ar,MohammadJamalaldeen/google_fleurs_ar,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MohammadJamalaldeen/google_fleurs_plus_common_voice_11_ar,MohammadJamalaldeen/google_fleurs_plus_common_voice_11_ar,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MohammadJamalaldeen/google_fleurs_plus_common_voice_11_arabic_language,MohammadJamalaldeen/google_fleurs_plus_common_voice_11_arabic_language,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MohammedNasri/common_voice_fleurs_with_diacs,MohammedNasri/common_voice_fleurs_with_diacs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MohammedNasri/fleurs,MohammedNasri/fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/MohammedNasri/wav_to_vec_common_voice_fleurs_without_diacs,MohammedNasri/wav_to_vec_common_voice_fleurs_without_diacs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/NLPGenius/PlantDisease,NLPGenius/PlantDisease,huggingface,unknown,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/NazmulNIR/Chilli-Plant-Disease-Classification,NazmulNIR/Chilli-Plant-Disease-Classification,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/NouRed/plant-disease-recognition,NouRed/plant-disease-recognition,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/PRAKALP-PANDE/PSP-agricultureQnA-1k-unique,PRAKALP-PANDE/PSP-agricultureQnA-1k-unique,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Prachi1234/corn-leaf-disease,Prachi1234/corn-leaf-disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/COLD_chili_leaf_disease_classification,Project-AgML/COLD_chili_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/Cassava_whitefly_detection,Project-AgML/Cassava_whitefly_detection,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/DeepWeeds_classification,Project-AgML/DeepWeeds_classification,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/Dhan-Shomadhan_rice_leaf_disease_classification,Project-AgML/Dhan-Shomadhan_rice_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/apple_leaf_disease_classification,Project-AgML/apple_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/citrus_fruit_leaf_disease_classification,Project-AgML/citrus_fruit_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/corn_leaf_disease_classification,Project-AgML/corn_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/corn_maize_leaf_disease,Project-AgML/corn_maize_leaf_disease,huggingface,,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/cotton_leaf_disease_classification,Project-AgML/cotton_leaf_disease_classification,huggingface,cc-by-nc-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/eggplant_leaf_disease_classification,Project-AgML/eggplant_leaf_disease_classification,huggingface,cc-by-nc-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/grape_leaf_disease_classification,Project-AgML/grape_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/grapevine_disease_classification,Project-AgML/grapevine_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/image_safari_cassava_qed_lilongwe,Project-AgML/image_safari_cassava_qed_lilongwe,huggingface,cc-by-sa-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/orange_leaf_disease_classification,Project-AgML/orange_leaf_disease_classification,huggingface,,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/potato_leaf_disease_classification,Project-AgML/potato_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/rice_disease_classification_bangladesh,Project-AgML/rice_disease_classification_bangladesh,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/rice_leaf_disease_classification,Project-AgML/rice_leaf_disease_classification,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/rice_leaf_disease_classification_2,Project-AgML/rice_leaf_disease_classification_2,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/rice_leaf_disease_classification_bd,Project-AgML/rice_leaf_disease_classification_bd,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/rice_leaf_disease_classification_india,Project-AgML/rice_leaf_disease_classification_india,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/soybean_leaf_disease_classification,Project-AgML/soybean_leaf_disease_classification,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/soybean_leaf_disease_classification_brazil,Project-AgML/soybean_leaf_disease_classification_brazil,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/soybean_leaf_wilt_classification_2,Project-AgML/soybean_leaf_wilt_classification_2,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/tomato_leaf_disease,Project-AgML/tomato_leaf_disease,huggingface,cc0-1.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/tomato_leaf_disease_detection,Project-AgML/tomato_leaf_disease_detection,huggingface,cc-by-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/Project-AgML/uci_rice_leaf_diseases_classification,Project-AgML/uci_rice_leaf_diseases_classification,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Project-AgML/wheat_disease_detection,Project-AgML/wheat_disease_detection,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/RASMUS/fleurs_asr_processed_audio,RASMUS/fleurs_asr_processed_audio,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/RaviNaik/Fleurs-Kn,RaviNaik/Fleurs-Kn,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Rouaaaa/tomato-leaf-disease-image,Rouaaaa/tomato-leaf-disease-image,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/RuterNorway/Fleurs-Alpaca-EN-NO,RuterNorway/Fleurs-Alpaca-EN-NO,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/S-a-r-a/rice_leaf_disease_dataset,S-a-r-a/rice_leaf_disease_dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Sadashiv/Plant-Diseases-Dataset,Sadashiv/Plant-Diseases-Dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/SberDevices/Golos,SberDevices/Golos,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Sh1man/golos_opus,Sh1man/golos_opus,huggingface,cc-by-nc-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Shib-Sankar-Das/Plant-Disease-Detection-System,Shib-Sankar-Das/Plant-Disease-Detection-System,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ShuklaShreyansh/Agriculture-QA,ShuklaShreyansh/Agriculture-QA,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Speech-data/russian-speech-dataset,Speech-data/russian-speech-dataset,huggingface,cc-by-nc-nd-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/SpeechDataAI/russian-conversational-speech,SpeechDataAI/russian-conversational-speech,huggingface,other,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Spitblaze/Corn_or_Maize_Leaf_Disease_Dataset,Spitblaze/Corn_or_Maize_Leaf_Disease_Dataset,huggingface,unknown,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Tanishqgupta10/agriculture,Tanishqgupta10/agriculture,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Thangne/Durian-Leaf-Disease-Dataset,Thangne/Durian-Leaf-Disease-Dataset,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/TheReinventGuy/agbeai-cassava-speech,TheReinventGuy/agbeai-cassava-speech,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/UniDataPro/russian-speech-recognition-dataset,UniDataPro/russian-speech-recognition-dataset,huggingface,cc-by-nc-nd-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/VishwaV/Plant_disease_dataset,VishwaV/Plant_disease_dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Voxel51/PlantSeg-Test,Voxel51/PlantSeg-Test,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/Voxel51/PlantWild,Voxel51/PlantWild,huggingface,cc-by-nc-nd-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/XuVV/plantsegv3,XuVV/plantsegv3,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/YuvrajSingh9886/Agriculture-Irrigation-QA-Pairs-Dataset,YuvrajSingh9886/Agriculture-Irrigation-QA-Pairs-Dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/YuvrajSingh9886/Agriculture-Plan-Diseases-QA-Pairs-Dataset,YuvrajSingh9886/Agriculture-Plan-Diseases-QA-Pairs-Dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/YuvrajSingh9886/Agriculture-Soil-QA-Pairs-Dataset,YuvrajSingh9886/Agriculture-Soil-QA-Pairs-Dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/abhi334/PlantDisease,abhi334/PlantDisease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/adamkatchee/grape-leaf-disease-augmented-dataset,adamkatchee/grape-leaf-disease-augmented-dataset,huggingface,cc-by-nc-sa-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/akahana/plant-disease,akahana/plant-disease,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/albertvillanova/dummy_fleurs,albertvillanova/dummy_fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ali-analytics-io/plant-disease-detection,ali-analytics-io/plant-disease-detection,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ali-analytics-io/plant-disease-detection-hyperspectral-imaging,ali-analytics-io/plant-disease-detection-hyperspectral-imaging,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/amdmqd/rice_leaf_disease_dataset,amdmqd/rice_leaf_disease_dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/amuseix/fleurs_full_text,amuseix/fleurs_full_text,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/anandvermagmailcom/soybean-leaf-diseases,anandvermagmailcom/soybean-leaf-diseases,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/andrewkatumba/cassava_leaf_diseases_dsa_2023,andrewkatumba/cassava_leaf_diseases_dsa_2023,huggingface,cc-by-sa-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ankur02/fleurs,ankur02/fleurs,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/anupamavm/sri_lankan_tea_leaf_diseases,anupamavm/sri_lankan_tea_leaf_diseases,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/anyspeech/fleurs_ipa,anyspeech/fleurs_ipa,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/anyspeech/fleurs_test,anyspeech/fleurs_test,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/appdevop666/onion-leaf-disease,appdevop666/onion-leaf-disease,huggingface,ncsa,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/aquib1011/maize-leaf-disease,aquib1011/maize-leaf-disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/aranemini/northern-kurdish-fleurs,aranemini/northern-kurdish-fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/artmelancholy/golos_mfa_punctuation_long,artmelancholy/golos_mfa_punctuation_long,huggingface,other,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ayerr/plant-disease-classification,ayerr/plant-disease-classification,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/baohuynhbk14/fleurs-preprocessed-16k-whisper-large-v3,baohuynhbk14/fleurs-preprocessed-16k-whisper-large-v3,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/berger123/kerala_agriculture_dataset,berger123/kerala_agriculture_dataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/bf369/BeejX-Agriculture-Dataset,bf369/BeejX-Agriculture-Dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/bond005/sberdevices_golos_100h_farfield,bond005/sberdevices_golos_100h_farfield,huggingface,other,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/bond005/sberdevices_golos_10h_crowd,bond005/sberdevices_golos_10h_crowd,huggingface,other,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/bond005/sberdevices_golos_10h_crowd_noised_2db,bond005/sberdevices_golos_10h_crowd_noised_2db,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/bonlime/golos-test,bonlime/golos-test,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/brainer-fp66/coffee-leaf-diseases,brainer-fp66/coffee-leaf-diseases,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/cahya/fleurs,cahya/fleurs,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/cayala/cassava,cayala/cassava,huggingface,cc-by-3.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/chuangchuangwang/mango-leaf-disease,chuangchuangwang/mango-leaf-disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/daiv05/corn-leaf-diseases-pests-and-deficiencies,daiv05/corn-leaf-diseases-pests-and-deficiencies,huggingface,cc-by-nc-sa-4.0,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/datasets-CNRS/vocabulaire_agriculture_et_systemes_elevage,datasets-CNRS/vocabulaire_agriculture_et_systemes_elevage,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/dffesalbon/rubber-tree-leaf-disease-ph-labeled,dffesalbon/rubber-tree-leaf-disease-ph-labeled,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/dffesalbon/rubber-tree-leaf-disease-ph-segmented,dffesalbon/rubber-tree-leaf-disease-ph-segmented,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/diegod666/Paddy_Disease_w_Non_Rice_Feature,diegod666/Paddy_Disease_w_Non_Rice_Feature,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/dpdl-benchmark/cassava,dpdl-benchmark/cassava,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/dresen/fleurs_da_pseudo_labelled,dresen/fleurs_da_pseudo_labelled,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/dzinampini/potato-leaf-diseases,dzinampini/potato-leaf-diseases,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/edcelbogs/cassava-7-dataset,edcelbogs/cassava-7-dataset,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/electricsheepafrica/africa-owid-cassava-production,electricsheepafrica/africa-owid-cassava-production,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/electricsheepafrica/africa-owid-cassava-yields,electricsheepafrica/africa-owid-cassava-yields,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/electricsheepasia/asia-owid-cassava-production,electricsheepasia/asia-owid-cassava-production,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/electricsheepasia/asia-owid-cassava-yields,electricsheepasia/asia-owid-cassava-yields,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/esimijoq/Kazakh-Russian-Child-Directed-Speech-Corpus,esimijoq/Kazakh-Russian-Child-Directed-Speech-Corpus,huggingface,other,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/faisal-hugging-face/plant-disease,faisal-hugging-face/plant-disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/fakewave07/plant-diseases-dataset,fakewave07/plant-diseases-dataset,huggingface,unknown,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/faranbutt789/cassava-logs-dataset,faranbutt789/cassava-logs-dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/faranbutt789/cassava_logs,faranbutt789/cassava_logs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/gggggggg123/sber-golos,gggggggg123/sber-golos,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/google/fleurs,google/fleurs,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/govnejri/golos_mfa_punctuation,govnejri/golos_mfa_punctuation,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/harshprasad718/plant-disease-model,harshprasad718/plant-disease-model,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/harxsan/agriculture-data,harxsan/agriculture-data,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/harxsan/agriculture-livestock-data,harxsan/agriculture-livestock-data,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/hassaanik/Plant_Disease_App_Images,hassaanik/Plant_Disease_App_Images,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/hatxwgah/Rice-Disease-Augmented,hatxwgah/Rice-Disease-Augmented,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/htdung167/fleurs-vi-preprocessed,htdung167/fleurs-vi-preprocessed,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/htdung167/fleurs-vi-preprocessed-v2,htdung167/fleurs-vi-preprocessed-v2,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/hub-ia-senai-pr-t8/hackathon-deepweeds,hub-ia-senai-pr-t8/hackathon-deepweeds,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/i-koskin/Golos,i-koskin/Golos,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/iashchak/ru_common_voice_sova_rudevices_golos_fleurs,iashchak/ru_common_voice_sova_rudevices_golos_fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/PlantDiseaseDatasetLLaVA,ipranavks/PlantDiseaseDatasetLLaVA,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/PlantDiseaseDatasetcrt,ipranavks/PlantDiseaseDatasetcrt,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/PlantDiseaseDatasetpks,ipranavks/PlantDiseaseDatasetpks,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/agriculture,ipranavks/agriculture,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/agriculture_trivandrum,ipranavks/agriculture_trivandrum,huggingface,cc-by-nd-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/agriculture_tvm,ipranavks/agriculture_tvm,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/my-plant-disease-dataset,ipranavks/my-plant-disease-dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-chat-dataset,ipranavks/plant-disease-chat-dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-chat-dataset1,ipranavks/plant-disease-chat-dataset1,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-dataset1,ipranavks/plant-disease-dataset1,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-datasetog,ipranavks/plant-disease-datasetog,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-detection,ipranavks/plant-disease-detection,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-image-chat,ipranavks/plant-disease-image-chat,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-image-chatnew,ipranavks/plant-disease-image-chatnew,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant-disease-imageuse,ipranavks/plant-disease-imageuse,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plant_disease_dataset,ipranavks/plant_disease_dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plantdisease1,ipranavks/plantdisease1,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plantdisease2,ipranavks/plantdisease2,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ipranavks/plantdisease3,ipranavks/plantdisease3,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/jatyan/Rice-Disease-Classification-Dataset,jatyan/Rice-Disease-Classification-Dataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/jayasuryajsk/fleurs_tts,jayasuryajsk/fleurs_tts,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/jayasuryajsk/google-fleurs-te-romanized,jayasuryajsk/google-fleurs-te-romanized,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/khushwant04/Plant-Disease-Dataset,khushwant04/Plant-Disease-Dataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/kkitt/golos_ipa_big,kkitt/golos_ipa_big,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/kkk412/plant_disease_dataset,kkk412/plant_disease_dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/kshubham/agriculture_data_5k,kshubham/agriculture_data_5k,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/lab260/golos_balalaika,lab260/golos_balalaika,huggingface,cc-by-sa-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/loizee/fleurs_ceb,loizee/fleurs_ceb,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/macabdul9/fleurs-hubert-discrete-tokens,macabdul9/fleurs-hubert-discrete-tokens,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/malaysia-ai/fleurs-my-ms,malaysia-ai/fleurs-my-ms,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/mbazaNLP/fleurs-kinyarwanda,mbazaNLP/fleurs-kinyarwanda,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/mikhail-panzo/fleurs-ceb,mikhail-panzo/fleurs-ceb,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/mikhail-panzo/fleurs-ceb-processed,mikhail-panzo/fleurs-ceb-processed,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/mikhail-panzo/fleurs-fil,mikhail-panzo/fleurs-fil,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/mikhail-panzo/raw_fleurs_ceb,mikhail-panzo/raw_fleurs_ceb,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/mikhail-panzo/raw_fleurs_fil,mikhail-panzo/raw_fleurs_fil,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/minhhungg/plant-disease-instruct,minhhungg/plant-disease-instruct,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/minhhungg/rice-disease-dataset,minhhungg/rice-disease-dataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/mmazzz/Agriculturetasks,mmazzz/Agriculturetasks,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/muAtarist/maize_leaf_diseases,muAtarist/maize_leaf_diseases,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/muhammad-atif-ali/agriculture-dataset-for-falcon-7b-instruct,muhammad-atif-ali/agriculture-dataset-for-falcon-7b-instruct,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/muhammad-atif-ali/agriculture-qa-english-llama-2,muhammad-atif-ali/agriculture-qa-english-llama-2,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/muhammad-atif-ali/agricultureQnA-1k-unique-llama-2,muhammad-atif-ali/agricultureQnA-1k-unique-llama-2,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/nahidur415/onion-leaf-disease,nahidur415/onion-leaf-disease,huggingface,ncsa,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ngohuudang/fleurs,ngohuudang/fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/nieche/turkish_agriculture_QA_llama2_22.6k,nieche/turkish_agriculture_QA_llama2_22.6k,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/niobures/golos-annotation-length-based,niobures/golos-annotation-length-based,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/niobures/russian-single-speaker-speech-dataset,niobures/russian-single-speaker-speech-dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ov1n/sinhala-agriculture-gce-alevel-2021,ov1n/sinhala-agriculture-gce-alevel-2021,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/parami-ai/google_fleurs,parami-ai/google_fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/penscola/plant_disease_detection,penscola/plant_disease_detection,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/prithviraaj/agriculture,prithviraaj/agriculture,huggingface,llama2,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/pufanyi/cassava-leaf-disease-classification,pufanyi/cassava-leaf-disease-classification,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/qklent/golos-10h-hard-s-labeled,qklent/golos-10h-hard-s-labeled,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/quocanh34/viet_fleurs,quocanh34/viet_fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/raghavendrad60/vqa_plant-disease-classification-merged-dataset,raghavendrad60/vqa_plant-disease-classification-merged-dataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/realnetworks-kontxt/fleurs-hs,realnetworks-kontxt/fleurs-hs,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/realnetworks-kontxt/fleurs-hs-vits,realnetworks-kontxt/fleurs-hs-vits,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/recepbulbul/Law_Sustainability_Education_Agriculture_Turkish_Dataset,recepbulbul/Law_Sustainability_Education_Agriculture_Turkish_Dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/roshaan-aq/agriculture_QA,roshaan-aq/agriculture_QA,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/rutul8016/plant-disease-classifier,rutul8016/plant-disease-classifier,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/saifullah03/malabar_spinach_leaf_disease_dataset,saifullah03/malabar_spinach_leaf_disease_dataset,huggingface,apache-2.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/saisundaresan01/fleurs,saisundaresan01/fleurs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/shangzx/Durian-Plantation-Disease-Leaf-Rot-Detection-Image-Dataset,shangzx/Durian-Plantation-Disease-Leaf-Rot-Detection-Image-Dataset,huggingface,cc-by-nc-sa-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/sharmin3/Rice-Leaf-Disease,sharmin3/Rice-Leaf-Disease,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/shi-labs/Agriculture-Vision,shi-labs/Agriculture-Vision,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/shihabsarar29/grapeLeafDisease,shihabsarar29/grapeLeafDisease,huggingface,mit,2026-10-17,previous_search_candidate
+https://huggingface.co/datasets/slevis/fleurs_cs,slevis/fleurs_cs,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/sowmya14/agriculture_QA,sowmya14/agriculture_QA,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/steward768320/tomato-leaf-disease-image,steward768320/tomato-leaf-disease-image,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/susnato/plant_disease_detection_processed,susnato/plant_disease_detection_processed,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/tedliosu/sb_leaf_disease_imgs_derived,tedliosu/sb_leaf_disease_imgs_derived,huggingface,cc0-1.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/tirtho149/plantseg-lookalike,tirtho149/plantseg-lookalike,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ttkqwe123/leaf_disease_detection,ttkqwe123/leaf_disease_detection,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ud-nlp/russian-speech-recognition-dataset,ud-nlp/russian-speech-recognition-dataset,huggingface,cc-by-nc-nd-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/unanam/fleurstest,unanam/fleurstest,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/uqtwei2/PlantWild,uqtwei2/PlantWild,huggingface,cc-by-nc-nd-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/vibulan73/Tamil-Agriculture-Data,vibulan73/Tamil-Agriculture-Data,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/vumichien/preprocessed_jsut_jsss_css10_fleurs_common_voice_11,vumichien/preprocessed_jsut_jsss_css10_fleurs_common_voice_11,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/wellCh4n/tomato-leaf-disease-image,wellCh4n/tomato-leaf-disease-image,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/wilsondt/rice-disease-02,wilsondt/rice-disease-02,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/yanbayu/corn-leaf-disease-dataset,yanbayu/corn-leaf-disease-dataset,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/yashtiwari/fleurs-hi-en-ST,yashtiwari/fleurs-hi-en-ST,huggingface,,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/ymoslem/FLEURS-GA-EN,ymoslem/FLEURS-GA-EN,huggingface,cc-by-4.0,2026-10-19,metadata_only_not_approved
+https://huggingface.co/datasets/yt0609/cassava-leaf-disease-classification,yt0609/cassava-leaf-disease-classification,huggingface,mit,2026-10-19,metadata_only_not_approved
+https://link.springer.com/chapter/10.1007/978-3-030-48791-1_22,red_grapes_and_leaves_segmentation,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://phenoroam.phenorob.de/geonetwork/srv/eng/catalog.search#/metadata/cb328232-31f5-4b84-a929-8e1ee551d66a,growliflower_cauliflower_segmentation,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://researchdata.edu.au/mangoyolo-set/1697505,mango_detection_australia,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://rsn.umn.edu/projects/orchard-monitoring/minneapple,apple_segmentation_minnesota,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://universe.roboflow.com/strawberrydet/strawberry_2022/dataset/4,strawberry_detection_2022,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://universe.roboflow.com/strawberrydet/strawberry_2023/3,strawberry_detection_2023,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://vision.eng.au.dk/leaf-counting-dataset/,leaf_counting_denmark,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://vision.eng.au.dk/plant-seedlings-dataset/,plant_seedlings_aarhus,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.grap.udl.cat/en/publications/KFuji_RGBDS_database.html,apple_detection_spain,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.kaggle.com/competitions/paddy-disease-classification/data,paddy_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.kaggle.com/datasets/a1is4akhatri/crop-disease-prediction-research-report,Crop Disease Prediction Research Report,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aarishasifkhan/plantvillage-potato-disease-dataset,Potato Disease Data | PlantVillage,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abdelrahmanallam22/augmented-cucumber-leaf-disease,augmented cucumber leaf disease,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abdelrahmanallam22/cucumber-leaf-disease-dataset,cucumber leaf disease dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abdelrahmanemad2199/corn-or-maize-leaf-disease-dataset,Corn or Maize Leaf Disease Dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abdulhasibuddin/appleplantdocdataset,Apple-PlantDoc-Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abdulhasibuddin/plant-doc-dataset,Plant Doc Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abdulrosyidkun/chili-leaf-disease-ponorogo-east-java,Chili Leaf Disease | Ponorogo East Java,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abdurraffay00/plant-leaves-dataset,Plant Leaves Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/abhaythakur41/potato-leaf-disease-dataset,Potato leaf Disease Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/adamkacmar/augmented-grape-leaf-disease-dataset,Augmented Grape Leaf Disease Dataset,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/adecentdelinquent/testdata,testdata,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/adecentdelinquent/testingdataset,testingdataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/adiithape1/plant-disease-detection-dataset-master-version,Plant Leaf Disease MasterDataset (19 Crops),kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/adithyantg/black-pepper-leaf-disease-mini-dataset,BLACK PEPPER LEAF DISEASE MINI-DATASET,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aelchimminut/fruits262,Fruits-262,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/agriaisolutions/agriaiseg,AgriAIseg,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ahmadalmahsiri/chili-plant-disease,Chili Plant Disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ahmadhabibhasanzein/grape-leaves,Grape-Leaves,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ahmadzargar/tomato-leaf-disease-dataset-segmented,Tomato Leaf Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ahmednasser83/tomato-leaf-disease-dataset,Tomato leaf disease dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aibuzz/apple-leaf-disease-dataset-in-separate-folder,Apple Leaf Disease Dataset- In Separate Folder ,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aibuzz/apple-leaf-disease-powdery-mildew,Apple Leaf Disease - Powdery Mildew,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/akarshangupta/high-quality-crop-disease-image-dataset-for-cnns,High-Quality Crop Disease Image Dataset for CNNs,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/akechatem/plant-village,plant_village,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/akilesh253/sugarcane-plant-diseases-dataset,Sugarcane Plant Diseases Dataset,kaggle,Community Data License Agreement - Sharing - Version 1.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/akinyemijoseph/apple-leaf-disease-dataset-6-classes-v2,PV_ALE: Apple Leaf Disease Classification Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/akshajsinghbisht/ccmt-augmented-split,ccmt-augmented-split,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/akshaygudi/apple-leaf-disease,Apple Leaf Disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/akshithabapathu1/orange-leaf-disease,Orange leaf disease,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alaaab/plant-disease,plant disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alexo98/individual-disease,Individual Disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alexo98/leaf-detection,Leaf Detection,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alexzcheny/testdataset,Field-acquired Plant Disease Dataset,kaggle,Attribution-NonCommercial 4.0 International (CC BY-NC 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aliamjadpy/tomato-leaf-disease,Tomato leaf disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alinedobrovsky/plant-disease-classification-merged-dataset,Plant Disease Classification Merged Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aliyasardar/fyp-plant-dataset,FYP_Plant_Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alokkumar175358/2k-tomato-disease-annotated-data,2K Tomato Disease Annotated Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alvarogomesdelima/consolidated-plant-disease-dataset,Consolidated_plant_disease_dataset,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alvinyee23/plantdoc-with-plantvillage-labeling,PlantDoc with (PlantVillage Labeling),kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/alyeko/potato-tomato-dataset,potato-tomato-dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/amiski/synthetic-strawberry-leaf-disease-dataset,synthetic-strawberry-leaf-disease-dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/amitra19/annotated-apple-leaf-disease-dataset-mask-rcnn,Annotated Apple Leaf Disease Dataset - Mask RCNN ,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/amrutdesh/plantvillage-preprocessed-data-part-3,PlantVillage_Preprocessed_Data Part-3,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/amrutdesh/plantvillage-preprocessed-data-part-4,PlantVillage_Preprocessed_Data Part-4 🍅,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/anasbhuiyan/potato-leaf-disease-dataset,Potato Leaf Disease Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/andrewmvd/leaf-type-detection,Leaf Type Detection,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/angiegomeza/potato-late-blight-boy-col,potato late blight Boy Col,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aniksutrodhar/niphad-grape-leaf-disease-dataset-ngld,Niphad Grape Leaf Disease Dataset (NGLD),kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aniruddha2022/mulberry-leaf-disease,chili-leaf-disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/anitagarg123/soyabeen-leaves,SOYABEEN_LEAVES,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/anjali321123desai/apple-leaf-validation-dataset,APPLE_LEAF_VALIDATION DATASET,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ans1933/vineyards-disease-datasetdowny-mildew,vineyards Disease Dataset(Downy mildew),kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/anshmishra777/darishtiaiv1-01,DrishtiAI,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/anshulm257/rice-disease-dataset/data,rice_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.kaggle.com/datasets/arajmishra/potato-dataset,Potato Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aresusayhi/vietnameses-tomato-disease-dataset,VTLD dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/arniyusfin/chili-leaf-disease-image-dataset,Chili Leaf Disease Image Dataset.,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/asaahmanasseh/crop-care-dataset-v2,"crop-care-dataset(Cocoa, Maize, Tomato, Cashew +1)",kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ashifahmedshuvo/orange-dataset,Orange Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ashishmotwani/tomato,Tomato Leaves Dataset,kaggle,Data files © Original Authors,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/asieldazvasallo/glasshouse-multispectral-soybean-leaf-dataset,Glasshouse Multispectral Soybean Leaf Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/aslhanyldrm/leavesbank-dataset,LeavesBank Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ateebnoone/fruits-dataset-for-fruit-disease-classification,FRUITS DATASET FOR FRUIT DISEASE CLASSIFICATION,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/atharvamadamshett/krishimesh-dataset,KrishiMesh Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/athuljosephthomas/retinal-disease-image-classification,Retinal Disease Image Classification,kaggle,Attribution-NonCommercial 4.0 International (CC BY-NC 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/atkiyamaisha/multi-crop-leaf-disease-dataset,Multi-Crop Leaf Disease Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ayoubellani/dataset-orange,Dataset_Orange,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ayyappaswamythati/leafy-plant-pathology,Leafy - plant pathology,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/bahetiharsh/tomatovsother,TomatoVsOther,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/betulbny/potato,Potato Leaf,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/bikramchapagain/plantvillagenepaldataset,PLANTVILLAGENEPALDATASET,kaggle,Community Data License Agreement - Sharing - Version 1.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/bmshahriaalam/grape-leaf-disease,Grape Leaf Disease,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/brimbim/adaption-organic-plant-disease-advisory,Organic_plant_disease_advisory,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/caozhihao/strawberry-disease-data,Strawberry Disease Data,kaggle,Attribution-NonCommercial 4.0 International (CC BY-NC 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/cdcd001/maize-leaf-diseases,Maize leaf Diseases,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/chayanmondalabir/citrus-leaf-pathology-multi-class-image-dataset,Citrus Leaf Pathology Multi-Class Image Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/codewithsk/apple-leaf-disease-dataset-plantcity-2025,Apple Leaf Disease Dataset PlantCity 2025,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/codewithsk/apricot-leaf-diseases-on-plantcity-2025,Apricot Leaf Diseases on PlantCity 2025,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/codewithsk/cherry-leaf-disease-on-plantcity-2025,Cherry Leaf Disease on PlantCity 2025,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/codewithsk/grapes-leafs-disease-7-classes-plantcity-2025,Grapes Leafs Disease 7 Classes PlantCity 2025,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/codewithsk/plantcity-a-comprehensive-images-multicrop-leaves,PlantCity: MultiCrop leaves Images 52 Class 2025,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/codewithsk/tomato-leaf-disease-from-plantcity-2025,Tomato Leaf Disease PlantCity 2025 (11 classes),kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/cookiefinder/tomato-disease-multiple-sources,Tomato Disease Multiple Sources,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/crewsat/chili-leaf-disease-image-dataset,Chili Leaf Disease Image Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/cubeai/tomato-leaf-diseases-detection-for-yolov8,Tomato leaf diseases detection for YOLOv8,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/danishjamil89/apple-vit00,apple vit00,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/davitchelidze/dataset,Grapevine Disease Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/debaduttabaliarsingh/refined-leaf-dataset,Refined_Leaf_Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/dellcat/datasetofleafdiseasesandpestsofagriculturalplants,DatasetOfLeafDiseasesAndPestsOfAgriculturalPlants,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/dhenyd/chili-plant-disease,Chili Plant Disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/dihyabourzig/potato-and-tomato-diseases-dataset,Potato and Tomato Diseases Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/dinesh83/crop-diseses,Crop_diseses,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/diyaaalobaidy1994/plant-diseases-with-masks,Plant Diseases Dataset with Segmentation Masks,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/downloader007/ccl20,CCL'20,kaggle,Data files © Original Authors,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/drjaveriaamin/datasetleaf,datasetleaf,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/drtawfikrrahman/agrigen-xlcrops-livestock-and-aquaculture,"AgriGen-XL:Crops, Livestock, and Aquaculture",kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/drtawfikrrahman/agrovision-tomato,AgroVision-Tomato,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/drtawfikrrahman/potato-leaf-disease-detection-and-classification,Potato Leaf Disease Detection and Classification,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/edidiongcharlie/nigeria-climatedisaster-multilingual,Nigeria Climate Disasters and Environmental Impact,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/emmurasoli/plant-and-pest-dataset-agri,plant-and-pest-dataset-agri,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/entishar/disease-dataset,disease dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/eslamelhamouly/tomato-plantvillage-yolov8,Tomato PlantVillage YOLOv8 Merged,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/faialammisaid/atldsd,ATLDSD,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/fakhrealam9537/leaf-disease-segmentation-dataset,Leaf disease segmentation dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/fantasticbang/leaf-disease-eval,leaf_disease_eval,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/farmannaim/maizeleaf,Maize Leaf,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/farukalam/tomato-leaf-diseases-detection-computer-vision,Tomato Leaf Diseases Detection Computer Vision,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/faysalmiah1721758/potato-dataset,Potato Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/fitcompetition/test-preliminary-round-fit-2025,Preliminary Round FIT 2025,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/fourthgemini/dataset-maize-leaf-disease,DATASET MAIZE LEAF DISEASE,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/fouziz/grape-leaf-disease,Grape leaf disease,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/freshersstaff/grape-leaf-disease-images-collection,Grape Leaf Disease Images Collection,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/galaxionzero000/corn-leaf-diseases-dataset,Corn Leaf Diseases Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/gihozopatrick/tomatoes-datadiseasespestsnutrient-deficiency,"Tomatoes data(Diseases,pests,nutrient deficiency)",kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/groldotieno/adaption-crop-diagnosis-reasoning,crop_diagnosis_reasoning,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hafiznouman786/potato-plant-diseases-data,🌱 Potato Plant Diseases Data 🍂,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hamedetezadi/leaf-image-dataset,Leaf-Images-Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hamidabbaszadeh/apple-leaf-diseases-13-classes,Apple Leaf Diseases (13 classes),kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hamidgujjar/tomato-leaf-disease-detection-dataset,Tomato Leaf Disease Detection Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hamishcrazeai/maize-in-field-dataset,Maize_in_Field_Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/haninafismuzaki/tomato-leaf-disease-dataset,Tomato Leaf Disease Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/harshit991339/plant-disease-datasets,Plant Disease Datasets,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/harshv777/soybean-leaf-image-dataset,Soybean_Leaf_Image_Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hassanimran55/strawberry-dataset-hassan,strawberry dataset hassan,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hawkinswinja/maize-leaf-disease,maize leaf disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hemanth850/diseaseleafnet,DiseaseLeafNet,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hendriyunuswijaya/maize-leaf-disease,Maize Leaf Disease,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hindrakioffcial/controlled-augmented-derivatives-ngld-dataset,Controlled Augmented Grape Leaf Disease Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hoangtungngo/tomato-leaf-disease-merged-dataset,Tomato Leaf Disease Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hopesb/solanales-dataset-pepper-potato-and-tomato,"Healthy Pepper, Potato & Tomato Leaf Images ",kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hsmcaju/d-kap,Kashmiri Apple Plant Disease Dataset,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/hunhphcc/collect-leaf-potato-data,Collect_Leaf_Potato_Data,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ibrahimagabardiop/niayes-crops-disease-v2,PEST_AI Plant Leaf Disease Recognition Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/idsalifou/geoenv-automl-0-2-0a4,GeoEnv AutoML 0.2.0a4,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/informaticteens/yellow-and-read-autumn-color-grapeleafs,Yellow and red autumn color | Grapeleafs,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/irfan3464/irfan-pumpkin-yolov8,Irfan Pumpkin YOLOv8,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/isiborihianle/smartberry-strawberry-field-image-dataset,SmartBerry: Strawberry Field Image Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/islammohammedkkk/strawberry-detection,Strawberry diseases detection,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ismetgocer/grape-leaf-disease-small-4-class-500-samples-each,Grape Leaf Disease -Small-4 Class-500 Samples Each,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/itselif/comprehensive-plant-disease-dataset,Comprehensive Plant Disease Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/jarvis705/tomato-leaf-disease,Tomato Leaf Disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/javedrashid/citrus-leaf-disease-dataset-clld,Citrus Leaf Disease Dataset (CLLD),kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/jawadali1045/20k-multi-class-crop-disease-images,20k+ Multi-Class Crop Disease Images,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/jawadulkarim117/grape-leaf-disease-4-class,Grape Leaf Disease 4 Class,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/jgyskr/corn-leaf-plant-diseases-and-insect-pests,Corn leaf plant diseases and insect pests,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/jimpax/datasetv13,Hybrid Tomato Disease Dataset: Field & Public Data,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/joelnwakaire/nsukka-yellow-pepper-healthy,Nsukka Yellow Pepper_Healthy,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/jonathansilva2020/orange-diseases-dataset,Orange diseases dataset ,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/joseenriquelopez/tomato-leaf-diseases,Tomato Leaf Diseases,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kafilatmusa11/pepper-bell-leaf-disease,Pepper Bell Leaf Disease,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kamal01/crop-prediction,Three Main Crop Prediction,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kamal01/top-agriculture-crop-disease,Top Agriculture Crop Disease India,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/karagwaanntreasure/plant-disease-detection,Plant Disease Detection,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kareem3egm/cucumber-plant-diseases-dataset,Cucumber plant diseases dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kareemsalama/eng-marko,Eng-Marko ,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/karimipavan/smart-crop-recommendation,smart crop recommendation,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kaushigihanml/cucumber-leaf-disease-dataset,Cucumber Leaf Disease Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kaustavbiswal/maize-diseases,Maize Diseases,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kaustubhb999/tomatoleaf,Tomato leaf disease detection,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kaustubhb999/tomatoleaf?resource=download,tomato_leaf_disease,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.kaggle.com/datasets/kazimdnaimurrahman/corn-or-maize-leaf-disease-dataset,Corn or Maize Leaf Disease Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ketangathibandhe/crop-disease-detection-dataset,Crop Disease Detection Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kevinvichicela/potado-lead-dataset,DatasetPotatoLeaf,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/khajaahmed1/multimodal-cashew-maize-daatset,MultiModal_Cashew_Maize_Daatset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/khalil18/bellpaperdataset,BellpaperDataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/khalil18/cherry-dataset,Cherry dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/khalil18/grape-dataset,Grape dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kpoviesistphane/tomato-leaf-disease-detection,Tomato-Leaf-Disease-detection,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/krishd123/potato-leaf-disease-gallery,🥔🍃 Potato Leaf Disease Gallery 📸🔍,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/krishnx09/crop-leaf-disease-image-dataset-jalgaon-region,Crop Leaf Disease Image Dataset (Jalgaon Region),kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/kvuddipganesh/leaf-detection-using-deep-learning,Leaf Detection Using Deep Learning,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/lakshyasharma97/vrikshai-crop-disease-and-anomaly-detection-dataset,VrikshAI: Crop Disease & Anomaly Detection Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/lavaman151/plantifydr-dataset,PlantifyDr Dataset,kaggle,Data files © Original Authors,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/lboudhar/tomato-leaves-diseases-by-lies-boudhar,Tomato leaves diseases by Lies Boudhar,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ldthanh/cleaned-plantdoc,plantdoc-classification-dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/lemontyc/sweet-pepper,Sweet Pepper and Peduncle Segmentation,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/leonardoserafinn/grapevine-leaf-vs-non-grapevine-leaf,Grapevine Leaf vs Non Grapevine Leaf,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/lolomsv/cycleganapplescab-test,cycleganapplescab_test,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/luisolazo/tomato-diseases,Tomato Leaf Disease,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/maciekpopik/plantlab2realgeneralization,PlantLab2RealGeneralization,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mageshkumarnagappan/multi-crop-vegetable-disease-dataset,multi-crop-vegetable-disease-dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/maglorculnamo/apple-scab,apple_scab,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mahfuzhasan/sweet-pumkin-diseaseimages, Sweet Pumpkin disease(images),kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mahin661/plant-disease-detection-bounding-box-dataset,Plant Disease Detection Bounding Box Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mamtag/tomato-village,Tomato-Village dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mamun009/soybean-leaf-image-dataset,Soybean Leaf Image Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/manhhoangvan/irishpotato,IrishPotato,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/manhhoangvan/yeesidtaset,YeesiDataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/manojkumarcs28/plantdoc-dataset,PlantDoc Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/markkostantine/potato-leaf-disease-original-augmented,Potato Leaf Disease - Balanced & Augmented,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/marslanarshad/peach-tree-disease,peach_tree_disease_dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/maryammoosavi77/cycleganapplescab,cycleganapplescab,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mbuyaed/strawberry-plants-disease-detection,Strawberry plants. Disease Detection ,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mdfikri/planitorium-dataset,Planitorium Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/memohussein/plant-leaf-disease-classification-dataset-split,Plant Leaf Disease Classification Dataset Split,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/memohussein/plant-leaf-healthy-and-disease-dataset,Plant Leaf Healthy & Disease Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/memohussein/plant-leaf-healthy-and-disease-dataset-split,Plant Leaf Healthy & Disease Dataset Split,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mexwell/food-vitamins-minerals-macronutrient,"🍔 Food Vitamins, Minerals, Macronutrient",kaggle,GPL 2,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mfaizankb/apple-disease-dataset,Apple Disease Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mgmitesh/plant-disease-detection-dataset,Plant Disease Detection Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mgmitesh/potato-disease-detection-dataset,Potato Disease Detection Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mhantor/apple-leaf-diseases,Apple Leaf Disease Symptoms Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/minturoy2026/agri-vision,agri-vision,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mirmarufahmed/potato-disease-dataset,Customized Potato Disease Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mithileshkolhapurkar/potato,Potato leaf Disease dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mkaouareya/agro-climatic-dataset-for-crop-monitoring,Agro-Climatic Dataset for Crop Monitoring,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mlakuberie/soybean-images,soybean disease_images,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mlakuberie/soybean-leaf-disease-and-pesticides-dataset,Soybean Leaf Disease and pesticides code,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mohamedgwad/ana-m5dtesh-ketchap,ana m5dtesh ketchap :(,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mohamedsayedafifi/plant-disease-93-classes-balanced-ood,Plant Disease 93-Class Balanced with OOD,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mohamedsayedafifi/plant-disease-v3-supplement,Plant Disease V3 Supplementary Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mohammeda5/tomato-spider-mites-dataset,Tomato Spider Mites Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mohitsingh1804/plantvillage,PlantVillage,kaggle,GPL 2,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mrsa3dola/grape,grape__,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mshrestha/plant-disease-augmented-dataset,Plant Diseases With Augmented Images,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/muhammadardiputra/potato-leaf-disease-dataset,Potato Leaf Disease Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/muhammadwaqasms/lateblighttomatodisease,Late Blight Tomato Leaf Disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/musfiqurtuhin/bangladeshi-crops-disease-dataset-bcdd,Bangladeshi Crops Disease Dataset (BCDD),kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/musireddy/potato-leaf-500,Potato Leaf 500,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/musireddy/potato-leaf-disease,Potato Leaf Disease,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/mutantspore/plant-pathology-2020-preprocessed-images,Plant Pathology 2020 - Preprocessed Images,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/myprojectdictionary/citrus-leaf-disease-image,Citrus Leaf Disease Image,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nafishamoin/new-bangladeshi-crop-disease,New Bangladeshi Crop Disease,kaggle,Data files © Original Authors,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nagabushan/plant-disease-recognition-ai-challenger,Plant Disease Recognition AI Challenger (PDR2018),kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/naimur006/plant-leaves-disease-detection,Plant Leaves Disease Detection,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/najwamousa/apple-data-segmented-increase-scab,apple_data_segmented_increase_scab,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/naveedgull/tomato-leaf-disease,Tomato Leaf Disease,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ndisan/corn-leaf-disease,Corn Leaf Disease,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ndisan/corn-stalks,Corn Stalk Disease,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nelsonkiptanui/maize-leaf-disease-tanzania-planthead,maize-leaf-disease-tanzania-planthead,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nexuswho/laboro-tomato,tomato_ripeness_detection,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.kaggle.com/datasets/nhttrmcm/github-tomato,github_tomato,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nikitkashyap/fruit-infection-disease-dataset,Fruit Infection Disease Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ninadbarveadcs/cherry-powdery-mildew,cherry-powdery-mildew,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/apple-leaf-disease-dataset,Apple Leaf Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/apple-tree-leaf-disease-dataset,Apple Tree Leaf Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/esca-grapes-black-measles-dataset,ESCA (grapes black measles) dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/plant-disease-test-dataset,Plant Disease Test Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/plant-diseases-training-dataset,Plant Leaf Diseases Training Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/potato-leaf-disease-dataset,Potato Leaf Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/potato-leaf-healthy-and-late-blight,Potato Leaf (Healthy and Late Blight),kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nirmalsankalana/potato-viral-disease-dataset,Potato Viral Disease Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/nizorogbezuode/rice-leaf-images,rice_leaf_images,kaggle,Data files © Original Authors,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/oarcanjomiguel/citrus-greening,Citrus Greening,kaggle,GPL 2,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/osutokaggle/corn-leaf-disease,Corn Leaf Disease,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/osutokaggle/maize-beans-and-tomatoes-image-dataset-for-africa,"Maize, Beans and Tomatoes image dataset for Africa",kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/patricklford/hemochromatosis,Haemochromatosis/Hemochromatosis.,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/patricklford/water-and-air-quality,Water Quality -  Every Drop Matters.,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/paulrosero/tomato-leaf-illness-detection,Tomato leaf illness detection,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/pbshuvro7/grape-leaf-disease,Grape Leaf Disease,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/pbshuvro7/niphad-grape-leaf-disease-dataset-ngld,Niphad Grape Leaf Disease Dataset (NGLD),kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/piantic/plantpathology-apple-dataset,PlantPathology Apple Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/piyushmishra1999/plantvillage-grape,Grapevine Disease Images,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/poornatheja/plant-doc-dataset-analysis,Plant doc dataset analysis,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/potamitis/population-dynamics-of-helicoverpa-armigera,Population dynamics of Helicoverpa armigera,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/projectlzp201910094/applescabfds,AppleScabFDs,kaggle,Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/projectlzp201910094/applescablds,AppleScabLDs,kaggle,Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/projectlzp201910094/eapplescab,eAppleScab,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/qramkrishna/corn-leaf-infection-dataset,Corn Leaf Infection Dataset,kaggle,Data files © Original Authors,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rabbityashow/corn-leaf-diseasesnlb,Corn Leaf Diseases(NLB),kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/raiaone/olid-i,OLID I,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ranaamahmudd22/6-plant-disease-detection,6_plant_disease_detection,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rashidthihan/plant-disease-dataset,Plant Disease Dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rashidthihan/plant-doc-dataset-augmented,PlantDoc Augmented Dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rathorhome/lettuce-disease,Lettuce Plant Leaf Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/raymondtristan/grape-leaf-disease,grape leaf disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/recepbattal/leaf-disease-images,Leaf Disease İmages,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rejoychakraborty/plant-disease-dataset,Plant Disease Dataset,kaggle,Attribution-NonCommercial 4.0 International (CC BY-NC 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rifat963/pumpkin,Pumpkin Leaf Disease From Bangladesh,kaggle,GPL 3,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rijulbansal01/apple-leaf-diseases-detection,Apple Leaf Disease(s) Detection,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rithambararajput/custom-dataset-100-split,customised_100_category_plant_disease_dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rizwan123456789/potato-disease-leaf-datasetpld, Potato Disease Leaf Dataset(PLD),kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rm1000/apple-disease-dataset-original,Apple Disease Dataset (Original),kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rm1000/augmented-apple-disease-detection-dataset,Augmented Apple Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rm1000/augmented-grape-disease-detection-dataset,Augmented Grapevine Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rm1000/grape-disease-dataset-original,Grapevine Disease Dataset (Original),kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rm1000/grapevine-disease-detection-model-weights,Grapevine Disease Detection: Model Weights,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rockliuzejin/apple-leaf-disease-dataset,Apple leaf disease dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rogovanataliya/bb-soybean-leaf,BB_soybean_leaf,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rogovanataliya/health-soybean-leaf,health_soybean_leaf,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/romiyalgeorge/slif-tomato-dataset,SLIF-Tomato Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rupeshkumaryadav/whu-hyperspectral-dataset,WHU Hyperspectral dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/rymonin/agri-vision4,Agri-vision4,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sabriarbishal/strawberry-leaf-disease,StrawberryDisease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sadiqulislamshakib/agroleaf-ai-v3,agroleaf-ai-v3,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sadmansakibmahi/plant-disease-expert,Plant Disease Expert,kaggle,Attribution-NonCommercial 4.0 International (CC BY-NC 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sahityamamillapalli/corn-or-maize-leaf-disease-dataset,Corn or Maize Leaf Disease Dataset,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/saidkomilms/grapevine-diseases,Grapevine Diseases,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/saikatdatta1994/tea-leaf-disease,tea_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.kaggle.com/datasets/sajid6230/synthetic-plant-co-infection-dataset,Synthetic Plant Co-Infection Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sakbvb/ppchangedimagesize,Plant pathology resized data,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/salmaagabr/bell-pepper-disease-detection,Bell Pepper Disease Detection,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/samareshkumar/multipleplantdiseases,Multiple Plant Diseases,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/samarth1228/grapevine-disease-jumbo-dataset-1228,Grapevine_Disease_Jumbo_Dataset_1228,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/samirarafiq/demoimages,DemoImages,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/samirarafiq/images-demo,Images Demo,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/saniyaverma914/cropdg-unified-multidomain,CropDG Unified Multi-Domain Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sayannath235/potato-leaf-disease-detection,Potato Leaf Disease Detection,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sebastianpalaciob/tomato-leaf-diseases-dataset-for-object-detection,Tomato leaf diseases dataset for Object Detection,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shahadhossin567r7455/potato-leaf-disease-dataset,Potato Leaf Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shamimkabirkazim/wheat-leaf-disease-dataset,Wheat Leaf Disease Dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shawontmsez/ccmt-multi-crop-plant-disease-detection-dataset,CCMT Multi-Crop Plant Disease Detection Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/showravdhar/apple-disease-dataset,Apple Leaf Disease Classification Dataset,kaggle,"Database: Open Database, Contents: © Original Authors",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shubham2703/five-crop-diseases-dataset,Five Crop Diseases Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shusongh/grapevine-yellows-multispectral-image-dataset,Grapevine Disease Multispectral Image Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/apple-leaf-diseases-plant-village-augmented-data,Apple Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/cauliflower-disease-multi-transformation-dataset,Cauliflower Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/cherry-leaf-diseases-plant-village-augmented-data,Cherry Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/chili-pepper-multi-source-dataset-bd,Chili Pepper Multi-Source Dataset BD,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/coconut-disease-multi-transformation-dataset,Coconut Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/coconut-disease-multi-transformation-sttv-dataset,Coconut Disease Multi Transformation sTTV Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/corn-leaf-diseases-plant-village-augmented-data,Corn Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/cotton-disease-multi-transformation-dataset,Cotton Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/grape-leaf-diseases-plant-village-augmented-data,Grape Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/lemon-leaf-disease-multi-transformation-dataset,Lemon Leaf Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/lemon-leaf-disease-multi-transformation-sttv-data,Lemon Leaf Disease Multi Transformation sTTV Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/lettuce-disease-multi-transformation-dataset,Lettuce Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/peach-leaf-diseases-plant-village-augmented-data,Peach Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/pepper-leaf-diseases-plant-village-augmented-data,Pepper Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/potato-leaf-diseases-plant-village-augmented-data,Potato Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/pumpkin-leaf-disease-multi-transformation-dataset,Pumpkin Leaf Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/rice-disease-multi-transformation-dataset,Rice Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/rice-disease-multi-transformation-sttv-dataset,Rice Disease Multi Transformation sTTV Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/rose-leaf-disease-multi-transformation-dataset,Rose Leaf Disease Multi Transformation  Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/sugarcane-disease-multi-transformation-ttv-dataset,Sugarcane Disease Multi Transformation TTV Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/tomato-leaf-diseases-plant-village-augmented-data,Tomato Leaf Diseases Plant Village Augmented Data,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/vanilla-disease-multi-transformation-dataset,Vanilla Disease Multi Transformation Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak2030/vanilla-disease-multi-transformation-sttv-dataset,Vanilla Disease Multi Transformation sTTV Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak4004/latest-and-update-potato-leaf-diseases-dataset, Latest & Update Potato Leaf Diseases Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak4004/orange-leaf-disease-dataset,Orange leaf disease dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak4004/potato-crop-disease-and-health-dataset,Potato Crop Disease and Health Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shuvokumarbasak4004/potato-leaf-diseases-detection-using-ml,Potato Leaf Diseases Detection using ML,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shylesh101/apple-leaf-disease-shylesh,Apple Leaf Disease - Shylesh,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/shylesh101/tomato-leaf-disease,Tomato Leaf Disease - Shylesh,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/siamahmedsiam/niphad-grape-leaf-disease-dataset-ngld-v1,Niphad Grape Leaf Disease Dataset (NGLD) v1,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sivm205/soybean-diseased-leaf-dataset,Soybean Diseased Leaf Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/smaranjitghose/corn-or-maize-leaf-disease-dataset,Corn or Maize Leaf Disease Dataset,kaggle,Data files © Original Authors,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/smaranjitghose/corn-or-maize-leaf-disease-dataset/data,corn_maize_leaf_disease,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.kaggle.com/datasets/smartagrotech/tomato-leaf-disease-dataset,Tomato Leaf Disease Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/snikhilrao/crop-disease-detection-dataset,Crop Disease Detection Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/social888/plantdisease,Agrivision Dataset ,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sohilaayman/plant-disease-dataset,Plant Disease Dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sohilaayman/plants-disease-prediction-dataset,Plants Disease Prediction Dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sovitrath/apple-scab-detection-fruit-scab,Apple Scab Detection (Fruit Scab),kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/srabon00/combine-plant-disease-dataset-pv-pd-fp,Combined PV–PD–FP Plant Disease Dataset,kaggle,"Database: Open Database, Contents: Database Contents",2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/srijonashraf/maize-leaf-diseases-six-classes,Maize Leaf Diseases (Six Classes),kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/srinub15/crop-disease-data,Crop disease data,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/srkuhin/field-based-potato-leaf-disease-dataset,Potato Leaf Disease Dataset Uncontrolled Enviro.,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/stefanyeo/grape-vine-leaf-disease,grape-vine-leaf-disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/subhamdikshit/apple-leaf-dataset,Apple Leaf Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/sujaykapadnis/cucumber-disease-recognition-dataset,Cucumber Disease Recognition Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/superlord/citrus-diseases,Citrus-Diseases,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/suryansh2003/leaf-disease-cropped-dataset,leaf disease cropped dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/suryiapooventhanr/chilli,CHILLI,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/suzzynikky/apple-scab,Apple Scab,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/syedhashirali260/tomato-leaf-disease-dataset-6-classes,Tomato Leaf Disease Dataset (6 Classes),kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/syraverma/soyabean-4-class-leaf-disease-dataset,Soyabean 4 Class Leaf Disease Dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tahmidmir/pumpkin-leaf-diseases-dataset-from-bangladesh,Pumpkin Leaf Diseases Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/taiburrahaman/chillileafdataset-trainvaltest,ChilliLeafDataset_TrainValTest,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tamima1530/potato-leaf-disease-based-on-weather-details,Potato Leaf Disease Based on Weather Details,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tanvirujjaman/cucumber-leaf-disease,Cucumber Leaf Disease,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tanvirujjaman/cucumber-leaf-diseases,Cucumber_Leaf_Diseases,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/thatgeeman/640p-plant-pathology-2021-resized-to-w-x-640,[640p] Plant Pathology 2021 resized to W x 640,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/thegoanpanda/rice-crop-diseases,RICE CROP DISEASES,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/thepetioleteam/apple-canker,Apple Canker,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/thepetioleteam/apple-scab,Apple Scab,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tminhhi/chili-leaf-disease-cross-dataset-query-set,Chili Leaf Disease Cross-Dataset Query Set,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tminhhi/chili-leaf-disease-few-shot,Chili Leaf Disease Few-Shot,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/trungcaoduc/xai-training,xAI_Plant_2024_Trung-Hai,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tungstor1/cherry-leaf-diseases,Cherry Leaf Diseases,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/tushar5harma/plant-village-dataset-updated,Plant Village Dataset (Updated),kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/uderighteousness/healthy-and-late-blight-potatoes,Healthy and Late Blight potatoes,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ulaelg/corn-leaf-disease-data,Corn Leaf Disease Data,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ulaelg/tomato-leaf-diseases-yolov8,Tomato Leaf Diseases  [YOLOv8],kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/unknown6874/corn-leaf-disease-dataset,Corn Leaf Disease Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/usmanafzaal/strawberry-disease-detection-dataset,Strawberry Disease Detection Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/usmanalibutt9393/ccl-20-citrus-leaf-disease-dataset,CCL 20,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/usmansaqib123/apple-leaf-disease,Apple leaf Disease,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/uvetha/apple-leaf-dataset,Apple Leaf Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/vagoasdf/apple-comparison,Apples to Apples,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/vaishaligbhujade/soybean-leaf-dataset-for-disease-classification,Soybean Leaf Dataset for Disease Classification ,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/vasantharank/tomato-leaf-disease-detection-yolov8-dataset,Tomato Leaf Disease Detection - YOLOv8 Dataset,kaggle,CC BY-NC-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/vascomarmelo/grapevine-disease-detection-dataset,Grapevine Disease Detection Dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/vbookshelf/rice-leaf-diseases,Rice Leaf Diseases Dataset,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/vidyawaykule/real-image-tomato-leaf-disease-dataset,Real Image Tomato Leaf Disease Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/vishnuvraoch/agriguardian,AgriGuardian,kaggle,CC BY-SA 4.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/w970704112/corn-wheat-rice-soybean,corn_wheat_rice_soybean,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/warcoder/potato-leaf-disease-dataset,Potato Leaf Disease Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/williamsgubarie/maize-leaf-disease,Maize Leaf Disease,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/willianoliveiragibin/knowledge-graph-construction,knowledge-graph-construction,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yaldanz/apple-leaf-and-fruit-disease-segmenattion,Apple leaf and fruit disease segmenattion,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yasirahmad0810/consolidated-corn-dataset,consolidated-corn-dataset,kaggle,MIT,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yasminmahmoud/apple-leaf-dataset,Apple Leaf Dataset,kaggle,Other (specified in description),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yogeshbandewar/crop-dataset,Crop dataset,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yousufrayhan/augmented-sweet-orange-leaf-disease,Augmented_Sweet_orange_leaf_disease,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yusufmurtaza01/apple-leaf-diseases,APPLE Leaf Diseases,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yusufmurtaza01/corn-leaf-diseases,CORN Leaf Diseases,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yusufmurtaza01/grape-leaf-diseases,GRAPE Leaf Diseases,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yusufmurtaza01/plantdoc-object-detection-dataset,PlantDoc: Object Detection Dataset,kaggle,Attribution 4.0 International (CC BY 4.0),2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yusufmurtaza01/tomato-leaf-dataset-for-disease-detection,Tomato Leaf Dataset for Disease Detection,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/yusufmurtaza01/tomato-leaf-disease,Tomato Leaf Disease,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/zaeemabbas512/grape-leaf-disease-main-zaeem-abbas,Grape Leaf Disease main zaeem abbas,kaggle,Unknown,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/ziya07/solanaceae-family-leaves-dataset,Solanaceae Family Leaves Dataset,kaggle,CC0: Public Domain,2026-10-17,previous_search_candidate
+https://www.kaggle.com/datasets/zunorain/tomato-dataset-v2,tomato_dataset_v2,kaggle,Apache 2.0,2026-10-17,previous_search_candidate
+https://www.researchgate.net/publication/380611658_Dataset_of_Chilli_and_Onion_Plant_Leaf_Images_for_Classification_and_Detection,onion_leaf_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.researchgate.net/publication/380900090_Sigatoka_and_Xanthomonas_Banana_Leaf_Disease_Detection_Via_Transfer_Learning,banana_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2352340921004261?via%3Dihub#sec0001,arabica_coffee_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2352340922002542,sunflower_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2352340922009295,blackgram_plant_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2352340923004389,cucumber_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2352340923007692#sec0003,coconut_tree_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2352340924006802#sec0004,orange_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2352340924008734,papaya_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.sciencedirect.com/science/article/pii/S2772375524001059#sec0003,java_plum_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://www.semanticscholar.org/paper/Betel-Leaf-Diseases-Classification-using-Machine-A-David-Mukunthan/38208c9d2306444e3b9f8593715a46e2dcf26f44#paper-topics,betel_leaf_disease_classification,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://zenodo.org/record/5092309,wheat_head_counting,AgML_reference,,2026-10-19,catalogue_reference_not_approved
+https://zenodo.org/records/7636408,vegann_multicrop_presence_segmentation,AgML_reference,,2026-10-19,catalogue_reference_not_approved

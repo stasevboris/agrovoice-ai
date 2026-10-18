@@ -1,0 +1,229 @@
+{
+  "date": "2026-10-19",
+  "discovery": {
+    "checked_on": "2026-10-19",
+    "previous_candidate_references": 430,
+    "search_queries": 14,
+    "candidate_references": 740,
+    "search_errors": [],
+    "limitations": "URLs are not independent datasets. Search metadata is not provenance/license verification. Results limited per query; not exhaustive market coverage."
+  },
+  "datasets": {
+    "dataset_vision_training_v1": {
+      "path": "ml-pipeline/dataset_vision_training_v1",
+      "report": "ml-pipeline/dataset_vision_training_v1/report.json",
+      "counts": {
+        "train_crops": 29460,
+        "train_images": 24054,
+        "val_crops": 4258,
+        "val_images": 3273,
+        "test_crops": 3281,
+        "test_images": 3033
+      },
+      "license": "see ATTRIBUTION.md and per-image attribution",
+      "excluded": {
+        "unreviewed_or_fallback_geometry": 1480,
+        "repeat_or_exact_duplicate": 4923
+      },
+      "limitations": [
+        "Trusted refers to geometry provenance, not new expert diagnosis verification.",
+        "Original near-duplicate/history limitations remain; not a new independent field test.",
+        "GT crops are for representation training, not end-to-end model ranking.",
+        "Images may be hard links; training must never modify source images in place.",
+        "Source licenses retained; no blanket license granted by this conversion."
+      ]
+    },
+    "dataset_unknown_beans_screened_v1": {
+      "path": "ml-pipeline/dataset_unknown_beans_screened_v1",
+      "report": "ml-pipeline/dataset_unknown_beans_screened_v1/report.json",
+      "counts": {
+        "train": 1034,
+        "val": 133,
+        "test": 128
+      },
+      "license": "MIT",
+      "excluded": {},
+      "limitations": [
+        "No leaf boxes: never use empty detection labels.",
+        "Bean is outside taxonomy_v1; diseases are not soybean labels.",
+        "Original split; plant/session IDs unavailable.",
+        "After exposure training, test is seen-crop OOD, not novel-species test.",
+        "pHash screening does not prove image/plant independence. Source split retained after exclusions."
+      ]
+    },
+    "dataset_unknown_deepweeds_v1": {
+      "path": "ml-pipeline/dataset_unknown_deepweeds_v1",
+      "report": "ml-pipeline/dataset_unknown_deepweeds_v1/report.json",
+      "counts": {
+        "train": 1425,
+        "test": 1489,
+        "val": 1581
+      },
+      "license": "CC-BY-4.0 images/annotations; author README distinguishes repository code license",
+      "excluded": {
+        "species_reserved_outside_pilot": 1125,
+        "capture_day_camera_crosses_species_splits": 2776,
+        "negative_is_not_nonplant": 9106,
+        "near_duplicate_within_split": 7
+      },
+      "limitations": [
+        "Image-level species labels, no disease labels or leaf boxes.",
+        "Species and camera/date groups held out; location independence not established.",
+        "Low-resolution Australian scenes are not a Belarus phone field test.",
+        "pHash rotation/reflection <=6 screening does not prove independence.",
+        "Only JSONL-listed images are accepted; excluded files remain on disk for traceability.",
+        "Never train on held-out species test before final OOD comparison."
+      ],
+      "species": {
+        "train": [
+          "Lantana",
+          "Parthenium"
+        ],
+        "val": [
+          "Prickly acacia",
+          "Rubber vine"
+        ],
+        "test": [
+          "Siam weed",
+          "Snake weed"
+        ]
+      }
+    },
+    "dataset_asr_ru_fleurs_v1": {
+      "path": "ml-pipeline/dataset_asr_ru_fleurs_v1",
+      "report": "ml-pipeline/dataset_asr_ru_fleurs_v1/report.json",
+      "counts": {
+        "train": 2562,
+        "val": 356,
+        "test": 775
+      },
+      "license": "CC-BY-4.0",
+      "excluded": null,
+      "limitations": [
+        "Read speech, not field commands; no claim of domain WER.",
+        "Retains official splits; no speaker identity inferred from filenames."
+      ],
+      "duration_seconds": {
+        "train": 28981.2,
+        "val": 3883.56,
+        "test": 8993.82
+      }
+    },
+    "dataset_intents_ru_massive_v1": {
+      "path": "ml-pipeline/dataset_intents_ru_massive_v1",
+      "report": "ml-pipeline/dataset_intents_ru_massive_v1/report.json",
+      "counts": {
+        "train": 11514,
+        "val": 2033,
+        "test": 2974
+      },
+      "license": "CC-BY-4.0",
+      "excluded": null,
+      "limitations": [
+        "Not AgroVoice actions; no automatic mapping to app commands.",
+        "Do not merge test into training or duplicate parallel languages across splits."
+      ]
+    },
+    "dataset_assistant_ru_v1": {
+      "path": "ml-pipeline/dataset_assistant_ru_v1",
+      "report": "ml-pipeline/dataset_assistant_ru_v1/report.json",
+      "counts": {
+        "train": 138,
+        "val": 24,
+        "test": 39
+      },
+      "license": "AGPL-3.0 project terms",
+      "excluded": null,
+      "limitations": [
+        "Seed SFT corpus and synthetic regression probe, not a user benchmark.",
+        "No recorded voices, no measured model accuracy.",
+        "Split by authored scenario group; no claim of semantic independence.",
+        "Contextual JSON dispatcher is a target protocol, not implemented in Android.",
+        "Test is a development regression set; collect independent speakers/scenarios for acceptance.",
+        "FunctionGemma needs its native tool template; do not train it blindly on Qwen chat format."
+      ]
+    },
+    "dataset_nonplant_openimages_v2": {
+      "path": "ml-pipeline/dataset_nonplant_openimages_v2",
+      "report": "ml-pipeline/dataset_nonplant_openimages_v2/report.json",
+      "counts": {
+        "train": 20,
+        "val": 5,
+        "test": 6
+      },
+      "license": "see ATTRIBUTION.md and per-image attribution",
+      "excluded": 33,
+      "limitations": [
+        "Small reviewed pilot; independent household/field recordings still required.",
+        "AI visual screening can miss small foliage; inspect full resolution before final acceptance.",
+        "CC-BY-2.0 individual image attribution is in manifest.jsonl; annotations CC-BY-4.0.",
+        "Only train split can be included in training."
+      ]
+    }
+  },
+  "totals": {
+    "vision_source_images": 30360,
+    "derived_leaf_crops": 36999,
+    "new_accepted_images": 5821,
+    "speech_clips": 3693,
+    "massive_utterances": 16521,
+    "synthetic_app_utterances": 201
+  },
+  "missing_strict_train_classes": [
+    "corn__healthy",
+    "cucumber__bacterial_wilt",
+    "cucumber__downy_mildew"
+  ],
+  "training_performed": false,
+  "verification": {
+    "tests": {
+      "command": ".\\ml-pipeline\\venv\\Scripts\\python.exe -X utf8 -m unittest discover -s ml-pipeline/tests",
+      "tests_run": 65,
+      "failures": 0,
+      "errors": 0,
+      "successful": true
+    },
+    "data": {
+      "train": {
+        "images": 24054,
+        "boxes": 29460
+      },
+      "val": {
+        "images": 3273,
+        "boxes": 4258
+      },
+      "test": {
+        "images": 3033,
+        "boxes": 3281
+      },
+      "train_with_negatives": {
+        "images": 24074,
+        "boxes": 29460
+      },
+      "dataset_unknown_beans_screened_v1": {
+        "records_verified": 1295
+      },
+      "dataset_unknown_deepweeds_v1": {
+        "records_verified": 4495
+      },
+      "dataset_asr_ru_fleurs_v1": {
+        "records_verified": 3693
+      },
+      "successful": true,
+      "fleurs_cross_split_overlap": {
+        "train_val": {
+          "sentence_ids": 0,
+          "normalized_texts": 0
+        },
+        "train_test": {
+          "sentence_ids": 0,
+          "normalized_texts": 0
+        },
+        "val_test": {
+          "sentence_ids": 0,
+          "normalized_texts": 0
+        }
+      }
+    }
+  }
+}

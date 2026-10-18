@@ -1,5 +1,10 @@
 # Внешние наборы ext_v2 (дополнение к allcrops_v1)
 
+Дополнительный поиск, корпуса неизвестных видов/предметов/русской речи и подготовка
+данных для альтернатив YOLO — [отбор моделей и данных](../research/DATA_AND_MODEL_SELECTION_2026-10-19.md),
+[каталог кандидатов](DATASET_CANDIDATES_2026-10-19.csv),
+[проверяемая сводка](TRAINING_PREPARATION_REPORT.json). Ниже описан именно прежний ext_v2.
+
 Набор `ml-pipeline/dataset_ext_v2` (в git не идёт) — снимки с Kaggle для тех же 49 классов `taxonomy_v1` (порядок и ID классов не менялись). Собран 18.10.2026 скриптом `ml-pipeline/external/build_external_v2.py`; источники — `ml-pipeline/external/sources_v2.json`, сопоставление папок с классами — `mapping_v2.json`. Все числа ниже — из `dataset_ext_v2/report.json` (отпечаток `a5be23e8…`).
 
 ## Как собирался

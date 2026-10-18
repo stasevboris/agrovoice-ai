@@ -1,0 +1,327 @@
+{
+  "reviewed_on": "2026-10-19",
+  "reviewer": "assistant visual screening of 4 contact sheets",
+  "scope": "Absence of visible real foliage only. No plant species or disease labels inferred. Conservative exclusions for outdoor foliage, foods with greens and ambiguous backgrounds.",
+  "decisions": {
+    "f54ce42a32feccf0": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 0
+    },
+    "9286a99f243b359a": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 1
+    },
+    "0e481ee0c6655eb1": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 2
+    },
+    "d6bdc197b5645e29": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 3
+    },
+    "777d9d76ca6113ac": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 4
+    },
+    "0035a4bfeda1b637": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 5
+    },
+    "5ca4b981af357bd7": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 6
+    },
+    "a512ef412da4ee29": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 7
+    },
+    "1ae431c8afde430f": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 8
+    },
+    "19d85d98e3a84e43": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 9
+    },
+    "9338ef15df611769": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 10
+    },
+    "7bcce2931b9e442e": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 11
+    },
+    "84c3ad460ced2ad9": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 12
+    },
+    "4cceeb7e21c8e0be": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 13
+    },
+    "7a4a3e615c6022a7": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 14
+    },
+    "fabf857f72b1c8bf": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 15
+    },
+    "d28d71c2690c16ed": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 16
+    },
+    "66e242138c7ead4d": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 17
+    },
+    "3f802e24c2739214": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 18
+    },
+    "ca074869694d7a7b": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 19
+    },
+    "686799d087248d7f": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 20
+    },
+    "5f032a047de94dcc": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 21
+    },
+    "c3850f8a5eaaeb52": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 22
+    },
+    "bf9fb499b6e991ab": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 23
+    },
+    "232efffa8c56845c": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 24
+    },
+    "086224b8c3266d3e": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 25
+    },
+    "4cb5614b233ee2cb": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 26
+    },
+    "12a68a91a00d1b91": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 27
+    },
+    "026fa3777c04b863": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 28
+    },
+    "0e67272f228ba0c5": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 29
+    },
+    "2c9817c8076a3fd4": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 30
+    },
+    "064a8def3049d040": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 31
+    },
+    "500a9dd05eb4d9c3": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 32
+    },
+    "d08688e8f8baf578": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 33
+    },
+    "bfaae3db9126ecf1": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 34
+    },
+    "e51e3156ed41b3a8": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 35
+    },
+    "0d605ebce175a954": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 36
+    },
+    "1f6886454432c317": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 37
+    },
+    "3ae0e6e23a9af498": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 38
+    },
+    "8af420f7f8e8b5e6": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 39
+    },
+    "c805c48b2828e980": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 40
+    },
+    "f6aa134ce6284e38": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 41
+    },
+    "92eb72d6587bfbf9": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 42
+    },
+    "320fcaa7e1313551": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 43
+    },
+    "8bcc58817528ee04": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 44
+    },
+    "d213ece8466847a6": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 45
+    },
+    "bdf57c7e488c7d93": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 46
+    },
+    "d2f7e03433c3f000": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 47
+    },
+    "bdb8abb449444489": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 48
+    },
+    "42894a81eca95732": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 49
+    },
+    "4ddf4d3a43343ba1": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 50
+    },
+    "88e56983c5bcc0ef": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 51
+    },
+    "06a4a9b49707a673": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 52
+    },
+    "966d44c47effc043": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 53
+    },
+    "0445879119ab002f": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 54
+    },
+    "bf7b0a5059e63391": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 55
+    },
+    "6c304280c24a90f8": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 56
+    },
+    "df7c076ae9d89bbf": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 57
+    },
+    "e1c19875643b041f": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 58
+    },
+    "b21851932252e3fd": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 59
+    },
+    "fbe077711ccc62c3": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 60
+    },
+    "dead6bc1e76b3b5a": {
+      "decision": "accept",
+      "reason": "Household object/interior/graphic without visible real foliage in inspected preview",
+      "preview_index": 61
+    },
+    "3ed000628c6a0587": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 62
+    },
+    "0170ea8e1a33375a": {
+      "decision": "exclude",
+      "reason": "Visible vegetation, plant food, or ambiguous background: exclude from empty leaf annotations",
+      "preview_index": 63
+    }
+  }
+}
