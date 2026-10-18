@@ -1,6 +1,6 @@
 # Авторы данных и компонентов
 
-Код проекта распространяется под [GNU AGPL-3.0](LICENSE). Модели обучены на данных и компонентах ниже; при использовании весов сохраняйте эти ссылки.
+Код проекта распространяется под [GNU AGPL-3.0](LICENSE). Ниже перечислены источники действующих экспериментов и подготовленных наборов для будущего обучения; при использовании весов сохраняйте соответствующие ссылки.
 
 ## Данные для обучения моделей allcrops
 
@@ -15,9 +15,9 @@
 
 ### Дополнение ext_v2 (модели allcrops_v2)
 
-Модели `allcrops_v2_*` дообучены также на внешних наборах Kaggle: Plant Pathology 2021 FGVC8 (Thapa et al., Cornell), D-KAP (Sharma et al. 2022), PlantCity 2025 (Khan et al.; яблоня, вишня, виноград, томат; ODbL 1.0), Esca grapes (Alessandrini et al., CC BY 4.0), Corn Leaf Disease Polagan (MIT), Cucumber Leaf Disease (Apache 2.0), Potato Disease Leaf PLD (Rashid et al. 2021), Potato Leaf Disease in uncontrolled environment (Shabrina et al. 2023, CC BY 4.0), Potato leaf Ethiopia (CC0), Soyabean 4-class (MIT), Pumpkin leaf diseases Bangladesh (CC BY 4.0), SmartBerry (Ihianle, CC BY 4.0), Vietnamese Tomato Leaf Disease (Apache 2.0), Real-image tomato leaf disease (CC BY 4.0), Tomato spider mites (Apache 2.0), Pepper bell leaf disease (CC BY 4.0). Ссылки, лицензии и сколько снимков взято из каждого — [docs/data/SOURCES.md](docs/data/SOURCES.md).
+Для будущего дообучения моделей `allcrops_v2_*` подготовлены внешние наборы Kaggle: Plant Pathology 2021 FGVC8 (Thapa et al., Cornell), D-KAP (Sharma et al. 2022), PlantCity 2025 (Khan et al.; яблоня, вишня, виноград, томат; ODbL 1.0), Esca grapes (Alessandrini et al., CC BY 4.0), Corn Leaf Disease Polagan (MIT), Cucumber Leaf Disease (Apache 2.0), Potato Disease Leaf PLD (Rashid et al. 2021), Potato Leaf Disease in uncontrolled environment (Shabrina et al. 2023, CC BY 4.0), Potato leaf Ethiopia (CC0), Soyabean 4-class (MIT), Pumpkin leaf diseases Bangladesh (CC BY 4.0), SmartBerry (Ihianle, CC BY 4.0), Vietnamese Tomato Leaf Disease (Apache 2.0), Real-image tomato leaf disease (CC BY 4.0), Tomato spider mites (Apache 2.0), Pepper bell leaf disease (CC BY 4.0). Ссылки, лицензии и сколько снимков взято из каждого — [docs/data/SOURCES.md](docs/data/SOURCES.md).
 
-Веса, обученные на PlantVillage (CC BY-SA 3.0), публикуются с указанием авторства. Вопрос, распространяется ли условие «share-alike» на веса модели, юридически не решён; проект открыт, поэтому совместимость сохраняется в любом случае.
+Веса, обученные на PlantVillage (CC BY-SA 3.0), публикуются с указанием авторства. Вопрос, распространяется ли условие «share-alike» на веса модели, юридически не решён. Открытость кода сама по себе не доказывает совместимость всех условий данных и весов; перед публикацией необходима отдельная проверка.
 
 ## Программные компоненты и модели
 
