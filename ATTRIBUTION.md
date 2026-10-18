@@ -44,3 +44,19 @@ PlantSeg в новый обучающий пакет не включены: ус
 | [ONNX Runtime](https://github.com/microsoft/onnxruntime) | MIT | запуск моделей на телефоне |
 | JNA | Apache-2.0 / LGPL-2.1 | зависимость Vosk |
 | DEIMv2 | собственная лицензия правообладателя (all rights reserved), см. `android-app/app/src/main/assets/licenses/DEIMv2-LICENSE.md` | только экспериментальный режим lab-сборки; **веса DEIMv2 проектом не публикуются** |
+# Дополнительные источники: обычные фото и OPTIMA (19.10.2026)
+
+- **iNaturalist, индивидуальные фотографии CC BY / CC0.** Авторы, ID наблюдений,
+  ссылки на страницы фото, код лицензии и SHA256 сохранены в
+  `ml-pipeline/external/web_photo_sources_v1.json`; решения просмотра —
+  `web_photo_review_v1.json`. Вид — исходная community/research-grade метка,
+  наличие листа и частичные рамки — визуальная разметка ИИ. Диагнозы не назначались.
+  Изображения: `ml-pipeline/dataset_web_leaf_presence_v1/`. При передаче сохранять
+  индивидуальную атрибуцию; вырезки обозначать как производные изображения.
+- **OPTIMA RGB/MS, Blok, Polder, Peller, van Daalen (Wageningen University & Research).**
+  DOI: https://doi.org/10.5281/zenodo.6778647, лицензия **CC BY 4.0**.
+  Подготовлен исторический RGB-поднабор v1; актуальная найденная версия —
+  https://doi.org/10.5281/zenodo.8339572, здесь не скачана.
+  `ml-pipeline/dataset_optima_rgb_v1/source_metadata.json` сохраняет оригинальную
+  запись. Исходные рамки областей болезни преобразованы в отдельный COCO;
+  они не являются рамками целых листьев taxonomy_v1. Multispectral не включён.

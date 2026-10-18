@@ -5,6 +5,7 @@
 
 - Что делаем и в каком порядке — [docs/ROADMAP.md](docs/ROADMAP.md)
 - Что есть сейчас — [docs/STATUS.md](docs/STATUS.md)
+- Что читать Борису и как запускать обучение — [карта документации](docs/READING_GUIDE.md), [инструкция обучения](docs/TRAINING_PLAYBOOK.md)
 - Полный технический отчёт, ограничения и направления развития — [docs/PROJECT_REPORT_2026-10-19.md](docs/PROJECT_REPORT_2026-10-19.md)
 - Аудит проекта на 16.10.2026 — [docs/AUDIT_AND_PLAN_2026-10-16.md](docs/AUDIT_AND_PLAN_2026-10-16.md)
 - Правила для ИИ-агентов — [AGENTS.md](AGENTS.md)

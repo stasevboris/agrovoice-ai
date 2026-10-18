@@ -1,0 +1,21 @@
+{
+  "reviewer": "AI visual review, 2026-10-19",
+  "scope": "Visible leaf presence and selected leaf rectangles only; no disease diagnosis. Rectangles are partial annotations, never exhaustive detection ground truth.",
+  "decisions": {
+    "45095": {"accept": true, "reason": "Visible maple leaves; scene presence only."},
+    "104080": {"accept": true, "reason": "Prominent maple leaf; edge is truncated. Reviewed individual image.", "box_xyxy": [0, 0, 425, 352], "truncated": true},
+    "408631": {"accept": true, "reason": "Multiple visible maple leaves; no exhaustive boxes."},
+    "105088": {"accept": true, "reason": "Visible nettle leaves with background vegetation."},
+    "143164": {"accept": true, "reason": "Visible nettle leaves and inflorescence."},
+    "1196172": {"accept": true, "reason": "Visible discoloured oak leaves; disease intentionally unknown."},
+    "1372338": {"accept": false, "reason": "Tree trunk is the subject, foliage distant; exclude from leaf-focused pilot."},
+    "1769643": {"accept": false, "reason": "Acorns and ground are the subject; not a leaf-focused example and not a nonplant negative."},
+    "2460842": {"accept": true, "reason": "Visible held oak leaf; no diagnosis from discolouration."},
+    "2480929": {"accept": true, "reason": "Prominent oak leaf; reviewed individual image.", "box_xyxy": [22, 34, 326, 493]},
+    "26296397": {"accept": true, "reason": "Cucumber leaf partially occluded by flower; reviewed individual image.", "box_xyxy": [91, 22, 434, 346], "occluded": true},
+    "49570048": {"accept": false, "reason": "Flower and mixed vegetation dominate; ambiguous leaf-focused sample."},
+    "66280614": {"accept": true, "reason": "Multiple visible cucumber leaves; scene presence only."},
+    "68959917": {"accept": true, "reason": "Visible cucumber leaves among background plants; no exhaustive boxes."},
+    "89524781": {"accept": false, "reason": "Cucumber fruit is subject, leaves out of focus; not a nonplant negative."}
+  }
+}

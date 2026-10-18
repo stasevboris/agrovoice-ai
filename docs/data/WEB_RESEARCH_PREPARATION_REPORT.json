@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-19",
+  "datasets": {
+    "dataset_web_leaf_presence_v1": {
+      "path": "ml-pipeline/dataset_web_leaf_presence_v1",
+      "report": {
+        "training_ready_for": [
+          "leaf_presence_train_positives",
+          "selected_species_crops"
+        ],
+        "training_ready_for_taxonomy_v1_disease_detection": false,
+        "counts": {
+          "candidates": 15,
+          "train_images": 11,
+          "derived_crops": 3,
+          "excluded": 4
+        },
+        "species": {
+          "Acer platanoides": 3,
+          "Urtica dioica": 2,
+          "Quercus robur": 3,
+          "Cucumis sativus": 3
+        },
+        "licenses": {
+          "cc-by": 8,
+          "cc0": 3
+        },
+        "screening": {
+          "reference": "ml-pipeline/.cache/external/hash_index/current_sources.npy",
+          "reference_hashes": 94401,
+          "phash_threshold": 6
+        },
+        "limitations": [
+          "AI visual review, not expert disease diagnosis.",
+          "Partial boxes are not complete detection annotations.",
+          "Medium-size public images, not original-resolution independent field test.",
+          "All records are supplemental train; no new evaluation split.",
+          "Reference pHash screening is not global web deduplication.",
+          "iNaturalist research grade supports species, not health status.",
+          "Crops are derivatives of the same observations, not new images."
+        ]
+      },
+      "verified_records": 11
+    },
+    "dataset_optima_rgb_v1": {
+      "path": "ml-pipeline/dataset_optima_rgb_v1",
+      "report": {
+        "source": "https://zenodo.org/api/records/6778647",
+        "pinned_version": "1",
+        "latest_known_record": 8339572,
+        "license": "CC-BY-4.0",
+        "archive_bytes": 286433844,
+        "archive_sha256": "14ff1dbce3848234611c39531fba1cea516ac7dd26d4af291e3f8d911ebb7a44",
+        "counts": {
+          "rgb_candidates": 90,
+          "accepted_train_images": 88,
+          "boxes": 283,
+          "excluded": 2
+        },
+        "classes": {
+          "apple_applescab": 28,
+          "carrot_alternaria": 30,
+          "grape_downymildew": 30
+        },
+        "sessions": {
+          "apple_applescab:21_05_27": 15,
+          "apple_applescab:21_06_10": 13,
+          "carrot_alternaria:21_09_02": 8,
+          "carrot_alternaria:21_09_24": 9,
+          "carrot_alternaria:21_11_04": 13,
+          "grape_downymildew:21_07_23": 22,
+          "grape_downymildew:21_08_23": 8
+        },
+        "training_ready_for": [
+          "auxiliary_representation_train",
+          "separate_source_lesion_task_train"
+        ],
+        "training_ready_for_taxonomy_v1_leaf_detection": false,
+        "limitations": [
+          "Historical v1 pilot; latest v2 is a larger archive not prepared here.",
+          "Source annotations retained, not independently re-diagnosed.",
+          "Disease-region boxes must never be relabelled as whole leaves.",
+          "All accepted samples are train-only; no independent test split claimed.",
+          "Multispectral images excluded from RGB Android task.",
+          "Only train.jsonl / COCO-listed files are accepted; excluded originals remain.",
+          "Current-source pHash <=6 screening cannot prove global independence."
+        ]
+      },
+      "verified_records": 88
+    }
+  },
+  "totals": {
+    "accepted_original_images": 99,
+    "derived_crops": 3
+  },
+  "training_performed": false,
+  "tests": {
+    "command": ".\\ml-pipeline\\venv\\Scripts\\python.exe -X utf8 -m unittest discover -s ml-pipeline/tests",
+    "tests_run": 75,
+    "failures": 0,
+    "errors": 0,
+    "successful": true
+  },
+  "yolo_config": {
+    "counts": {
+      "train": 24054,
+      "train_with_negatives": 24074,
+      "val_field": 349
+    },
+    "validation": "field_only",
+    "test_exposed": false,
+    "training_performed": false,
+    "data": "F:/agrovoice-ai/ml-pipeline/dataset_vision_training_v1"
+  },
+  "archive": {
+    "archive": "artifacts/gpu_kit/agrovoice_discovery_addon_20261019.zip",
+    "bytes": 227011832,
+    "sha256": "011e0f9b5475f2110ea4a3964b0002a942d904f2956c3ca9436d7df36f3ee846",
+    "crc_verified": true,
+    "entries": 210,
+    "dataset_files": {
+      "dataset_web_leaf_presence_v1": 19,
+      "dataset_optima_rgb_v1": 181
+    },
+    "weights_included": false,
+    "training_performed": false
+  },
+  "source_limits": [
+    "Commons photo downloads returned HTTP 429, excluded from training.",
+    "Some Crossref title queries returned HTTP 429; DOI confirmed from primary pages where available.",
+    "UFV full text encountered a bot check; retained only as a candidate.",
+    "Initial incorrect PlantNet arXiv candidate was rejected by title; correct publication found in author README.",
+    "Geographic search is selective, not all countries/universities."
+  ]
+}
