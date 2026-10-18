@@ -42,6 +42,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     var bitmap by mutableStateOf<Bitmap?>(null); private set
     var photo by mutableStateOf<File?>(null); private set
     var result by mutableStateOf<DetectionResult?>(null); private set
+    var photoQuality by mutableStateOf<PhotoQuality?>(null)
+        private set
     var busy by mutableStateOf(false); private set
     var message by mutableStateOf<String?>(null); private set
     /** Errors stop the task; confirmations of a finished action do not. */
@@ -95,6 +97,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     fun selectedModelName(): String = detector.models.firstOrNull {it.id==selectedModel}?.name ?: selectedModel
     fun importPhoto(uri: Uri) {
         if(busy)return
+        photoQuality = null
         busy=true;message=null;result=null;reportName=null
         worker.execute {
             try {
@@ -106,6 +109,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun openFile(file: File) {
         if(busy)return
+        photoQuality = null
         busy=true;message=null;result=null;reportName=null
         worker.execute {
             try {
@@ -129,7 +133,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         busy=true;message=null;result=null;reportName=null
         worker.execute {
             try {
-                val detection=detector.detect(source,model,cropSnapshot,thresholdSnapshot)
+                val quality = PhotoFiles.measureQuality(source)
+                main.post { if (!cleared) photoQuality = quality }
+                val detection = detector.detect(source, model, cropSnapshot, thresholdSnapshot)
+                    .copy(photoQuality = quality)
                 val report=PhotoFiles.saveResult(getApplication(),file,source,detection,detector,cropSnapshot,thresholdSnapshot)
                 replaceUnsavedReport(report)
                 main.post {if(!cleared){result=detection;reportName=report.name;busy=false}}
@@ -184,8 +191,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun spokenResult(): String {
         val found=result ?: return "Сначала сделай фото и дождись анализа."
-        if(found.boxes.isEmpty())return "Лист с достаточной уверенностью не найден. Попробуй другой ракурс."
-        return "Предварительный результат. "+found.boxes.take(5).mapIndexed {i,b ->"Лист ${i+1}. ${detector.labels[b.classId]}."}.joinToString(" ")+" Результат нужно проверить."
+        return spokenAnalysis(found.boxes.map { detector.labels[it.classId] }, found.photoQuality)
     }
     private fun postFailure(error:Exception){main.post {if(!cleared){busy=false;showError(error.message ?: "Не удалось обработать фото")}}}
     override fun onCleared(){

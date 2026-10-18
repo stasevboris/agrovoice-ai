@@ -12,6 +12,7 @@ import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 import ai.onnxruntime.TensorInfo
 import org.json.JSONObject
+import com.agronomy.phytomonitor.PhotoQuality
 import java.io.Closeable
 import java.io.File
 import java.nio.ByteBuffer
@@ -32,7 +33,8 @@ data class DetectorModel(val id: String, val name: String, val asset: String, va
 data class DetectionResult(val model: DetectorModel, val boxes: List<LeafDetection>,
                            val inferenceMs: Double, val pipelineMs: Double,
                            val proposedLeaves: Int = 0, val classifiedLeaves: Int = 0,
-                           val skippedLeaves: Int = 0)
+                           val skippedLeaves: Int = 0,
+                           val photoQuality: PhotoQuality? = null)
 
 /** One background executor, at most one detector and one classifier session. */
 class FieldDetector(private val context: Context) : Closeable {

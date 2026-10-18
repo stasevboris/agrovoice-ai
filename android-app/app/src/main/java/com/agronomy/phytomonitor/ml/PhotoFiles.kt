@@ -15,8 +15,24 @@ import org.json.JSONObject
 import java.io.File
 import java.util.UUID
 import kotlin.math.max
+import com.agronomy.phytomonitor.PhotoQuality
+import com.agronomy.phytomonitor.analysePhoto
+import com.agronomy.phytomonitor.qualitySampleSize
 
 object PhotoFiles {
+    /** Called on the analysis worker, before inference. The displayed source is never recycled. */
+    fun measureQuality(bitmap: Bitmap): PhotoQuality {
+        val (width, height) = qualitySampleSize(bitmap.width, bitmap.height)
+        val sample = Bitmap.createScaledBitmap(bitmap, width, height, true)
+        try {
+            val pixels = IntArray(width * height)
+            sample.getPixels(pixels, 0, width, 0, 0, width, height)
+            return analysePhoto(pixels, width, height)
+        } finally {
+            if (sample !== bitmap) sample.recycle()
+        }
+    }
+
     fun folder(context: Context) = File(context.getExternalFilesDir(null) ?: context.filesDir,"photos").apply { mkdirs() }
     fun newCapture(context: Context) = File(folder(context),"camera_${UUID.randomUUID()}.jpg")
 
@@ -103,6 +119,7 @@ object PhotoFiles {
             .put("inference_ms",result.inferenceMs).put("pipeline_ms",result.pipelineMs)
             .put("detections",boxes).put("device","${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
             .put("scope","Whole leaf with crop/condition. Confidence is not disease probability or damaged area.")
+        addAnalysisAssessment(report, result.boxes.size, result.photoQuality)
         return File(directory,"${System.currentTimeMillis()}_${result.model.id}_${UUID.randomUUID().toString().take(8)}.json")
             .apply {writeText(report.toString(2))}
     }

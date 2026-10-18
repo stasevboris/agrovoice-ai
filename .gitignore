@@ -69,3 +69,6 @@ docs/**/*.jsonl
 
 # Prepared GitHub Release files (ml-pipeline/prepare_model_release.py)
 /artifacts/release/
+
+# Local verification reports and logs
+/artifacts/verification/

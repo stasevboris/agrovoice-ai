@@ -203,6 +203,7 @@ private fun PhotoZone(model: FieldDemoViewModel, maxHeight: androidx.compose.ui.
         EmptyPhoto()
     } else {
         PhotoWithDetections(image, model.result?.boxes.orEmpty(), model.showBoxes, busy = model.busy, maxHeight = maxHeight)
+        model.photoQuality?.advice?.let { MessageBanner(it, isError = false) }
     }
 }
 
@@ -330,7 +331,7 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
             }
         }
         if (result.boxes.isEmpty()) {
-            MessageBanner("Не нашёл лист с достаточной уверенностью. Попробуй другой ракурс, модель или порог.", isError = false)
+            MessageBanner(NO_DETECTIONS_ADVICE, isError = false)
         } else {
             result.boxes.forEachIndexed { index, box ->
                 LeafResultRow(
