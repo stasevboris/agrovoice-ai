@@ -5,9 +5,12 @@
 
 - Что делаем и в каком порядке — [docs/ROADMAP.md](docs/ROADMAP.md)
 - Что есть сейчас — [docs/STATUS.md](docs/STATUS.md)
-- Что читать Борису и как запускать обучение — [карта документации](docs/READING_GUIDE.md), [инструкция обучения](docs/TRAINING_PLAYBOOK.md)
-- Полный технический отчёт, ограничения и направления развития — [docs/PROJECT_REPORT_2026-10-19.md](docs/PROJECT_REPORT_2026-10-19.md)
-- Аудит проекта на 16.10.2026 — [docs/AUDIT_AND_PLAN_2026-10-16.md](docs/AUDIT_AND_PLAN_2026-10-16.md)
+- Что читать Борису — [маршрут чтения](docs/READING_GUIDE.md), [полный каталог документов](docs/DOCUMENTATION_CATALOG.md)
+- Где что лежит — [карта проекта](docs/PROJECT_MAP.md), [разделы документации](docs/README.md), [вход в ML-пайплайн](ml-pipeline/README.md)
+- Проверенное состояние и риски — [полный аудит 19.10.2026](docs/audits/PROJECT_AUDIT_2026-10-19.md)
+- Как запускать обучение — [практическая инструкция](docs/guides/TRAINING_PLAYBOOK.md)
+- Полный технический отчёт, ограничения и направления развития — [docs/architecture/PROJECT_REPORT_2026-10-19.md](docs/architecture/PROJECT_REPORT_2026-10-19.md)
+- Аудит проекта на 16.10.2026 — [docs/audits/AUDIT_AND_PLAN_2026-10-16.md](docs/audits/AUDIT_AND_PLAN_2026-10-16.md)
 - Правила для ИИ-агентов — [AGENTS.md](AGENTS.md)
 - Что не хранится в git и где лежит — [docs/ARCHIVE.md](docs/ARCHIVE.md)
 
@@ -21,7 +24,15 @@
 
 ## Сборка APK
 
-Нужны JDK 17+ (проверено на JDK 25) и Android SDK (путь в `android-app/local.properties`).
+Нужны JDK 25 (закреплён в `gradle-daemon-jvm.properties`) и Android SDK
+(путь в `android-app/local.properties`). Используется Gradle Wrapper проекта.
+Перед сборкой из корня проверь локальные ассеты:
+
+```powershell
+python android-app\fetch_assets.py --check
+```
+
+Затем:
 
 ```powershell
 cd android-app
@@ -29,14 +40,20 @@ cd android-app
 .\gradlew.bat assembleDebug
 ```
 
-Модели (`app/src/main/assets/models/*.onnx`) и речевая модель Vosk в git не хранятся. Перед сборкой:
+Модели (`app/src/main/assets/models/*.onnx`) и Vosk в git не хранятся.
+`model_release.json` пока содержит пустой список файлов: чистый клон не получает
+текущие модели автоматически. На рабочем ПК они уже есть. Для другого компьютера
+нужна локальная папка с соответствующими ONNX либо завершённый G-05 с опубликованными
+разрешёнными ассетами. Команды из корня репозитория:
 
 ```powershell
-python android-app\fetch_assets.py          # проверить и скачать: модели — из GitHub Release, Vosk — с сайта авторов
-python android-app\fetch_assets.py --check  # только проверить
+python android-app\fetch_assets.py --local-dir E:\models  # существующая папка с нужными ONNX; Vosk при отсутствии скачивается
+python android-app\fetch_assets.py --check                # проверка без скачивания
 ```
 
-В релизе публикуются только итоговые модели allcrops; экспериментальные модели lab-сборки (включая DEIMv2, у которого закрытая лицензия) есть только на рабочем ПК.
+План релиза — только разрешённые итоговые модели через `prepare_model_release.py`.
+Текущая смешанная debug-сборка содержит локальные эксперименты, включая DEIMv2;
+она не является готовым публичным релизом.
 
 ## Данные и обучение
 
@@ -53,7 +70,9 @@ python android-app\fetch_assets.py --check  # только проверить
 
 ## Лицензия
 
-Код и опубликованные веса — [GNU AGPL-3.0](LICENSE) (обучение на Ultralytics YOLO, AGPL-3.0). Авторы данных и компонентов — [ATTRIBUTION.md](ATTRIBUTION.md). Карточка модели появляется в `docs/MODEL_CARD_<тег>.md` при подготовке релиза.
+Код проекта — [GNU AGPL-3.0](LICENSE). Авторы и отдельные условия данных,
+библиотек и моделей — [ATTRIBUTION.md](ATTRIBUTION.md); лицензия кода не заменяет
+их проверку. Карточка модели появляется в `docs/MODEL_CARD_<тег>.md` при подготовке релиза.
 
 ## Ограничения (честно)
 

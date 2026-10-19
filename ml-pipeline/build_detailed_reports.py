@@ -10,7 +10,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "docs/reports"
+OUT = ROOT / "docs/history/reports"
 STUDY = ROOT / "docs/experiments/study10_v2"
 DATE = "2026-10-04"
 METRICS = {
@@ -63,7 +63,7 @@ def main():
     phone = read(ROOT / "docs/android/phone_validation/summary.json")
     parity = read(ROOT / "docs/android/phone_validation/desktop_parity.json")
     photos = read(ROOT / "artifacts/field_photos/manifest.json")
-    downloads = read(ROOT / "docs/research/dataset_downloads_2026-10-03.json")
+    downloads = read(ROOT / "docs/history/research/dataset_downloads_2026-10-03.json")
     assert status["status"] == "completed" and result["completed"] == result["requested"] == 20
     assert all(row["completed_epochs"] == 60 for row in result["runs"])
     assert hashlib.sha256(dataset_path.read_text(encoding="utf-8").encode("utf-8")).hexdigest() == plan["dataset_fingerprint"]
@@ -124,23 +124,23 @@ def main():
 | [05. Варианты повышения точности и смены архитектуры](05_ACCURACY_OPTIONS_2026-10-04.md) | YOLO + классификатор, небольшие DETR, более крупная YOLO, сегментация/дистилляция, первичные источники и план честного сравнения; предложения ещё не обучены |
 | [Машинное подтверждение отчётов](evidence_2026-10-04.json) | Численные таблицы, отпечатки источников, выбранные веса, версия APK и контрольные суммы |
 
-Числа в таблицах второго отчёта вычислены из сохранённых JSON и CSV. Подготовка отчётов не запускает обучение, экспорт или граф модели и не меняет замороженную серию. Генератор: [build_detailed_reports.py](../../ml-pipeline/build_detailed_reports.py).
+Числа в таблицах второго отчёта вычислены из сохранённых JSON и CSV. Подготовка отчётов не запускает обучение, экспорт или граф модели и не меняет замороженную серию. Генератор: [build_detailed_reports.py](../../../ml-pipeline/build_detailed_reports.py).
 
 ## Где результат
 
-- [Готовый APK 0.2](../../artifacts/apk/AgroVoice-field-demo-0.2.apk), уже установлен на Note 7. Внутри две проверенные модели **seed 20261003**.
-- [Итоговая выбранная YOLO26n: manifest](../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/run_manifest.json) и [ONNX](../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/model.onnx). Это отдельный пакет **seed 20261012**, ещё не встроенный в установленный APK.
-- [Краткая инструкция пользователю](../android/FIELD_DEMO_2026-10-03.md).
-- [Общий журнал действий](../../PROJECT_GUIDE.md).
+- [Готовый APK 0.2](../../../artifacts/apk/AgroVoice-field-demo-0.2.apk), уже установлен на Note 7. Внутри две проверенные модели **seed 20261003**.
+- [Итоговая выбранная YOLO26n: manifest](../../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/run_manifest.json) и [ONNX](../../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/model.onnx). Это отдельный пакет **seed 20261012**, ещё не встроенный в установленный APK.
+- [Краткая инструкция пользователю](../../android/FIELD_DEMO_2026-10-03.md).
+- [Общий журнал действий](../PROJECT_GUIDE_until_2026-10-16.md).
 
 ## Исходные подробные исследования
 
 | Тема | Документ |
 |---|---|
-| Происхождение текущей выборки | [clean v2](../data/dataset_clean_v2.md), [машинный отчёт данных](../data/dataset_clean_v2_report.json) |
-| Зафиксированный эксперимент | [Протокол](../experiments/STUDY10_PROTOCOL_2026-10-03.md), [plan.json](../experiments/study10_v2/plan.json), [results.json](../experiments/study10_v2/results.json) |
-| Короткий итог серии | [FINAL_REPORT](../experiments/study10_v2/FINAL_REPORT_2026-10-04.md) |
-| Повторные замеры старой модели на телефоне | [Десять серий на архитектуру](../experiments/redmi_note_7_10series/REPORT.md) |
+| Происхождение текущей выборки | [clean v2](../../data/dataset_clean_v2.md), [машинный отчёт данных](../../data/dataset_clean_v2_report.json) |
+| Зафиксированный эксперимент | [Протокол](../../experiments/STUDY10_PROTOCOL_2026-10-03.md), [plan.json](../../experiments/study10_v2/plan.json), [results.json](../../experiments/study10_v2/results.json) |
+| Короткий итог серии | [FINAL_REPORT](../../experiments/study10_v2/FINAL_REPORT_2026-10-04.md) |
+| Повторные замеры старой модели на телефоне | [Десять серий на архитектуру](../../experiments/redmi_note_7_10series/REPORT.md) |
 | Новые источники данных | [27 записей каталога](../research/DATASETS_NEXT_TRAINING_2026-10-03.md) |
 | Локальные модели под компьютер Бориса | [Модели и память](../research/LOCAL_CODING_MODELS_2026-10-03.md) |
 | Локальные агенты | [Настройка и шаблоны](../research/LOCAL_AGENTS_SETUP_2026-10-03.md) |
@@ -195,7 +195,7 @@ AgroVoice AI — дипломный Android-проект для осмотра �
 | Реальные снимки для испытаний | Десять авторских фотографий в галерее Note 7 | Источники, лицензии, десять совпавших SHA-256 |
 | Журнал результатов прототипа | JSON каждой успешной обработки | Технические записи, ещё не полноценный журнал осмотров |
 | Данные для будущего обучения | Каталог источников, четыре скачанных архива | Отдельные кандидаты, в завершённую серию не включены |
-| Отчётность | Журнал действий и отдельные тематические отчёты | PROJECT_GUIDE.md и каталог docs/reports |
+| Отчётность | Журнал действий и отдельные тематические отчёты | PROJECT_GUIDE.md и каталог docs/history/reports |
 
 Ночная очередь завершилась в 02:32 по Минску 4 октября. После проверки результатов и APK часовое наблюдение `agrovoice` приостановлено. Оно больше не должно расходовать лимит на одинаковые проверки завершённой задачи.
 
@@ -260,7 +260,7 @@ AgroVoice AI — дипломный Android-проект для осмотра �
 | Android-магазины | Разобраны Play, RuStore, Huawei, Samsung, F-Droid и прямой APK для физлица из Беларуси | Исследование от 3 октября; аккаунты, платежи, тестовый релиз и публикация не выполнялись |
 | Аналоги дипломной темы | Определены критерии сходства и попытки поиска в каталоге университета | elib.gstu.by недоступен также у Бориса; отсутствие похожих тем не доказано |
 
-Полные тексты находятся в [docs/research](../research/README.md). Они сохраняют источники и дату проверки. Правила магазинов, цены, поддержка аппаратуры и доступные локальные модели могут измениться до мая 2027: перед фактической установкой/публикацией соответствующие сведения нужно перепроверить. Этот отчёт не является новым исследованием внешних сайтов.
+Полные тексты находятся в [docs/research](../../research/README.md). Они сохраняют источники и дату проверки. Правила магазинов, цены, поддержка аппаратуры и доступные локальные модели могут измениться до мая 2027: перед фактической установкой/публикацией соответствующие сведения нужно перепроверить. Этот отчёт не является новым исследованием внешних сайтов.
 
 ## 8. История, которую важно учитывать при защите
 
@@ -336,7 +336,7 @@ FanControl оставлен закрытым по последнему указ�
 
 **PlantDoc** сохранён из очищенной clean v1: исправлено чтение A.jpg/a.jpg, учтён EXIF, точные копии сгруппированы, прежняя val/test не менялась при создании v2. Лицензия источника CC BY 4.0. Точная дедупликация не исключает похожие кадры одного растения.
 
-**PlantVillage**: загружены 1102 RGB и 1102 соответствующих сегментированных изображения из зафиксированной ревизии. Из масок крупнейшей компоненты выведены рамки целого листа. Это автоматически полученные границы, а не экспертные рамки очагов. По физическим листьям использован авторский leaf-map; неоднозначные группы исключались. При проверке масок категория Leaf Mold из дополнений исключена из-за захвата фона; Mosaic не добавлена из-за неизвестных/неоднозначных физических групп. Исходные классы PlantDoc при этом сохранились. Принято 739 фото: 590 train и 149 val_aux. Лицензия карточки автора CC BY-SA 3.0; ревизия и происхождение записаны в [отчёте данных](../data/dataset_clean_v2.md).
+**PlantVillage**: загружены 1102 RGB и 1102 соответствующих сегментированных изображения из зафиксированной ревизии. Из масок крупнейшей компоненты выведены рамки целого листа. Это автоматически полученные границы, а не экспертные рамки очагов. По физическим листьям использован авторский leaf-map; неоднозначные группы исключались. При проверке масок категория Leaf Mold из дополнений исключена из-за захвата фона; Mosaic не добавлена из-за неизвестных/неоднозначных физических групп. Исходные классы PlantDoc при этом сохранились. Принято 739 фото: 590 train и 149 val_aux. Лицензия карточки автора CC BY-SA 3.0; ревизия и происхождение записаны в [отчёте данных](../../data/dataset_clean_v2.md).
 
 **Огурцы**: Image tags.zip из Zenodo 16816441, CC BY 4.0. Из fresh_leaf просмотрены все 62 отобранных миниатюры, 9 отклонены, 53 приняты и разделены 42/11. Метка fresh/healthy не перенесена как гарантированное здоровье: используется «condition unknown». Это малое дополнение для обнаружения культуры, без обучения огуречных диагнозов.
 
@@ -410,7 +410,7 @@ FanControl оставлен закрытым по последнему указ�
 
 {table(['Seed', 'Модель', 'Эпох', 'P', 'R', 'mAP50', 'mAP50–95', 'Aux AP', 'Мин'], run_rows)}
 
-Полные имена имеют вид `study10_v2_<модель>_seed<seed>`; каталоги находятся в `F:\\agrovoice-ai\\runs\\detect`. У каждого есть results.csv, run_manifest.json, best.pt/best.onnx, evaluation.json и evaluation_aux.json. Исходные числа не округляются в [results.json](../experiments/study10_v2/results.json).
+Полные имена имеют вид `study10_v2_<модель>_seed<seed>`; каталоги находятся в `F:\\agrovoice-ai\\runs\\detect`. У каждого есть results.csv, run_manifest.json, best.pt/best.onnx, evaluation.json и evaluation_aux.json. Исходные числа не округляются в [results.json](../../experiments/study10_v2/results.json).
 
 ## 7. Парные разницы и неопределённость
 
@@ -486,7 +486,7 @@ ONNX сравнен с PyTorch на трёх сохранённых val-изоб
 
 Приоритет следующего этапа — новые размеченные полевые примеры и независимый контроль слабых классов, затем новая серия с явным протоколом. Увеличение модели само по себе не добавит отсутствующие огуречные болезни и не исправит отсутствие test здорового картофеля/клеща.
 
-Источники: [plan.json](../experiments/study10_v2/plan.json), [results.json](../experiments/study10_v2/results.json), [status.json](../experiments/study10_v2/status.json), [selected_model.json](../experiments/study10_v2/selected_model.json), [completion_audit.json](../experiments/study10_v2/completion_audit.json), [dataset_clean_v2.md](../data/dataset_clean_v2.md), [телефонные повторы](../experiments/redmi_note_7_10series/REPORT.md), [историческое сравнение clean v1](../experiments/YOLO_COMPARISON_2026-10-03.md). [Назад к содержанию](README.md).
+Источники: [plan.json](../../experiments/study10_v2/plan.json), [results.json](../../experiments/study10_v2/results.json), [status.json](../../experiments/study10_v2/status.json), [selected_model.json](../../experiments/study10_v2/selected_model.json), [completion_audit.json](../../experiments/study10_v2/completion_audit.json), [dataset_clean_v2.md](../../data/dataset_clean_v2.md), [телефонные повторы](../../experiments/redmi_note_7_10series/REPORT.md), [историческое сравнение clean v1](../../experiments/YOLO_COMPARISON_2026-10-03.md). [Назад к содержанию](README.md).
 """
     write("02_MODEL_STUDY_2026-10-04.md", text)
 
@@ -500,8 +500,8 @@ ONNX сравнен с PyTorch на трёх сохранённых val-изоб
         "docs/experiments/study10_v2/completion_audit.json", "ml-pipeline/dataset_clean_v2/manifest.json",
         "docs/android/field_demo_models_2026-10-03.json", "docs/android/phone_validation/verification.json",
         "docs/android/phone_validation/summary.json", "docs/android/phone_validation/desktop_parity.json",
-        "artifacts/field_photos/manifest.json", "docs/research/dataset_downloads_2026-10-03.json",
-        "docs/research/dataset_candidate_inspection_2026-10-03.json",
+        "artifacts/field_photos/manifest.json", "docs/history/research/dataset_downloads_2026-10-03.json",
+        "docs/history/research/dataset_candidate_inspection_2026-10-03.json",
     ]
     for run in result["runs"]:
         for filename in ("results.csv", "run_manifest.json", "evaluation.json", "evaluation_aux.json"):
@@ -549,7 +549,7 @@ def android_report(models, verify, phone, parity, photos, package_hashes):
     write("03_ANDROID_IMPLEMENTATION_2026-10-04.md", f"""
 # Автономный Android-прототип: реализация и испытания
 
-Срез на 4 октября 2026. Готовый файл: [AgroVoice-field-demo-0.2.apk](../../artifacts/apk/AgroVoice-field-demo-0.2.apk). APK установлен на подключённый Redmi Note 7. Здесь подробно записаны устройство программы, фактические проверки, обнаруженные ошибки и ограничения. Краткая пользовательская инструкция — [FIELD_DEMO](../android/FIELD_DEMO_2026-10-03.md).
+Срез на 4 октября 2026. Готовый файл: [AgroVoice-field-demo-0.2.apk](../../../artifacts/apk/AgroVoice-field-demo-0.2.apk). APK установлен на подключённый Redmi Note 7. Здесь подробно записаны устройство программы, фактические проверки, обнаруженные ошибки и ограничения. Краткая пользовательская инструкция — [FIELD_DEMO](../../android/FIELD_DEMO_2026-10-03.md).
 
 ## 1. Назначение версии 0.2
 
@@ -581,7 +581,7 @@ def android_report(models, verify, phone, parity, photos, package_hashes):
 
 Вход `[1,3,416,416]`, выход `[1,34,3549]`, FP32, обычная голова и внешний NMS. YOLO26n выбрана в интерфейсе по умолчанию; обе можно исполнять на одном снимке. Во время обработки управляющие кнопки блокируются.
 
-**Финальная выбранная YOLO26n — другой файл, seed 20261012.** Его SHA-256 `{package_hashes['model.onnx']}`. Он сохранён в [итоговом пакете](../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/run_manifest.json), ещё не встроен в APK 0.2 и не должен выдавать себя за уже проверенную на телефоне модель. Средние десяти seed описывают исследование архитектур, а не качество конкретных предварительных весов в APK.
+**Финальная выбранная YOLO26n — другой файл, seed 20261012.** Его SHA-256 `{package_hashes['model.onnx']}`. Он сохранён в [итоговом пакете](../../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/run_manifest.json), ещё не встроен в APK 0.2 и не должен выдавать себя за уже проверенную на телефоне модель. Средние десяти seed описывают исследование архитектур, а не качество конкретных предварительных весов в APK.
 
 ## 3. Пользовательский сценарий
 
@@ -715,7 +715,7 @@ NMS выполняется в сетевых координатах до обр�
 
 Три Android instrumentation-теста прошли на реальном Note 7, результат `OK (3 tests)`. Вспомогательный test-пакет после проверки удалён; основное приложение осталось. Дополнительные тесты ради документации не запускались.
 
-Исходная проверка APK датирована 3 октября, когда очередь обучения ещё шла. Её историческое поле «training continues» сохраняется как описание того момента. Текущая очередь завершена; [completion_audit](../experiments/study10_v2/completion_audit.json) и отчёт моделей фиксируют окончательное состояние.
+Исходная проверка APK датирована 3 октября, когда очередь обучения ещё шла. Её историческое поле «training continues» сохраняется как описание того момента. Текущая очередь завершена; [completion_audit](../../experiments/study10_v2/completion_audit.json) и отчёт моделей фиксируют окончательное состояние.
 
 ## 8. Фактические ответы на трёх реальных фотографиях
 
@@ -741,7 +741,7 @@ NMS выполняется в сетевых координатах до обр�
 
 ## 10. Скорость, память и ограничения измерений
 
-Ранее проведены десять серий каждой архитектуры на **clean v1**, по 10 прогревов/40 измерений, свежий процесс и чередование моделей. Среднее десяти медиан графа+обработки: YOLO11n 122,39±0,60 мс, YOLO26n 107,89±0,65 мс. Камера, декодирование, масштабирование и отрисовка исключены. [Отчёт и исходные серии](../experiments/redmi_note_7_10series/REPORT.md).
+Ранее проведены десять серий каждой архитектуры на **clean v1**, по 10 прогревов/40 измерений, свежий процесс и чередование моделей. Среднее десяти медиан графа+обработки: YOLO11n 122,39±0,60 мс, YOLO26n 107,89±0,65 мс. Камера, декодирование, масштабирование и отрисовка исключены. [Отчёт и исходные серии](../../experiments/redmi_note_7_10series/REPORT.md).
 
 Текущие шесть JSON clean v2 демонстрируют исполнение обеих моделей на телефоне, но не повторяют тот протокол. Нельзя обещать, что пользователь всегда получит полный результат за 108 мс: импорт, чтение большой фотографии, создание модели и UI добавляют время.
 
@@ -759,7 +759,7 @@ NMS выполняется в сетевых координатах до обр�
 
 Загрузка одиннадцатого снимка остановлена после HTTP 429 и Retry-After 600; лимит источника не обходился. Для первого испытания оставлены десять проверенных файлов.
 
-Скриншоты [portrait](../android/phone_validation/portrait.png) и [landscape](../android/phone_validation/landscape.png) содержат фото Rasbak, [карточка Commons](https://commons.wikimedia.org/wiki/File:Sphaerotheca_fusca_on_Cucumber_leaves.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). Фото масштабировано и дополнено интерфейсными рамками; атрибуцию сохранять при использовании этих скриншотов в дипломе/показе.
+Скриншоты [portrait](../../android/phone_validation/portrait.png) и [landscape](../../android/phone_validation/landscape.png) содержат фото Rasbak, [карточка Commons](https://commons.wikimedia.org/wiki/File:Sphaerotheca_fusca_on_Cucumber_leaves.jpg), [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). Фото масштабировано и дополнено интерфейсными рамками; атрибуцию сохранять при использовании этих скриншотов в дипломе/показе.
 
 ## 12. Как воспроизвести техническую проверку
 
@@ -797,7 +797,7 @@ Set-Location F:\\agrovoice-ai\\android-app
 
 После полевого испытания добавить постоянный журнал осмотров и экспорт результатов, затем голос и справочник. Работа с болезнями огурцов зависит от будущей разметки и обучения, а не только от новой кнопки интерфейса.
 
-Подтверждения: [verification.json](../android/phone_validation/verification.json), [summary.json](../android/phone_validation/summary.json), [desktop_parity.json](../android/phone_validation/desktop_parity.json), [manifest моделей](../android/field_demo_models_2026-10-03.json), [manifest фото](../../artifacts/field_photos/manifest.json), [атрибуция](../../artifacts/field_photos/ATTRIBUTION.txt). [Назад к содержанию](README.md).
+Подтверждения: [verification.json](../../android/phone_validation/verification.json), [summary.json](../../android/phone_validation/summary.json), [desktop_parity.json](../../android/phone_validation/desktop_parity.json), [manifest моделей](../../android/field_demo_models_2026-10-03.json), [manifest фото](../../../artifacts/field_photos/manifest.json), [атрибуция](../../../artifacts/field_photos/ATTRIBUTION.txt). [Назад к содержанию](README.md).
 """)
 
 
@@ -869,7 +869,7 @@ AP — среднее основной val AP50–95 YOLO26n по десяти s
 
 OLID cucumber: healthy 34, potassium 50, nitrogen 89, nitrogen+potassium 76. Болезней огурца в этой части нет. OLID tomato part 2: 32 jassid+mite, 207 leaf miner, 200 mite; смешанные повреждения не переносить в класс одиночного клеща. Части исходного корпуса не следует считать независимыми наборами испытания только из-за разных ZIP.
 
-**Все эти четыре архива исключены из dataset_clean_v2 и завершённой study10_v2.** Их нельзя добавлять в описание источников уже полученных 20 результатов. В v2 действительно использованы PlantDoc, отобранный PlantVillage и 53 cucumber condition unknown; подробное происхождение приведено в [отчёте текущих данных](../data/dataset_clean_v2.md).
+**Все эти четыре архива исключены из dataset_clean_v2 и завершённой study10_v2.** Их нельзя добавлять в описание источников уже полученных 20 результатов. В v2 действительно использованы PlantDoc, отобранный PlantVillage и 53 cucumber condition unknown; подробное происхождение приведено в [отчёте текущих данных](../../data/dataset_clean_v2.md).
 
 ## 5. Правильная подготовка clean v3
 
@@ -965,7 +965,7 @@ OLID cucumber: healthy 34, potassium 50, nitrogen 89, nitrogen+potassium 76. Б�
 
 YOLO26n — рабочая основа. YOLO11n — сравнительный вариант. Финальный выбранный набор весов — seed 20261012. Сохранённый APK — проверенный прототип с более ранней предварительной парой seed 20261003. Следующие усилия разумно направить на правильные полевые данные, внедрение выбранных весов и сбор ошибок пользователя. Болезни огурцов, надёжные рекомендации и финальная полевая оценка ещё впереди.
 
-Числа текущей серии не правятся задним числом после новых данных. Для следующей серии нужны новый каталог, версия, протокол и отчёт. Историю изменений продолжать в [PROJECT_GUIDE.md](../../PROJECT_GUIDE.md). [Назад к содержанию](README.md).
+Числа текущей серии не правятся задним числом после новых данных. Для следующей серии нужны новый каталог, версия, протокол и отчёт. Историю изменений продолжать в [PROJECT_GUIDE.md](../PROJECT_GUIDE_until_2026-10-16.md). [Назад к содержанию](README.md).
 """)
 
 

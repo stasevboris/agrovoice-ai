@@ -67,7 +67,7 @@ def main():
         apk={'verification_status':phone.get('status'),'verified_modes':phone.get('modes',[]),
              'verified_apk_sha256':phone.get('apk_sha256'),'evidence':str(phonefile.relative_to(ROOT)),
              'all_five_final':False},
-        report='docs/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md',
+        report='docs/history/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md',
         next=['Watch architecture_status and active worker; do not start another GPU load',
               'Assess newly completed exports on shared val; all five pilot directions are already in APK0.8, avoid rebuilding after every new seed',
               'Run evaluate_accuracy_pipeline.py --seeds all ten; summarize_accuracy_seeds.py; final selection uses shared end-to-end AP',
@@ -75,7 +75,7 @@ def main():
               'Complete all 80 jobs and final APK; only then pause automation'])
     if focus:
         state.update(objective='Complete ten YOLO26s seeds, compare to fixed best YOLO26n from completed ten-run study, retain all eight APK examples; research other YOLO versions',
-            active_scope='yolo26s_focus_v1',report='docs/reports/07_YOLO26_FOCUS_2026-10-04.md',
+            active_scope='yolo26s_focus_v1',report='docs/history/reports/07_YOLO26_FOCUS_2026-10-04.md',
             eta_evidence='docs/experiments/yolo26s_focus_v1/eta.json',
             pending_scope_question={'status':'resolved','resolution':'Boris fully discontinued DETR and chose YOLO26s/YOLO26n; all current APK examples remain','plan_changed':True},
             next=['Watch one focus worker; resume only via Start-Yolo26sFocus.ps1 after its actual exit',

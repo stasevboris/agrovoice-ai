@@ -16,7 +16,7 @@ def main():
     if (ROOT/'docs/experiments/yolo26s_focus_v1/plan.json').exists():
         scope=['**Исходная очередь80 отменена решением Бориса 4 октября. Этот отчёт сохраняет историю пяти пилотов. '
                'Продолжаются только десять YOLO26s, лучший прежний YOLO26n остаётся в APK; остальные кнопки сохранены как примеры. '
-               'Текущее состояние: [отчёт07](07_YOLO26_FOCUS_2026-10-04.md) и [новый протокол](../experiments/yolo26s_focus_v1/PROTOCOL.md).**','']
+               'Текущее состояние: [отчёт07](07_YOLO26_FOCUS_2026-10-04.md) и [новый протокол](../../experiments/yolo26s_focus_v1/PROTOCOL.md).**','']
     lines=['# Все пять вариантов: фактический ход работы','',*scope,f'Обновлено по файлам: {datetime.now(timezone.utc).isoformat()}.',
       '', 'Это новая разрешённая серия accuracy_v1. Отчёты 01–05 сохраняют предыдущий результат и предложения. '
       'Здесь фиксируется фактическая реализация. Запуск очереди не означает, что все модели уже обучены.',
@@ -167,8 +167,8 @@ def main():
       '', 'Дополнительно DEIM-граф с необученной головой успешно запущен на Note7: это подтверждает поддержку операций '
       'ONNX Runtime Android, но не качество диагнозов. Это исторические технические пробы, '
       'которые не заменяют проверку настоящих обученных весов. Актуальный состав и паритет реальных графов APK '
-      'приведены ниже. [DEIM phone probe](../android/accuracy_v1/deim_export_probe.json), '
-      '[CPU component probes](../experiments/accuracy_v1/component_cpu_probes.json).',
+      'приведены ниже. [DEIM phone probe](../../android/accuracy_v1/deim_export_probe.json), '
+      '[CPU component probes](../../experiments/accuracy_v1/component_cpu_probes.json).',
       '']
     diagnostic=REPORT/'deim_full_export_diagnostic.json'
     if diagnostic.exists():
@@ -185,8 +185,8 @@ def main():
           'Это минимальный доступный порог приложения. AP50/AP50–95 дополнительно сравниваются по всем кандидатам '
           'score≥0,001/maxDets300, допустимая разница0,0001. Сам raw граф и общий evaluator не изменены. '
           'Исходный SHA обучения сохранён отдельно от нового экспортного SHA;60 эпох первого DEIM не повторялись. '
-          '[Первичная диагностика](../experiments/accuracy_v1/deim_export_failure_diagnostic.json), '
-          '[вся val](../experiments/accuracy_v1/deim_full_export_diagnostic.json).',
+          '[Первичная диагностика](../../experiments/accuracy_v1/deim_export_failure_diagnostic.json), '
+          '[вся val](../../experiments/accuracy_v1/deim_full_export_diagnostic.json).',
           '', '| Seed | Проверка всех val | Максимальная разница AP | SHA графа |','|---|---|---:|---|']
         for run in sorted(RUNS.glob('deimv2_n_seed*')):
             path=run/'export_validation.json'
@@ -197,7 +197,7 @@ def main():
     phone=ROOT/'docs/android/accuracy_v1/verification.json'
     if phone.exists():
         r=read(phone);evidence['phone']=r
-        lines+=[f'Текущий APK: [{Path(r["apk"]).name}](../../{Path(r["apk"]).as_posix()}), {r["apk_bytes"]:,} байт, SHA {r["apk_sha256"]}. Установлен на Redmi Note7; режимы: '+', '.join(r['modes'])+'.',
+        lines+=[f'Текущий APK: [{Path(r["apk"]).name}](../../../{Path(r["apk"]).as_posix()}), {r["apk_bytes"]:,} байт, SHA {r["apk_sha256"]}. Установлен на Redmi Note7; режимы: '+', '.join(r['modes'])+'.',
           '', f'Проверка: {r["results"]} результатов на трёх снимках, {len(r["comparisons"])} сравнений выходов с desktop ORT '
           'на фактических Android-входах первого снимка. Для DEIM строго сравниваются все кандидаты score≥0,1; '
           'для остальных стадий все raw значения. Полные сырые тензоры сохранены. '
@@ -236,26 +236,26 @@ def main():
       '```powershell','.\\ml-pipeline\\Get-AccuracyStatus.ps1',
       '# Возобновление после фактического выхода прежнего worker','.\\ml-pipeline\\Start-AccuracyStudy.ps1 -AllArchitectures',
       '# Мягко остановить после эпохи','.\\ml-pipeline\\Stop-Training.ps1','```','',
-      'Очередь: [architecture_status.json](../experiments/accuracy_v1/architecture_status.json), '
-      '[протокол](../experiments/accuracy_v1/PROTOCOL.md), '
-      '[пошаговое продолжение](../experiments/accuracy_v1/CONTINUE.md), '
-      '[точка продолжения](../session/accuracy_work_state.json), '
-      '[телефон](../android/accuracy_v1/verification.json), '
-      '[Текущая сборка](../../artifacts/apk/current_model_lab.json).',
+      'Очередь: [architecture_status.json](../../experiments/accuracy_v1/architecture_status.json), '
+      '[протокол](../../experiments/accuracy_v1/PROTOCOL.md), '
+      '[пошаговое продолжение](../../experiments/accuracy_v1/CONTINUE.md), '
+      '[точка продолжения](../../session/accuracy_work_state.json), '
+      '[телефон](../../android/accuracy_v1/verification.json), '
+      '[Текущая сборка](../../../artifacts/apk/current_model_lab.json).',
       '', 'Резерв15% пятичасового лимита действует. При достижении остановить разработку до01:00 следующего дня Minsk; '
       'обучение может продолжаться без токенов. FanControl, вентиляторы и HDD не меняются. Ничего не публикуется.',
-      '', 'Исходники/веса и зависимости: [sources](../experiments/accuracy_v1/third_party_sources.json), '
-      '[weights](../experiments/accuracy_v1/detector_weights.json), '
-      '[DEIM CPU](../experiments/accuracy_v1/deim_cpu_probe.json). '
+      '', 'Исходники/веса и зависимости: [sources](../../experiments/accuracy_v1/third_party_sources.json), '
+      '[weights](../../experiments/accuracy_v1/detector_weights.json), '
+      '[DEIM CPU](../../experiments/accuracy_v1/deim_cpu_probe.json). '
       'DEIMv2 текущей ревизии допускает некоммерческие учебные эксперименты; копия лицензии сопровождает соответствующий APK-граф.']
     snapshots=REPORT/'source_snapshots.json'
     if snapshots.exists():
         evidence['source_snapshots']=read(snapshots)
-        lines+=['','[Точные версии исходников](../experiments/accuracy_v1/source_snapshots.json): текущие адаптеры '
+        lines+=['','[Точные версии исходников](../../experiments/accuracy_v1/source_snapshots.json): текущие адаптеры '
                 'и восстановленная исходная accuracy_study.py, чей полный SHA совпал с manifests первых MobileNet03/04. '
                 'Финальный test запускается только после полного выбора через evaluate_accuracy_final_test.py; сейчас он не выполнялся.']
-    (ROOT/'docs/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
+    (ROOT/'docs/history/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
     (REPORT/'progress_evidence.json').write_text(json.dumps(evidence,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(json.dumps({'report':'docs/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md','protected_scripts':'passed','components':{k:len(v) for k,v in evidence['components'].items()}}))
+    print(json.dumps({'report':'docs/history/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md','protected_scripts':'passed','components':{k:len(v) for k,v in evidence['components'].items()}}))
 
 if __name__=='__main__':main()

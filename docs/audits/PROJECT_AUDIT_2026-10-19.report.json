@@ -1,0 +1,391 @@
+{
+  "date": "2026-10-19",
+  "source_commit": "212475d6d6395a45f4b69679ceae64524af0000f",
+  "apk_classes": 30,
+  "apk_models": [
+    "yolo11n",
+    "yolo26n",
+    "mobilenet_v3_large",
+    "efficientnet_b0",
+    "masked_mobilenet_v3_large",
+    "distilled_mobilenet_v3_large",
+    "yolo26s",
+    "deimv2_n",
+    "yolo26m"
+  ],
+  "target_classes": 49,
+  "python": {
+    "tests": 75,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "log": "python_tests.log"
+  },
+  "jvm": {
+    "tests": 36,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "android": {
+    "tasks": [
+      "testDebugUnitTest",
+      "assembleDebug",
+      "assembleDebugAndroidTest",
+      "lintDebug"
+    ],
+    "build_successful": true,
+    "note": "Tests and assemblies UP-TO-DATE; lint executed. No device tests."
+  },
+  "lint": {
+    "by_severity": {
+      "Warning": 58,
+      "Hint": 2
+    },
+    "by_id": {
+      "RedundantLabel": 1,
+      "GradleDependency": 10,
+      "NewerVersionAvailable": 4,
+      "ModifierParameter": 2,
+      "ChromeOsAbiSupport": 1,
+      "AutoboxingStateCreation": 2,
+      "UnusedResources": 7,
+      "IconXmlAndPng": 2,
+      "IconDuplicates": 5,
+      "UseKtx": 12,
+      "UseTomlInstead": 9,
+      "SetTextI18n": 5
+    }
+  },
+  "device_used": false,
+  "training_performed": false,
+  "external_sources_revalidated": false,
+  "python_final": {
+    "command": [
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "ml-pipeline/tests"
+    ],
+    "tests": 75,
+    "exit_code": 0,
+    "successful": true,
+    "log": "artifacts/verification/project_audit_20261019/python_tests_final.log"
+  },
+  "assets_check": {
+    "command": "python -X utf8 android-app/fetch_assets.py --check",
+    "exit_code": 0,
+    "result": "All local ONNX and Vosk manifest hashes passed; no download."
+  },
+  "pip_check": {
+    "command": "python -X utf8 -m pip check",
+    "exit_code": 0,
+    "result": "No broken requirements found."
+  },
+  "documentation_moves": {
+    "docs/PROJECT_REPORT_2026-10-19.md": "docs/architecture/PROJECT_REPORT_2026-10-19.md",
+    "docs/AUDIT_AND_PLAN_2026-10-16.md": "docs/audits/AUDIT_AND_PLAN_2026-10-16.md",
+    "docs/ANALOGUES_2026-10-19.md": "docs/research/ANALOGUES_2026-10-19.md",
+    "docs/TRAINING_PLAYBOOK.md": "docs/guides/TRAINING_PLAYBOOK.md",
+    "docs/reports/01_PROJECT_STATUS_2026-10-04.md": "docs/history/reports/01_PROJECT_STATUS_2026-10-04.md",
+    "docs/reports/02_MODEL_STUDY_2026-10-04.md": "docs/history/reports/02_MODEL_STUDY_2026-10-04.md",
+    "docs/reports/03_ANDROID_IMPLEMENTATION_2026-10-04.md": "docs/history/reports/03_ANDROID_IMPLEMENTATION_2026-10-04.md",
+    "docs/reports/04_DATA_AND_ROADMAP_2026-10-04.md": "docs/history/reports/04_DATA_AND_ROADMAP_2026-10-04.md",
+    "docs/reports/05_ACCURACY_OPTIONS_2026-10-04.md": "docs/history/reports/05_ACCURACY_OPTIONS_2026-10-04.md",
+    "docs/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md": "docs/history/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md",
+    "docs/reports/07_YOLO26_FOCUS_2026-10-04.md": "docs/history/reports/07_YOLO26_FOCUS_2026-10-04.md",
+    "docs/reports/08_YOLO26M_PILOT_2026-10-05.md": "docs/history/reports/08_YOLO26M_PILOT_2026-10-05.md",
+    "docs/reports/README.md": "docs/history/reports/README.md",
+    "docs/reports/evidence_2026-10-04.json": "docs/history/reports/evidence_2026-10-04.json",
+    "docs/research/ANDROID_STORES_PUBLICATION_2026-10-03.md": "docs/history/research/ANDROID_STORES_PUBLICATION_2026-10-03.md",
+    "docs/research/DATASETS_NEXT_TRAINING_2026-10-03.md": "docs/history/research/DATASETS_NEXT_TRAINING_2026-10-03.md",
+    "docs/research/GEMINI_DATASET_PROPOSALS_2026-10-05.md": "docs/history/research/GEMINI_DATASET_PROPOSALS_2026-10-05.md",
+    "docs/research/LOCAL_AGENTS_SETUP_2026-10-03.md": "docs/history/research/LOCAL_AGENTS_SETUP_2026-10-03.md",
+    "docs/research/LOCAL_CODING_MODELS_2026-10-03.md": "docs/history/research/LOCAL_CODING_MODELS_2026-10-03.md",
+    "docs/research/YOLO_ALTERNATIVES_2026-10-04.md": "docs/history/research/YOLO_ALTERNATIVES_2026-10-04.md",
+    "docs/research/config_examples/continue-lmstudio.example.yaml": "docs/history/research/config_examples/continue-lmstudio.example.yaml",
+    "docs/research/config_examples/local-agent-task.example.md": "docs/history/research/config_examples/local-agent-task.example.md",
+    "docs/research/config_examples/opencode-v2-lmstudio.example.json": "docs/history/research/config_examples/opencode-v2-lmstudio.example.json",
+    "docs/research/dataset_candidate_inspection_2026-10-03.json": "docs/history/research/dataset_candidate_inspection_2026-10-03.json",
+    "docs/research/dataset_downloads_2026-10-03.json": "docs/history/research/dataset_downloads_2026-10-03.json",
+    "docs/research/gemini_dataset_proposals_2026-10-05.json": "docs/history/research/gemini_dataset_proposals_2026-10-05.json",
+    "docs/research/gemini_dataset_proposals_2026-10-05.txt": "docs/history/research/gemini_dataset_proposals_2026-10-05.txt",
+    "docs/research/local_model_files_2026-10-03.json": "docs/history/research/local_model_files_2026-10-03.json",
+    "docs/research/university_topic_check_2026-10-03.md": "docs/history/research/university_topic_check_2026-10-03.md"
+  },
+  "archived_apk_links_redirected": [
+    {
+      "document": "docs/android/FIELD_DEMO_2026-10-03.md",
+      "old_apk": "../../artifacts/apk/AgroVoice-field-demo-0.2.apk"
+    },
+    {
+      "document": "docs/android/MODEL_LAB.md",
+      "old_apk": "../../artifacts/apk/AgroVoice-model-lab-0.11.apk"
+    },
+    {
+      "document": "docs/android/VOICE_COMMANDS_2026-10-04.md",
+      "old_apk": "../../artifacts/apk/AgroVoice-model-lab-0.9.apk"
+    },
+    {
+      "document": "docs/android/VOICE_CONTROLS_2026-10-04.md",
+      "old_apk": "../../artifacts/apk/AgroVoice-model-lab-0.11.apk"
+    },
+    {
+      "document": "docs/android/VOICE_GALLERY_2026-10-04.md",
+      "old_apk": "../../artifacts/apk/AgroVoice-model-lab-0.10.apk"
+    },
+    {
+      "document": "docs/android/VOICE_GALLERY_2026-10-04.md",
+      "old_apk": "../../artifacts/apk/AgroVoice-model-lab-0.9.apk"
+    },
+    {
+      "document": "docs/history/README_until_2026-10-16.md",
+      "old_apk": "../../artifacts/apk/AgroVoice-model-lab-0.11.apk"
+    },
+    {
+      "document": "docs/history/reports/03_ANDROID_IMPLEMENTATION_2026-10-04.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-field-demo-0.2.apk"
+    },
+    {
+      "document": "docs/history/reports/06_FIVE_VARIANTS_PROGRESS_2026-10-04.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.8.apk"
+    },
+    {
+      "document": "docs/history/reports/07_YOLO26_FOCUS_2026-10-04.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.15.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.11.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.8.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.7.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.6.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.5.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.4.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-model-lab-0.3.apk"
+    },
+    {
+      "document": "docs/history/reports/README.md",
+      "old_apk": "../../../artifacts/apk/AgroVoice-field-demo-0.2.apk"
+    }
+  ],
+  "limits": [
+    "No GPU training or device interaction.",
+    "No external websites or CVE databases revalidated.",
+    "Historical experiments and external E: archive were not rerun or fully inventoried.",
+    "Gradle reused up-to-date JVM and APK outputs; lint ran.",
+    "The inline Markdown checker validates file/directory targets, not fragment anchors or reference-style links."
+  ],
+  "evidence_unchanged": {
+    "checked_files": 1209,
+    "changed": []
+  },
+  "documentation": {
+    "text_catalog_count": 124,
+    "markdown_checked": 96,
+    "existing_local_links": 852,
+    "missing_local_links": [],
+    "local_only_links": [
+      {
+        "document": "docs/ROADMAP.md",
+        "line": 40,
+        "link": "../ml-pipeline/dataset_allcrops_v1/report.json"
+      },
+      {
+        "document": "docs/STATUS.md",
+        "line": 9,
+        "link": "../artifacts/gpu_kit/agrovoice_research_data_20261019.report.json"
+      },
+      {
+        "document": "docs/architecture/PROJECT_REPORT_2026-10-19.md",
+        "line": 70,
+        "link": "../../artifacts/verification/research_20261019/report.json"
+      },
+      {
+        "document": "docs/architecture/PROJECT_REPORT_2026-10-19.md",
+        "line": 142,
+        "link": "../../ml-pipeline/dataset_allcrops_v1/report.json"
+      },
+      {
+        "document": "docs/architecture/PROJECT_REPORT_2026-10-19.md",
+        "line": 152,
+        "link": "../../ml-pipeline/dataset_ext_v2/report.json"
+      },
+      {
+        "document": "docs/architecture/PROJECT_REPORT_2026-10-19.md",
+        "line": 216,
+        "link": "../../artifacts/apk/agrovoice-logo-debug.apk"
+      },
+      {
+        "document": "docs/architecture/PROJECT_REPORT_2026-10-19.md",
+        "line": 228,
+        "link": "../../artifacts/verification/research_20261019/report.json"
+      },
+      {
+        "document": "docs/data/WEB_DATA_2026-10-19.md",
+        "line": 96,
+        "link": "../../artifacts/gpu_kit/agrovoice_discovery_addon_20261019.report.json"
+      },
+      {
+        "document": "docs/experiments/yolo26s_data_v1/HISTORICAL_OVERLAP_ADDENDUM_2026-10-05.md",
+        "line": 11,
+        "link": "group_closure_r1/candidate_split_constraints.jsonl"
+      },
+      {
+        "document": "docs/experiments/yolo26s_data_v1/REPORT.md",
+        "line": 65,
+        "link": "candidate_overlap_full_r3/candidate_disposition.jsonl"
+      },
+      {
+        "document": "docs/experiments/yolo26s_data_v1/REPORT.md",
+        "line": 67,
+        "link": "group_closure_r1/candidate_split_constraints.jsonl"
+      },
+      {
+        "document": "docs/experiments/yolo26s_data_v1/SOURCE_AUDIT_REPORT_2026-10-05.md",
+        "line": 117,
+        "link": "candidate_overlap_full_r3/candidate_disposition.jsonl"
+      },
+      {
+        "document": "docs/experiments/yolo26s_data_v1/SOURCE_AUDIT_REPORT_2026-10-05.md",
+        "line": 119,
+        "link": "group_closure_r1/candidate_split_constraints.jsonl"
+      },
+      {
+        "document": "docs/history/reports/03_ANDROID_IMPLEMENTATION_2026-10-04.md",
+        "line": 38,
+        "link": "../../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/run_manifest.json"
+      },
+      {
+        "document": "docs/history/reports/08_YOLO26M_PILOT_2026-10-05.md",
+        "line": 57,
+        "link": "../../../artifacts/apk/AgroVoice-model-lab-0.16.apk"
+      },
+      {
+        "document": "docs/history/reports/README.md",
+        "line": 45,
+        "link": "../../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/run_manifest.json"
+      },
+      {
+        "document": "docs/history/reports/README.md",
+        "line": 45,
+        "link": "../../../ml-pipeline/exports/study10_v2_yolo26n_seed20261012/model.onnx"
+      }
+    ],
+    "outside_workspace_links": [],
+    "encoding_errors": [],
+    "python_syntax_errors": [],
+    "scope": "Inline Markdown local file/directory links; fragment anchors, reference-style links and external URLs not validated.",
+    "known_empty_json": [
+      {
+        "path": "docs/android/yolo26s_final_v15_phone/ui/saf_export_first_pull_pending.json",
+        "error": "Expecting value: line 1 column 1 (char 0)",
+        "disposition": "Historical empty pending placeholder, preserved, not evidence of export success."
+      }
+    ],
+    "catalog_coverage": "Every versioned Markdown and DOCX plus selected narrative TXT/licenses is listed by path in docs/DOCUMENTATION_CATALOG.md."
+  },
+  "package_smoke": {
+    "successful": true,
+    "scope": "Pack real documentation with empty synthetic datasets in a temporary workspace; original datasets and archives unchanged.",
+    "checks": [
+      "main() completed",
+      "ZIP CRC passed",
+      "moved guide included",
+      "README points to moved guide"
+    ]
+  },
+  "diff_check": {
+    "command": "git -c core.whitespace=cr-at-eol diff --check",
+    "exit_code": 0,
+    "note": "Accept existing Windows CRLF; trailing whitespace checks remain enabled."
+  },
+  "inventory_before_reorganization": {
+    "tracked_files": 1839,
+    "markdown_files": 84,
+    "tracked_by_root": {
+      ".gitattributes": 1,
+      ".gitignore": 1,
+      "AGENTS.md": 1,
+      "ATTRIBUTION.md": 1,
+      "CLAUDE.md": 1,
+      "LICENSE": 1,
+      "README.md": 1,
+      "android-app": 106,
+      "artifacts": 7,
+      "docs": 1540,
+      "ml-pipeline": 179
+    },
+    "largest_tracked": [
+      {
+        "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/sheet-06.png",
+        "bytes": 2379110
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/sheet-02.png",
+        "bytes": 2332485
+      },
+      {
+        "path": "docs/android/voice_v2/home_after_navigation.png",
+        "bytes": 2138563
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/sheet-05.png",
+        "bytes": 2126950
+      },
+      {
+        "path": "docs/android/phone_validation/portrait.png",
+        "bytes": 2092752
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/sheet-01.png",
+        "bytes": 2011731
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/sheet-07.png",
+        "bytes": 1989706
+      },
+      {
+        "path": "docs/thesis/2026-10-05/AgroVoice_Polnaya_Istoriya_Razrabotki_2026-10-05.docx",
+        "bytes": 1944319
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/sheet-08.png",
+        "bytes": 1889926
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/legacy_overlap_visual_r1/sheet-04.png",
+        "bytes": 1818256
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/olid_review/inventory.json",
+        "bytes": 1689392
+      },
+      {
+        "path": "docs/experiments/yolo26s_data_v1/olid_review_r2_chroma/inventory.json",
+        "bytes": 1628536
+      }
+    ]
+  }
+}

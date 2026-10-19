@@ -129,8 +129,8 @@ def main():
     addendum_path = BASE / 'HISTORICAL_OVERLAP_ADDENDUM_2026-10-05.md'
     addendum_path.write_text(addendum, encoding='utf-8')
     for rel, link in [
-        ('docs/reports/07_YOLO26_FOCUS_2026-10-04.md', '../experiments/yolo26s_data_v1/HISTORICAL_OVERLAP_ADDENDUM_2026-10-05.md'),
-        ('docs/reports/08_YOLO26M_PILOT_2026-10-05.md', '../experiments/yolo26s_data_v1/HISTORICAL_OVERLAP_ADDENDUM_2026-10-05.md'),
+        ('docs/history/reports/07_YOLO26_FOCUS_2026-10-04.md', '../../experiments/yolo26s_data_v1/HISTORICAL_OVERLAP_ADDENDUM_2026-10-05.md'),
+        ('docs/history/reports/08_YOLO26M_PILOT_2026-10-05.md', '../../experiments/yolo26s_data_v1/HISTORICAL_OVERLAP_ADDENDUM_2026-10-05.md'),
         ('docs/experiments/study10_v2/FINAL_REPORT_2026-10-04.md', '../yolo26s_data_v1/HISTORICAL_OVERLAP_ADDENDUM_2026-10-05.md'),
     ]:
         path = ROOT / rel

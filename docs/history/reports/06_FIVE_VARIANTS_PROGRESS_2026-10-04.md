@@ -1,6 +1,6 @@
 # Все пять вариантов: фактический ход работы
 
-**Исходная очередь80 отменена решением Бориса 4 октября. Этот отчёт сохраняет историю пяти пилотов. Продолжаются только десять YOLO26s, лучший прежний YOLO26n остаётся в APK; остальные кнопки сохранены как примеры. Текущее состояние: [отчёт07](07_YOLO26_FOCUS_2026-10-04.md) и [новый протокол](../experiments/yolo26s_focus_v1/PROTOCOL.md).**
+**Исходная очередь80 отменена решением Бориса 4 октября. Этот отчёт сохраняет историю пяти пилотов. Продолжаются только десять YOLO26s, лучший прежний YOLO26n остаётся в APK; остальные кнопки сохранены как примеры. Текущее состояние: [отчёт07](07_YOLO26_FOCUS_2026-10-04.md) и [новый протокол](../../experiments/yolo26s_focus_v1/PROTOCOL.md).**
 
 Обновлено по файлам: 2026-10-04T13:38:06.358426+00:00.
 
@@ -136,7 +136,7 @@ F1 здесь учитывает пропуски, неправильные кл
 
 DEIM CPU-проверка проверяет перенос 626 из 637 тензоров, forward, конечные loss/градиенты и ONNX. TopK может переставлять почти равные результаты: сравнение выполняет взаимно однозначное сопоставление класса/рамки/score. Проверочная сеть с необученной головой в APK не включается.
 
-Дополнительно DEIM-граф с необученной головой успешно запущен на Note7: это подтверждает поддержку операций ONNX Runtime Android, но не качество диагнозов. Это исторические технические пробы, которые не заменяют проверку настоящих обученных весов. Актуальный состав и паритет реальных графов APK приведены ниже. [DEIM phone probe](../android/accuracy_v1/deim_export_probe.json), [CPU component probes](../experiments/accuracy_v1/component_cpu_probes.json).
+Дополнительно DEIM-граф с необученной головой успешно запущен на Note7: это подтверждает поддержку операций ONNX Runtime Android, но не качество диагнозов. Это исторические технические пробы, которые не заменяют проверку настоящих обученных весов. Актуальный состав и паритет реальных графов APK приведены ниже. [DEIM phone probe](../../android/accuracy_v1/deim_export_probe.json), [CPU component probes](../../experiments/accuracy_v1/component_cpu_probes.json).
 
 
 ### Исправление проверки обученного DEIM
@@ -149,7 +149,7 @@ DEIM CPU-проверка проверяет перенос 626 из 637 тен�
 | deployed_torch | 0.30093071215 | 0.43891936218 |
 | onnx | 0.30093014141 | 0.43891849518 |
 
-Для каждого обученного DEIM export_validation.json теперь проверяет **всю val**: unordered набор всех кандидатов score≥0,1 с точным class ID и прежними atol0,003/rtol0,0001. Это минимальный доступный порог приложения. AP50/AP50–95 дополнительно сравниваются по всем кандидатам score≥0,001/maxDets300, допустимая разница0,0001. Сам raw граф и общий evaluator не изменены. Исходный SHA обучения сохранён отдельно от нового экспортного SHA;60 эпох первого DEIM не повторялись. [Первичная диагностика](../experiments/accuracy_v1/deim_export_failure_diagnostic.json), [вся val](../experiments/accuracy_v1/deim_full_export_diagnostic.json).
+Для каждого обученного DEIM export_validation.json теперь проверяет **всю val**: unordered набор всех кандидатов score≥0,1 с точным class ID и прежними atol0,003/rtol0,0001. Это минимальный доступный порог приложения. AP50/AP50–95 дополнительно сравниваются по всем кандидатам score≥0,001/maxDets300, допустимая разница0,0001. Сам raw граф и общий evaluator не изменены. Исходный SHA обучения сохранён отдельно от нового экспортного SHA;60 эпох первого DEIM не повторялись. [Первичная диагностика](../../experiments/accuracy_v1/deim_export_failure_diagnostic.json), [вся val](../../experiments/accuracy_v1/deim_full_export_diagnostic.json).
 
 | Seed | Проверка всех val | Максимальная разница AP | SHA графа |
 |---|---|---:|---|
@@ -157,7 +157,7 @@ DEIM CPU-проверка проверяет перенос 626 из 637 тен�
 
 ## Что уже на телефоне
 
-Текущий APK: [AgroVoice-model-lab-0.8.apk](../../artifacts/apk/AgroVoice-model-lab-0.8.apk), 195,341,969 байт, SHA e15c43914329ced466a6bf4bdd863d890586d7f67b9433ddcff5fa12879dad0f. Установлен на Redmi Note7; режимы: deimv2_n, distilled_mobilenet_v3_large, efficientnet_b0, masked_mobilenet_v3_large, mobilenet_v3_large, yolo11n, yolo26n, yolo26s.
+Текущий APK: AgroVoice-model-lab-0.8.apk (`AgroVoice-model-lab-0.8.apk`; [расположение архива](../../ARCHIVE.md)), 195,341,969 байт, SHA e15c43914329ced466a6bf4bdd863d890586d7f67b9433ddcff5fa12879dad0f. Установлен на Redmi Note7; режимы: deimv2_n, distilled_mobilenet_v3_large, efficientnet_b0, masked_mobilenet_v3_large, mobilenet_v3_large, yolo11n, yolo26n, yolo26s.
 
 Проверка: 24 результатов на трёх снимках, 12 сравнений выходов с desktop ORT на фактических Android-входах первого снимка. Для DEIM строго сравниваются все кандидаты score≥0,1; для остальных стадий все raw значения. Полные сырые тензоры сохранены. Это техническая проверка переносимости, не статистический тест точности.
 
@@ -223,10 +223,10 @@ RSS учитывает процесс и все его текущие выдел
 .\ml-pipeline\Stop-Training.ps1
 ```
 
-Очередь: [architecture_status.json](../experiments/accuracy_v1/architecture_status.json), [протокол](../experiments/accuracy_v1/PROTOCOL.md), [пошаговое продолжение](../experiments/accuracy_v1/CONTINUE.md), [точка продолжения](../session/accuracy_work_state.json), [телефон](../android/accuracy_v1/verification.json), [Текущая сборка](../../artifacts/apk/current_model_lab.json).
+Очередь: [architecture_status.json](../../experiments/accuracy_v1/architecture_status.json), [протокол](../../experiments/accuracy_v1/PROTOCOL.md), [пошаговое продолжение](../../experiments/accuracy_v1/CONTINUE.md), [точка продолжения](../../session/accuracy_work_state.json), [телефон](../../android/accuracy_v1/verification.json), [Текущая сборка](../../../artifacts/apk/current_model_lab.json).
 
 Резерв15% пятичасового лимита действует. При достижении остановить разработку до01:00 следующего дня Minsk; обучение может продолжаться без токенов. FanControl, вентиляторы и HDD не меняются. Ничего не публикуется.
 
-Исходники/веса и зависимости: [sources](../experiments/accuracy_v1/third_party_sources.json), [weights](../experiments/accuracy_v1/detector_weights.json), [DEIM CPU](../experiments/accuracy_v1/deim_cpu_probe.json). DEIMv2 текущей ревизии допускает некоммерческие учебные эксперименты; копия лицензии сопровождает соответствующий APK-граф.
+Исходники/веса и зависимости: [sources](../../experiments/accuracy_v1/third_party_sources.json), [weights](../../experiments/accuracy_v1/detector_weights.json), [DEIM CPU](../../experiments/accuracy_v1/deim_cpu_probe.json). DEIMv2 текущей ревизии допускает некоммерческие учебные эксперименты; копия лицензии сопровождает соответствующий APK-граф.
 
-[Точные версии исходников](../experiments/accuracy_v1/source_snapshots.json): текущие адаптеры и восстановленная исходная accuracy_study.py, чей полный SHA совпал с manifests первых MobileNet03/04. Финальный test запускается только после полного выбора через evaluate_accuracy_final_test.py; сейчас он не выполнялся.
+[Точные версии исходников](../../experiments/accuracy_v1/source_snapshots.json): текущие адаптеры и восстановленная исходная accuracy_study.py, чей полный SHA совпал с manifests первых MobileNet03/04. Финальный test запускается только после полного выбора через evaluate_accuracy_final_test.py; сейчас он не выполнялся.

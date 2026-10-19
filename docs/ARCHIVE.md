@@ -13,7 +13,7 @@ Git содержит исходники, конфиги, отчёты и неб�
 | Наборы | `ml-pipeline/dataset_clean_v2`, `dataset_allcrops_v1(_smoke)`, `dataset_accuracy_v1` | обучение и пересборка |
 | Модели APK (`.onnx`) и голос Vosk | `android-app/app/src/main/assets/models`, `.../voice/ru` | сборка APK (план — GitHub Release, задача G-05) |
 | Комплект для арендованной GPU | `artifacts/gpu_kit/` | обучение (`pack_gpu_kit.py` пересобирает) |
-| Текущий APK 0.16 | `artifacts/apk/` | установка на телефон |
+| Локальные APK | `artifacts/apk/` | версии и фактическая проверка — в STATUS, название файла не доказывает установку |
 
 ## На E: — `E:\Перенесено_с_F` (архив, 16–17.10.2026)
 

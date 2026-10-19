@@ -35,12 +35,12 @@ def main():
             for relative in files:
                 archive.write(folder / relative, f"data/{name}/{relative}")
             counts[name] = len(files)
-        for path in ["ATTRIBUTION.md", "LICENSE", "docs/TRAINING_PLAYBOOK.md", "docs/data/WEB_DATA_2026-10-19.md",
+        for path in ["ATTRIBUTION.md", "LICENSE", "docs/guides/TRAINING_PLAYBOOK.md", "docs/data/WEB_DATA_2026-10-19.md",
                      "ml-pipeline/external/web_photo_sources_v1.json", "ml-pipeline/external/web_photo_review_v1.json",
                      "ml-pipeline/external/prepare_web_photos.py", "ml-pipeline/external/prepare_optima.py"]:
             archive.write(ROOT / path, path)
         archive.write(Path(__file__).with_name("configure_yolo_pilot.py"), "configure_yolo_pilot.py")
-        archive.writestr("README.txt", "Extract beside the existing research data package. New data are train-only auxiliaries, NOT additions to taxonomy_v1 detection. Read docs/TRAINING_PLAYBOOK.md and docs/data/WEB_DATA_2026-10-19.md. Preparers are included for reference; reproduction needs the project external helpers and source hash index. No weights included.\n")
+        archive.writestr("README.txt", "Extract beside the existing research data package. New data are train-only auxiliaries, NOT additions to taxonomy_v1 detection. Read docs/guides/TRAINING_PLAYBOOK.md and docs/data/WEB_DATA_2026-10-19.md. Preparers are included for reference; reproduction needs the project external helpers and source hash index. No weights included.\n")
     with zipfile.ZipFile(out) as archive:
         bad = archive.testzip()
         if bad is not None:

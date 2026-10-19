@@ -1,6 +1,6 @@
 # Полное голосовое управление — APK0.11, 4 октября2026
 
-Статус: **verified**. APK: [AgroVoice-model-lab-0.11.apk](../../artifacts/apk/AgroVoice-model-lab-0.11.apk); 264823748 байт; SHA256 `cac90e7a8d1eca4cdf6f452cb0300850cebb031b49414f6114832a229177c700`.
+Статус: **verified**. APK: AgroVoice-model-lab-0.11.apk (`AgroVoice-model-lab-0.11.apk`; [расположение архива](../ARCHIVE.md)); 264823748 байт; SHA256 `cac90e7a8d1eca4cdf6f452cb0300850cebb031b49414f6114832a229177c700`.
 
 ## Что изменилось по новому запросу Бориса
 

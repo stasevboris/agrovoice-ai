@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "ml-pipeline/source_candidates/research_2026-10-03"
-REPORT = ROOT / "docs/research/dataset_downloads_2026-10-03.json"
+REPORT = ROOT / "docs/history/research/dataset_downloads_2026-10-03.json"
 SOURCES = [
     ("wur_spider", "https://api.figshare.com/v2/articles/12712289", {"data.zip"}),
     ("olid", "https://zenodo.org/api/records/8105154", {

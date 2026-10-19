@@ -1,9 +1,9 @@
 # Что ставить на обучение AgroVoice
 
-Это инструкция для Бориса. Оперативное состояние — [STATUS](STATUS.md).
+Это инструкция для Бориса. Оперативное состояние — [STATUS](../STATUS.md).
 Подготовленные данные и их фактические количества —
-[основной отчёт](data/TRAINING_PREPARATION_REPORT.json) и
-[новое пополнение](data/WEB_RESEARCH_PREPARATION_REPORT.json).
+[основной отчёт](../data/TRAINING_PREPARATION_REPORT.json) и
+[новое пополнение](../data/WEB_RESEARCH_PREPARATION_REPORT.json).
 Ниже **предложенный экспериментальный бюджет**, не измеренная длительность и
 не обещание качества. Новые модели в рамках поиска не обучались.
 
@@ -23,7 +23,7 @@ train-классов: `corn__healthy`, `cucumber__bacterial_wilt`, `cucumber__do
 `train_queue.py` остаются отдельным маршрутом allcrops_v1. Он использует другой
 набор/рецепт и оценивает test после каждого запуска. Его результаты нельзя
 смешивать с новой абляцией как будто условия одинаковы. Инструкция:
-[gpu_kit/README](../ml-pipeline/gpu_kit/README.md).
+[gpu_kit/README](../../ml-pipeline/gpu_kit/README.md).
 
 ## Где лежат данные и для чего они подходят
 
@@ -85,7 +85,7 @@ yolo detect train model=/work/weights/yolo26n.pt data=/work/pilot_config/train_w
 ```
 
 Файл конфигуратора в репозитории:
-[configure_yolo_pilot.py](../ml-pipeline/gpu_kit/alternatives/configure_yolo_pilot.py).
+[configure_yolo_pilot.py](../../ml-pipeline/gpu_kit/alternatives/configure_yolo_pilot.py).
 Его создание файлов проверено на реальных данных; команды обучения выше здесь
 не запускались. Начальный `batch=16` — выбор для старта, не измеренный оптимум GPU.
 При OOM снизить batch одинаково для сравниваемой пары и записать изменение.
@@ -96,8 +96,8 @@ yolo detect train model=/work/weights/yolo26n.pt data=/work/pilot_config/train_w
 чекпойнт от field-val нельзя считать выбранными по одному критерию.
 Отрицательные val-кадры проверяются дополнительно: они не заменяют field-val.
 
-Для D-FINE уже есть [configure_dfine.py](../ml-pipeline/gpu_kit/alternatives/configure_dfine.py)
-и [рецепт](../ml-pipeline/gpu_kit/alternatives/README.md). Он использует field-val.
+Для D-FINE уже есть [configure_dfine.py](../../ml-pipeline/gpu_kit/alternatives/configure_dfine.py)
+и [рецепт](../../ml-pipeline/gpu_kit/alternatives/README.md). Он использует field-val.
 Совместимость полного D-FINE forward/export и мобильного runtime ещё не проверена.
 Сценарии DINO/SFT — планы ограниченных опытов, не готовые протестированные trainers.
 

@@ -83,15 +83,15 @@ def main():
              'его выбрали до итогового test. Повторное обучениеN сейчас не требуется. S в APK0.8 пока seed03; '
              'окончательный seedS выбирается после десяти полных общих val, затем устанавливается новая версияAPK.', '',
              '## Что реально исполнено', '',
-             f'- YOLO26n: прежние10/10 обучений и10/10 общих val-оценок. [Прежняя серия](../experiments/study10_v2/FINAL_REPORT_2026-10-04.md).',
+             f'- YOLO26n: прежние10/10 обучений и10/10 общих val-оценок. [Прежняя серия](../../experiments/study10_v2/FINAL_REPORT_2026-10-04.md).',
              f'- YOLO26s: **{len(ready)}/10** обучений с прошедшим экспортом; **{len(evaluated)}/10** полных общих val-оценок.',
              f'- Текущая очередь: {queue["status"]}, компонент {current.get("id", "—")}.',
              '- Исходный план80 остановлен, checkpointS04 сохранён на39/60 и продолжен со40/60. Числовой рецепт и данные не менялись.',
              '- DETR, отдельные классификаторы, маска и дистилляция дальше не повторяются в этой очереди. Их пилоты и результаты сохранены; это изменение задачи, не технический отказ.', '',
-             'Источник исполнения: [status](../experiments/yolo26s_focus_v1/status.json), '
-             '[замороженный план](../experiments/yolo26s_focus_v1/plan.json), '
-             '[протокол](../experiments/yolo26s_focus_v1/PROTOCOL.md), '
-             '[продолжение](../experiments/yolo26s_focus_v1/CONTINUE.md). Один GPU-worker; CPU ONNX-оценка может идти рядом.', '']
+             'Источник исполнения: [status](../../experiments/yolo26s_focus_v1/status.json), '
+             '[замороженный план](../../experiments/yolo26s_focus_v1/plan.json), '
+             '[протокол](../../experiments/yolo26s_focus_v1/PROTOCOL.md), '
+             '[продолжение](../../experiments/yolo26s_focus_v1/CONTINUE.md). Один GPU-worker; CPU ONNX-оценка может идти рядом.', '']
     if progress:
         lines += [f'Последняя сохранённая эпоха текущегоS: {progress["epoch"]}/60, файл обновлён {progress["updated_utc"]}. '
                   'Промежуточная эпоха не является готовым запуском.', '']
@@ -139,7 +139,7 @@ def main():
               'В test этих трёх классов нет. Болезни огурцов и доля поражённой ткани не заявляются.', '',
               '## Что в приложении', '',
               f'Текущий APK: **{phone["version"]}**, status={phone["status"]}, installed={phone["installed"]}, '
-              f'SHA256 `{phone["sha256"]}`. [Файл](../../{phone["apk"].replace(chr(92), "/")}).', '',
+              f'SHA256 `{phone["sha256"]}`. [Файл](../../../{phone["apk"].replace(chr(92), "/")}).', '',
               '| Кнопка | Seed | Назначение |', '|---|---:|---|']
     for model in current_manifest['models']:
         purpose = ('Проверенный быстрый выбор; десять обучений' if model['id'] == 'yolo26n' else
@@ -157,25 +157,25 @@ def main():
         value = row['pipeline']
         lines.append(f'| {kind} | {value["mean_of_series_medians_ms"]:.2f} ± {value["sd_of_series_medians_ms"]:.2f} | {row["series"]} |')
     if (ROOT/'docs/android/voice_v1/verification.json').exists():
-        lines += ['', 'APK0.9 добавляет [фиксированные русские голосовые команды](../android/VOICE_COMMANDS_2026-10-04.md) '
+        lines += ['', 'APK0.9 добавляет [фиксированные русские голосовые команды](../../android/VOICE_COMMANDS_2026-10-04.md) '
                   'без интернета по отдельному выбору Бориса. Визуальные веса/предобработка и прежние восемь примеров сохранены. '
                   'Показанные времена — измерения0.8; новые десять серий нужны при окончательном выбореS.']
     if (ROOT/'docs/android/voice_v2/verification.json').exists():
         voice_flow=read(ROOT/'docs/android/voice_v2/verification.json')
-        lines += ['', f'Новая [голосовая съёмка и галерея0.10](../android/VOICE_GALLERY_2026-10-04.md): '
+        lines += ['', f'Новая [голосовая съёмка и галерея0.10](../../android/VOICE_GALLERY_2026-10-04.md): '
                   f'статус `{voice_flow["status"]}`. Автоматический затвор, номер → просмотр → подтверждение. '
                   'Сохранить этот функционал при упаковке финальнойS. Детальные телефонные проверки — вvoice_v2.']
     lines += ['', 'Измерены подготовка входов, графы и postprocess одного декодированного снимка; камера, декодирование, '
               'сохранение/UI не включены. По3 прогрева и10 измерений на режим в каждом из10 свежих процессов, порядок менялся. '
               'RSS — память процесса, не индивидуальный размер модели. Это десять замеров скорости, не десять обучений. '
-              '[Исходные измерения](../android/accuracy_v1/benchmark/summary.json). После выбора окончательнойS проверить заново.', '',
+              '[Исходные измерения](../../android/accuracy_v1/benchmark/summary.json). После выбора окончательнойS проверить заново.', '',
               '## Сколько осталось', '',
               f'По CSV завершённыхS среднее время эпохи≈{epoch_basis:.1f}с. Расчётный остаток собственно эпох≈{remaining_training/3600:.2f}ч. '
               f'Плановый диапазон серии с экспортом/native-проверками≈{eta["remaining_series_hours_low"]:.1f}–{eta["remaining_series_hours_high"]:.1f}ч от времени этого среза. '
               'Это ориентир по немногим запускам, не статистический доверительный интервал и не гарантированный срок.', '',
               'После эпох нужны общая val, заблокированный test, сборка/установка и повторные телефонные проверки. '
               'Паузы компьютера и ошибки сдвигают срок. Старый прогноз45–55 часов относится к отменённой очереди80 и больше не действителен. '
-              '[Численный расчёт](../experiments/yolo26s_focus_v1/eta.json).', '',
+              '[Численный расчёт](../../experiments/yolo26s_focus_v1/eta.json).', '',
               '## Другие YOLO и следующий эксперимент', '',
               '[Исследование доступных версий](../research/YOLO_ALTERNATIVES_2026-10-04.md):26m для возможного повышения качества, '
               '11s как контроль, v9s/v10s для проверки компактности;12/13 в исследовательском резерве,27 на момент проверки ещё unreleased. '
@@ -191,7 +191,7 @@ def main():
               '- Guard-проверка до10S действительно отказала в упаковке/test до записи assets и до чтения test.',
               '- Источники/выбор/метрики/экспорты хранятся в plan, run manifests, pipeline JSON и source_snapshots. '
               'FanControl закрыт; вентиляторы/HDD не менялись; GPU-worker один.', '']
-    output = ROOT / 'docs/reports/07_YOLO26_FOCUS_2026-10-04.md'
+    output = ROOT / 'docs/history/reports/07_YOLO26_FOCUS_2026-10-04.md'
     output.write_text('\n'.join(lines), encoding='utf-8')
     save(FOCUS / 'progress_evidence.json', {'updated_utc': now.isoformat(), 'plan_sha256': sha(FOCUS / 'plan.json'),
                                           'queue': queue, 'records': records, 'seed_summary': summary, 'apk': phone, 'eta': eta})
