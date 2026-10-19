@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.activity.ComponentActivity
@@ -39,11 +40,15 @@ import com.agronomy.phytomonitor.voice.VoiceAction
 import com.agronomy.phytomonitor.voice.VoiceCommand
 import com.agronomy.phytomonitor.voice.VoiceCommands
 import com.agronomy.phytomonitor.voice.OfflineResultSpeaker
+import com.agronomy.phytomonitor.voice.HeadsetButton
+import com.agronomy.phytomonitor.voice.HeadsetButtonPolicy
+import com.agronomy.phytomonitor.voice.HeadsetPress
 import kotlinx.coroutines.delay
 
 class FieldDemoActivity : ComponentActivity() {
     private lateinit var voice: OfflineVoiceController
     private lateinit var speaker: OfflineResultSpeaker
+    private lateinit var headset: HeadsetButton
     internal val voiceListening: Boolean get()=voice.active
     internal val voiceController: OfflineVoiceController get()=voice
     internal val resultSpeaker: OfflineResultSpeaker get()=speaker
@@ -238,6 +243,30 @@ class FieldDemoActivity : ComponentActivity() {
     private val followUp = FollowUpDialog()
     /** Compose-visible copy of the dialog phase: it decides whether to listen after speech. */
     private var followUpPhase by mutableStateOf(FollowUpDialog.Phase.IDLE)
+    /** V-01: one headset button for hands-free work; see HeadsetButtonPolicy. */
+    internal fun headsetPress() {
+        if (!foreground) {
+            return
+        }
+        val listening = voice.active || photoFlow.dialogVoice || photoFlow.continuousVoice
+        when (HeadsetButtonPolicy.press(currentScreen(), speaker.active, listening, followUp.awaitingAnswer)) {
+            HeadsetPress.TAKE_SHOT, HeadsetPress.ANSWER_YES -> handleVoiceCommand(VoiceCommand(VoiceAction.CONFIRM, "Кнопка гарнитуры"))
+            HeadsetPress.STOP_SPEECH -> speaker.stop()
+            HeadsetPress.STOP_LISTENING, HeadsetPress.START_LISTENING -> voiceButton()
+            HeadsetPress.NONE -> Unit
+        }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode in HeadsetButtonPolicy.keys) {
+            if (event.repeatCount == 0) {
+                headsetPress()
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     private fun voiceButton() {
         if(voice.active || photoFlow.dialogVoice || photoFlow.continuousVoice){setContinuous(false);return}
         requestContinuous=false
@@ -306,6 +335,7 @@ class FieldDemoActivity : ComponentActivity() {
         enableEdgeToEdge()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         voice=OfflineVoiceController(applicationContext)
+        headset=HeadsetButton(this,::headsetPress)
         speaker=OfflineResultSpeaker(applicationContext)
         photoFlow=ViewModelProvider(this)[PhotoFlowViewModel::class.java]
         fieldModel=ViewModelProvider(this)[FieldDemoViewModel::class.java]
@@ -398,8 +428,8 @@ class FieldDemoActivity : ComponentActivity() {
             }
         }
     }
-    override fun onResume(){super.onResume();foreground=true;if(fieldModel.locationEnabled && fieldModel.location.hasPermission())startLocation()}
-    override fun onStop(){foreground=false;actions.cancelPlan();followUp.stop();followUpPhase=followUp.phase;fieldModel.location.stop();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
-    override fun onDestroy(){voice.close();speaker.close();super.onDestroy()}
+    override fun onResume(){super.onResume();foreground=true;headset.setActive(true);if(fieldModel.locationEnabled && fieldModel.location.hasPermission())startLocation()}
+    override fun onStop(){foreground=false;headset.setActive(false);actions.cancelPlan();followUp.stop();followUpPhase=followUp.phase;fieldModel.location.stop();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
+    override fun onDestroy(){voice.close();speaker.close();headset.release();super.onDestroy()}
 }
 
