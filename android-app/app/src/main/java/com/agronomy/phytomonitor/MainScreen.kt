@@ -350,7 +350,7 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
             result.boxes.forEachIndexed { index, box ->
                 LeafResultRow(
                     number = index + 1,
-                    label = model.detector.labels[box.classId],
+                    label = result.model.labels[box.classId],
                     confidence = box.confidence,
                     prominent = index == 0,
                     showCrop = true,
@@ -553,7 +553,7 @@ private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean, on
     ) {
         Text("Настройки анализа", style = MaterialTheme.typography.titleLarge)
         Text(
-            "${model.selectedModelName()} · ${cropName(model.crop)} · порог ${thresholdPercent(model.threshold)}",
+            "${model.selectedModelName()} · ${model.cropName(model.crop)} · порог ${thresholdPercent(model.threshold)}",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -614,7 +614,7 @@ private fun CropChips(model: FieldDemoViewModel, enabled: Boolean, onAction: Act
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        cropOptions.forEach { (id, label) ->
+        model.cropChoices().forEach { (id, label) ->
             FilterChip(selected = model.crop == id, onClick = { onAction(VoiceAction.CROP, id) }, label = { Text(label) }, enabled = enabled)
         }
     }
@@ -628,7 +628,7 @@ private fun ComparisonList(model: FieldDemoViewModel) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Сравнение моделей", style = MaterialTheme.typography.titleMedium)
         model.comparison.forEach { (name, result) ->
-            val labels = result.boxes.take(3).joinToString("; ") { model.detector.labels[it.classId] }
+            val labels = result.boxes.take(3).joinToString("; ") { result.model.labels[it.classId] }
             ComparisonRow(
                 name = name,
                 summary = labels.ifBlank { "Нет уверенного результата" },

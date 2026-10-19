@@ -33,7 +33,7 @@ class VoiceCommandsTest {
         assertEquals("yolo26n",VoiceCommands.parse("быстрая модель")!!.value)
         assertEquals("yolo26s",VoiceCommands.parse("большая модель")!!.value)
         assertEquals("yolo11n",VoiceCommands.parse("старую модель")!!.value)
-        assertEquals("Cucumber",VoiceCommands.parse("огурцы")!!.value)
+        assertEquals("cucumber",VoiceCommands.parse("огурцы")!!.value)
         assertEquals("all",VoiceCommands.parse("все культуры")!!.value)
     }
     @Test fun fieldToolsAreExplicitAndRejectedOutsideMain() {

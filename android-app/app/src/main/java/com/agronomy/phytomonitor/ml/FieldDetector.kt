@@ -29,7 +29,11 @@ data class DetectorModel(val id: String, val name: String, val asset: String, va
                          val family: String = "yolo", val side: Int = 416,
                          val seed: Int = 20261003, val detectorSeed: Int = seed,
                          val dataset: String = "clean v2", val provisional: Boolean = true,
-                         val classifier: ClassifierGraph? = null)
+                         val classifier: ClassifierGraph? = null,
+                         /** Output classes of this graph, their Russian labels and crop ids (manifest schema 3). */
+                         val classes: List<String> = emptyList(), val labels: List<String> = emptyList(),
+                         val classCrops: List<String> = emptyList(), val crops: List<String> = emptyList(),
+                         val cropNames: Map<String,String> = emptyMap())
 data class DetectionResult(val model: DetectorModel, val boxes: List<LeafDetection>,
                            val inferenceMs: Double, val pipelineMs: Double,
                            val proposedLeaves: Int = 0, val classifiedLeaves: Int = 0,
@@ -39,17 +43,8 @@ data class DetectionResult(val model: DetectorModel, val boxes: List<LeafDetecti
 /** One background executor, at most one detector and one classifier session. */
 class FieldDetector(private val context: Context) : Closeable {
     val manifest = JSONObject(context.assets.open("models/manifest.json").bufferedReader().use { it.readText() })
-    val classes = manifest.getJSONArray("classes").let { a -> List(a.length()) { a.getString(it) } }
-    val labels = manifest.getJSONArray("labels_ru").let { a -> List(a.length()) { a.getString(it) } }
-    val models = manifest.getJSONArray("models").let { a -> List(a.length()) { i ->
-        val m=a.getJSONObject(i)
-        val classifier=m.optJSONObject("classifier")?.let {
-            ClassifierGraph(it.getString("id"),it.getString("asset"),it.getString("sha256"),it.getInt("seed"),it.getString("kind"),it.optInt("side",224))
-        }
-        DetectorModel(m.getString("id"),m.getString("name"),m.getString("asset"),m.getString("sha256"),
-            m.optString("family","yolo"),m.optInt("side",416),m.optInt("seed",20261003),
-            m.optInt("detector_seed",m.optInt("seed",20261003)),m.optString("dataset","clean v2"),m.optBoolean("provisional",true),classifier)
-    } }
+    /** Each model carries its own classes and labels; old schema-2 models share the top-level list. */
+    val models = ModelCatalog.parse(manifest)
     private val environment=OrtEnvironment.getEnvironment()
     private val sessions=mutableMapOf<String,OrtSession>()
     private var currentModel: String? = null
@@ -102,12 +97,13 @@ class FieldDetector(private val context: Context) : Closeable {
         if(currentModel!=model.id){close();currentModel=model.id}
         val detector=graph(model.id,model.asset,model.sha256,model.side){shape ->
             if(model.family=="detr")shape.contentEquals(longArrayOf(1,300,6))
-            else shape.size==3 && shape[0]==1L && shape[1]==(classes.size+4).toLong() && shape[2]>0
+            else shape.size==3 && shape[0]==1L && shape[1]==(model.classes.size+4).toLong() && shape[2]>0
         }
-        val classifier=model.classifier?.let {c -> graph(c.id,c.asset,c.sha256,c.side){it.contentEquals(longArrayOf(1,classes.size.toLong()))}}
+        val classifier=model.classifier?.let {c -> graph(c.id,c.asset,c.sha256,c.side){it.contentEquals(longArrayOf(1,model.classes.size.toLong()))}}
         val geometry=Letterbox(bitmap.width,bitmap.height,model.side)
         val input=prepareInput(bitmap,geometry)
-        val allowed=if(crop=="all") null else classes.indices.filter {classes[it].startsWith(crop,ignoreCase=true)}.toSet()
+        // The crop of each class comes from the manifest, not from the beginning of an English class name.
+        val allowed=if(crop=="all") null else model.classCrops.indices.filter {model.classCrops[it]==crop}.toSet()
         var inferenceNanos=0L
         val proposals=OnnxTensor.createTensor(environment,input.asFloatBuffer(),longArrayOf(1,3,model.side.toLong(),model.side.toLong())).use {tensor ->
             val before=SystemClock.elapsedRealtimeNanos()
@@ -117,7 +113,7 @@ class FieldDetector(private val context: Context) : Closeable {
                 val output=((result[0] as OnnxTensor).value as Array<Array<FloatArray>>)[0]
                 trace?.invoke(input.asReadOnlyBuffer(),output)
                 stageTrace?.invoke("detector",input.asReadOnlyBuffer(),output.flatMap {it.asIterable()}.toFloatArray(),intArrayOf(1,output.size,output[0].size))
-                if(model.family=="detr")decodeDetr(output,geometry,threshold,allowed)
+                if(model.family=="detr")decodeDetr(output,geometry,threshold,allowed,model.classes.size)
                 else YoloPostprocessor.decode(output,geometry,if(classifier==null)threshold else .10f,
                     if(classifier==null)allowed else null,classAgnostic=classifier!=null)
             }
@@ -135,7 +131,7 @@ class FieldDetector(private val context: Context) : Closeable {
                     inferenceNanos+=SystemClock.elapsedRealtimeNanos()-before
                     @Suppress("UNCHECKED_CAST")
                     val logits=((result[0] as OnnxTensor).value as Array<FloatArray>)[0]
-                    require(logits.size==classes.size && logits.all {it.isFinite()}){"Некорректный выход классификатора"}
+                    require(logits.size==model.classes.size && logits.all {it.isFinite()}){"Некорректный выход классификатора"}
                     if(index==0)stageTrace?.invoke("classifier",leafInput.asReadOnlyBuffer(),logits.copyOf(),intArrayOf(1,logits.size))
                     val largest=logits.maxOrNull()!!
                     val probabilities=logits.map {exp((it-largest).toDouble())};val total=probabilities.sum()
@@ -183,11 +179,11 @@ class FieldDetector(private val context: Context) : Closeable {
         buffer.rewind();return buffer
     }
 
-    private fun decodeDetr(rows: Array<FloatArray>,g: Letterbox,threshold: Float,allowed: Set<Int>?): List<LeafDetection> =
+    private fun decodeDetr(rows: Array<FloatArray>,g: Letterbox,threshold: Float,allowed: Set<Int>?,classCount: Int): List<LeafDetection> =
         rows.mapNotNull {r ->
             require(r.size==6 && r.all {it.isFinite()}){"Некорректный выход DETR"}
             val cls=r[5].toInt()
-            if(cls !in classes.indices || r[4]<threshold || (allowed!=null && cls !in allowed))null
+            if(cls !in 0 until classCount || r[4]<threshold || (allowed!=null && cls !in allowed))null
             else {
                 val l=((r[0]-g.padX)/(g.resizedWidth.toFloat()/g.width)).coerceIn(0f,g.width.toFloat())
                 val t=((r[1]-g.padY)/(g.resizedHeight.toFloat()/g.height)).coerceIn(0f,g.height.toFloat())

@@ -9,7 +9,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import com.agronomy.phytomonitor.ml.CropVocabulary
 import com.agronomy.phytomonitor.ml.DetectionResult
+import com.agronomy.phytomonitor.ml.DetectorModel
 import com.agronomy.phytomonitor.ml.FieldDetector
 import com.agronomy.phytomonitor.journal.FieldPlots
 import com.agronomy.phytomonitor.journal.JournalDatabase
@@ -66,7 +68,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     var messageIsError by mutableStateOf(true); private set
     var reportName by mutableStateOf<String?>(null); private set
     var selectedModel by mutableStateOf(preferences.getString("model","yolo26n") ?: "yolo26n"); private set
-    var crop by mutableStateOf(preferences.getString("crop","all") ?: "all"); private set
+    /** Crop ids are taxonomy ids («potato»); values saved by older versions («Potato») are lower-cased. */
+    var crop by mutableStateOf((preferences.getString("crop","all") ?: "all").lowercase()); private set
     var threshold by mutableStateOf(preferences.getFloat("threshold",0.25f).coerceIn(0.1f,0.8f)); private set
     /** What the journal holds for the current result; a repeated «сохрани осмотр» compares against it. */
     private var savedInspection by mutableStateOf<SavedInspection?>(null)
@@ -78,6 +81,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         if(detector.models.none {it.id==selectedModel})selectedModel=detector.models.first().id
+        if(crop!="all" && crop !in currentModel().crops)crop="all"
         worker.execute {migrateJournal()}
         refreshPlots()
         val last=preferences.getString("last_photo",null)?.let(::File)
@@ -89,6 +93,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(busy || id==selectedModel || detector.models.none {it.id==id})return
         selectedModel=id; result=null; reportName=null;review="unrated";comparison=emptyList()
         preferences.edit().putString("model",id).apply()
+        // A crop the new model does not know would hide every class.
+        if(crop!="all" && crop !in currentModel().crops){crop="all";preferences.edit().putString("crop",crop).apply()}
         if(bitmap!=null && analyzePhoto) analyze()
     }
     fun selectCrop(value: String, analyzePhoto: Boolean=true) {
@@ -119,6 +125,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     /** A finished action («сохранено»): shown briefly at the bottom, not as a banner in the page. */
     fun notify(text: String){message=text;messageIsError=false}
     fun clearMessage(){message=null;messageIsError=true}
+    fun currentModel(): DetectorModel = detector.models.firstOrNull {it.id==selectedModel} ?: detector.models.first()
+    /** «Все культуры» first, then the crops of the selected model with their Russian names. */
+    fun cropChoices(): List<Pair<String,String>> = listOf("all" to "Все культуры") + currentModel().let {m -> m.crops.map {it to (m.cropNames[it] ?: it)}}
+    fun cropName(id: String): String = if(id=="all") "Все культуры" else currentModel().cropNames[id] ?: CropVocabulary.names[id] ?: id
     /** The model shown in the top bar: «YOLO26n · 25 %». */
     fun selectedModelName(): String = detector.models.firstOrNull {it.id==selectedModel}?.name ?: selectedModel
     fun importPhoto(uri: Uri) {
@@ -303,7 +313,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun spokenResult(): String {
         val found=result ?: return "Сначала сделай фото и дождись анализа."
-        return spokenAnalysis(found.boxes.map { detector.labels[it.classId] }, found.photoQuality)
+        return spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality)
     }
     private fun postFailure(error:Exception){main.post {if(!cleared){busy=false;showError(error.message ?: "Не удалось обработать фото")}}}
     override fun onCleared(){

@@ -8,7 +8,6 @@ import kotlin.math.roundToInt
  * fixed voice phrases and assistant proposals, and are tested without a phone.
  */
 object ActionPolicy {
-    val crops = setOf("all", "Potato", "Tomato", "Cucumber")
     val reviews = setOf("correct", "incorrect", "uncertain")
     val scrollDirections = setOf("down", "up", "top", "bottom")
     const val MIN_THRESHOLD = 10
@@ -78,7 +77,7 @@ object ActionPolicy {
         }
         return when (request.action) {
             VoiceAction.MODEL -> if (value in state.availableModels) null else Verdict.Reject("Модель недоступна в текущем приложении.")
-            VoiceAction.CROP -> if (value in crops) null else Verdict.Reject("Эта культура недоступна в текущем приложении.")
+            VoiceAction.CROP -> if (value == "all" || value in state.crops) null else Verdict.Reject("Эта культура недоступна для выбранной модели.")
             VoiceAction.SCROLL -> if (value in scrollDirections) null else Verdict.Reject("Неизвестное направление прокрутки.")
             VoiceAction.ASSESS -> if (value in reviews) null else Verdict.Reject("Неизвестная оценка результата.")
             VoiceAction.THRESHOLD -> thresholdProblem(value)

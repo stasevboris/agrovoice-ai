@@ -43,6 +43,8 @@ data class AppState(
     val threshold: Float = 0.25f,
     val selectedModel: String = "",
     val crop: String = "all",
+    /** Crop ids the selected model can filter by; «all» is always allowed. */
+    val crops: List<String> = emptyList(),
     val availableModels: List<String> = emptyList(),
     val verifiedKnowledge: Boolean = false,
     val plots: List<String> = emptyList(),

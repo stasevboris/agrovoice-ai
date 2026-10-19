@@ -1,6 +1,5 @@
 package com.agronomy.phytomonitor.actions
 
-import com.agronomy.phytomonitor.cropOptions
 import com.agronomy.phytomonitor.voice.VoiceAction
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -11,7 +10,8 @@ class ActionPolicyTest {
         hasPhoto = true,
         hasResult = true,
         selectedModel = "yolo26n",
-        availableModels = listOf("yolo26n", "yolo26s")
+        availableModels = listOf("yolo26n", "yolo26s"),
+        crops = listOf("potato", "tomato", "cucumber")
     )
 
     private fun voice(action: VoiceAction, value: String = "") = ActionRequest(action, value, ActionSource.VOICE)
@@ -153,7 +153,7 @@ class ActionPolicyTest {
         assertTrue(ActionPolicy.resolve(voice(VoiceAction.THRESHOLD, "сорок"), withResult) is Verdict.Reject)
         assertTrue(ActionPolicy.resolve(voice(VoiceAction.THRESHOLD, "120"), withResult) is Verdict.Clarify)
         assertTrue(ActionPolicy.resolve(voice(VoiceAction.THRESHOLD, "-5"), withResult) is Verdict.Clarify)
-        assertEquals(cropOptions.map { it.first }.toSet(), ActionPolicy.crops)
+        assertTrue(ActionPolicy.resolve(voice(VoiceAction.CROP, "tomato"), withResult.copy(crops = listOf("potato"))) is Verdict.Reject)
     }
 
     @Test
@@ -163,8 +163,8 @@ class ActionPolicyTest {
             operations(ActionPolicy.resolve(voice(VoiceAction.MODEL, "yolo26s"), withResult))
         )
         assertEquals(
-            listOf(Operation.SelectCrop("Tomato", analyze = false)),
-            operations(ActionPolicy.resolve(voice(VoiceAction.CROP, "Tomato"), withResult.copy(screen = Screen.GALLERY)))
+            listOf(Operation.SelectCrop("tomato", analyze = false)),
+            operations(ActionPolicy.resolve(voice(VoiceAction.CROP, "tomato"), withResult.copy(screen = Screen.GALLERY)))
         )
         assertTrue(ActionPolicy.resolve(voice(VoiceAction.MODEL, "yolo26n"), withResult) is Verdict.Skip)
         assertEquals(

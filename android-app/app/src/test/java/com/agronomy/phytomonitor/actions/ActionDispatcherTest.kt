@@ -87,10 +87,10 @@ class ActionDispatcherTest {
 
     @Test
     fun differentValuesAreNotRepeats() {
-        val app = FakeApp(ready.copy(availableModels = listOf("yolo26n", "yolo26s")))
+        val app = FakeApp(ready.copy(availableModels = listOf("yolo26n", "yolo26s"), crops = listOf("potato", "tomato")))
         val actions = dispatcher(app)
-        actions.dispatch(voice(VoiceAction.CROP, "Potato"))
-        actions.dispatch(voice(VoiceAction.CROP, "Tomato"))
+        actions.dispatch(voice(VoiceAction.CROP, "potato"))
+        actions.dispatch(voice(VoiceAction.CROP, "tomato"))
         assertEquals(2, app.performed.count { it is Operation.SelectCrop })
     }
 

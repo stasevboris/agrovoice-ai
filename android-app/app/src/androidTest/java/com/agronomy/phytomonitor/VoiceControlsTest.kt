@@ -109,7 +109,7 @@ class VoiceControlsTest {
         say("открой галерею");compose.waitUntil(15000){!compose.activity.photoFlow.loading}
         compose.runOnUiThread {compose.activity.setContinuous(false)}
         VoiceCommands.modelIds.forEachIndexed {index,id->say("модель ${RussianPhotoNumber.words(index+1)}");assertEquals(id,model.selectedModel)}
-        listOf("картофель" to "Potato","томаты" to "Tomato","огурцы" to "Cucumber","все культуры" to "all").forEach {(text,id)->say(text);assertEquals(id,model.crop)}
+        listOf("картофель" to "potato","томаты" to "tomato","огурцы" to "cucumber","все культуры" to "all").forEach {(text,id)->say(text);assertEquals(id,model.crop)}
         say("порог двадцать пять процентов");assertEquals(0.25f,model.threshold,0.001f)
         say("увеличь порог");assertEquals(0.30f,model.threshold,0.001f)
         say("уменьши порог");assertEquals(0.25f,model.threshold,0.001f)

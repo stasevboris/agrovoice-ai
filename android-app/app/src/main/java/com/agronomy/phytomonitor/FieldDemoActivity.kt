@@ -128,6 +128,7 @@ class FieldDemoActivity : ComponentActivity() {
         threshold = fieldModel.threshold,
         selectedModel = fieldModel.selectedModel,
         crop = fieldModel.crop,
+        crops = fieldModel.currentModel().crops,
         availableModels = fieldModel.detector.models.map { it.id },
         plots = fieldModel.plots.map { it.plot.name },
         plot = fieldModel.plotName,

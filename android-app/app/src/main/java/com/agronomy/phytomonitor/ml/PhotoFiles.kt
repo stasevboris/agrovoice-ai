@@ -111,8 +111,8 @@ object PhotoFiles {
         val directory=File(context.getExternalFilesDir(null) ?: context.filesDir,"results").apply{mkdirs()}
         val boxes=JSONArray()
         result.boxes.forEach { box->boxes.put(JSONObject()
-            .put("class_id",box.classId).put("class_name",detector.classes[box.classId])
-            .put("label_ru",detector.labels[box.classId]).put("confidence",box.confidence.toDouble())
+            .put("class_id",box.classId).put("class_name",result.model.classes[box.classId])
+            .put("label_ru",result.model.labels[box.classId]).put("confidence",box.confidence.toDouble())
             .put("xyxy_pixels",JSONArray(listOf(box.left,box.top,box.right,box.bottom)))) }
         val report=JSONObject().put("created_epoch_ms",System.currentTimeMillis())
             .put("photo",photo.absolutePath).put("photo_sha256",FieldDetector.sha256(photo))

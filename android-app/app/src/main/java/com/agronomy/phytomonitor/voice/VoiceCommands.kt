@@ -1,5 +1,6 @@
 package com.agronomy.phytomonitor.voice
 
+import com.agronomy.phytomonitor.ml.CropVocabulary
 import java.util.Locale
 
 enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS }
@@ -35,9 +36,11 @@ object VoiceCommands {
         add(VoiceCommand(VoiceAction.MODEL,"Выбрана YOLO26s","yolo26s"),"большая модель","большую модель","выбери большую модель")
         add(VoiceCommand(VoiceAction.MODEL,"Выбрана YOLO11n","yolo11n"),"старая модель","старую модель","выбери старую модель")
         add(VoiceCommand(VoiceAction.CROP,"Все культуры","all"),"все культуры","покажи все культуры")
-        add(VoiceCommand(VoiceAction.CROP,"Картофель","Potato"),"картофель","выбери картофель")
-        add(VoiceCommand(VoiceAction.CROP,"Томат","Tomato"),"томат","томаты","выбери томаты")
-        add(VoiceCommand(VoiceAction.CROP,"Огурец","Cucumber"),"огурец","огурцы","выбери огурцы")
+        // All 15 taxonomy crops; the executor rejects a crop the selected model does not know.
+        CropVocabulary.names.forEach {(crop,name) ->
+            val phrases=CropVocabulary.spoken.getValue(crop)+CropVocabulary.chooseForms.getValue(crop).map {"выбери $it"}
+            add(VoiceCommand(VoiceAction.CROP,name,crop),*phrases.distinct().toTypedArray())
+        }
         add(VoiceCommand(VoiceAction.CANCEL,"Команда отменена"),"отмена","отмени")
         add(VoiceCommand(VoiceAction.CONFIRM,"Подтверждаю"),"подтвердить","подтверди","выбрать фото","выбери это фото")
         add(VoiceCommand(VoiceAction.BACK,"Назад"),"назад","вернись назад")

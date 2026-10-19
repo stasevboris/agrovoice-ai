@@ -21,12 +21,4 @@ class ResultFormattingTest {
         assertEquals("29 %", thresholdPercent(0.29f))
     }
 
-    @Test
-    fun cropNamesComeFromOneListForTheScreenAndTheSheet() {
-        assertEquals("Все культуры", cropName("all"))
-        assertEquals("Картофель", cropName("Potato"))
-        assertEquals("Томат", cropName("Tomato"))
-        assertEquals("Огурец", cropName("Cucumber"))
-        assertEquals("Unknown", cropName("Unknown"))
-    }
 }

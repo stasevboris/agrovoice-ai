@@ -9,6 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = Path(__file__).with_name("scenarios.json")
 VOICE_SOURCE = ROOT / "android-app/app/src/main/java/com/agronomy/phytomonitor/voice/VoiceCommands.kt"
+TAXONOMY = ROOT / "ml-pipeline/allcrops/taxonomy_v1.json"
+CROPS = set(json.loads(TAXONOMY.read_text(encoding="utf-8"))["crops_ru"]) | {"all"}
 
 SYSTEM = """Ты — маршрутизатор команд AgroVoice. Вход: JSON со state и utterance.
 Верни только JSON с decision (execute, clarify, reject, dictate), actions и text.
@@ -23,7 +25,8 @@ actions — список объектов action/value. Предлагай то�
 выбранного фото в gallery. Без контекста «да» требует уточнения.
 Системные действия Android, удаление, отправка и медицинские/агрономические
 назначения не входят в этот протокол. Нет verified_kb — не придумывай лечение.
-Порог приложения: 10..80. CROP: Tomato, Potato, Cucumber, all.
+Порог приложения: 10..80. CROP: id культуры из taxonomy_v1 (tomato, potato, …) или all;
+культура должна быть у выбранной модели.
 MODEL: только available_models. Составные команды выполняются последовательно
 после проверки результата каждого шага; список — план, а не факт исполнения.
 """
@@ -59,7 +62,7 @@ def validate_target(state, target, allowed):
         if action == "CONFIRM" and not state["pending"]:
             if state["screen"] != "gallery" or not state["selected_photo"]:
                 raise ValueError("Confirmation has no pending object")
-        if action == "CROP" and value not in {"Tomato", "Potato", "Cucumber", "all"}:
+        if action == "CROP" and value not in CROPS:
             raise ValueError("Unsupported crop")
         if action == "MODEL" and value not in state["available_models"]:
             raise ValueError("Unavailable model")

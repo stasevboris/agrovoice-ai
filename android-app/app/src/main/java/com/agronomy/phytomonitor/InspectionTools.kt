@@ -84,10 +84,6 @@ internal fun boxesLabel(count: Int): String {
     return "$count $word"
 }
 
-internal val cropOptions = listOf("all" to "Все культуры", "Potato" to "Картофель", "Tomato" to "Томат", "Cucumber" to "Огурец")
-
-internal fun cropName(id: String) = cropOptions.firstOrNull { it.first == id }?.second ?: id
-
 /** The threshold is spoken and set in percents; the screen shows the same unit. */
 internal fun thresholdPercent(value: Float) = "${(value * 100).toInt()} %"
 

@@ -1,5 +1,6 @@
 package com.agronomy.phytomonitor.actions
 
+import com.agronomy.phytomonitor.ml.CropVocabulary
 import com.agronomy.phytomonitor.voice.VoiceAction
 import com.agronomy.phytomonitor.voice.VoiceCommands
 import org.json.JSONArray
@@ -165,6 +166,7 @@ class AssistantCorpusTest {
             helpOpen = data.optBoolean("help_open"),
             verifiedKnowledge = data.optBoolean("verified_kb"),
             crop = "",
+            crops = CropVocabulary.names.keys.toList(),
             availableModels = listOf("yolo26n", "yolo26s", "yolo11n")
         )
     }
