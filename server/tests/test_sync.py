@@ -84,6 +84,20 @@ def test_reject_stale_clock_even_with_current_version(client, auth):
     assert push(client, auth, item).json()["results"][0]["status"] == "conflict"
 
 
+def test_changed_prediction_requires_new_expert_review(client, database, auth):
+    item = update()
+    push(client, auth, item)
+    record = database.scalar(select(Inspection))
+    record.expert_status = "confirmed"
+    database.flush()
+    item["base_version"] = 1
+    item["updated_at"] = (datetime.now(timezone.utc) + timedelta(minutes=1)).isoformat()
+    item["data"]["prediction"]["crop"] = "tomato"
+    reply = push(client, auth, item).json()["results"][0]
+    assert reply["status"] == "accepted"
+    assert reply["inspection"]["expert_status"] == "unreviewed"
+
+
 def test_accounts_are_isolated_even_for_same_uuid(client, auth, other_auth):
     item = update(b"test photo bytes")
     push(client, auth, item)

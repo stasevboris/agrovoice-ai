@@ -114,6 +114,9 @@ def apply_update(database: Session, owner: User, update: InspectionUpdate):
                             revision=owner.sync_revision, updated_at=updated_at, payload=payload)
         database.add(record)
     else:
+        evidence_fields = ("prediction", "photos", "model_version", "model_sha256")
+        if any(record.payload[key] != payload[key] for key in evidence_fields):
+            record.expert_status = "unreviewed"
         record.version += 1
         record.revision = owner.sync_revision
         record.updated_at = updated_at

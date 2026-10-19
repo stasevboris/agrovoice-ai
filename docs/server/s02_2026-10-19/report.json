@@ -9,10 +9,10 @@
     "errors": "0",
     "failures": "0",
     "skipped": "0",
-    "tests": "14",
-    "time": "2.130",
-    "timestamp": "2026-10-19T14:53:49.219134+00:00",
-    "hostname": "b8baaacebaad"
+    "tests": "15",
+    "time": "2.137",
+    "timestamp": "2026-10-19T14:58:05.199036+00:00",
+    "hostname": "6ec23a29edf5"
   },
   "tests": [
     "test_health_uses_real_postgresql_and_migration",
@@ -22,6 +22,7 @@
     "test_missing_and_expired_tokens_are_rejected",
     "test_repeat_conflict_and_server_expert_status",
     "test_reject_stale_clock_even_with_current_version",
+    "test_changed_prediction_requires_new_expert_review",
     "test_accounts_are_isolated_even_for_same_uuid",
     "test_pagination_and_incremental_update",
     "test_photo_repeat_mismatch_truncation_and_retry",
