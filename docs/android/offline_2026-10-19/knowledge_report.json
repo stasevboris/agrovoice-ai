@@ -1,0 +1,11 @@
+{
+  "command": "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest",
+  "result": "BUILD SUCCESSFUL",
+  "tests": 163,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "log": "artifacts/verification/offline_20261019/knowledge-build.log",
+  "device_tests": "Compiled, not run; phone access not authorized in this task",
+  "training": "No new training launched; deadline 2026-10-19T22:00:00+03:00"
+}

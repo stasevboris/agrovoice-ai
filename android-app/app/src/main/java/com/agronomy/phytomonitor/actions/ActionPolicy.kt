@@ -46,7 +46,7 @@ object ActionPolicy {
         VoiceAction.MODEL, VoiceAction.CROP, VoiceAction.THRESHOLD, VoiceAction.SCROLL,
         VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER,
         VoiceAction.JOURNAL_NUMBER, VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT,
-        VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL
+        VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL, VoiceAction.LEAF_KNOWLEDGE
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -95,7 +95,8 @@ object ActionPolicy {
                 else -> Verdict.Clarify(wrongScreenText(state.screen))
             }
             VoiceAction.READ_KNOWLEDGE -> if (state.screen == Screen.KNOWLEDGE) run(Operation.ReadKnowledge)
-                else Verdict.Clarify("Сначала открой справочник и выбери карточку. Проверенных назначений препаратов пока нет.")
+                else ResultKnowledge.resolve(request, state)
+            VoiceAction.LEAF_KNOWLEDGE -> ResultKnowledge.resolve(request, state)
             VoiceAction.KNOWLEDGE_NUMBER, VoiceAction.KNOWLEDGE_NEXT, VoiceAction.KNOWLEDGE_PREVIOUS -> knowledgeCard(request, state)
             VoiceAction.CROP -> if (state.screen == Screen.KNOWLEDGE) run(Operation.FilterKnowledgeCrop(request.value))
                 else capture(request, state)
@@ -154,6 +155,7 @@ object ActionPolicy {
             VoiceAction.PLOT -> plotProblem(value, state)
             VoiceAction.KNOWLEDGE_NUMBER -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Назови номер карточки из списка.")
             VoiceAction.JOURNAL_NUMBER -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Назови номер осмотра из журнала.")
+            VoiceAction.LEAF_KNOWLEDGE -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Назови номер листа из результата.")
             else -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Такого номера нет в галерее.")
         }
     }

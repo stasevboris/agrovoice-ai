@@ -4,7 +4,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.LocalDate
 
-data class KnowledgeSource(val id: String, val title: String, val url: String, val edition: String)
+data class KnowledgeSource(val id: String, val title: String, val url: String, val edition: String,
+    val kind: String, val region: String, val accessed: String, val rights: String)
 data class KnowledgeStatement(val text: String, val source: String, val locator: String)
 data class KnowledgeCard(
     val code: String,
@@ -15,16 +16,27 @@ data class KnowledgeCard(
     val reviewDue: String?,
     val missing: List<String>,
     val sections: Map<String, List<KnowledgeStatement>>,
-    val sources: List<KnowledgeSource>
+    val sources: List<KnowledgeSource>,
+    val verifiedAt: String?,
+    val treatments: List<KnowledgeTreatment>,
+    val fertilization: List<KnowledgeFertilization>
 ) {
     fun reviewed(today: LocalDate = LocalDate.now()): Boolean = status == "verified" &&
         !verifiedBy.isNullOrBlank() && missing.isEmpty() && sources.isNotEmpty() &&
-        runCatching { !LocalDate.parse(reviewDue).isBefore(today) }.getOrDefault(false)
+        runCatching {
+            val verified = LocalDate.parse(verifiedAt)
+            val due = LocalDate.parse(reviewDue)
+            !verified.isAfter(today) && due.isAfter(verified) && !due.isBefore(today) &&
+                sources.all { !LocalDate.parse(it.accessed).isAfter(today) } &&
+                treatments.all { it.registerYear <= today.year }
+        }.getOrDefault(false)
 
     fun spoken(today: LocalDate = LocalDate.now()): String = if (!reviewed(today)) {
         "Справка не проверена специалистом или требует пересмотра. Смотрите текст карточки."
     } else {
-        name + ". " + sections.values.flatten().joinToString(" ") { it.text }
+        name + ". " + sections.values.flatten().joinToString(" ") { it.text } + " " +
+            (treatments.map { it.text() } + fertilization.map { it.text() }).joinToString(" ") +
+            if (treatments.isNotEmpty() || fertilization.isNotEmpty()) " Сверьтесь с этикеткой и действующим реестром РБ." else " Проверенных назначений препаратов в карточке нет."
     }
 }
 
@@ -51,20 +63,24 @@ data class KnowledgeCatalog(val version: String, val cards: List<KnowledgeCard>)
             }
             val sources = document.getJSONArray("sources").objects().associate { source ->
                 val id = source.getString("id")
-                id to KnowledgeSource(id, source.getString("title"), source.getString("url"), source.getString("edition"))
+                id to KnowledgeSource(id, source.getString("title"), source.getString("url"), source.getString("edition"),
+                    source.getString("kind"), source.getString("region"), source.getString("accessed"), source.getString("rights"))
             }
             val cards = document.getJSONArray("cards").objects().map { card ->
+                val cardSources = card.getJSONArray("sources").strings().associateWith { sources.getValue(it) }
                 val sections = sectionNames.keys.associateWith { section ->
                     card.getJSONArray(section).objects().map { statement ->
                         val source = statement.getString("source")
-                        require(source in sources) { "Неизвестный источник $source" }
+                        require(source in cardSources) { "Источник $source не указан в карточке" }
                         KnowledgeStatement(statement.getString("text"), source, statement.getString("locator"))
                     }
                 }
                 KnowledgeCard(card.getString("code"), card.getString("crop"), card.getString("name_ru"),
                     card.getString("status"), card.nullable("verified_by"), card.nullable("review_due"),
                     card.getJSONArray("missing").strings(), sections,
-                    card.getJSONArray("sources").strings().map { sources.getValue(it) })
+                    cardSources.values.toList(), card.nullable("verified_at"),
+                    card.getJSONArray("treatments").objects().map { KnowledgeProducts.treatment(it, cardSources) },
+                    card.getJSONArray("fertilization").objects().map { KnowledgeProducts.fertilization(it, cardSources) })
             }
             require(cards.map { it.code }.distinct().size == cards.size) { "Повторяющиеся карточки справочника" }
             return KnowledgeCatalog(document.getString("kb_version"), cards)

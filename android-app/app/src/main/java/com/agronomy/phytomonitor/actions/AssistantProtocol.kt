@@ -46,6 +46,7 @@ object AssistantProtocol {
         .put("plots", JSONArray(state.plots))
         .put("pending_plot_name", state.pendingPlotDeletion?.name ?: JSONObject.NULL)
         .put("settings", JSONObject(state.settings))
+        .put("result_knowledge_codes", JSONArray(state.resultKnowledgeCodes))
         .put("speaking", state.speaking)
         .put("help_open", state.helpOpen)
         .put("verified_kb", state.verifiedKnowledge)

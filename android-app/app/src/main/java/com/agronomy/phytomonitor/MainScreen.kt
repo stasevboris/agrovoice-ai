@@ -375,6 +375,9 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
                     showCrop = true,
                     onExplain = { explain = true }
                 )
+                TextButton(onClick = { onAction(VoiceAction.LEAF_KNOWLEDGE, (index + 1).toString()) }, enabled = controlsEnabled) {
+                    Text("Справка по листу ${index + 1}")
+                }
             }
         }
         OutlinedButton(

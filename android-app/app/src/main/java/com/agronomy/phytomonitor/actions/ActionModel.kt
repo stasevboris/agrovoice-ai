@@ -53,6 +53,7 @@ data class AppState(
     val knowledgeCardOpen: Boolean = false,
     val knowledgeCodes: List<String> = emptyList(),
     val selectedKnowledgeCode: String? = null,
+    val resultKnowledgeCodes: List<String?> = emptyList(),
     val plots: List<String> = emptyList(),
     val plotTargets: List<PlotTarget> = emptyList(),
     val pendingPlotDeletion: PlotTarget? = null,
@@ -117,6 +118,7 @@ sealed interface Operation {
     data object CloseSettings : Operation
     data class OpenKnowledge(val withVoice: Boolean) : Operation
     data class OpenKnowledgeCard(val code: String, val withVoice: Boolean) : Operation
+    data class OpenResultKnowledge(val code: String, val withVoice: Boolean) : Operation
     data object CloseKnowledge : Operation
     data object CloseKnowledgeCard : Operation
     data class FilterKnowledgeCrop(val crop: String) : Operation

@@ -10,7 +10,7 @@ enum class VoiceAction {
     CONFIRM, NOTE, CLEAR_NOTE, JOURNAL, JOURNAL_NUMBER, SAVE_INSPECTION, ASSESS, COMPARE,
     SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, CREATE_PLOT, RENAME_PLOT,
     DELETE_PLOT, SETTINGS, SET_SETTING, SEARCH, JOURNAL_FILTER, EXPORT_JOURNAL, IMPORT_JOURNAL,
-    KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS
+    KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS, LEAF_KNOWLEDGE
 }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
@@ -95,7 +95,7 @@ object VoiceCommands {
 
     /** Main-screen grammar with «ряд N» and «участок <name>» for the plots that exist now. */
     fun mainGrammar(plots: Collection<String>, followUp: Boolean=false): List<String> =
-        (grammar + listOf("ряд") + (1..SPOKEN_ROWS).map(RussianPhotoNumber::words) +
+        (grammar + listOf("ряд", "справка по листу", "чем лечить лист") + (1..SPOKEN_ROWS).map(RussianPhotoNumber::words) +
             plots.map {"участок ${spokenPlot(it)}"}.filter {it.length>"участок ".length} +
             // «да» is listened for only right after the app asked «Сохранить осмотр?».
             (if(followUp)listOf("да","подтвердить") else emptyList())).distinct()
@@ -148,6 +148,13 @@ object VoiceCommands {
     fun parseForScreen(text: String, screen: String, plots: Collection<String> = emptyList()): VoiceCommand? {
         if(screen=="note")return null
         com.agronomy.phytomonitor.actions.BrowseActions.parse(text, screen)?.let { return it }
+        if (screen in setOf("main", "journal")) {
+            val normalized = text.trim().lowercase().replace('ё', 'е').removeSuffix(".")
+            val prefix = listOf("справка по листу ", "чем лечить лист ").firstOrNull { normalized.startsWith(it) }
+            prefix?.let { RussianPhotoNumber.parse(normalized.removePrefix(it)) }?.let {
+                return VoiceCommand(VoiceAction.LEAF_KNOWLEDGE, "Справка для листа $it", it.toString())
+            }
+        }
         if (screen == "plots") {
             com.agronomy.phytomonitor.actions.PlotActions.parse(text, plots)?.let { return it }
         }
@@ -172,7 +179,7 @@ object VoiceCommands {
             if (number != null) return VoiceCommand(VoiceAction.KNOWLEDGE_NUMBER, "Карточка №$number", number.toString())
         }
         val command=parse(text,plots) ?: return null
-        if (screen == "journal" && command.action in setOf(VoiceAction.SPEAK_RESULT, VoiceAction.NOTE, VoiceAction.SILENCE)) return command
+        if (screen == "journal" && command.action in setOf(VoiceAction.SPEAK_RESULT, VoiceAction.NOTE, VoiceAction.SILENCE, VoiceAction.READ_KNOWLEDGE)) return command
         if (screen == "knowledge" && command.action in knowledgeActions) return command
         if(screen=="note_review")return command.takeIf {it.action in setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.NOTE,VoiceAction.CLEAR_NOTE,VoiceAction.LISTEN_OFF)}
         val plotActions=setOf(VoiceAction.ROW,VoiceAction.PLOT)

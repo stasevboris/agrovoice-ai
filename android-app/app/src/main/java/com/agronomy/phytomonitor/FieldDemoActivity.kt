@@ -204,6 +204,7 @@ class FieldDemoActivity : ComponentActivity() {
         knowledgeCardOpen = navigation?.currentDestination?.route == "knowledge/{code}",
         knowledgeCodes = knowledgeModel.state.value.visible.map { it.code },
         selectedKnowledgeCode = knowledgeModel.state.value.selectedCode,
+        resultKnowledgeCodes = resultKnowledgeCodes(),
         availableModels = fieldModel.detector.models.map { it.id },
         plots = plotsModel.state.value.plots.map { it.plot.name },
         plotTargets = plotsModel.state.value.plots.map { PlotTarget(it.plot.id, it.plot.name) },
@@ -222,6 +223,19 @@ class FieldDemoActivity : ComponentActivity() {
         resultOpen = navigation?.currentDestination?.route == "result",
         followUp = followUp.awaitingAnswer
     )
+
+    private fun resultKnowledgeCodes(): List<String?> {
+        val classes = if (navigation?.currentDestination?.route == "inspection/{id}") {
+            val saved = journalModel.state.value.opened?.takeIf {
+                it.details.inspection.id == navigation?.currentBackStackEntry?.arguments?.getString("id")
+            }
+            saved?.details?.photos?.firstOrNull()?.detections.orEmpty()
+                .sortedByDescending { it.confidence }.map { it.classCode }
+        } else {
+            fieldModel.result?.let { result -> result.boxes.map { result.model.classes[it.classId] } }.orEmpty()
+        }
+        return classes.map(knowledgeModel::codeForClass)
+    }
 
     private val actionPort = object : ActionPort {
         override fun state() = currentState()
@@ -350,6 +364,15 @@ class FieldDemoActivity : ComponentActivity() {
                     if (operation.withVoice) knowledgeModel.state.value.selected?.let {
                         speak("Карточка: ${it.name}. " + if (it.reviewed()) "Проверено специалистом." else "Черновик, требуется проверка.")
                     }
+                }
+                is Operation.OpenResultKnowledge -> {
+                    voice.stop()
+                    photoFlow.dialogVoice = operation.withVoice
+                    knowledgeModel.open(operation.code.substringBefore("__"))
+                    navigation?.navigate("knowledge") { launchSingleTop = true }
+                    knowledgeModel.select(operation.code)
+                    navigation?.navigate("knowledge/${operation.code}") { launchSingleTop = true }
+                    if (operation.withVoice) speak("Справка по предварительному результату модели. " + knowledgeModel.spoken())
                 }
                 Operation.CloseKnowledge -> {
                     voice.stop()
@@ -740,6 +763,7 @@ class FieldDemoActivity : ComponentActivity() {
                                     } else {
                                         SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) },
                                             onRead = { press(VoiceAction.SPEAK_RESULT) },
+                                            onKnowledge = { press(VoiceAction.LEAF_KNOWLEDGE, it.toString()) },
                                             onEditNote = { press(VoiceAction.NOTE) }, onReanalyse = {
                                             val path = saved.details.photos.firstOrNull()?.photo?.localPath
                                             if (path != null) {

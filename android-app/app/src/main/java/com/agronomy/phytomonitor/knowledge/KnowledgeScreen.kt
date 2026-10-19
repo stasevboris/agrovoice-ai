@@ -81,12 +81,18 @@ fun KnowledgeScreen(model: KnowledgeViewModel, onBack: () -> Unit, onOpen: (Stri
                 }
             }
             item {
-                Text("Проверенные назначения препаратов пока недоступны. Сверяйтесь с этикеткой препарата и действующим реестром РБ.")
+                if (card.reviewed()) {
+                    card.treatments.forEach { Text(it.text()) }
+                    card.fertilization.forEach { Text(it.text()) }
+                    if (card.treatments.isEmpty() && card.fertilization.isEmpty()) Text("Проверенных назначений в карточке нет.")
+                } else Text("Назначения не показываются до актуальной проверки специалистом.")
+                Text("Регион применения: Беларусь. Сверяйтесь с этикеткой препарата и действующим реестром РБ.")
+                Text("Проверка: ${card.verifiedAt ?: "не выполнена"}. Пересмотр до: ${card.reviewDue ?: "не задан"}.", style = MaterialTheme.typography.bodySmall)
                 if (card.missing.isNotEmpty()) Text("Не заполнено: " + card.missing.joinToString { KnowledgeCatalog.gapNames[it] ?: it },
                     style = MaterialTheme.typography.bodySmall)
             }
             items(card.sources, key = { it.id }) { source ->
-                Text("${source.id}: ${source.title}\n${source.edition}\n${source.url}", style = MaterialTheme.typography.bodySmall)
+                Text("${source.id}: ${source.title}\n${source.edition} · ${source.region}\n${source.url}\n${source.rights}", style = MaterialTheme.typography.bodySmall)
                 TextButton(onClick = { links.openUri(source.url) }) { Text("Открыть источник онлайн") }
             }
         } else if (!state.loading) item { Text("Карточка не найдена.") }

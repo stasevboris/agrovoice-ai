@@ -42,7 +42,7 @@ class KnowledgeCatalogTest {
     @Test
     fun expiredVerificationAndMissingExpertBlockNarration() {
         val card = catalog().cards.first { it.code == "potato__late_blight" }.copy(status = "verified", verifiedBy = "TEST: специалист",
-            reviewDue = "2026-10-20", missing = emptyList())
+            verifiedAt = "2026-10-19", reviewDue = "2026-10-20", missing = emptyList())
         assertTrue(card.reviewed(LocalDate.parse("2026-10-19")))
         assertFalse(card.reviewed(LocalDate.parse("2026-10-21")))
         assertFalse(card.copy(verifiedBy = null).reviewed(LocalDate.parse("2026-10-19")))
