@@ -30,7 +30,7 @@ class PhotoVoiceFlowTest {
         val photos=compose.activity.photoFlow.photos.toList()
         assertTrue(photos.zipWithNext().all {(a,b)->a.chronologicalMs>=b.chronologicalMs})
         say("подтвердить")
-        assertTrue(compose.activity.photoFlow.galleryOpen)
+        assertTrue((compose.activity.currentState().screen == com.agronomy.phytomonitor.actions.Screen.GALLERY))
         assertEquals(original,compose.activity.fieldModel.photo?.absolutePath)
         say("первое фото")
         compose.waitUntil(15000){compose.activity.photoFlow.preview!=null}
@@ -52,7 +52,7 @@ class PhotoVoiceFlowTest {
         compose.waitUntil(15000){compose.onAllNodesWithText("Слушаю. Скажи одну команду…").fetchSemanticsNodes().isNotEmpty()}
         say("подтвердить")
         idle()
-        assertFalse(compose.activity.photoFlow.galleryOpen)
+        assertFalse((compose.activity.currentState().screen == com.agronomy.phytomonitor.actions.Screen.GALLERY))
         assertFalse(compose.activity.photoFlow.dialogVoice)
         val imported=compose.activity.fieldModel.photo!!
         val expected=compose.activity.contentResolver.openInputStream(uri)!!.use {it.readBytes()}
@@ -69,7 +69,7 @@ class PhotoVoiceFlowTest {
         val original=compose.activity.fieldModel.photo?.absolutePath
         val before=LocalPhotoGallery.load(compose.activity).map {it.id}.toSet()
         say("сделай фото")
-        compose.waitUntil(30000){!compose.activity.photoFlow.cameraOpen && !compose.activity.fieldModel.busy && compose.activity.fieldModel.photo?.name?.startsWith("import_")==true && LocalPhotoGallery.load(compose.activity).any {it.id !in before && it.name.startsWith("AgroVoice_")}}
+        compose.waitUntil(30000){!(compose.activity.currentState().screen == com.agronomy.phytomonitor.actions.Screen.CAMERA) && !compose.activity.fieldModel.busy && compose.activity.fieldModel.photo?.name?.startsWith("import_")==true && LocalPhotoGallery.load(compose.activity).any {it.id !in before && it.name.startsWith("AgroVoice_")}}
         val captured=LocalPhotoGallery.load(compose.activity).first {it.id !in before && it.name.startsWith("AgroVoice_")}
         assertEquals(captured.id,LocalPhotoGallery.load(compose.activity).first().id)
         assertTrue(compose.activity.fieldModel.bitmap!!.width>0)
@@ -91,6 +91,6 @@ class PhotoVoiceFlowTest {
         assertFalse(compose.activity.photoFlow.dialogVoice)
         compose.onNodeWithContentDescription("Голосовая команда").assertIsEnabled()
         say("отмена")
-        assertFalse(compose.activity.photoFlow.galleryOpen)
+        assertFalse((compose.activity.currentState().screen == com.agronomy.phytomonitor.actions.Screen.GALLERY))
     }
 }

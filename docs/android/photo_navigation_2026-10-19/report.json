@@ -1,0 +1,31 @@
+{
+  "jvm": {
+    "tests": 132,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build_status": "passed",
+  "build_command": "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+  "phone_tests": 9,
+  "phone_status": "passed",
+  "phone_command": "adb shell am instrument -w -e class com.agronomy.phytomonitor.VoiceControlsTest,com.agronomy.phytomonitor.PlotsNavigationTest,com.agronomy.phytomonitor.NoteSpeechFlowTest,com.agronomy.phytomonitor.JournalNavigationTest -e voiceFolder voice_current_20261019 com.agronomy.phytomonitor.test/androidx.test.runner.AndroidJUnitRunner",
+  "preservation": {
+    "records": true,
+    "files": true
+  },
+  "regressions_found_and_fixed": [
+    "Immediate rename must read queued persisted plot selection atomically, not a stale state snapshot.",
+    "Fast reopening of CameraX failed with animated navigation; transitions disabled to release the prior camera before the next binding."
+  ],
+  "checks": [
+    "Two-stage and immediate camera; only identified test captures deleted",
+    "Gallery selection by voice, button and swipe; last preview wins; navigation survives recreation",
+    "Room plot changes update current selection and voice choices",
+    "Note dictation and offline TTS; saved inspection navigation without reanalysis"
+  ],
+  "limitations": [
+    "Synthetic commands and automated microphone sessions; not human speech or headset validation",
+    "Field analysis still uses its prior worker until the next A-10 increment"
+  ]
+}

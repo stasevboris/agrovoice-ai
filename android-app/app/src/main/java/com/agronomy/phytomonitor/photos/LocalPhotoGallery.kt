@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.provider.MediaStore
 import android.util.Size
 import androidx.compose.runtime.*
@@ -23,7 +21,13 @@ import com.agronomy.phytomonitor.settings.SettingsStore
 import com.agronomy.phytomonitor.settings.Keys
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 
 data class GalleryPhoto(val id: Long, val uri: Uri, val name: String, val takenMs: Long, val addedMs: Long) {
     val chronologicalMs: Long get()=takenMs.takeIf {it>0} ?: addedMs
@@ -74,19 +78,30 @@ object LocalPhotoGallery {
     }
 }
 
+data class GalleryState(
+    val loading: Boolean = false,
+    val photos: List<GalleryPhoto> = emptyList(),
+    val selectedNumber: Int? = null,
+    val preview: Bitmap? = null,
+    val previewLoading: Boolean = false,
+    val message: String? = null,
+    val partialAccess: Boolean = false
+) {
+    val selected: GalleryPhoto? get() = selectedNumber?.let { photos.getOrNull(it - 1) }
+}
+
+/** Gallery loading/selection is cancelled when leaving the destination or choosing another photo. */
 class PhotoFlowViewModel(application: Application): AndroidViewModel(application) {
-    private val worker=Executors.newSingleThreadExecutor()
-    private val main=Handler(Looper.getMainLooper())
-    @Volatile private var generation=0
-    @Volatile private var cleared=false
-    var galleryOpen by mutableStateOf(false); private set
-    var loading by mutableStateOf(false); private set
-    var photos by mutableStateOf<List<GalleryPhoto>>(emptyList()); private set
-    var selectedNumber by mutableStateOf<Int?>(null); private set
-    var preview by mutableStateOf<Bitmap?>(null); private set
-    var previewLoading by mutableStateOf(false); private set
-    var message by mutableStateOf<String?>(null); private set
-    var partialAccess by mutableStateOf(false); private set
+    private val mutableState = MutableStateFlow(GalleryState())
+    val state = mutableState.asStateFlow()
+    private var request: Job? = null
+    val loading get() = state.value.loading
+    val photos get() = state.value.photos
+    val selectedNumber get() = state.value.selectedNumber
+    val preview get() = state.value.preview
+    val previewLoading get() = state.value.previewLoading
+    val message get() = state.value.message
+    val selected get() = state.value.selected
     var dialogVoice by mutableStateOf(false)
     private val settings = SettingsStore.get(application)
     var continuousVoice by mutableStateOf(false); private set
@@ -106,44 +121,62 @@ class PhotoFlowViewModel(application: Application): AndroidViewModel(application
             }
         }
     }
-    var cameraOpen by mutableStateOf(false); private set
-    var shotRequested by mutableStateOf(false); private set
-    var cameraCapturing by mutableStateOf(false); private set
-    val selected: GalleryPhoto? get()=selectedNumber?.let {photos.getOrNull(it-1)}
     fun openGallery(withVoice: Boolean) {
-        generation++;val token=generation
-        galleryOpen=true;cameraOpen=false;loading=true;photos=emptyList();selectedNumber=null;preview=null;message=null
-        partialAccess=!LocalPhotoGallery.fullAccess(getApplication());dialogVoice=withVoice
-        worker.execute {
+        request?.cancel()
+        mutableState.value = GalleryState(loading = true, partialAccess = !LocalPhotoGallery.fullAccess(getApplication()))
+        dialogVoice = withVoice
+        request = viewModelScope.launch {
             try {
-                val items=LocalPhotoGallery.load(getApplication())
-                main.post {if(!cleared && token==generation){photos=items;loading=false;if(items.isEmpty())message="Нет доступных фото. Проверь разрешение на фотографии."}}
-            }catch(error:Exception){main.post {if(!cleared && token==generation){loading=false;message=error.message ?: "Не удалось открыть галерею";dialogVoice=false}}}
+                val items = withContext(Dispatchers.IO) { LocalPhotoGallery.load(getApplication()) }
+                mutableState.update { it.copy(photos = items, loading = false,
+                    message = if (items.isEmpty()) "Нет доступных фото. Проверь разрешение на фотографии." else null) }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                mutableState.update { it.copy(loading = false, message = error.message ?: "Не удалось открыть галерею") }
+                dialogVoice = false
+            }
         }
     }
     fun select(number: Int) {
-        if(!galleryOpen || loading)return
-        if(number !in 1..photos.size){message="Нет фото №$number. Доступны номера от 1 до ${photos.size}.";return}
-        selectedNumber=number;preview=null;previewLoading=true;message=null
-        val token=++generation;val image=photos[number-1]
-        worker.execute {
+        if (loading) return
+        if (number !in 1..photos.size) {
+            error("Нет фото №$number. Доступны номера от 1 до ${photos.size}.")
+            return
+        }
+        request?.cancel()
+        val image = photos[number - 1]
+        mutableState.update { it.copy(selectedNumber = number, preview = null, previewLoading = true, message = null) }
+        request = viewModelScope.launch {
+            var decoded: Bitmap? = null
             try {
-                val bitmap=LocalPhotoGallery.preview(getApplication(),image.uri,1080)
-                main.post {if(!cleared && token==generation){preview=bitmap;previewLoading=false}else bitmap.recycle()}
-            }catch(error:Exception){main.post {if(!cleared && token==generation){previewLoading=false;message="Не удалось открыть фото №$number. Выбери другое фото."}}}
+                val bitmap = withContext(Dispatchers.IO) {
+                    LocalPhotoGallery.preview(getApplication(), image.uri, 1080).also { decoded = it }
+                }
+                mutableState.update { it.copy(preview = bitmap, previewLoading = false) }
+                decoded = null
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                mutableState.update { it.copy(previewLoading = false, message = "Не удалось открыть фото №$number. Выбери другое фото.") }
+            } finally {
+                decoded?.recycle()
+            }
         }
     }
     fun confirmation(): Uri? {
-        if(selected==null){message="Сначала назови номер фото.";return null}
-        if(preview==null || previewLoading){message="Дождись просмотра выбранного фото.";return null}
+        if(selected==null){error("Сначала назови номер фото.");return null}
+        if(preview==null || previewLoading){error("Дождись просмотра выбранного фото.");return null}
         return selected!!.uri
     }
-    fun openCamera(automatic: Boolean){close();cameraOpen=true;shotRequested=automatic}
-    fun requestShot(){if(cameraOpen && !cameraCapturing)shotRequested=true}
-    fun consumeAutoShot(): Boolean {val value=shotRequested;shotRequested=false;return value}
-    fun capturing(value: Boolean){cameraCapturing=value}
-    fun clearSelection(){generation++;selectedNumber=null;preview=null;previewLoading=false;message=null}
-    fun error(text: String){message=text}
-    fun close(){generation++;galleryOpen=false;cameraOpen=false;dialogVoice=false;shotRequested=false;cameraCapturing=false;loading=false;previewLoading=false;preview=null;selectedNumber=null;photos=emptyList();message=null}
-    override fun onCleared(){cleared=true;generation++;worker.shutdown();super.onCleared()}
+    fun clearSelection() {
+        request?.cancel()
+        mutableState.update { it.copy(selectedNumber = null, preview = null, previewLoading = false, message = null) }
+    }
+    fun error(text: String) = mutableState.update { it.copy(message = text) }
+    fun close() {
+        request?.cancel()
+        dialogVoice = false
+        mutableState.value = GalleryState()
+    }
 }

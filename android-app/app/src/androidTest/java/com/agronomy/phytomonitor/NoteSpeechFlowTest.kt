@@ -147,7 +147,7 @@ class NoteSpeechFlowTest {
                     compose.runOnUiThread {activity.handleVoiceCommand(VoiceCommands.parse("добавь заметку")!!)}
                     listening();assertTrue(vm.dictating)
                     feed("note_camera",voice,"note")
-                    assertFalse(activity.photoFlow.cameraOpen);assertTrue(vm.noteDraft.contains("фото"))
+                    assertFalse((activity.currentState().screen == com.agronomy.phytomonitor.actions.Screen.CAMERA));assertTrue(vm.noteDraft.contains("фото"))
                     feed("note_phrase",voice,"note");assertTrue(vm.noteDraft.length>20)
                     feed("note_end",voice,"note")
                     compose.waitUntil(30000){!vm.dictating && vm.noteReviewVoice && activity.voiceListening}

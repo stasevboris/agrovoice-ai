@@ -172,12 +172,12 @@ object ActionPolicy {
 
     /** «Назад» and «отмена» close the topmost layer only, one step per phrase. */
     private fun closeTopLayer(state: AppState): Verdict = when {
+        state.helpOpen -> run(Operation.ShowHelp(false))
         state.followUp && state.screen == Screen.MAIN -> run(Operation.EndFollowUp)
         state.screen == Screen.JOURNAL && state.inspectionOpen -> run(Operation.CloseInspection)
         state.screen == Screen.JOURNAL -> run(Operation.CloseJournal)
         state.screen == Screen.PLOTS -> run(Operation.ClosePlots)
         state.screen == Screen.SETTINGS -> run(Operation.CloseSettings)
-        state.helpOpen -> run(Operation.ShowHelp(false))
         state.screen == Screen.CAMERA || state.screen == Screen.GALLERY -> run(Operation.ClosePhotoFlow)
         else -> Verdict.Skip("Нечего отменять.")
     }

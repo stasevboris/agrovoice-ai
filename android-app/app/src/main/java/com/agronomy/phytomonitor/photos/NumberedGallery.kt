@@ -34,32 +34,33 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun NumberedGallery(flow: PhotoFlowViewModel,onConfirm: ()->Unit,onCancel: ()->Unit,onSystemPicker: ()->Unit,voicePanel: @Composable ()->Unit) {
+fun NumberedGallery(flow: PhotoFlowViewModel,onConfirm: ()->Unit,onCancel: ()->Unit,onSystemPicker: ()->Unit,onSelect: (Int)->Unit,voicePanel: @Composable ()->Unit) {
+    val state by flow.state.collectAsState()
     var number by remember {mutableStateOf("")}
     val grid=rememberLazyGridState()
-    LaunchedEffect(flow.selectedNumber) {flow.selectedNumber?.let {grid.animateScrollToItem(it-1);number=it.toString()}}
+    LaunchedEffect(state.selectedNumber) {state.selectedNumber?.let {grid.animateScrollToItem(it-1);number=it.toString()}}
     var handledScroll by remember {mutableIntStateOf(flow.scrollEvent)}
     LaunchedEffect(flow.scrollEvent) {
-        if(handledScroll!=flow.scrollEvent && flow.photos.isNotEmpty()){handledScroll=flow.scrollEvent
-            when(flow.scrollDirection){"top"->grid.animateScrollToItem(0);"bottom"->grid.animateScrollToItem(flow.photos.lastIndex);else->grid.scrollBy(if(flow.scrollDirection=="down")500f else -500f)}
+        if(handledScroll!=flow.scrollEvent && state.photos.isNotEmpty()){handledScroll=flow.scrollEvent
+            when(flow.scrollDirection){"top"->grid.animateScrollToItem(0);"bottom"->grid.animateScrollToItem(state.photos.lastIndex);else->grid.scrollBy(if(flow.scrollDirection=="down")500f else -500f)}
         }
     }
     Column(Modifier.fillMaxSize().padding(horizontal = 12.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onCancel) { Icon(AgroIcons.Back, contentDescription = "Назад") }
             Column(Modifier.weight(1f)) {
-                Text("Галерея · ${flow.photos.size} фото", style = MaterialTheme.typography.titleLarge)
-                Text("№1 — самое новое, №${flow.photos.size} — самое старое", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Галерея · ${state.photos.size} фото", style = MaterialTheme.typography.titleLarge)
+                Text("№1 — самое новое, №${state.photos.size} — самое старое", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
-        if (flow.partialAccess) {
+        if (state.partialAccess) {
             MessageBanner("Android разрешил только часть фотографий. Номера относятся к доступным фото.", isError = true)
         }
         voicePanel()
-        if (flow.previewLoading) {
+        if (state.previewLoading) {
             LinearProgressIndicator(Modifier.fillMaxWidth())
         }
-        flow.selected?.let { photo -> SelectedPreview(flow, photo.name) }
+        state.selected?.let { photo -> SelectedPreview(flow, photo.name, onSelect) }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             OutlinedTextField(
                 value = number,
@@ -69,18 +70,18 @@ fun NumberedGallery(flow: PhotoFlowViewModel,onConfirm: ()->Unit,onCancel: ()->U
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.weight(1f)
             )
-            FilledTonalButton(onClick = { number.toIntOrNull()?.let(flow::select) ?: flow.error("Введи номер фото") }) { Text("Показать") }
+            FilledTonalButton(onClick = { number.toIntOrNull()?.let(onSelect) ?: flow.error("Введи номер фото") }) { Text("Показать") }
         }
-        flow.message?.let { MessageBanner(it, isError = true) }
+        state.message?.let { MessageBanner(it, isError = true) }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button(onClick = onConfirm, enabled = flow.preview != null && !flow.previewLoading, modifier = Modifier.weight(1f).height(52.dp)) {
+            Button(onClick = onConfirm, enabled = state.preview != null && !state.previewLoading, modifier = Modifier.weight(1f).height(52.dp)) {
                 Icon(AgroIcons.Check, contentDescription = null)
                 Spacer(Modifier.width(6.dp))
                 Text("Подтвердить")
             }
             OutlinedButton(onClick = onCancel, modifier = Modifier.weight(1f).height(52.dp)) { Text("Отмена") }
         }
-        if (flow.loading) {
+        if (state.loading) {
             LinearProgressIndicator(Modifier.fillMaxWidth())
         }
         LazyVerticalGrid(
@@ -90,8 +91,8 @@ fun NumberedGallery(flow: PhotoFlowViewModel,onConfirm: ()->Unit,onCancel: ()->U
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
-            itemsIndexed(flow.photos, key = { _, photo -> photo.id }) { index, photo ->
-                GalleryCell(photo, index + 1, selected = flow.selectedNumber == index + 1, onClick = { flow.select(index + 1) })
+            itemsIndexed(state.photos, key = { _, photo -> photo.id }) { index, photo ->
+                GalleryCell(photo, index + 1, selected = state.selectedNumber == index + 1, onClick = { onSelect(index + 1) })
             }
         }
         TextButton(onClick = onSystemPicker) { Text("Системный выбор фото") }
@@ -99,36 +100,37 @@ fun NumberedGallery(flow: PhotoFlowViewModel,onConfirm: ()->Unit,onCancel: ()->U
 }
 
 @Composable
-private fun SelectedPreview(flow: PhotoFlowViewModel, name: String) {
+private fun SelectedPreview(flow: PhotoFlowViewModel, name: String, onSelect: (Int)->Unit) {
+    val state by flow.state.collectAsState()
     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Text("Фото №${flow.selectedNumber} · $name", style = MaterialTheme.typography.titleSmall, maxLines = 1)
-        flow.preview?.let {
+        Text("Фото №${state.selectedNumber} · $name", style = MaterialTheme.typography.titleSmall, maxLines = 1)
+        state.preview?.let {
             Image(
                 it.asImageBitmap(),
-                contentDescription = "Просмотр фото №${flow.selectedNumber}",
+                contentDescription = "Просмотр фото №${state.selectedNumber}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(180.dp)
                     .clip(MaterialTheme.shapes.large)
                     .background(PhotoBackdrop)
                     .testTag("gallery_preview")
-                    .pointerInput(flow.selectedNumber, flow.photos.size) {
+                    .pointerInput(state.selectedNumber, state.photos.size) {
                         var distance = 0f
                         detectHorizontalDragGestures(onDragStart = { distance = 0f }, onDragCancel = { distance = 0f }, onDragEnd = {
-                            val current = flow.selectedNumber ?: return@detectHorizontalDragGestures
-                            if (flow.photos.size > 1 && kotlin.math.abs(distance) > 48.dp.toPx()) {
+                            val current = state.selectedNumber ?: return@detectHorizontalDragGestures
+                            if (state.photos.size > 1 && kotlin.math.abs(distance) > 48.dp.toPx()) {
                                 val target = current + if (distance < 0) 1 else -1
-                                if (target in 1..flow.photos.size) flow.select(target)
+                                if (target in 1..state.photos.size) onSelect(target)
                             }
                         }) { change, amount -> change.consume(); distance += amount }
                     },
                 contentScale = ContentScale.Fit
             )
         }
-        if (flow.photos.size > 1) {
+        if (state.photos.size > 1) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { flow.select((flow.selectedNumber ?: 1) - 1) }, enabled = (flow.selectedNumber ?: 1) > 1, modifier = Modifier.weight(1f)) { Text("Предыдущее") }
-                OutlinedButton(onClick = { flow.select((flow.selectedNumber ?: 1) + 1) }, enabled = (flow.selectedNumber ?: 1) < flow.photos.size, modifier = Modifier.weight(1f)) { Text("Следующее") }
+                OutlinedButton(onClick = { onSelect((state.selectedNumber ?: 1) - 1) }, enabled = (state.selectedNumber ?: 1) > 1, modifier = Modifier.weight(1f)) { Text("Предыдущее") }
+                OutlinedButton(onClick = { onSelect((state.selectedNumber ?: 1) + 1) }, enabled = (state.selectedNumber ?: 1) < state.photos.size, modifier = Modifier.weight(1f)) { Text("Следующее") }
             }
         }
     }

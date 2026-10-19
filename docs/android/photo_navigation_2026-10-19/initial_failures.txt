@@ -1,0 +1,30 @@
+com.agronomy.phytomonitor.PlotsNavigationTest:
+Error in roomChangesRefreshVoiceChoicesAndCurrentPlotWithoutReopeningScreen(com.agronomy.phytomonitor.PlotsNavigationTest):
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 10000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:809)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:378)
+	at com.agronomy.phytomonitor.PlotsNavigationTest.roomChangesRefreshVoiceChoicesAndCurrentPlotWithoutReopeningScreen(PlotsNavigationTest.kt:44)
+
+com.agronomy.phytomonitor.VoiceControlsTest:....
+Error in twoStageCameraWaitsForConfirmationAndImmediateCameraDoesNot(com.agronomy.phytomonitor.VoiceControlsTest):
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 30000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:809)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:378)
+	at com.agronomy.phytomonitor.VoiceControlsTest.twoStageCameraWaitsForConfirmationAndImmediateCameraDoesNot(VoiceControlsTest.kt:153)
+
+
+Time: 90,795
+There were 2 failures:
+1) roomChangesRefreshVoiceChoicesAndCurrentPlotWithoutReopeningScreen(com.agronomy.phytomonitor.PlotsNavigationTest)
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 10000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:809)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:378)
+	at com.agronomy.phytomonitor.PlotsNavigationTest.roomChangesRefreshVoiceChoicesAndCurrentPlotWithoutReopeningScreen(PlotsNavigationTest.kt:44)
+2) twoStageCameraWaitsForConfirmationAndImmediateCameraDoesNot(com.agronomy.phytomonitor.VoiceControlsTest)
+androidx.compose.ui.test.ComposeTimeoutException: Condition still not satisfied after 30000 ms
+	at androidx.compose.ui.test.AndroidComposeUiTestEnvironment$AndroidComposeUiTestImpl.waitUntil(ComposeUiTest.android.kt:809)
+	at androidx.compose.ui.test.junit4.AndroidComposeTestRule.waitUntil(AndroidComposeTestRule.android.kt:378)
+	at com.agronomy.phytomonitor.VoiceControlsTest.twoStageCameraWaitsForConfirmationAndImmediateCameraDoesNot(VoiceControlsTest.kt:153)
+
+FAILURES!!!
+Tests run: 6,  Failures: 2

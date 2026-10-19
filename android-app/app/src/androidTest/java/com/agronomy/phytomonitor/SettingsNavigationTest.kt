@@ -38,7 +38,7 @@ class SettingsNavigationTest {
             compose.runOnUiThread { compose.activity.onBackPressedDispatcher.onBackPressed() }
             compose.waitUntil(10000) { compose.activity.currentState().screen == Screen.MAIN }
             compose.runOnUiThread { compose.activity.handleVoiceCommand(VoiceCommands.parse("открой камеру")!!) }
-            assertFalse(compose.activity.photoFlow.cameraOpen)
+            assertFalse((compose.activity.currentState().screen == com.agronomy.phytomonitor.actions.Screen.CAMERA))
             assertFalse(compose.activity.voiceListening)
         } finally {
             runBlocking {

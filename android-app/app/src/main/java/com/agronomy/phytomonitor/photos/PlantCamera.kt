@@ -37,7 +37,8 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun PlantCamera(flow: PhotoFlowViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,voicePanel: @Composable ()->Unit) {
+fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,onShoot: ()->Unit,voicePanel: @Composable ()->Unit) {
+    val state by flow.state.collectAsState()
     val context=LocalContext.current
     val owner=LocalLifecycleOwner.current
     val previewView=remember {PreviewView(context).apply {implementationMode=PreviewView.ImplementationMode.COMPATIBLE}}
@@ -85,13 +86,13 @@ fun PlantCamera(flow: PhotoFlowViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit
         previewView.previewStreamState.observe(owner,observer)
         onDispose {disposed=true;ready=false;previewView.previewStreamState.removeObserver(observer);provider?.unbind(preview,capture)}
     }
-    LaunchedEffect(ready,streamed,flow.shotRequested) {
+    LaunchedEffect(ready,streamed,state.shotRequested) {
         if(ready && streamed) {
             delay(400) // Let the first exposure and autofocus settle; no second shutter command required.
             if(ready && streamed && flow.consumeAutoShot())takePhoto()
         }
     }
-    CameraLayout(previewView, shooting, ready, flow.message, onShoot={takePhoto()}, onCancel=onCancel, voicePanel=voicePanel)
+    CameraLayout(previewView, shooting, ready, state.message, onShoot=onShoot, onCancel=onCancel, voicePanel=voicePanel)
 }
 
 /**

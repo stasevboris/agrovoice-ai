@@ -458,9 +458,6 @@ private fun BottomArea(
             }
         }
     }
-    if (flow.helpOpen) {
-        VoiceHelpDialog { onAction(VoiceAction.CLOSE_HELP, "") }
-    }
 }
 
 /** One line of context for the microphone: status while idle, «Услышал» while listening. */
@@ -480,7 +477,7 @@ private fun VoiceStatusLine(voice: OfflineVoiceController, flow: PhotoFlowViewMo
 }
 
 @Composable
-private fun VoiceHelpDialog(onClose: () -> Unit) {
+internal fun VoiceHelpDialog(onClose: () -> Unit) {
     AlertDialog(
         onDismissRequest = onClose,
         icon = { Icon(AgroIcons.Mic, contentDescription = null) },

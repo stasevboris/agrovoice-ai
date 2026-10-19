@@ -10,6 +10,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.Transaction
 import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 data class PlotSummary(
     @androidx.room.Embedded val plot: PlotEntity,
@@ -39,6 +40,9 @@ interface JournalDao {
             "FROM plot"
     )
     fun plotsWithCounts(): List<PlotSummary>
+
+    @Query("SELECT plot.*, (SELECT COUNT(*) FROM inspection WHERE inspection.plot_id = plot.id) AS inspections FROM plot")
+    fun observePlots(): Flow<List<PlotSummary>>
 
     @Query("UPDATE plot SET name = :name, updated_at = :updatedAt WHERE id = :id")
     fun renamePlot(id: String, name: String, updatedAt: Long)

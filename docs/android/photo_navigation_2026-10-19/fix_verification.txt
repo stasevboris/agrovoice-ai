@@ -1,0 +1,6 @@
+com.agronomy.phytomonitor.PlotsNavigationTest:.
+com.agronomy.phytomonitor.VoiceControlsTest:.
+
+Time: 17,179
+
+OK (2 tests)

@@ -36,6 +36,17 @@ class SettingsStoreTest {
     }
 
     @Test
+    fun selectingAndImmediatelyRenamingUsesTheQueuedValue() = runBlocking {
+        val store = SettingsStore.create(context, scope(), file)
+        withTimeout(10000) { store.state.filterNotNull().first() }
+        store.set(Keys.plot, "Выбранный")
+        store.replaceIfMatches(Keys.plot, "Выбранный", "Переименованный").join()
+        withTimeout(10000) { store.state.first { it?.plot == "Переименованный" } }
+        store.replaceIfMatches(Keys.plot, "Чужой", "").join()
+        assertEquals("Переименованный", store.state.value!!.plot)
+    }
+
+    @Test
     fun legacyValuesMoveOnceAndNewValuesSurviveReopening() = runBlocking {
         val old = context.getSharedPreferences("field_demo", 0)
         val voice = context.getSharedPreferences("voice_controls", 0)

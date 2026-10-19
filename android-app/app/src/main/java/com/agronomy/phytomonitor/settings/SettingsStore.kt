@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -12,6 +13,7 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStoreFile
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -81,9 +83,18 @@ class SettingsStore private constructor(private val data: DataStore<Preferences>
         .catch { error.value = "Не удалось прочитать настройки: ${it.message}" }
         .stateIn(scope, SharingStarted.Eagerly, null)
 
-    fun <T> set(key: Preferences.Key<T>, value: T?) = scope.launch {
+    fun <T> set(key: Preferences.Key<T>, value: T?) = change {
+        if (value == null) it.remove(key) else it[key] = value
+    }
+
+    fun <T> replaceIfMatches(key: Preferences.Key<T>, expected: T, value: T) = change {
+        if (it[key] == expected) it[key] = value
+    }
+
+    // Enqueue writes in caller order before returning; disk I/O still runs in DataStore's scope.
+    private fun change(edit: (MutablePreferences) -> Unit) = scope.launch(start = CoroutineStart.UNDISPATCHED) {
         try {
-            data.edit { if (value == null) it.remove(key) else it[key] = value }
+            data.edit { edit(it) }
             error.value = null
         } catch (cancelled: CancellationException) {
             throw cancelled

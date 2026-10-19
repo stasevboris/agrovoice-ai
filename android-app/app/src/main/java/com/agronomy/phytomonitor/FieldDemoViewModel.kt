@@ -13,11 +13,7 @@ import com.agronomy.phytomonitor.ml.CropVocabulary
 import com.agronomy.phytomonitor.ml.DetectionResult
 import com.agronomy.phytomonitor.ml.DetectorModel
 import com.agronomy.phytomonitor.ml.FieldDetector
-import com.agronomy.phytomonitor.journal.FieldPlots
-import com.agronomy.phytomonitor.journal.JournalDatabase
 import com.agronomy.phytomonitor.journal.JournalIssue
-import com.agronomy.phytomonitor.journal.PlotChange
-import com.agronomy.phytomonitor.journal.PlotSummary
 import com.agronomy.phytomonitor.location.FieldLocation
 import com.agronomy.phytomonitor.location.LocationFixes
 import com.agronomy.phytomonitor.ml.PhotoFiles
@@ -29,6 +25,8 @@ import com.agronomy.phytomonitor.settings.Keys
 import com.agronomy.phytomonitor.settings.SettingsStore
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 class FieldDemoViewModel(application: Application) : AndroidViewModel(application) {
@@ -40,12 +38,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     private var cleared=false
     private var unsavedReport: File?=null // touched only on the worker thread
     private val journal=InspectionJournal(application)
-    private val fieldPlots=FieldPlots(JournalDatabase.get(application))
     /** Receiver readings while the screen is open; a fresh fix is attached to the next saved inspection. */
     val location=FieldLocation(application)
     var locationEnabled by mutableStateOf(false); private set
-    var plotsOpen by mutableStateOf(false)
-    var plots by mutableStateOf<List<PlotSummary>>(emptyList()); private set
     var rowName by mutableStateOf(""); private set
     var noteDraft by mutableStateOf(""); private set
     var review by mutableStateOf("unrated"); private set
@@ -79,7 +74,6 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         worker.execute {migrateJournal()}
-        refreshPlots()
         viewModelScope.launch {
             val saved = settings.state.filterNotNull().first()
             selectedModel = saved.model.takeIf { id -> detector.models.any { it.id == id } } ?: detector.models.first().id
@@ -95,6 +89,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         }
         viewModelScope.launch {
             settings.error.filterNotNull().collect { showError(it) }
+        }
+        viewModelScope.launch {
+            settings.state.filterNotNull().map { it.plot }.distinctUntilChanged().collect { plotName = it }
         }
     }
 
@@ -203,28 +200,6 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     /** The row of the next inspection: digits only, as in «ряд четырнадцать». */
     fun editRow(text: String){rowName=text.filter {it.isDigit()}.take(3);settings.set(Keys.row, rowName)}
     fun switchLocation(enabled: Boolean){locationEnabled=enabled;settings.set(Keys.location, enabled);if(!enabled)location.stop()}
-    fun openPlots(){plotsOpen=true;refreshPlots()}
-    fun refreshPlots(){worker.execute {val rows=fieldPlots.list();main.post {if(!cleared)plots=rows}}}
-    fun createPlot(name: String){changePlots {fieldPlots.create(name)}}
-    fun renamePlot(id: String, name: String){
-        val renamingCurrent=plots.firstOrNull {it.plot.id==id}?.plot?.name==plotName
-        changePlots {fieldPlots.rename(id,name).also {if(renamingCurrent && it is PlotChange.Done)main.post {editPlot(it.plot.name)}}}
-    }
-    fun deletePlot(id: String){
-        val removed=plots.firstOrNull {it.plot.id==id}?.plot?.name
-        worker.execute {
-            fieldPlots.delete(id)
-            val rows=fieldPlots.list()
-            main.post {if(!cleared){plots=rows;if(removed==plotName)editPlot("");notify("Участок удалён. Его осмотры остались в журнале без участка.")}}
-        }
-    }
-    private fun changePlots(change: ()->PlotChange){
-        worker.execute {
-            val outcome=change()
-            val rows=fieldPlots.list()
-            main.post {if(!cleared){plots=rows;if(outcome is PlotChange.Rejected)showError(outcome.reason) else clearMessage()}}
-        }
-    }
     fun assess(value: String){if(value in setOf("unrated","correct","incorrect","uncertain")){review=value;saveInspection()}}
     fun saveInspection(){
         val name=reportName ?: run {showError("Сначала дождись результата анализа");return}
@@ -237,8 +212,6 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         message=null
         worker.execute {try {
             journal.save(report,note,rating,plot,row,place)
-            val rows=fieldPlots.list()
-            main.post {if(!cleared)plots=rows}
             if(unsavedReport?.name==report.name)unsavedReport=null
             main.post {if(!cleared){savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
         }catch(error: Exception){postFailure(error)}}

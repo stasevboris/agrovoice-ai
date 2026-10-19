@@ -20,6 +20,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import com.agronomy.phytomonitor.journal.PlotsViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,7 +38,8 @@ import com.agronomy.phytomonitor.voice.VoiceCommands
  * «ряд четырнадцать», «назад».
  */
 @Composable
-internal fun PlotsScreen(model: FieldDemoViewModel, onBack: () -> Unit, onSelect: (String) -> Unit) {
+internal fun PlotsScreen(model: PlotsViewModel, currentPlot: String, row: String, onBack: () -> Unit, onSelect: (String) -> Unit) {
+    val state by model.state.collectAsState()
     var newName by remember { mutableStateOf("") }
     var renaming by remember { mutableStateOf<PlotEntity?>(null) }
     var removing by remember { mutableStateOf<PlotEntity?>(null) }
@@ -62,27 +65,28 @@ internal fun PlotsScreen(model: FieldDemoViewModel, onBack: () -> Unit, onSelect
                     Button(onClick = {
                         model.createPlot(newName)
                         newName = ""
-                    }, enabled = newName.isNotBlank()) {
+                    }, enabled = newName.isNotBlank() && !state.busy) {
                         Text("Добавить")
                     }
                 }
             }
             item {
                 Text(
-                    "Текущий: ${model.plotName.ifBlank { "не выбран" }}${if (model.rowName.isBlank()) "" else ", ряд ${model.rowName}"}. " +
+                    "Текущий: ${currentPlot.ifBlank { "не выбран" }}${if (row.isBlank()) "" else ", ряд $row"}. " +
                         "Голосом: «участок …» с названием из списка, «ряд …» с номером.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            if (model.plots.isEmpty()) {
+            state.message?.let { message -> item { Text(message, color = MaterialTheme.colorScheme.error) } }
+            if (state.plots.isEmpty()) {
                 item { Text("Участков пока нет. Добавьте первый или впишите название на экране осмотра.", style = MaterialTheme.typography.bodyLarge) }
             }
-            items(model.plots, key = { it.plot.id }) { summary ->
+            items(state.plots, key = { it.plot.id }) { summary ->
                 PlotCard(
                     plot = summary.plot,
                     inspections = summary.inspections,
-                    current = summary.plot.name == model.plotName,
+                    current = summary.plot.name == currentPlot,
                     onSelect = { onSelect(summary.plot.name) },
                     onRename = { renaming = summary.plot },
                     onDelete = { removing = summary.plot }
