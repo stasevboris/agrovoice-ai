@@ -74,9 +74,10 @@ class RulesBaselineTest {
     @Test
     fun localLlmAnswers() {
         val folder = find("docs/experiments/v06_intent_baseline")
-        val files = folder.listFiles { file -> file.name.startsWith("llm_answers_") && file.name.endsWith(".jsonl") }.orEmpty()
+        val files = folder.listFiles { file -> file.name.startsWith("llm_answers_") && file.name.endsWith(".json") }.orEmpty()
         for (file in files.sortedBy { it.name }) {
-            val rows = file.readLines().filter { it.isNotBlank() }.map(::JSONObject)
+            val array = JSONArray(file.readText())
+            val rows = (0 until array.length()).map { array.getJSONObject(it) }
             val answers = rows.associate { it.getString("utterance") to it.getString("answer") }
             val latencies = rows.map { it.getLong("latency_ms") }.sorted()
             val model = rows.first().getString("model")
@@ -92,7 +93,7 @@ class RulesBaselineTest {
             report.put("raw_execute_proposals_on_non_execute", rawExecuteProposals(answers))
             report.put("desktop_latency_ms_median", latencies[latencies.size / 2])
             report.put("desktop_latency_note", "Ollama on the development PC, first call includes loading; not a phone measurement.")
-            write("llm_${file.name.removePrefix("llm_answers_").removeSuffix(".jsonl")}.json", report)
+            write("llm_${file.name.removePrefix("llm_answers_").removeSuffix(".json")}.json", report)
             assertEquals(201, rows.size)
         }
     }

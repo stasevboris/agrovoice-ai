@@ -6,8 +6,8 @@
 |---|---|---|
 | Точные фразы приложения 0.18 — [rules_exact_phrases.json](rules_exact_phrases.json) | 0/104 · 0/14 · 0/20 | 0/34 · 0/10 · 0/19 |
 | Правила свободных фраз `FreeSpeech` — [rules_free_phrases.json](rules_free_phrases.json) | 104/104 · 14/14 · 19/20 | 0/34 · 0/10 · 0/19 |
-| Qwen3-0.6B (Q4_K_M), без дообучения — [llm_qwen3_0.6b.json](llm_qwen3_0.6b.json), [ответы](llm_answers_qwen3_0.6b.jsonl) | 2/104 · 0/14 · 0/20 | 12/34 · 5/10 · 5/19 (модель предложила «execute» в 45 из 63) |
-| Qwen3.5-0.8B (Q8_0), без дообучения — [llm_qwen3.5_0.8b.json](llm_qwen3.5_0.8b.json), [ответы](llm_answers_qwen3.5_0.8b.jsonl) | 1/104 · 0/14 · 0/20 | 2/34 · 0/10 · 0/19 (предложила «execute» в 10 из 63) |
+| Qwen3-0.6B (Q4_K_M), без дообучения — [llm_qwen3_0.6b.json](llm_qwen3_0.6b.json), [ответы](llm_answers_qwen3_0.6b.json) | 2/104 · 0/14 · 0/20 | 12/34 · 5/10 · 5/19 (модель предложила «execute» в 45 из 63) |
+| Qwen3.5-0.8B (Q8_0), без дообучения — [llm_qwen3.5_0.8b.json](llm_qwen3.5_0.8b.json), [ответы](llm_answers_qwen3.5_0.8b.json) | 1/104 · 0/14 · 0/20 | 2/34 · 0/10 · 0/19 (предложила «execute» в 10 из 63) |
 
 LLM: системный промпт и состояние из `prepare_corpus.py`, ответ ограничен JSON-схемой протокола, temperature 0; сбор — `ml-pipeline/assistant/run_ollama_router.py --model <model>` через локальный Ollama 0.31.1, оценка — тот же тест (`localLlmAnswers`): ответ проходит `AssistantProtocol` (форма, диктовка, отрицания) и `ActionPolicy`. Медианная задержка на ПК разработки — в отчётах; это не замер телефона.
 
