@@ -10,8 +10,10 @@ from app.config import settings
 from app.db import session
 from app.models import User
 from app.security import current_user, denied, dummy_hash, issue_token, passwords
+from app.sync import router as sync_router
 
-app = FastAPI(title="AgroVoice API", version="0.1.0")
+app = FastAPI(title="AgroVoice API", version="0.2.0")
+app.include_router(sync_router)
 
 
 class Login(BaseModel):

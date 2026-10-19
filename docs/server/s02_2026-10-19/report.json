@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-19",
+  "commands": [
+    "docker compose up -d --build",
+    "docker compose --profile test run --rm tests"
+  ],
+  "pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "14",
+    "time": "2.130",
+    "timestamp": "2026-10-19T14:53:49.219134+00:00",
+    "hostname": "b8baaacebaad"
+  },
+  "tests": [
+    "test_health_uses_real_postgresql_and_migration",
+    "test_password_login_and_bearer_profile",
+    "test_invalid_credentials_have_the_same_response[alice-wrong]",
+    "test_invalid_credentials_have_the_same_response[unknown-wrong]",
+    "test_missing_and_expired_tokens_are_rejected",
+    "test_repeat_conflict_and_server_expert_status",
+    "test_reject_stale_clock_even_with_current_version",
+    "test_accounts_are_isolated_even_for_same_uuid",
+    "test_pagination_and_incremental_update",
+    "test_photo_repeat_mismatch_truncation_and_retry",
+    "test_disconnect_during_stream_and_full_retry",
+    "test_metadata_rebinding_and_duplicate_batch_are_rejected",
+    "test_authentication_required",
+    "test_concurrent_retries_use_one_version"
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "database": "ok"
+    }
+  },
+  "api_version": "0.2.0",
+  "routes": [
+    "/sync/inspections",
+    "/photos/{photo_id}",
+    "/health",
+    "/auth/token",
+    "/me"
+  ],
+  "browser": "Velly browser_open + browser_read: Swagger UI 0.2.0 and sync/photo routes visible",
+  "database": "PostgreSQL 17; Alembic 0002_sync; separate agrovoice_test, concurrency test cleans only its generated account",
+  "limitations": [
+    "No Android sync client or real users connected.",
+    "Photo blobs are stored in PostgreSQL, limited to 10 MiB.",
+    "No expert edit endpoint or deletion protocol yet.",
+    "HTTPX TestClient deprecation warning remains."
+  ]
+}

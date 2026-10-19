@@ -43,7 +43,7 @@ def client(database):
 
 def test_health_uses_real_postgresql_and_migration(client, database):
     assert client.get("/health").json() == {"status": "ok", "database": "ok"}
-    assert database.scalar(text("SELECT version_num FROM alembic_version")) == "0001_users"
+    assert database.scalar(text("SELECT version_num FROM alembic_version")) == "0002_sync"
 
 
 def test_password_login_and_bearer_profile(client):
