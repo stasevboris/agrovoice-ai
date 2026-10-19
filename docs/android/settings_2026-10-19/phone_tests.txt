@@ -1,0 +1,8 @@
+com.agronomy.phytomonitor.SettingsNavigationTest:.
+com.agronomy.phytomonitor.JournalNavigationTest:.
+com.agronomy.phytomonitor.VoiceRecognitionTest:.
+com.agronomy.phytomonitor.NoteSpeechFlowTest:..
+
+Time: 89,766
+
+OK (5 tests)

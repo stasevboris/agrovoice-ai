@@ -8,6 +8,29 @@ import org.junit.Test
 
 class VoiceRouterTest {
     @Test
+    fun settingsNavigationWorksWhileAnalysisRunsAndBackClosesOnlySettings() {
+        val open = ActionRequest(VoiceAction.SETTINGS, source = ActionSource.BUTTON)
+        assertEquals(Verdict.Run(listOf(Operation.OpenSettings)), ActionPolicy.resolve(open, AppState(busy = true)))
+        val back = ActionRequest(VoiceAction.BACK, source = ActionSource.VOICE)
+        assertEquals(Verdict.Run(listOf(Operation.CloseSettings)), ActionPolicy.resolve(back, AppState(screen = Screen.SETTINGS)))
+        assertTrue(ActionPolicy.resolve(ActionRequest(VoiceAction.SAVE_INSPECTION, source = ActionSource.VOICE),
+            AppState(screen = Screen.SETTINGS, hasResult = true)) is Verdict.Clarify)
+    }
+
+    @Test
+    fun disabledSpokenFollowUpDoesNotCreateAnAutomaticQuestion() {
+        val dialog = FollowUpDialog()
+        val port = object : ActionPort {
+            override fun state() = AppState(hasPhoto = true)
+            override fun perform(operation: Operation) = Unit
+            override fun tell(text: String, isError: Boolean, request: ActionRequest?) = Unit
+        }
+        val router = VoiceRouter({ Screen.MAIN }, { true }, ActionDispatcher(port), dialog, {}, {}, { false })
+        assertTrue(router.command(VoiceCommand(VoiceAction.ANALYZE, "")) is Verdict.Run)
+        assertEquals(FollowUpDialog.Phase.IDLE, dialog.phase)
+    }
+
+    @Test
     fun navigationIsReadForEachPhraseAndBackgroundCallbacksDoNothing() {
         var screen = Screen.MAIN
         var foreground = true

@@ -139,6 +139,9 @@ internal fun FieldDemoScreen(
                 onSettings = { settingsOpen = true },
                 status = if (model.busy) "Анализ…" else model.selectedModelName()
             )
+            TextButton(onClick = { onAction(VoiceAction.SETTINGS, "") }) {
+                Text("Настройки приложения")
+            }
             if (wide) {
                 val scrollPhoto = rememberScrollState()
                 Row(Modifier.weight(1f)) {

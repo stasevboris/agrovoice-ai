@@ -18,6 +18,11 @@ import androidx.compose.runtime.*
 import androidx.core.content.ContextCompat
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.agronomy.phytomonitor.settings.SettingsStore
+import com.agronomy.phytomonitor.settings.Keys
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 data class GalleryPhoto(val id: Long, val uri: Uri, val name: String, val takenMs: Long, val addedMs: Long) {
@@ -83,16 +88,24 @@ class PhotoFlowViewModel(application: Application): AndroidViewModel(application
     var message by mutableStateOf<String?>(null); private set
     var partialAccess by mutableStateOf(false); private set
     var dialogVoice by mutableStateOf(false)
-    private val voicePreferences=application.getSharedPreferences("voice_controls",0)
-    var continuousVoice by mutableStateOf(voicePreferences.getBoolean("continuous",false)); private set
+    private val settings = SettingsStore.get(application)
+    var continuousVoice by mutableStateOf(false); private set
     var helpOpen by mutableStateOf(false)
     var scrollEvent by mutableStateOf(0);private set
     var scrollDirection="down";private set
     fun scroll(direction: String){scrollDirection=direction;scrollEvent++}
-    fun setContinuous(value: Boolean){continuousVoice=value;voicePreferences.edit().putBoolean("continuous",value).apply()}
+    fun setContinuous(value: Boolean){continuousVoice=value;settings.set(Keys.continuous, value)}
     /** Experimental free Russian speech: Vosk without a phrase list, FreeSpeech rules, the same executor. */
-    var freeSpeech by mutableStateOf(voicePreferences.getBoolean("free_speech",false)); private set
-    fun switchFreeSpeech(value: Boolean){freeSpeech=value;voicePreferences.edit().putBoolean("free_speech",value).apply()}
+    var freeSpeech by mutableStateOf(false); private set
+    fun switchFreeSpeech(value: Boolean){freeSpeech=value;settings.set(Keys.freeSpeech, value)}
+    init {
+        viewModelScope.launch {
+            settings.state.filterNotNull().collect {
+                continuousVoice = it.continuous
+                freeSpeech = it.freeSpeech
+            }
+        }
+    }
     var cameraOpen by mutableStateOf(false); private set
     var shotRequested by mutableStateOf(false); private set
     var cameraCapturing by mutableStateOf(false); private set

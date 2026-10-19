@@ -34,7 +34,7 @@ object ActionPolicy {
     /** Reading the journal and hiding boxes do not touch the photo, so they work during analysis too. */
     private val availableWhileBusy = setOf(
         VoiceAction.JOURNAL, VoiceAction.SHOW_BOXES, VoiceAction.HIDE_BOXES,
-        VoiceAction.PLOTS, VoiceAction.PLOT, VoiceAction.ROW
+        VoiceAction.PLOTS, VoiceAction.PLOT, VoiceAction.ROW, VoiceAction.SETTINGS
     )
     /** The plot and the row describe the next inspection; they can be set next to the photo or in the plot list. */
     private val placeActions = setOf(VoiceAction.ROW, VoiceAction.PLOT)
@@ -64,6 +64,11 @@ object ActionPolicy {
         return when (request.action) {
             in placeActions -> place(request, state)
             VoiceAction.PLOTS -> openPlots(state)
+            VoiceAction.SETTINGS -> when (state.screen) {
+                Screen.MAIN -> run(Operation.OpenSettings)
+                Screen.SETTINGS -> Verdict.Skip("Настройки уже открыты.")
+                else -> Verdict.Clarify(wrongScreenText(state.screen))
+            }
             in inspectionActions -> inspection(request, state)
             in galleryActions -> gallery(request, state)
             else -> capture(request, state)
@@ -171,6 +176,7 @@ object ActionPolicy {
         state.screen == Screen.JOURNAL && state.inspectionOpen -> run(Operation.CloseInspection)
         state.screen == Screen.JOURNAL -> run(Operation.CloseJournal)
         state.screen == Screen.PLOTS -> run(Operation.ClosePlots)
+        state.screen == Screen.SETTINGS -> run(Operation.CloseSettings)
         state.helpOpen -> run(Operation.ShowHelp(false))
         state.screen == Screen.CAMERA || state.screen == Screen.GALLERY -> run(Operation.ClosePhotoFlow)
         else -> Verdict.Skip("Нечего отменять.")
@@ -288,6 +294,7 @@ object ActionPolicy {
         Screen.GALLERY -> "Назови номер фото или скажи «подтвердить» / «отмена»."
         Screen.JOURNAL -> "Сначала закрой журнал: скажи «назад»."
         Screen.PLOTS -> "Сначала закрой список участков: скажи «назад»."
+        Screen.SETTINGS -> "Сначала закрой настройки: скажи «назад»."
         else -> "Сначала открой галерею, чтобы выбрать фото по номеру."
     }
 

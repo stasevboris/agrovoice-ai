@@ -9,6 +9,7 @@ enum class Screen(val protocolName: String) {
     GALLERY("gallery"),
     JOURNAL("journal"),
     PLOTS("plots"),
+    SETTINGS("settings"),
     NOTE("note"),
     NOTE_REVIEW("note_review");
 
@@ -82,6 +83,8 @@ sealed interface Operation {
     data object OpenJournal : Operation
     data object OpenPlots : Operation
     data object ClosePlots : Operation
+    data object OpenSettings : Operation
+    data object CloseSettings : Operation
     data class SelectPlot(val name: String) : Operation
     data class SetRow(val row: String) : Operation
     data object SaveInspection : Operation

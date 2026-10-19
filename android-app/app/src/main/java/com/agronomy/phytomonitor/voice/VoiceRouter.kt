@@ -16,7 +16,8 @@ class VoiceRouter(
     private val actions: ActionDispatcher,
     private val followUp: FollowUpDialog,
     private val prompt: (FollowUpDialog.Prompt) -> Unit,
-    private val phaseChanged: (FollowUpDialog.Phase) -> Unit
+    private val phaseChanged: (FollowUpDialog.Phase) -> Unit,
+    private val followUpEnabled: () -> Boolean = { true }
 ) {
     val screen: Screen get() = screenProvider()
 
@@ -28,7 +29,7 @@ class VoiceRouter(
             followUp.commandHandled(request, verdict)?.let(prompt)
         } else if (request.action in stopActions) {
             followUp.stop()
-        } else if (verdict is Verdict.Run && verdict.operations.any { it in startsAnalysis || it is Operation.OpenCamera }) {
+        } else if (followUpEnabled() && verdict is Verdict.Run && verdict.operations.any { it in startsAnalysis || it is Operation.OpenCamera }) {
             followUp.voiceAnalysisRequested()
         }
         phaseChanged(followUp.phase)

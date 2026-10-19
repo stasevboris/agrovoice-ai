@@ -24,10 +24,17 @@ import com.agronomy.phytomonitor.ml.PhotoFiles
 import java.io.File
 import java.util.concurrent.Executors
 import kotlinx.coroutines.CompletableDeferred
+import androidx.lifecycle.viewModelScope
+import com.agronomy.phytomonitor.settings.Keys
+import com.agronomy.phytomonitor.settings.SettingsStore
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class FieldDemoViewModel(application: Application) : AndroidViewModel(application) {
     val detector=FieldDetector(application)
-    private val preferences=application.getSharedPreferences("field_demo",0)
+    private val settings = SettingsStore.get(application)
+    private var pendingCapture: String? = null
     private val worker=Executors.newSingleThreadExecutor()
     private val main=Handler(Looper.getMainLooper())
     private var cleared=false
@@ -36,13 +43,13 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     private val fieldPlots=FieldPlots(JournalDatabase.get(application))
     /** Receiver readings while the screen is open; a fresh fix is attached to the next saved inspection. */
     val location=FieldLocation(application)
-    var locationEnabled by mutableStateOf(preferences.getBoolean("location",false)); private set
+    var locationEnabled by mutableStateOf(false); private set
     var plotsOpen by mutableStateOf(false)
     var plots by mutableStateOf<List<PlotSummary>>(emptyList()); private set
-    var rowName by mutableStateOf(preferences.getString("row","") ?: ""); private set
+    var rowName by mutableStateOf(""); private set
     var noteDraft by mutableStateOf(""); private set
     var review by mutableStateOf("unrated"); private set
-    var plotName by mutableStateOf(preferences.getString("plot","") ?: ""); private set
+    var plotName by mutableStateOf(""); private set
     var comparison by mutableStateOf<List<Pair<String,DetectionResult>>>(emptyList()); private set
     var showBoxes by mutableStateOf(true)
     var noteOpen by mutableStateOf(false)
@@ -53,15 +60,15 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     var result by mutableStateOf<DetectionResult?>(null); private set
     var photoQuality by mutableStateOf<PhotoQuality?>(null)
         private set
-    var busy by mutableStateOf(false); private set
+    var busy by mutableStateOf(true); private set
     var message by mutableStateOf<String?>(null); private set
     /** Errors stop the task; confirmations of a finished action do not. */
     var messageIsError by mutableStateOf(true); private set
     var reportName by mutableStateOf<String?>(null); private set
-    var selectedModel by mutableStateOf(preferences.getString("model","yolo26n") ?: "yolo26n"); private set
+    var selectedModel by mutableStateOf("yolo26n"); private set
     /** Crop ids are taxonomy ids («potato»); values saved by older versions («Potato») are lower-cased. */
-    var crop by mutableStateOf((preferences.getString("crop","all") ?: "all").lowercase()); private set
-    var threshold by mutableStateOf(preferences.getFloat("threshold",0.25f).coerceIn(0.1f,0.8f)); private set
+    var crop by mutableStateOf("all"); private set
+    var threshold by mutableStateOf(0.25f); private set
     /** What the journal holds for the current result; a repeated «сохрани осмотр» compares against it. */
     private var savedInspection by mutableStateOf<SavedInspection?>(null)
     val inspectionSaved: Boolean
@@ -71,27 +78,38 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     val journalReady = CompletableDeferred<JournalReport?>()
 
     init {
-        if(detector.models.none {it.id==selectedModel})selectedModel=detector.models.first().id
-        if(crop!="all" && crop !in currentModel().crops)crop="all"
         worker.execute {migrateJournal()}
         refreshPlots()
-        val last=preferences.getString("last_photo",null)?.let(::File)
-        // The last photo comes back without a new analysis: the user decides when to check it.
-        if(last?.isFile==true) openFile(last,analyzePhoto=false)
+        viewModelScope.launch {
+            val saved = settings.state.filterNotNull().first()
+            selectedModel = saved.model.takeIf { id -> detector.models.any { it.id == id } } ?: detector.models.first().id
+            crop = saved.crop.takeIf { it == "all" || it in currentModel().crops } ?: "all"
+            threshold = saved.threshold
+            plotName = saved.plot
+            rowName = saved.row
+            locationEnabled = saved.location
+            pendingCapture = saved.pendingCamera
+            busy = false
+            val last = saved.lastPhoto?.let(::File)
+            if (last?.isFile == true) openFile(last, analyzePhoto = false)
+        }
+        viewModelScope.launch {
+            settings.error.filterNotNull().collect { showError(it) }
+        }
     }
 
     fun setModel(id: String, analyzePhoto: Boolean=true) {
         if(busy || id==selectedModel || detector.models.none {it.id==id})return
         selectedModel=id; result=null; reportName=null;review="unrated";comparison=emptyList()
-        preferences.edit().putString("model",id).apply()
+        settings.set(Keys.model, id)
         // A crop the new model does not know would hide every class.
-        if(crop!="all" && crop !in currentModel().crops){crop="all";preferences.edit().putString("crop",crop).apply()}
+        if(crop!="all" && crop !in currentModel().crops){crop="all";settings.set(Keys.crop, crop)}
         if(bitmap!=null && analyzePhoto) analyze()
     }
     fun selectCrop(value: String, analyzePhoto: Boolean=true) {
         if(busy || value==crop)return
         crop=value; result=null;reportName=null;review="unrated";comparison=emptyList()
-        preferences.edit().putString("crop",value).apply()
+        settings.set(Keys.crop, value)
         if(bitmap!=null && analyzePhoto) analyze()
     }
     /** Keeps the current result on screen while the slider moves; analyze() replaces it when the drag ends. */
@@ -99,15 +117,17 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(busy)return
         threshold=value
         comparison=emptyList()
-        preferences.edit().putFloat("threshold",value).apply()
+        settings.set(Keys.threshold, value)
     }
 
     fun createCapture(): File = PhotoFiles.newCapture(getApplication()).also {
-        preferences.edit().putString("pending_camera",it.absolutePath).apply()
+        pendingCapture = it.absolutePath
+        settings.set(Keys.pendingCamera, it.absolutePath)
     }
     fun captureComplete(success: Boolean) {
-        val path=preferences.getString("pending_camera",null)
-        preferences.edit().remove("pending_camera").apply()
+        val path=pendingCapture
+        pendingCapture = null
+        settings.set(Keys.pendingCamera, null)
         val file=path?.let(::File)
         if(success && file?.isFile==true && file.length()>0) openFile(file)
         else {file?.delete();notify("Съёмка отменена")}
@@ -149,7 +169,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         // Old images are left to GC after Compose has stopped drawing them.
         bitmap=decoded;photo=file
         noteDraft="";review="unrated";comparison=emptyList()
-        preferences.edit().putString("last_photo",file.absolutePath).apply()
+        settings.set(Keys.lastPhoto, file.absolutePath)
     }
     fun analyze(){
         val source=bitmap ?: return
@@ -179,10 +199,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         unsavedReport=report
     }
     fun editNote(text: String){noteDraft=text.take(4000)}
-    fun editPlot(text: String){plotName=text.take(120);preferences.edit().putString("plot",plotName).apply()}
+    fun editPlot(text: String){plotName=text.take(120);settings.set(Keys.plot, plotName)}
     /** The row of the next inspection: digits only, as in «ряд четырнадцать». */
-    fun editRow(text: String){rowName=text.filter {it.isDigit()}.take(3);preferences.edit().putString("row",rowName).apply()}
-    fun switchLocation(enabled: Boolean){locationEnabled=enabled;preferences.edit().putBoolean("location",enabled).apply();if(!enabled)location.stop()}
+    fun editRow(text: String){rowName=text.filter {it.isDigit()}.take(3);settings.set(Keys.row, rowName)}
+    fun switchLocation(enabled: Boolean){locationEnabled=enabled;settings.set(Keys.location, enabled);if(!enabled)location.stop()}
     fun openPlots(){plotsOpen=true;refreshPlots()}
     fun refreshPlots(){worker.execute {val rows=fieldPlots.list();main.post {if(!cleared)plots=rows}}}
     fun createPlot(name: String){changePlots {fieldPlots.create(name)}}

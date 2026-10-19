@@ -17,6 +17,11 @@ import org.vosk.Recognizer
 import java.io.File
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import com.agronomy.phytomonitor.settings.SettingsStore
+import com.agronomy.phytomonitor.settings.Keys
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 
 class NoteSpeechFlowTest {
     @get:Rule val compose=createAndroidComposeRule<FieldDemoActivity>()
@@ -31,9 +36,9 @@ class NoteSpeechFlowTest {
     fun prepareOwnInspection() {
         val activity = compose.activity
         val model = activity.fieldModel
-        val preferences = activity.getSharedPreferences("field_demo", 0)
-        previousPhoto = preferences.getString("last_photo", null)
-        previousPlot = model.plotName
+        val saved = runBlocking { SettingsStore.get(activity).state.filterNotNull().first() }
+        previousPhoto = saved.lastPhoto
+        previousPlot = saved.plot
         originalRecords = InspectionJournal(activity).let { journal ->
             journal.list().associate { it.id to journal.record(it.id).toString() }
         }
@@ -78,8 +83,7 @@ class NoteSpeechFlowTest {
         }
             .forEach { journal.deleteForTest(it.id) }
         compose.runOnUiThread { model.editPlot(previousPlot) }
-        activity.getSharedPreferences("field_demo", 0).edit()
-            .putString("last_photo", previousPhoto).commit()
+        runBlocking { SettingsStore.get(activity).set(Keys.lastPhoto, previousPhoto).join() }
         testReport?.let { assertTrue("Test report was not removed", !it.exists() || it.delete()) }
         testPhoto?.let { assertTrue("Test photo was not removed", !it.exists() || it.delete()) }
         assertEquals(originalRecords, journal.list().associate { it.id to journal.record(it.id).toString() })

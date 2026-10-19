@@ -3,7 +3,7 @@ package com.agronomy.phytomonitor.voice
 import com.agronomy.phytomonitor.ml.CropVocabulary
 import java.util.Locale
 
-enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS }
+enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, SETTINGS }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
 /** Exact fixed intents: no substring guessing and no action from partial speech. */
@@ -24,6 +24,7 @@ object VoiceCommands {
         add(VoiceCommand(VoiceAction.COMPARE,"Сравниваю модели"),"сравни модели","сравнить модели")
         add(VoiceCommand(VoiceAction.SPEAK_RESULT,"Читаю результат"),"прочитай результат","озвучь результат")
         add(VoiceCommand(VoiceAction.SILENCE,"Озвучивание остановлено"),"замолчи","останови озвучивание")
+        add(VoiceCommand(VoiceAction.SETTINGS,"Настройки приложения"),"открой настройки","настройки приложения")
         add(VoiceCommand(VoiceAction.SHOW_BOXES,"Рамки включены"),"покажи рамки")
         add(VoiceCommand(VoiceAction.HIDE_BOXES,"Рамки скрыты"),"убери рамки","спрячь рамки")
         add(VoiceCommand(VoiceAction.CAMERA,"Камера: наведи телефон и скажи «подтвердить»"),"сделать фото","сделай фото","сфотографируй")
@@ -70,7 +71,7 @@ object VoiceCommands {
     val phrases: List<String> get() = aliases.keys.toList()
     private val globalActions=setOf(VoiceAction.MODEL,VoiceAction.CROP,VoiceAction.HELP,VoiceAction.CLOSE_HELP,VoiceAction.LISTEN_ON,VoiceAction.LISTEN_OFF,VoiceAction.BACK,VoiceAction.EXIT,VoiceAction.CANCEL,VoiceAction.SCROLL,VoiceAction.THRESHOLD_UP,VoiceAction.THRESHOLD_DOWN)
     private fun phrasesFor(actions: Set<VoiceAction>)=aliases.filterValues {it.action in actions}.keys.toList()
-    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES,VoiceAction.ROW,VoiceAction.PLOT,VoiceAction.PLOTS)
+    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES,VoiceAction.ROW,VoiceAction.PLOT,VoiceAction.PLOTS,VoiceAction.SETTINGS)
     const val MAX_ROW=999
     private const val SPOKEN_ROWS=200
 

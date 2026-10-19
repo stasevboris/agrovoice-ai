@@ -1,0 +1,25 @@
+{
+  "jvm": {
+    "tests": 129,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build_status": "passed",
+  "commands": [
+    "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+    "gradlew.bat testDebugUnitTest",
+    "adb install -r app-debug.apk",
+    "adb install -r app-debug-androidTest.apk",
+    "adb shell am instrument -w -e class com.agronomy.phytomonitor.SettingsNavigationTest,com.agronomy.phytomonitor.JournalNavigationTest,com.agronomy.phytomonitor.NoteSpeechFlowTest,com.agronomy.phytomonitor.VoiceRecognitionTest -e voiceFolder voice_current_20261019 com.agronomy.phytomonitor.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "phone_tests": 5,
+  "phone_tests_status": "passed",
+  "preservation": {
+    "journal_tables": true,
+    "photos_results_legacy_files": true,
+    "legacy_settings_preserved": true
+  },
+  "migration": "Robolectric test imports model/crop/threshold/plot/row/photo/camera/location/voice keys, preserves legacy files, then reopens DataStore and verifies no overwrite by stale preferences. Phone test checks setting retention across Activity recreation and disabled voice routing.",
+  "remaining": "Model picker is still in analysis settings. field/lab restriction depends on A-12. Server address is stored but no synchronization implemented."
+}

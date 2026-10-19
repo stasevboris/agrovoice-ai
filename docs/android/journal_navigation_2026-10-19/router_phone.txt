@@ -1,9 +1,6 @@
-
 com.agronomy.phytomonitor.JournalNavigationTest:.
 com.agronomy.phytomonitor.NoteSpeechFlowTest:..
 
 Time: 51,276
 
 OK (3 tests)
-
-
