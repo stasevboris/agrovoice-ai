@@ -10,6 +10,7 @@ enum class Screen(val protocolName: String) {
     JOURNAL("journal"),
     PLOTS("plots"),
     SETTINGS("settings"),
+    KNOWLEDGE("knowledge"),
     NOTE("note"),
     NOTE_REVIEW("note_review");
 
@@ -46,12 +47,17 @@ data class AppState(
     val crop: String = "all",
     /** Crop ids the selected model can filter by; «all» is always allowed. */
     val crops: List<String> = emptyList(),
+    val canRefineCrop: Boolean = true,
     val availableModels: List<String> = emptyList(),
     val verifiedKnowledge: Boolean = false,
+    val knowledgeCardOpen: Boolean = false,
+    val knowledgeCodes: List<String> = emptyList(),
+    val selectedKnowledgeCode: String? = null,
     val plots: List<String> = emptyList(),
     val plot: String = "",
     val row: String = "",
     val inspectionOpen: Boolean = false,
+    val resultOpen: Boolean = false,
     /** The app has just asked «Сохранить осмотр?» and waits for «да» or «нет». */
     val followUp: Boolean = false
 ) {
@@ -75,6 +81,7 @@ sealed interface Operation {
     data object CloseNote : Operation
     data object CloseJournal : Operation
     data object CloseInspection : Operation
+    data object CloseResult : Operation
     data object EndFollowUp : Operation
     data object ClosePhotoFlow : Operation
     data object StopSpeech : Operation
@@ -85,6 +92,12 @@ sealed interface Operation {
     data object ClosePlots : Operation
     data object OpenSettings : Operation
     data object CloseSettings : Operation
+    data class OpenKnowledge(val withVoice: Boolean) : Operation
+    data class OpenKnowledgeCard(val code: String, val withVoice: Boolean) : Operation
+    data object CloseKnowledge : Operation
+    data object CloseKnowledgeCard : Operation
+    data class FilterKnowledgeCrop(val crop: String) : Operation
+    data object ReadKnowledge : Operation
     data class SelectPlot(val name: String) : Operation
     data class SetRow(val row: String) : Operation
     data object SaveInspection : Operation

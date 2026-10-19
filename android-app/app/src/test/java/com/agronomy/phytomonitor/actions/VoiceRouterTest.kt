@@ -8,6 +8,21 @@ import org.junit.Test
 
 class VoiceRouterTest {
     @Test
+    fun openingAnotherScreenCancelsThePendingPhotoQuestion() {
+        val dialog = FollowUpDialog()
+        dialog.voiceAnalysisRequested()
+        val port = object : ActionPort {
+            override fun state() = AppState(hasPhoto = true, busy = true)
+            override fun perform(operation: Operation) = Unit
+            override fun tell(text: String, isError: Boolean, request: ActionRequest?) = Unit
+        }
+        val router = VoiceRouter({ Screen.MAIN }, { true }, ActionDispatcher(port), dialog, {}, {})
+        assertTrue(router.command(VoiceCommand(VoiceAction.JOURNAL, "")) is Verdict.Run)
+        assertEquals(FollowUpDialog.Phase.IDLE, dialog.phase)
+        assertNull(dialog.analysisFinished(hasResult = true))
+    }
+
+    @Test
     fun settingsNavigationWorksWhileAnalysisRunsAndBackClosesOnlySettings() {
         val open = ActionRequest(VoiceAction.SETTINGS, source = ActionSource.BUTTON)
         assertEquals(Verdict.Run(listOf(Operation.OpenSettings)), ActionPolicy.resolve(open, AppState(busy = true)))

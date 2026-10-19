@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-19",
+  "kb_version": "2026.10.19-potato-draft",
+  "cards": 49,
+  "statuses": {
+    "draft": 49,
+    "verified": 0
+  },
+  "cards_with_statements": [
+    "potato__early_blight",
+    "potato__late_blight"
+  ],
+  "treatments": 0,
+  "sources_checked": [
+    {
+      "id": "B03",
+      "url": "https://izr.by/doc/rec51_26.pdf",
+      "checked_utc": "2026-10-19T11:12:34.477291+00:00",
+      "status": 200,
+      "final_url": "https://izr.by/doc/rec51_26.pdf",
+      "content_type": "application/pdf",
+      "pages": 3,
+      "bytes": 245659,
+      "sha256": "735cabd741776d9c3a4dc5d0d63e21439e3e5cf15a605e0156d64b5e2486753c"
+    },
+    {
+      "id": "B04",
+      "url": "https://izr.by/doc/rec24_26.pdf",
+      "checked_utc": "2026-10-19T11:12:34.479292+00:00",
+      "status": 200,
+      "final_url": "https://izr.by/doc/rec24_26.pdf",
+      "content_type": "application/pdf",
+      "pages": 5,
+      "bytes": 393160,
+      "sha256": "2da653c293eb611169080d034d13a0e75cb682db7a34e20d345c4f9c527151b7"
+    }
+  ],
+  "limitations": [
+    "B01 register not extracted; no product doses.",
+    "No expert verification.",
+    "B04 reviewed for applicability, not transferred into cards.",
+    "Full PDFs/text excluded from git; rights not established."
+  ]
+}

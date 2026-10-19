@@ -25,8 +25,8 @@ class VoiceRecognitionTest {
             for(index in 0 until cases.length()) {
                 val case=cases.getJSONObject(index);val bytes=File(folder,case.getString("file")).readBytes()
                 val pcm=pcm16k(bytes);val hypotheses=JSONArray();val commands=mutableListOf<VoiceCommand>()
-                val count=when(case.getString("id")){"number_1000"->1000;"number_125"->150;else->24}
-                val grammar=when(case.optString("context","main")){"note"->null;"gallery"->VoiceCommands.galleryGrammar(count)!!;"camera"->VoiceCommands.cameraGrammar;else->VoiceCommands.mainGrammar(emptyList())}
+                val count=when(case.getString("id")){"number_1000"->1000;"number_125"->150;else->case.optInt("count",24)}
+                val grammar=when(case.optString("context","main")){"note"->null;"gallery"->VoiceCommands.galleryGrammar(count)!!;"camera"->VoiceCommands.cameraGrammar;"knowledge"->VoiceCommands.knowledgeGrammar(count);else->VoiceCommands.mainGrammar(emptyList())}
                 (if(grammar==null)Recognizer(model,16000f) else Recognizer(model,16000f,JSONArray(grammar).toString())).use {engine ->
                     engine.setWords(true)
                     fun record(text: String) {

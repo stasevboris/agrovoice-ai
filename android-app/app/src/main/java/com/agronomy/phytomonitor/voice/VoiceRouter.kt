@@ -25,7 +25,12 @@ class VoiceRouter(
         if (!foreground()) return null
         val request = ActionRequest(command.action, command.value, ActionSource.VOICE)
         val verdict = actions.dispatch(request)
-        if (followUp.phase == FollowUpDialog.Phase.FOLLOW_UP) {
+        val leavingInspection = verdict is Verdict.Run && verdict.operations.any {
+            it == Operation.OpenJournal || it == Operation.OpenPlots || it == Operation.OpenSettings || it is Operation.OpenKnowledge
+        }
+        if (leavingInspection) {
+            followUp.stop()
+        } else if (followUp.phase == FollowUpDialog.Phase.FOLLOW_UP) {
             followUp.commandHandled(request, verdict)?.let(prompt)
         } else if (request.action in stopActions) {
             followUp.stop()

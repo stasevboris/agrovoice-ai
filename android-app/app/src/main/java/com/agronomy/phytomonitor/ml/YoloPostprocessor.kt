@@ -27,17 +27,21 @@ object YoloPostprocessor {
     ): List<LeafDetection> {
         require(threshold in 0f..1f && iouThreshold in 0f..1f)
         require(output.size > 4 && output.all { it.size == output[0].size })
+        val classes = allowedClasses?.filter { it in 0 until output.size - 4 }?.sorted()?.toIntArray()
+            ?: IntArray(output.size - 4) { it }
+        if (classes.isEmpty()) return emptyList()
         val candidates = mutableListOf<LeafDetection>()
         for (index in output[0].indices) {
-            var bestClass = 0
-            var score = output[4][index]
-            for (cls in 1 until output.size - 4) {
+            var bestClass = classes[0]
+            var score = output[bestClass + 4][index]
+            for (position in 1 until classes.size) {
+                val cls = classes[position]
                 if (output[cls + 4][index] > score) {
                     score = output[cls + 4][index]
                     bestClass = cls
                 }
             }
-            if (!score.isFinite() || score < threshold || allowedClasses?.contains(bestClass) == false) continue
+            if (!score.isFinite() || score < threshold) continue
             val x = output[0][index]; val y = output[1][index]
             val w = output[2][index]; val h = output[3][index]
             if (!x.isFinite() || !y.isFinite() || !w.isFinite() || !h.isFinite() || w <= 0 || h <= 0) continue

@@ -1,9 +1,9 @@
 {
   "schema": "agrovoice-kb-v1",
-  "kb_version": "2026.10.19-skeleton",
+  "kb_version": "2026.10.19-potato-draft",
   "region": "BY",
   "taxonomy": "ml-pipeline/allcrops/taxonomy_v1.json",
-  "notes": "Каркас K-01: по карточке на каждый класс taxonomy_v1, все draft. Тексты, латинские названия и препараты не заполнены намеренно: они вносятся только из источников с указанием места (K-02) и подтверждаются специалистом. candidate_sources — очередь работы, а не доказательство.",
+  "notes": "Карточки taxonomy_v1, все draft. Первые краткие описания картофеля сверены с B03; назначения и дозировки не внесены. Остальные пробелы отмечены missing. candidate_sources — очередь работы, не доказательство. Проверка специалистом не выполнена.",
   "sources": [
     {
       "id": "B01",
@@ -20,14 +20,14 @@
     {
       "id": "B03",
       "kind": "by_recommendation",
-      "title": "Картофель: фитофтороз и альтернариоз при переходе от жары к дождям",
+      "title": "Рекомендации по продолжению защиты картофеля от фитофтороза и альтернариоза в переходный период от жары к дождливой погоде",
       "publisher": "РУП «Институт защиты растений»",
       "url": "https://izr.by/doc/rec51_26.pdf",
       "edition": "16.07.2026",
       "accessed": "2026-10-19",
       "region": "BY",
-      "rights": "Материал ИЗР; полный текст не извлекался, права на копирование не проверены",
-      "extracted": false
+      "rights": "Права на полное копирование не установлены. В карточках — краткий самостоятельный пересказ с указанием страниц; PDF и полный извлечённый текст в git не включены.",
+      "extracted": true
     },
     {
       "id": "B04",
@@ -38,8 +38,8 @@
       "edition": "05.05.2026",
       "accessed": "2026-10-19",
       "region": "BY",
-      "rights": "Материал ИЗР; полный текст не извлекался, права на копирование не проверены",
-      "extracted": false
+      "rights": "Права на полное копирование не установлены. PDF получен и текст извлечён для проверки применимости; сведения в карточки пока не перенесены.",
+      "extracted": true
     }
   ],
   "cards": [
@@ -834,30 +834,41 @@
       "crop": "potato",
       "kind": "disease",
       "name_ru": "Картофель: альтернариоз",
-      "latin": null,
+      "latin": "Alternaria spp.",
       "status": "draft",
       "verified_by": null,
       "verified_at": null,
       "review_due": null,
-      "year": null,
-      "symptoms": [],
-      "conditions": [],
+      "year": 2026,
+      "symptoms": [
+        {
+          "text": "Сухие бурые пятна с чёткими краями, иногда с концентрическими кольцами.",
+          "source": "B03",
+          "locator": "с. 2, описание альтернариоза"
+        }
+      ],
+      "conditions": [
+        {
+          "text": "Жара с кратковременными осадками способствует развитию болезни.",
+          "source": "B03",
+          "locator": "с. 3, первый абзац"
+        }
+      ],
       "prevention": [],
       "agrotech": [],
       "treatments": [],
       "fertilization": [],
       "missing": [
-        "symptoms",
-        "conditions",
         "prevention",
         "agrotech",
         "treatments"
       ],
       "none_found": [],
-      "sources": [],
-      "candidate_sources": [
-        "B01",
+      "sources": [
         "B03"
+      ],
+      "candidate_sources": [
+        "B01"
       ]
     },
     {
@@ -865,30 +876,41 @@
       "crop": "potato",
       "kind": "disease",
       "name_ru": "Картофель: фитофтороз",
-      "latin": null,
+      "latin": "Phytophthora infestans",
       "status": "draft",
       "verified_by": null,
       "verified_at": null,
       "review_due": null,
-      "year": null,
-      "symptoms": [],
-      "conditions": [],
+      "year": 2026,
+      "symptoms": [
+        {
+          "text": "Расплывчатые пятна буреют и разрастаются; при сырости снизу листа возможен серовато-белый налёт.",
+          "source": "B03",
+          "locator": "с. 1, описание фитофтороза"
+        }
+      ],
+      "conditions": [
+        {
+          "text": "Прохладная дождливая погода и продолжительная влажность листьев повышают риск.",
+          "source": "B03",
+          "locator": "с. 2, последний абзац"
+        }
+      ],
       "prevention": [],
       "agrotech": [],
       "treatments": [],
       "fertilization": [],
       "missing": [
-        "symptoms",
-        "conditions",
         "prevention",
         "agrotech",
         "treatments"
       ],
       "none_found": [],
-      "sources": [],
-      "candidate_sources": [
-        "B01",
+      "sources": [
         "B03"
+      ],
+      "candidate_sources": [
+        "B01"
       ]
     },
     {

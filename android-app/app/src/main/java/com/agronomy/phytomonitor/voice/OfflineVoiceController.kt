@@ -49,7 +49,11 @@ object VoiceHypotheses {
         val data=JSONObject(hypothesis);val text=data.optString("text").trim()
         val words=data.optJSONArray("result")
         val confidence=if(words!=null && words.length()>0)(0 until words.length()).map {words.getJSONObject(it).optDouble("conf",0.0)}.average() else 0.0
-        val command=VoiceCommands.parseForScreen(text,screen,plots).takeIf {confidence.isFinite() && confidence>=0.65 && !text.contains("[unk]")}
+        // An explicit microphone stop is safe even when the acoustic score is low. Other actions keep
+        // the normal threshold; uncertain speech must not capture, save or select anything.
+        val parsed = VoiceCommands.parseForScreen(text, screen, plots)
+        val stop = parsed?.action == VoiceAction.LISTEN_OFF && text.equals("стоп", ignoreCase = true)
+        val command = parsed.takeIf { confidence.isFinite() && (confidence >= 0.65 || stop) && !text.contains("[unk]") }
         return RecognizedVoice(text,confidence,command)
     }
 }
@@ -157,6 +161,8 @@ class OfflineVoiceController(private val context: Context) {
         worker.execute {releaseSession()}
     }
     fun permissionDenied(){status="Разреши доступ к микрофону для голосовых команд. Фото можно проверять кнопками."}
+    /** The executor's actual outcome replaces the recognized command label on refusals/skips. */
+    fun feedback(text: String) { status = text }
     fun close() {
         if(closed)return
         closed=true;++token;active=false

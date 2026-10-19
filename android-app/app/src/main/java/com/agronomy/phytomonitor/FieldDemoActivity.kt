@@ -22,6 +22,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -58,6 +59,9 @@ import java.io.File
 import com.agronomy.phytomonitor.settings.SettingsScreen
 import com.agronomy.phytomonitor.settings.SettingsViewModel
 import com.agronomy.phytomonitor.settings.SettingsStore
+import com.agronomy.phytomonitor.knowledge.KnowledgeViewModel
+import com.agronomy.phytomonitor.knowledge.KnowledgeScreen
+import com.agronomy.phytomonitor.ml.CropVocabulary
 
 class FieldDemoActivity : ComponentActivity() {
     private lateinit var voice: OfflineVoiceController
@@ -72,6 +76,7 @@ class FieldDemoActivity : ComponentActivity() {
     internal lateinit var journalModel: JournalViewModel; private set
     internal lateinit var plotsModel: PlotsViewModel; private set
     internal lateinit var settingsModel: SettingsViewModel; private set
+    internal lateinit var knowledgeModel: KnowledgeViewModel; private set
     private val settings by lazy { SettingsStore.get(application) }
     private var navigation: NavHostController? = null
     private val cameraOpen get() = navigation?.currentDestination?.route == "camera"
@@ -186,13 +191,19 @@ class FieldDemoActivity : ComponentActivity() {
         helpOpen = photoFlow.helpOpen,
         threshold = fieldModel.threshold,
         selectedModel = fieldModel.selectedModel,
-        crop = fieldModel.crop,
-        crops = fieldModel.currentModel().crops,
+        crop = if (currentScreen() == Screen.KNOWLEDGE) knowledgeModel.state.value.crop else fieldModel.crop,
+        crops = if (currentScreen() == Screen.KNOWLEDGE) CropVocabulary.names.keys.toList() else fieldModel.currentModel().crops,
+        canRefineCrop = currentScreen() == Screen.KNOWLEDGE || fieldModel.currentModel().family != "detr",
+        verifiedKnowledge = knowledgeModel.state.value.selected?.reviewed() == true,
+        knowledgeCardOpen = navigation?.currentDestination?.route == "knowledge/{code}",
+        knowledgeCodes = knowledgeModel.state.value.visible.map { it.code },
+        selectedKnowledgeCode = knowledgeModel.state.value.selectedCode,
         availableModels = fieldModel.detector.models.map { it.id },
         plots = plotsModel.state.value.plots.map { it.plot.name },
         plot = fieldModel.plotName,
         row = fieldModel.rowName,
         inspectionOpen = navigation?.currentDestination?.route == "inspection/{id}",
+        resultOpen = navigation?.currentDestination?.route == "result",
         followUp = followUp.awaitingAnswer
     )
 
@@ -210,7 +221,8 @@ class FieldDemoActivity : ComponentActivity() {
                 is Operation.ShowHelp -> photoFlow.helpOpen = operation.visible
                 Operation.Exit -> finish()
                 Operation.CloseNote -> closeNote()
-                Operation.CloseJournal -> navigation?.popBackStack("main", false)
+                Operation.CloseJournal -> navigation?.popBackStack()
+                Operation.CloseResult -> navigation?.popBackStack("main", false)
                 Operation.CloseInspection -> {
                     journalModel.closeInspection()
                     navigation?.popBackStack()
@@ -230,9 +242,42 @@ class FieldDemoActivity : ComponentActivity() {
                     navigation?.navigate("journal") { launchSingleTop = true }
                 }
                 Operation.OpenPlots -> navigation?.navigate("plots") { launchSingleTop = true }
-                Operation.ClosePlots -> navigation?.popBackStack("main", false)
+                Operation.ClosePlots -> navigation?.popBackStack()
                 Operation.OpenSettings -> navigation?.navigate("settings") { launchSingleTop = true }
-                Operation.CloseSettings -> navigation?.popBackStack("main", false)
+                Operation.CloseSettings -> navigation?.popBackStack()
+                is Operation.OpenKnowledge -> {
+                    voice.stop()
+                    photoFlow.dialogVoice = operation.withVoice
+                    knowledgeModel.open(fieldModel.crop)
+                    navigation?.navigate("knowledge") { launchSingleTop = true }
+                }
+                is Operation.OpenKnowledgeCard -> {
+                    voice.stop()
+                    photoFlow.dialogVoice = operation.withVoice
+                    knowledgeModel.select(operation.code)
+                    navigation?.navigate("knowledge/${operation.code}") {
+                        popUpTo("knowledge")
+                        launchSingleTop = true
+                    }
+                    if (operation.withVoice) knowledgeModel.state.value.selected?.let {
+                        speak("Карточка: ${it.name}. " + if (it.reviewed()) "Проверено специалистом." else "Черновик, требуется проверка.")
+                    }
+                }
+                Operation.CloseKnowledge -> {
+                    voice.stop()
+                    photoFlow.dialogVoice = false
+                    navigation?.popBackStack()
+                }
+                Operation.CloseKnowledgeCard -> {
+                    knowledgeModel.select(null)
+                    navigation?.popBackStack()
+                }
+                is Operation.FilterKnowledgeCrop -> {
+                    voice.stop()
+                    knowledgeModel.crop(operation.crop)
+                    navigation?.popBackStack("knowledge", false)
+                }
+                Operation.ReadKnowledge -> speak(knowledgeModel.spoken())
                 is Operation.SelectPlot -> fieldModel.editPlot(operation.name)
                 is Operation.SetRow -> fieldModel.editRow(operation.row)
                 Operation.SaveInspection -> fieldModel.saveInspection()
@@ -272,9 +317,11 @@ class FieldDemoActivity : ComponentActivity() {
                 fieldModel.notify(text)
             }
             // «Прочитай результат» without a result answers aloud, as the button did before.
-            if (isError && request?.action == VoiceAction.SPEAK_RESULT) {
+            if (isError && (request?.action == VoiceAction.SPEAK_RESULT ||
+                    (request?.source == ActionSource.VOICE && speaker.available))) {
                 speak(text)
             }
+            if (request?.source == ActionSource.VOICE) voice.feedback(text)
         }
     }
     internal val actions = ActionDispatcher(actionPort)
@@ -326,6 +373,7 @@ class FieldDemoActivity : ComponentActivity() {
         photoFlow.freeSpeech->null
         cameraOpen->VoiceCommands.cameraGrammar
         galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
+        currentScreen() == Screen.KNOWLEDGE -> VoiceCommands.knowledgeGrammar(knowledgeModel.state.value.visible.size)
         else->VoiceCommands.mainGrammar(plotsModel.state.value.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
     }
     private fun currentScreen(): Screen = voiceRouter.screen
@@ -335,6 +383,7 @@ class FieldDemoActivity : ComponentActivity() {
         galleryOpen -> Screen.GALLERY
         navigation?.currentDestination?.route in setOf("journal", "inspection/{id}") -> Screen.JOURNAL
         navigation?.currentDestination?.route == "settings" -> Screen.SETTINGS
+        navigation?.currentDestination?.route in setOf("knowledge", "knowledge/{code}") -> Screen.KNOWLEDGE
         navigation?.currentDestination?.route == "plots" -> Screen.PLOTS
         else -> Screen.MAIN
     }
@@ -403,6 +452,7 @@ class FieldDemoActivity : ComponentActivity() {
         plotsModel=ViewModelProvider(this)[PlotsViewModel::class.java]
         plotsModel.connect(fieldModel.journalReady)
         settingsModel=ViewModelProvider(this)[SettingsViewModel::class.java]
+        knowledgeModel=ViewModelProvider(this)[KnowledgeViewModel::class.java]
         voice.onCommand=::handleVoiceCommand
         voice.onCommands=voiceRouter::plan
         voice.onFailure={photoFlow.setContinuous(false);photoFlow.dialogVoice=false}
@@ -414,11 +464,20 @@ class FieldDemoActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val backStackEntry by navController.currentBackStackEntryAsState()
                 val route = backStackEntry?.destination?.route ?: "main"
+                var shownReport by rememberSaveable { mutableStateOf<String?>(null) }
                 val journalState by journalModel.state.collectAsState()
                 val cameraState by cameraModel.state.collectAsState()
                 val galleryState by photoFlow.state.collectAsState()
                 val currentSettings by settingsModel.state.collectAsState()
                 SideEffect { navigation = navController }
+                LaunchedEffect(model.busy, model.reportName, route) {
+                    if (!model.busy && model.result != null && route == "main" && shownReport != model.reportName) {
+                        shownReport = model.reportName
+                        navController.navigate("result") { launchSingleTop = true }
+                    } else if (!model.busy && model.result == null && route == "result") {
+                        navController.popBackStack("main", false)
+                    }
+                }
                 LaunchedEffect(model.locationEnabled, foreground) {
                     if (foreground && model.locationEnabled && model.location.hasPermission()) startLocation()
                 }
@@ -482,17 +541,27 @@ class FieldDemoActivity : ComponentActivity() {
                 }
                 // Confirmations of finished actions («сохранено», «снято») appear for a moment; errors stay as banners.
                 val snackbar=remember {SnackbarHostState()}
-                val notice=model.message?.takeIf {!model.messageIsError}
+                val notice=model.message?.takeIf {!model.messageIsError || route != "main"}
                 LaunchedEffect(notice) {
                     if(notice!=null){snackbar.showSnackbar(notice,withDismissAction=false,duration=SnackbarDuration.Short);model.clearMessage()}
                 }
-                Scaffold(containerColor=MaterialTheme.colorScheme.background,snackbarHost={SnackbarHost(snackbar)}) { padding ->
+                Scaffold(containerColor=MaterialTheme.colorScheme.background,snackbarHost={SnackbarHost(snackbar)},
+                    bottomBar = {
+                        if (route !in setOf("main", "result", "camera", "gallery")) {
+                            VoiceStrip(voice, photoFlow, ::voiceButton, ::setContinuous, hint = "Скажи действие или «стоп».")
+                        }
+                    }) { padding ->
                     Box(Modifier.padding(padding)) {
                         NavHost(navController, startDestination = "main",
                             enterTransition = { EnterTransition.None }, exitTransition = { ExitTransition.None },
                             popEnterTransition = { EnterTransition.None }, popExitTransition = { ExitTransition.None }) {
                                 composable("main") {
-                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation)
+                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation,
+                                        showResult = false, onOpenResult = { navController.navigate("result") { launchSingleTop = true } })
+                                }
+                                composable("result") {
+                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation,
+                                        onBackToPhoto = { press(VoiceAction.BACK) })
                                 }
                                 composable("camera") {
                                     PlantCamera(cameraModel, onSaved = { uri ->
@@ -526,6 +595,20 @@ class FieldDemoActivity : ComponentActivity() {
                                     PlotsScreen(plotsModel, model.plotName, model.rowName,
                                         onBack = { press(VoiceAction.BACK) }, onSelect = { name -> press(VoiceAction.PLOT, name) })
                                 }
+                                composable("knowledge") {
+                                    LaunchedEffect(Unit) { knowledgeModel.select(null) }
+                                    KnowledgeScreen(knowledgeModel, onBack = { press(VoiceAction.BACK) },
+                                        onOpen = { code -> press(VoiceAction.KNOWLEDGE_NUMBER, (knowledgeModel.state.value.visible.indexOfFirst { it.code == code } + 1).toString()) },
+                                        onRead = { press(VoiceAction.READ_KNOWLEDGE) },
+                                        onCrop = { press(VoiceAction.CROP, it) })
+                                }
+                                composable("knowledge/{code}") { entry ->
+                                    LaunchedEffect(entry) { knowledgeModel.select(entry.arguments?.getString("code")) }
+                                    KnowledgeScreen(knowledgeModel, onBack = { press(VoiceAction.BACK) },
+                                        onOpen = { code -> press(VoiceAction.KNOWLEDGE_NUMBER, (knowledgeModel.state.value.visible.indexOfFirst { it.code == code } + 1).toString()) },
+                                        onRead = { press(VoiceAction.READ_KNOWLEDGE) },
+                                        onCrop = { press(VoiceAction.CROP, it) })
+                                }
                                 composable("inspection/{id}") { entry ->
                                     val id = requireNotNull(entry.arguments?.getString("id"))
                                     LaunchedEffect(id) { journalModel.openInspection(id) }
@@ -558,7 +641,23 @@ class FieldDemoActivity : ComponentActivity() {
         }
     }
     override fun onResume(){super.onResume();foreground=true;headset.setActive(true);if(fieldModel.locationEnabled && fieldModel.location.hasPermission())startLocation()}
-    override fun onStop(){foreground=false;headset.setActive(false);actions.cancelPlan();followUp.stop();followUpPhase=followUp.phase;fieldModel.location.stop();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(cameraOpen && !isChangingConfigurations)closePhotoFlow();super.onStop()}
+    override fun onStop() {
+        foreground = false
+        headset.setActive(false)
+        actions.cancelPlan()
+        followUp.stop()
+        followUpPhase = followUp.phase
+        fieldModel.location.stop()
+        voice.stop()
+        speaker.stop()
+        if (!isChangingConfigurations) {
+            fieldModel.dictating = false
+            fieldModel.noteReviewVoice = false
+            photoFlow.dialogVoice = false
+            if (cameraOpen) closePhotoFlow()
+        }
+        super.onStop()
+    }
     override fun onDestroy(){voice.close();speaker.close();headset.release();super.onDestroy()}
 }
 

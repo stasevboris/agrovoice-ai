@@ -34,7 +34,7 @@ object ActionPolicy {
     /** Reading the journal and hiding boxes do not touch the photo, so they work during analysis too. */
     private val availableWhileBusy = setOf(
         VoiceAction.JOURNAL, VoiceAction.SHOW_BOXES, VoiceAction.HIDE_BOXES,
-        VoiceAction.PLOTS, VoiceAction.PLOT, VoiceAction.ROW, VoiceAction.SETTINGS
+        VoiceAction.PLOTS, VoiceAction.PLOT, VoiceAction.ROW, VoiceAction.SETTINGS, VoiceAction.KNOWLEDGE
     )
     /** The plot and the row describe the next inspection; they can be set next to the photo or in the plot list. */
     private val placeActions = setOf(VoiceAction.ROW, VoiceAction.PLOT)
@@ -44,7 +44,7 @@ object ActionPolicy {
     )
     private val actionsWithValue = setOf(
         VoiceAction.MODEL, VoiceAction.CROP, VoiceAction.THRESHOLD, VoiceAction.SCROLL,
-        VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT
+        VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -58,10 +58,24 @@ object ActionPolicy {
         if (request.action in controlActions) {
             return control(request, state)
         }
-        if (state.busy && request.action !in availableWhileBusy) {
+        val readingKnowledge = state.screen == Screen.KNOWLEDGE && request.action in setOf(
+            VoiceAction.CROP, VoiceAction.KNOWLEDGE_NUMBER, VoiceAction.KNOWLEDGE_NEXT,
+            VoiceAction.KNOWLEDGE_PREVIOUS, VoiceAction.READ_KNOWLEDGE
+        )
+        if (state.busy && request.action !in availableWhileBusy && !readingKnowledge) {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            VoiceAction.KNOWLEDGE -> when (state.screen) {
+                Screen.MAIN, Screen.JOURNAL -> run(Operation.OpenKnowledge(request.source != ActionSource.BUTTON))
+                Screen.KNOWLEDGE -> Verdict.Skip("Справочник уже открыт.")
+                else -> Verdict.Clarify(wrongScreenText(state.screen))
+            }
+            VoiceAction.READ_KNOWLEDGE -> if (state.screen == Screen.KNOWLEDGE) run(Operation.ReadKnowledge)
+                else Verdict.Clarify("Сначала открой справочник и выбери карточку. Проверенных назначений препаратов пока нет.")
+            VoiceAction.KNOWLEDGE_NUMBER, VoiceAction.KNOWLEDGE_NEXT, VoiceAction.KNOWLEDGE_PREVIOUS -> knowledgeCard(request, state)
+            VoiceAction.CROP -> if (state.screen == Screen.KNOWLEDGE) run(Operation.FilterKnowledgeCrop(request.value))
+                else capture(request, state)
             in placeActions -> place(request, state)
             VoiceAction.PLOTS -> openPlots(state)
             VoiceAction.SETTINGS -> when (state.screen) {
@@ -75,6 +89,18 @@ object ActionPolicy {
         }
     }
 
+    private fun knowledgeCard(request: ActionRequest, state: AppState): Verdict {
+        if (state.screen != Screen.KNOWLEDGE) return Verdict.Clarify("Сначала открой справочник.")
+        val current = state.knowledgeCodes.indexOf(state.selectedKnowledgeCode)
+        val index = when (request.action) {
+            VoiceAction.KNOWLEDGE_NEXT -> current + 1
+            VoiceAction.KNOWLEDGE_PREVIOUS -> current - 1
+            else -> (request.value.toIntOrNull() ?: 0) - 1
+        }
+        if (index !in state.knowledgeCodes.indices) return Verdict.Clarify("Такой карточки в текущем списке нет.")
+        return run(Operation.OpenKnowledgeCard(state.knowledgeCodes[index], request.source != ActionSource.BUTTON))
+    }
+
     private fun argumentProblem(request: ActionRequest, state: AppState): Verdict? {
         val value = request.value
         if (request.action !in actionsWithValue) {
@@ -82,12 +108,17 @@ object ActionPolicy {
         }
         return when (request.action) {
             VoiceAction.MODEL -> if (value in state.availableModels) null else Verdict.Reject("Модель недоступна в текущем приложении.")
-            VoiceAction.CROP -> if (value == "all" || value in state.crops) null else Verdict.Reject("Эта культура недоступна для выбранной модели.")
+            VoiceAction.CROP -> when {
+                value != "all" && !state.canRefineCrop -> Verdict.Reject("Выбор культуры недоступен для этой демонстрационной модели.")
+                value == "all" || value in state.crops -> null
+                else -> Verdict.Reject("Эта культура недоступна для выбранной модели.")
+            }
             VoiceAction.SCROLL -> if (value in scrollDirections) null else Verdict.Reject("Неизвестное направление прокрутки.")
             VoiceAction.ASSESS -> if (value in reviews) null else Verdict.Reject("Неизвестная оценка результата.")
             VoiceAction.THRESHOLD -> thresholdProblem(value)
             VoiceAction.ROW -> if ((value.toIntOrNull() ?: 0) in 1..MAX_ROW) null else Verdict.Clarify("Номер ряда — от 1 до $MAX_ROW.")
             VoiceAction.PLOT -> plotProblem(value, state)
+            VoiceAction.KNOWLEDGE_NUMBER -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Назови номер карточки из списка.")
             else -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Такого номера нет в галерее.")
         }
     }
@@ -173,7 +204,10 @@ object ActionPolicy {
     /** «Назад» and «отмена» close the topmost layer only, one step per phrase. */
     private fun closeTopLayer(state: AppState): Verdict = when {
         state.helpOpen -> run(Operation.ShowHelp(false))
+        state.screen == Screen.KNOWLEDGE && state.knowledgeCardOpen -> run(Operation.CloseKnowledgeCard)
+        state.screen == Screen.KNOWLEDGE -> run(Operation.CloseKnowledge)
         state.followUp && state.screen == Screen.MAIN -> run(Operation.EndFollowUp)
+        state.resultOpen && state.screen == Screen.MAIN -> run(Operation.CloseResult)
         state.screen == Screen.JOURNAL && state.inspectionOpen -> run(Operation.CloseInspection)
         state.screen == Screen.JOURNAL -> run(Operation.CloseJournal)
         state.screen == Screen.PLOTS -> run(Operation.ClosePlots)
@@ -295,6 +329,7 @@ object ActionPolicy {
         Screen.JOURNAL -> "Сначала закрой журнал: скажи «назад»."
         Screen.PLOTS -> "Сначала закрой список участков: скажи «назад»."
         Screen.SETTINGS -> "Сначала закрой настройки: скажи «назад»."
+        Screen.KNOWLEDGE -> "Сначала закрой справочник: скажи «назад»."
         else -> "Сначала открой галерею, чтобы выбрать фото по номеру."
     }
 

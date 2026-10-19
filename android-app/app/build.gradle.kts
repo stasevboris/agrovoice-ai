@@ -14,8 +14,8 @@ android {
         applicationId = "com.agronomy.phytomonitor"
         minSdk = 26
         targetSdk = 37
-        versionCode = 18
-        versionName = "0.18-field"
+        versionCode = 19
+        versionName = "0.19-field"
 
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
@@ -46,6 +46,25 @@ android {
 ksp {
     // Exported schemas are the reference for future Room migrations.
     arg("room.schemaLocation", "$projectDir/schemas")
+}
+
+abstract class PrepareKnowledgeAssets : DefaultTask() {
+    @get:InputFile abstract val sourceFile: RegularFileProperty
+    @get:OutputDirectory abstract val outputDirectory: DirectoryProperty
+
+    @TaskAction
+    fun copyKnowledge() {
+        val target = outputDirectory.get().file("knowledge/kb_v1.json").asFile
+        target.parentFile.mkdirs()
+        sourceFile.get().asFile.copyTo(target, overwrite = true)
+    }
+}
+val copyKnowledge = tasks.register<PrepareKnowledgeAssets>("copyKnowledge") {
+    sourceFile.set(rootProject.layout.projectDirectory.file("../kb/kb_v1.json"))
+    outputDirectory.set(layout.buildDirectory.dir("generated/knowledgeAssets"))
+}
+androidComponents.onVariants { variant ->
+    variant.sources.assets?.addGeneratedSourceDirectory(copyKnowledge, PrepareKnowledgeAssets::outputDirectory)
 }
 
 dependencies {

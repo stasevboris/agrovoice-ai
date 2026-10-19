@@ -127,6 +127,8 @@ object PhotoFiles {
                 (0 until array.length()).map {array.getJSONObject(it)}.first {it.getString("id")==result.model.id}
             })
             .put("crop_filter",crop).put("confidence_threshold",threshold.toDouble())
+            .put("crop_policy", if (crop == "all") "model_default" else "rank_within_crop_without_score_renormalization")
+            .put("app_version", context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "unknown")
             .put("inference_ms",result.inferenceMs).put("pipeline_ms",result.pipelineMs)
             .put("detections",boxes).put("device","${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
             .put("scope","Whole leaf with crop/condition. Confidence is not disease probability or damaged area.")

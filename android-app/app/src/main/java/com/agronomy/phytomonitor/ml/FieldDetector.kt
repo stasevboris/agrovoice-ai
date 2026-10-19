@@ -127,7 +127,7 @@ class FieldDetector(private val context: Context) : Closeable {
             val leafInput=prepareLeaf(bitmap,leaf,c.side)
             OnnxTensor.createTensor(environment,leafInput.asFloatBuffer(),longArrayOf(1,3,c.side.toLong(),c.side.toLong())).use {tensor ->
                 val before=SystemClock.elapsedRealtimeNanos()
-                classifier.run(mapOf(classifier.inputNames.first() to tensor)).use {result ->
+                classifier.run(mapOf(classifier.inputNames.first() to tensor)).use classify@ {result ->
                     inferenceNanos+=SystemClock.elapsedRealtimeNanos()-before
                     @Suppress("UNCHECKED_CAST")
                     val logits=((result[0] as OnnxTensor).value as Array<FloatArray>)[0]
@@ -135,9 +135,10 @@ class FieldDetector(private val context: Context) : Closeable {
                     if(index==0)stageTrace?.invoke("classifier",leafInput.asReadOnlyBuffer(),logits.copyOf(),intArrayOf(1,logits.size))
                     val largest=logits.maxOrNull()!!
                     val probabilities=logits.map {exp((it-largest).toDouble())};val total=probabilities.sum()
-                    val cls=logits.indices.maxByOrNull {logits[it]}!!
+                    val candidates = logits.indices.filter { allowed == null || it in allowed }
+                    val cls = candidates.maxByOrNull { logits[it] } ?: return@classify
                     val score=(leaf.confidence*probabilities[cls]/total).toFloat()
-                    if(score>=threshold && (allowed==null || cls in allowed))predicted+=leaf.copy(classId=cls,confidence=score)
+                    if(score>=threshold)predicted+=leaf.copy(classId=cls,confidence=score)
                 }
             }
         }

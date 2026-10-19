@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-19",
+  "version_name": "0.19-field",
+  "version_code": 19,
+  "commands": [
+    "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+    "adb install -r app-debug.apk",
+    "adb install -r app-debug-androidTest.apk",
+    "adb shell am instrument -w -e class <12 classes listed below> -e voiceFolder voice_current_20261019 com.agronomy.phytomonitor.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "jvm": {
+    "tests": 144,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "lint": {
+    "Warning": 56,
+    "Hint": 2
+  },
+  "build": "BUILD SUCCESSFUL",
+  "apk_bytes": 334764295,
+  "apk_sha256": "a801ca0a26299aebc2eda3450a9826cfda899685ff6d81efc815e59b7d79f922",
+  "device": "Redmi Note 7; package versionCode=19 versionName=0.19-field checked with dumpsys",
+  "instrumentation": {
+    "tests": 20,
+    "result": "OK",
+    "classes": [
+      "SettingsNavigationTest",
+      "InspectionToolsTest",
+      "PlotsNavigationTest",
+      "ResultNavigationTest",
+      "JournalArchiveDeviceTest",
+      "JournalNavigationTest",
+      "VoiceControlsTest",
+      "KnowledgeNavigationTest",
+      "VoiceRecognitionTest",
+      "VoiceUiTest",
+      "NoteSpeechFlowTest",
+      "PhotoPipelineTest"
+    ]
+  },
+  "knowledge_wav": {
+    "command": "VoiceRecognitionTest -e voiceFolder voice_knowledge_20261019",
+    "result": "OK (1 test)",
+    "cases": 6,
+    "voices": [
+      "Microsoft Irina Desktop"
+    ],
+    "evidence": "artifacts/verification/home_training_20261019/knowledge-wave-test.log"
+  },
+  "preservation": {
+    "equal_before_after": {
+      "records": true,
+      "files": true,
+      "preferences": true
+    },
+    "files": 1014,
+    "tables": {
+      "android_metadata": 1,
+      "plot": 0,
+      "inspection": 4,
+      "photo": 4,
+      "detection": 5,
+      "disease": 0,
+      "treatment": 0,
+      "kb_version": 0,
+      "sync_queue": 4,
+      "room_master_table": 1
+    },
+    "snapshots": "artifacts/verification/home_training_20261019/phone_before, phone_final019",
+    "datastore": "Settings preservation asserted by instrumentation; snapshot covers legacy SharedPreferences only."
+  },
+  "limitations": [
+    "PhotoVoiceFlowTest remains @Ignore and was not counted.",
+    "Synthetic WAVs are not independent human speech; physical headset/GPS/TTS audibility not checked.",
+    "Knowledge cards remain draft; no treatment dosage or verified recommendations.",
+    "Manual crop ranking implemented; confidence calibration remains open.",
+    "New trained weights not installed; camera/result share one ViewModel; ASR/TTS still use Handler/Executor."
+  ]
+}

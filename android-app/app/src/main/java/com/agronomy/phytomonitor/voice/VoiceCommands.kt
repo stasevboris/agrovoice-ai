@@ -3,7 +3,7 @@ package com.agronomy.phytomonitor.voice
 import com.agronomy.phytomonitor.ml.CropVocabulary
 import java.util.Locale
 
-enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, SETTINGS }
+enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, SETTINGS, KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
 /** Exact fixed intents: no substring guessing and no action from partial speech. */
@@ -25,6 +25,10 @@ object VoiceCommands {
         add(VoiceCommand(VoiceAction.SPEAK_RESULT,"Читаю результат"),"прочитай результат","озвучь результат")
         add(VoiceCommand(VoiceAction.SILENCE,"Озвучивание остановлено"),"замолчи","останови озвучивание")
         add(VoiceCommand(VoiceAction.SETTINGS,"Настройки приложения"),"открой настройки","настройки приложения")
+        add(VoiceCommand(VoiceAction.KNOWLEDGE,"Справочник"),"открой справочник","справочник")
+        add(VoiceCommand(VoiceAction.READ_KNOWLEDGE,"Чтение справки"),"прочитай справку","прочитай карточку","чем лечить")
+        add(VoiceCommand(VoiceAction.KNOWLEDGE_NEXT,"Следующая карточка"),"следующая карточка","следующую карточку")
+        add(VoiceCommand(VoiceAction.KNOWLEDGE_PREVIOUS,"Предыдущая карточка"),"предыдущая карточка","предыдущую карточку")
         add(VoiceCommand(VoiceAction.SHOW_BOXES,"Рамки включены"),"покажи рамки")
         add(VoiceCommand(VoiceAction.HIDE_BOXES,"Рамки скрыты"),"убери рамки","спрячь рамки")
         add(VoiceCommand(VoiceAction.CAMERA,"Камера: наведи телефон и скажи «подтвердить»"),"сделать фото","сделай фото","сфотографируй")
@@ -71,7 +75,7 @@ object VoiceCommands {
     val phrases: List<String> get() = aliases.keys.toList()
     private val globalActions=setOf(VoiceAction.MODEL,VoiceAction.CROP,VoiceAction.HELP,VoiceAction.CLOSE_HELP,VoiceAction.LISTEN_ON,VoiceAction.LISTEN_OFF,VoiceAction.BACK,VoiceAction.EXIT,VoiceAction.CANCEL,VoiceAction.SCROLL,VoiceAction.THRESHOLD_UP,VoiceAction.THRESHOLD_DOWN)
     private fun phrasesFor(actions: Set<VoiceAction>)=aliases.filterValues {it.action in actions}.keys.toList()
-    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES,VoiceAction.ROW,VoiceAction.PLOT,VoiceAction.PLOTS,VoiceAction.SETTINGS)
+    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES,VoiceAction.ROW,VoiceAction.PLOT,VoiceAction.PLOTS,VoiceAction.SETTINGS,VoiceAction.KNOWLEDGE,VoiceAction.READ_KNOWLEDGE)
     const val MAX_ROW=999
     private const val SPOKEN_ROWS=200
 
@@ -87,6 +91,12 @@ object VoiceCommands {
             // «да» is listened for only right after the app asked «Сохранить осмотр?».
             (if(followUp)listOf("да","подтвердить") else emptyList())).distinct()
     val noteReviewGrammar=listOf("подтвердить","да","отмена","нет","добавь заметку","стоп","не подтверждать","[unk]")
+    private val knowledgeActions = setOf(VoiceAction.KNOWLEDGE, VoiceAction.READ_KNOWLEDGE,
+        VoiceAction.KNOWLEDGE_NUMBER, VoiceAction.KNOWLEDGE_NEXT, VoiceAction.KNOWLEDGE_PREVIOUS)
+    fun knowledgeGrammar(count: Int): List<String> = (phrasesFor(globalActions + knowledgeActions) +
+        listOf("карточка", "карточка номер", "открой карточку", "открой карточку номер",
+            "не открывай карточку", "не читай справку", "[unk]") +
+        (1..count.coerceIn(1, 1000)).map(RussianPhotoNumber::words)).distinct()
     val grammar: List<String> get() = phrasesFor(globalActions + labActions + setOf(VoiceAction.CAMERA,VoiceAction.CAMERA_NOW,VoiceAction.OPEN_CAMERA,VoiceAction.GALLERY,VoiceAction.SYSTEM_GALLERY,VoiceAction.ANALYZE)) +
         listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не делай фото","не открывай галерею","не проверяй фото","не выключай голос","сегодня хорошая погода","[unk]")
     val cameraGrammar: List<String> get()=(phrasesFor(globalActions+setOf(VoiceAction.CONFIRM,VoiceAction.CAMERA_NOW,VoiceAction.CAMERA,VoiceAction.GALLERY))+listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не подтверждать","не делай фото","не выключай голос","[unk]")).distinct()
@@ -121,7 +131,16 @@ object VoiceCommands {
     }
     fun parseForScreen(text: String, screen: String, plots: Collection<String> = emptyList()): VoiceCommand? {
         if(screen=="note")return null
+        if (screen == "knowledge") {
+            val normalized = text.trim().lowercase().replace('ё', 'е').replace(Regex("[.,!?;:]"), "")
+            val prefix = listOf("открой карточку номер ", "карточка номер ", "открой карточку ", "карточка ")
+                .firstOrNull { normalized.startsWith(it) }
+            val value = if (prefix != null) normalized.removePrefix(prefix) else normalized.takeIf { "фото" !in it }
+            val number = value?.let(RussianPhotoNumber::parse)
+            if (number != null) return VoiceCommand(VoiceAction.KNOWLEDGE_NUMBER, "Карточка №$number", number.toString())
+        }
         val command=parse(text,plots) ?: return null
+        if (screen == "knowledge" && command.action in knowledgeActions) return command
         if(screen=="note_review")return command.takeIf {it.action in setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.NOTE,VoiceAction.LISTEN_OFF)}
         val plotActions=setOf(VoiceAction.ROW,VoiceAction.PLOT)
         if(command.action in plotActions && screen=="plots")return command

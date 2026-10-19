@@ -80,7 +80,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch {
             val saved = settings.state.filterNotNull().first()
             selectedModel = saved.model.takeIf { id -> detector.models.any { it.id == id } } ?: detector.models.first().id
-            crop = saved.crop.takeIf { it == "all" || it in currentModel().crops } ?: "all"
+            crop = saved.crop.takeIf { it == "all" || (currentModel().family != "detr" && it in currentModel().crops) } ?: "all"
             threshold = saved.threshold
             plotName = saved.plot
             rowName = saved.row
@@ -103,11 +103,15 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         selectedModel=id; result=null; reportName=null;review="unrated";comparison=emptyList()
         settings.set(Keys.model, id)
         // A crop the new model does not know would hide every class.
-        if(crop!="all" && crop !in currentModel().crops){crop="all";settings.set(Keys.crop, crop)}
+        if(crop!="all" && (crop !in currentModel().crops || currentModel().family=="detr")){crop="all";settings.set(Keys.crop, crop)}
         if(bitmap!=null && analyzePhoto) analyze()
     }
     fun selectCrop(value: String, analyzePhoto: Boolean=true) {
         if(busy || value==crop)return
+        if (value != "all" && currentModel().family == "detr") {
+            showError("Выбор культуры недоступен для этой демонстрационной модели.")
+            return
+        }
         crop=value; result=null;reportName=null;review="unrated";comparison=emptyList()
         settings.set(Keys.crop, value)
         if(bitmap!=null && analyzePhoto) analyze()
@@ -138,7 +142,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     fun clearMessage(){message=null;messageIsError=true}
     fun currentModel(): DetectorModel = detector.models.firstOrNull {it.id==selectedModel} ?: detector.models.first()
     /** «Все культуры» first, then the crops of the selected model with their Russian names. */
-    fun cropChoices(): List<Pair<String,String>> = listOf("all" to "Все культуры") + currentModel().let {m -> m.crops.map {it to (m.cropNames[it] ?: it)}}
+    fun cropChoices(): List<Pair<String,String>> = listOf("all" to "Все культуры") + currentModel().let {m ->
+        if (m.family == "detr") emptyList() else m.crops.map {it to (m.cropNames[it] ?: it)}
+    }
     fun cropName(id: String): String = if(id=="all") "Все культуры" else currentModel().cropNames[id] ?: CropVocabulary.names[id] ?: id
     /** The model shown in the top bar: «YOLO26n · 25 %». */
     fun selectedModelName(): String = detector.models.firstOrNull {it.id==selectedModel}?.name ?: selectedModel

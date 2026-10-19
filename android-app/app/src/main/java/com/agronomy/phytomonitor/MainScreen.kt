@@ -106,7 +106,10 @@ internal fun FieldDemoScreen(
     onContinuous: (Boolean) -> Unit,
     speaking: Boolean,
     speakerStatus: String,
-    onLocation: (Boolean) -> Unit = {}
+    onLocation: (Boolean) -> Unit = {},
+    showResult: Boolean = true,
+    onOpenResult: () -> Unit = {},
+    onBackToPhoto: (() -> Unit)? = null
 ) {
     val onCamera = { onAction(VoiceAction.OPEN_CAMERA, "") }
     val onGallery = { onAction(VoiceAction.GALLERY, "") }
@@ -139,8 +142,17 @@ internal fun FieldDemoScreen(
                 onSettings = { settingsOpen = true },
                 status = if (model.busy) "Анализ…" else model.selectedModelName()
             )
-            TextButton(onClick = { onAction(VoiceAction.SETTINGS, "") }) {
-                Text("Настройки приложения")
+            Row {
+                onBackToPhoto?.let { back -> TextButton(onClick = back) { Text("К снимку") } }
+                TextButton(onClick = { onAction(VoiceAction.SETTINGS, "") }) {
+                    Text(if (onBackToPhoto == null) "Настройки приложения" else "Настройки")
+                }
+                TextButton(onClick = { onAction(VoiceAction.KNOWLEDGE, "") }) {
+                    Text("Справочник")
+                }
+            }
+            if (!showResult && model.result != null) {
+                TextButton(onClick = onOpenResult) { Text("Открыть результат") }
             }
             if (wide) {
                 val scrollPhoto = rememberScrollState()
@@ -162,7 +174,7 @@ internal fun FieldDemoScreen(
                             .padding(start = 8.dp, end = 16.dp, bottom = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        ResultReveal(model.result != null, reducedMotion) {
+                        ResultReveal(showResult && model.result != null, reducedMotion) {
                             model.result?.let { ResultSection(model, it, controlsEnabled, onAction) }
                         }
                         InspectionTools(model, onAction, onSpeak, speaking, speakerStatus, onLocation)
@@ -192,7 +204,7 @@ internal fun FieldDemoScreen(
                         BusyLine()
                     }
                     ErrorBanner(model)
-                    ResultReveal(model.result != null, reducedMotion) {
+                    ResultReveal(showResult && model.result != null, reducedMotion) {
                         model.result?.let { ResultSection(model, it, controlsEnabled, onAction) }
                     }
                     InspectionTools(model, onAction, onSpeak, speaking, speakerStatus, onLocation)
@@ -332,6 +344,10 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
     var explain by remember { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         BlockHeader(title = "Результат", icon = AgroIcons.Leaf)
+        if (model.crop != "all") {
+            Text("Культура указана вручную: ${model.cropName(model.crop)}", style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary)
+        }
         Text(
             "${result.model.name} · ${formatSeconds(result.inferenceMs)} · предварительная модель: " +
                 "уверенность не означает вероятность болезни",
