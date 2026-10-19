@@ -52,6 +52,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     var selectedModel by mutableStateOf(preferences.getString("model","yolo26n") ?: "yolo26n"); private set
     var crop by mutableStateOf(preferences.getString("crop","all") ?: "all"); private set
     var threshold by mutableStateOf(preferences.getFloat("threshold",0.25f).coerceIn(0.1f,0.8f)); private set
+    /** What the journal holds for the current result; a repeated «сохрани осмотр» compares against it. */
+    private var savedInspection by mutableStateOf<SavedInspection?>(null)
+    val inspectionSaved: Boolean
+        get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName)
 
     init {
         if(detector.models.none {it.id==selectedModel})selectedModel=detector.models.first().id
@@ -91,7 +95,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun showError(text: String){message=text;messageIsError=true}
     /** A finished action («сохранено»): shown briefly at the bottom, not as a banner in the page. */
-    private fun notify(text: String){message=text;messageIsError=false}
+    fun notify(text: String){message=text;messageIsError=false}
     fun clearMessage(){message=null;messageIsError=true}
     /** The model shown in the top bar: «YOLO26n · 25 %». */
     fun selectedModelName(): String = detector.models.firstOrNull {it.id==selectedModel}?.name ?: selectedModel
@@ -159,12 +163,14 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(busy)return
         val report=File(getApplication<Application>().getExternalFilesDir(null) ?: getApplication<Application>().filesDir,"results/$name")
         val note=noteDraft;val rating=review;val plot=plotName
+        val saved=SavedInspection(name,note,rating,plot)
         busy=true
+        message=null
         worker.execute {try {
             journal.save(report,note,rating,plot)
             if(unsavedReport?.name==report.name)unsavedReport=null
             val entries=journal.list()
-            main.post {if(!cleared){journalEntries=entries;busy=false;notify("Осмотр сохранён в журнале")}}
+            main.post {if(!cleared){journalEntries=entries;savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
         }catch(error: Exception){postFailure(error)}}
     }
     fun openJournal(){journalOpen=true;worker.execute {val entries=journal.list();main.post {if(!cleared)journalEntries=entries}}}
@@ -201,3 +207,5 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         super.onCleared()
     }
 }
+
+private data class SavedInspection(val reportName: String?, val note: String, val review: String, val plot: String)

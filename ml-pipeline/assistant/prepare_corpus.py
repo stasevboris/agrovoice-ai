@@ -122,7 +122,8 @@ def prepare(out):
               "limitations": ["Seed SFT corpus and synthetic regression probe, not a user benchmark.",
                                "No recorded voices, no measured model accuracy.",
                                "Split by authored scenario group; no claim of semantic independence.",
-                               "Contextual JSON dispatcher is a target protocol, not implemented in Android.",
+                               "Android parses and checks this JSON (actions/AssistantProtocol.kt) and runs it "
+                               "through the shared ActionDispatcher; no on-device router produces it yet.",
                                "Test is a development regression set; collect independent speakers/scenarios for acceptance.",
                                "FunctionGemma needs its native tool template; do not train it blindly on Qwen chat format."]}
     (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")

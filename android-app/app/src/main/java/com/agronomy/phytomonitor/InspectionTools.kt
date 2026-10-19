@@ -53,6 +53,7 @@ import com.agronomy.phytomonitor.ml.PhotoFiles
 import com.agronomy.phytomonitor.ui.AgroIcons
 import com.agronomy.phytomonitor.ui.BlockHeader
 import com.agronomy.phytomonitor.ui.Pill
+import com.agronomy.phytomonitor.voice.VoiceAction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -95,8 +96,9 @@ private fun reviewLabel(review: String) = when (review) {
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSpeak: () -> Unit, speaking: Boolean, speakerStatus: String) {
+internal fun InspectionTools(model: FieldDemoViewModel, onAction: ActionButtons, onSpeak: () -> Unit, speaking: Boolean, speakerStatus: String) {
     val hasResult = !model.busy && model.reportName != null
+    val onNote = { onAction(VoiceAction.NOTE, "") }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         BlockHeader("Осмотр", AgroIcons.Edit)
         Text(
@@ -108,7 +110,7 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
             reviewOptions.forEach { (id, label) ->
                 FilterChip(
                     selected = model.review == id,
-                    onClick = { model.assess(id) },
+                    onClick = { onAction(VoiceAction.ASSESS, id) },
                     enabled = hasResult,
                     label = { Text(label) },
                     leadingIcon = if (model.review == id) {
@@ -140,7 +142,7 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
                 modifier = Modifier.padding(14.dp)
             )
         }
-        Button(onClick = { model.saveInspection() }, enabled = hasResult, modifier = Modifier.fillMaxWidth().height(52.dp)) {
+        Button(onClick = { onAction(VoiceAction.SAVE_INSPECTION, "") }, enabled = hasResult, modifier = Modifier.fillMaxWidth().height(52.dp)) {
             Icon(AgroIcons.Save, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
             Text("Сохранить осмотр")
@@ -154,7 +156,7 @@ internal fun InspectionTools(model: FieldDemoViewModel, onNote: () -> Unit, onSp
                 onClick = onSpeak,
                 modifier = Modifier.weight(1f)
             )
-            ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { model.openJournal() }, modifier = Modifier.width(104.dp))
+            ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { onAction(VoiceAction.JOURNAL, "") }, modifier = Modifier.width(104.dp))
         }
         Text(speakerStatus, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
@@ -179,7 +181,7 @@ private fun ToolButton(label: String, icon: ImageVector, enabled: Boolean, onCli
 }
 
 @Composable
-internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Unit, onCloseNote: () -> Unit) {
+internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Unit, onConfirm: () -> Unit, onCloseNote: () -> Unit) {
     if (!model.noteOpen) {
         return
     }
@@ -211,7 +213,7 @@ internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Uni
             }
         },
         confirmButton = {
-            TextButton(onClick = { onCloseNote(); model.saveInspection() }) { Text("Сохранить заметку и осмотр") }
+            TextButton(onClick = onConfirm) { Text("Сохранить заметку и осмотр") }
         },
         dismissButton = { TextButton(onClick = onCloseNote) { Text("К снимку") } }
     )

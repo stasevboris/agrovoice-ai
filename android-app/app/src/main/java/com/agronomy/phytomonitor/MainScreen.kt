@@ -82,8 +82,13 @@ import com.agronomy.phytomonitor.ui.BlockHeader
 import com.agronomy.phytomonitor.ui.AgroMotion
 import com.agronomy.phytomonitor.ui.rememberReducedMotion
 import com.agronomy.phytomonitor.voice.OfflineVoiceController
+import com.agronomy.phytomonitor.voice.VoiceAction
 import com.agronomy.phytomonitor.voice.VoiceCommands
 import java.util.Locale
+import kotlin.math.roundToInt
+
+/** A button press handed to the shared executor: action and its value («» when it has none). */
+internal typealias ActionButtons = (VoiceAction, String) -> Unit
 
 /**
  * One screen, two zones: what the camera sees (photo and its result) and what the agronomist adds
@@ -94,17 +99,17 @@ import java.util.Locale
 internal fun FieldDemoScreen(
     model: FieldDemoViewModel,
     modifier: Modifier,
-    onGallery: () -> Unit,
-    onCamera: () -> Unit,
+    onAction: ActionButtons,
     voice: OfflineVoiceController,
     flow: PhotoFlowViewModel,
     onVoice: () -> Unit,
     onContinuous: (Boolean) -> Unit,
-    onNote: () -> Unit,
-    onSpeak: () -> Unit,
     speaking: Boolean,
     speakerStatus: String
 ) {
+    val onCamera = { onAction(VoiceAction.OPEN_CAMERA, "") }
+    val onGallery = { onAction(VoiceAction.GALLERY, "") }
+    val onSpeak = { onAction(if (speaking) VoiceAction.SILENCE else VoiceAction.SPEAK_RESULT, "") }
     val controlsEnabled = !model.busy
     val reducedMotion = rememberReducedMotion()
     val scroll = rememberScrollState()
@@ -129,7 +134,7 @@ internal fun FieldDemoScreen(
         val wide = maxWidth >= 600.dp
         Column(Modifier.fillMaxSize()) {
             TopBar(
-                onJournal = { model.openJournal() },
+                onJournal = { onAction(VoiceAction.JOURNAL, "") },
                 onSettings = { settingsOpen = true },
                 status = if (model.busy) "Анализ…" else model.selectedModelName()
             )
@@ -154,9 +159,9 @@ internal fun FieldDemoScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         ResultReveal(model.result != null, reducedMotion) {
-                            model.result?.let { ResultSection(model, it, controlsEnabled) }
+                            model.result?.let { ResultSection(model, it, controlsEnabled, onAction) }
                         }
-                        InspectionTools(model, onNote, onSpeak, speaking, speakerStatus)
+                        InspectionTools(model, onAction, onSpeak, speaking, speakerStatus)
                         VoiceStatusLine(voice, flow, listening = voice.active || flow.dialogVoice || flow.continuousVoice)
                     }
                     ActionRail(
@@ -166,7 +171,8 @@ internal fun FieldDemoScreen(
                         onCamera = onCamera,
                         onGallery = onGallery,
                         onVoice = onVoice,
-                        onContinuous = onContinuous
+                        onContinuous = onContinuous,
+                        onAction = onAction
                     )
                 }
             } else {
@@ -183,17 +189,17 @@ internal fun FieldDemoScreen(
                     }
                     ErrorBanner(model)
                     ResultReveal(model.result != null, reducedMotion) {
-                        model.result?.let { ResultSection(model, it, controlsEnabled) }
+                        model.result?.let { ResultSection(model, it, controlsEnabled, onAction) }
                     }
-                    InspectionTools(model, onNote, onSpeak, speaking, speakerStatus)
+                    InspectionTools(model, onAction, onSpeak, speaking, speakerStatus)
                     Spacer(Modifier.height(8.dp))
                 }
-                BottomArea(voice, flow, onVoice, onContinuous, controlsEnabled, onCamera, onGallery)
+                BottomArea(voice, flow, onVoice, onContinuous, controlsEnabled, onCamera, onGallery, onAction)
             }
         }
     }
     if (settingsOpen) {
-        AnalysisSheet(model, controlsEnabled) { settingsOpen = false }
+        AnalysisSheet(model, controlsEnabled, onAction) { settingsOpen = false }
     }
 }
 
@@ -223,7 +229,8 @@ private fun ActionRail(
     onCamera: () -> Unit,
     onGallery: () -> Unit,
     onVoice: () -> Unit,
-    onContinuous: (Boolean) -> Unit
+    onContinuous: (Boolean) -> Unit,
+    onAction: ActionButtons
 ) {
     val listening = voice.active || flow.dialogVoice || flow.continuousVoice
     Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxHeight()) {
@@ -259,7 +266,7 @@ private fun ActionRail(
                     .semantics { contentDescription = "Постоянно слушать" }
                     .testTag("continuous_voice")
             )
-            TextButton(onClick = { flow.helpOpen = true }) {
+            TextButton(onClick = { onAction(VoiceAction.HELP, "") }) {
                 Text("Фразы", style = MaterialTheme.typography.labelSmall)
             }
         }
@@ -309,7 +316,7 @@ private fun BusyLine() {
 }
 
 @Composable
-private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, controlsEnabled: Boolean) {
+private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, controlsEnabled: Boolean, onAction: ActionButtons) {
     var explain by remember { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         BlockHeader(title = "Результат", icon = AgroIcons.Leaf)
@@ -343,7 +350,7 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
             }
         }
         OutlinedButton(
-            onClick = { model.analyze() },
+            onClick = { onAction(VoiceAction.ANALYZE, "") },
             enabled = model.bitmap != null && controlsEnabled,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -376,7 +383,8 @@ private fun BottomArea(
     onContinuous: (Boolean) -> Unit,
     enabled: Boolean,
     onCamera: () -> Unit,
-    onGallery: () -> Unit
+    onGallery: () -> Unit,
+    onAction: ActionButtons
 ) {
     val listening = voice.active || flow.dialogVoice || flow.continuousVoice
     Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, tonalElevation = 0.dp) {
@@ -432,14 +440,14 @@ private fun BottomArea(
                     Text("Постоянно слушать", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
                     Switch(checked = flow.continuousVoice, onCheckedChange = null)
                 }
-                TextButton(onClick = { flow.helpOpen = true }) {
+                TextButton(onClick = { onAction(VoiceAction.HELP, "") }) {
                     Text("Фразы")
                 }
             }
         }
     }
     if (flow.helpOpen) {
-        VoiceHelpDialog { flow.helpOpen = false }
+        VoiceHelpDialog { onAction(VoiceAction.CLOSE_HELP, "") }
     }
 }
 
@@ -492,7 +500,7 @@ private fun HelpGroup(title: String, lines: String) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun ModelChips(model: FieldDemoViewModel, enabled: Boolean) {
+internal fun ModelChips(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons) {
     FlowRow(
         Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -502,7 +510,7 @@ internal fun ModelChips(model: FieldDemoViewModel, enabled: Boolean) {
             val number = VoiceCommands.modelIds.indexOf(version.id) + 1
             FilterChip(
                 selected = model.selectedModel == version.id,
-                onClick = { model.setModel(version.id) },
+                onClick = { onAction(VoiceAction.MODEL, version.id) },
                 label = { Text("$number. ${version.name}") },
                 enabled = enabled
             )
@@ -516,16 +524,16 @@ internal fun ModelChips(model: FieldDemoViewModel, enabled: Boolean) {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun AnalysisSheet(model: FieldDemoViewModel, enabled: Boolean, onDismiss: () -> Unit) {
+internal fun AnalysisSheet(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons, onDismiss: () -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
-        AnalysisSheetContent(model, enabled)
+        AnalysisSheetContent(model, enabled, onAction)
         Spacer(Modifier.height(24.dp))
     }
 }
 
 @Composable
-private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean) {
+private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -541,22 +549,31 @@ private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean) {
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text("Модель", style = MaterialTheme.typography.labelLarge)
-        ModelChips(model, enabled)
+        ModelChips(model, enabled, onAction)
         Text("Культура", style = MaterialTheme.typography.labelLarge)
-        CropChips(model, enabled)
-        Text("Порог уверенности: ${thresholdPercent(model.threshold)}", style = MaterialTheme.typography.labelLarge)
+        CropChips(model, enabled, onAction)
+        // Dragging moves only the slider; the release sets the threshold through the shared executor.
+        var dragged by remember { mutableStateOf<Float?>(null) }
+        val shown = dragged ?: model.threshold
+        Text("Порог уверенности: ${thresholdPercent(shown)}", style = MaterialTheme.typography.labelLarge)
         Slider(
-            value = model.threshold,
-            onValueChange = { model.changeThreshold(it) },
+            value = shown,
+            onValueChange = { dragged = it },
             valueRange = 0.1f..0.8f,
-            onValueChangeFinished = { model.analyze() },
+            onValueChangeFinished = {
+                val percent = (shown * 100).roundToInt()
+                dragged = null
+                onAction(VoiceAction.THRESHOLD, percent.toString())
+            },
             enabled = enabled
         )
         Row(
             Modifier
                 .fillMaxWidth()
                 .clip(MaterialTheme.shapes.small)
-                .toggleable(value = model.showBoxes, role = Role.Switch, onValueChange = { model.showBoxes = it })
+                .toggleable(value = model.showBoxes, role = Role.Switch, onValueChange = { visible ->
+                    onAction(if (visible) VoiceAction.SHOW_BOXES else VoiceAction.HIDE_BOXES, "")
+                })
                 .padding(vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -564,7 +581,7 @@ private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean) {
             Switch(checked = model.showBoxes, onCheckedChange = null)
         }
         OutlinedButton(
-            onClick = { model.compareModels() },
+            onClick = { onAction(VoiceAction.COMPARE, "") },
             enabled = enabled && model.bitmap != null,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -583,13 +600,13 @@ private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun CropChips(model: FieldDemoViewModel, enabled: Boolean) {
+private fun CropChips(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         cropOptions.forEach { (id, label) ->
-            FilterChip(selected = model.crop == id, onClick = { model.selectCrop(id) }, label = { Text(label) }, enabled = enabled)
+            FilterChip(selected = model.crop == id, onClick = { onAction(VoiceAction.CROP, id) }, label = { Text(label) }, enabled = enabled)
         }
     }
 }

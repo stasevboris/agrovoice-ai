@@ -22,6 +22,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.agronomy.phytomonitor.actions.ActionDispatcher
+import com.agronomy.phytomonitor.actions.ActionPort
+import com.agronomy.phytomonitor.actions.ActionRequest
+import com.agronomy.phytomonitor.actions.ActionSource
+import com.agronomy.phytomonitor.actions.AppState
+import com.agronomy.phytomonitor.actions.AssistantPlan
+import com.agronomy.phytomonitor.actions.Operation
+import com.agronomy.phytomonitor.actions.Screen
 import com.agronomy.phytomonitor.photos.*
 import com.agronomy.phytomonitor.ui.theme.AgroVoiceAITheme
 import com.agronomy.phytomonitor.voice.OfflineVoiceController
@@ -78,75 +86,112 @@ class FieldDemoActivity : ComponentActivity() {
         val uri=photoFlow.confirmation() ?: return
         closePhotoFlow();fieldModel.importPhoto(uri)
     }
-    /** The same dispatcher handles microphone results and instrumentation-decoded phrases. */
+    /** Microphone results and instrumentation-decoded phrases go through the same executor as buttons. */
     internal fun handleVoiceCommand(command: VoiceCommand) {
-        if(!foreground)return
-        when(command.action) {
-            VoiceAction.LISTEN_ON->{setContinuous(true);return}
-            VoiceAction.LISTEN_OFF->{setContinuous(false);return}
-            VoiceAction.HELP->{photoFlow.helpOpen=true;return}
-            VoiceAction.CLOSE_HELP->{photoFlow.helpOpen=false;return}
-            VoiceAction.EXIT->{setContinuous(false);finish();return}
-            VoiceAction.BACK,VoiceAction.CANCEL->{
-                if(fieldModel.noteOpen)closeNote() else if(fieldModel.journalOpen)fieldModel.journalOpen=false else if(photoFlow.helpOpen)photoFlow.helpOpen=false else closePhotoFlow()
-                return
-            }
-            VoiceAction.SILENCE->{speaker.stop();return}
-            VoiceAction.SCROLL->{photoFlow.scroll(command.value);return}
-            else->Unit
+        if (!foreground) {
+            return
         }
-        if(fieldModel.busy){fieldModel.showError("Дождись окончания анализа фото.");return}
-        if(fieldModel.noteOpen && command.action==VoiceAction.CONFIRM){closeNote();fieldModel.saveInspection();return}
-        val mainScreen=!photoFlow.cameraOpen && !photoFlow.galleryOpen
-        when(command.action) {
-            VoiceAction.NOTE->{openNote(true);return}
-            VoiceAction.JOURNAL->{fieldModel.openJournal();return}
-            VoiceAction.SAVE_INSPECTION->{fieldModel.saveInspection();return}
-            VoiceAction.ASSESS->{fieldModel.assess(command.value);return}
-            VoiceAction.COMPARE->{fieldModel.compareModels();return}
-            VoiceAction.SPEAK_RESULT->{readResult();return}
-            VoiceAction.SHOW_BOXES->{fieldModel.showBoxes=true;return}
-            VoiceAction.HIDE_BOXES->{fieldModel.showBoxes=false;return}
-            VoiceAction.MODEL->{fieldModel.setModel(command.value,mainScreen);return}
-            VoiceAction.CROP->{fieldModel.selectCrop(command.value,mainScreen);return}
-            VoiceAction.THRESHOLD,VoiceAction.THRESHOLD_UP,VoiceAction.THRESHOLD_DOWN->{
-                val value=when(command.action) {
-                    VoiceAction.THRESHOLD->command.value.toInt()/100f
-                    VoiceAction.THRESHOLD_UP->fieldModel.threshold+0.05f
-                    else->fieldModel.threshold-0.05f
+        actions.dispatch(ActionRequest(command.action, command.value, ActionSource.VOICE))
+    }
+
+    /** A button of the screen: the same checks and the same operations as the spoken command. */
+    private fun press(action: VoiceAction, value: String = "") {
+        if (!foreground) {
+            return
+        }
+        actions.dispatch(ActionRequest(action, value, ActionSource.BUTTON))
+    }
+
+    /**
+     * Entry point for a future on-device router: one answer in the JSON protocol of
+     * ml-pipeline/assistant. No model produces it in the app yet.
+     */
+    internal fun handleAssistantAnswer(json: String, utterance: String): AssistantPlan? {
+        if (!foreground) {
+            return null
+        }
+        return actions.submit(json, utterance)
+    }
+
+    internal fun currentState(): AppState = AppState(
+        screen = currentScreen(),
+        hasPhoto = fieldModel.bitmap != null,
+        hasResult = fieldModel.reportName != null,
+        busy = fieldModel.busy,
+        inspectionSaved = fieldModel.inspectionSaved,
+        review = fieldModel.review,
+        galleryCount = if (photoFlow.loading) 0 else photoFlow.photos.size,
+        selectedPhoto = photoFlow.selectedNumber,
+        cameraCapturing = photoFlow.shotRequested || photoFlow.cameraCapturing,
+        speaking = speaker.active,
+        helpOpen = photoFlow.helpOpen,
+        threshold = fieldModel.threshold,
+        selectedModel = fieldModel.selectedModel,
+        crop = fieldModel.crop,
+        availableModels = fieldModel.detector.models.map { it.id }
+    )
+
+    private val actionPort = object : ActionPort {
+        override fun state() = currentState()
+
+        override fun perform(operation: Operation) {
+            when (operation) {
+                is Operation.SetContinuousListening -> {
+                    if (!operation.enabled) {
+                        fieldModel.noteReviewVoice = false
+                    }
+                    setContinuous(operation.enabled)
                 }
-                fieldModel.changeThreshold(value.coerceIn(0.1f,0.8f))
-                if(mainScreen && fieldModel.bitmap!=null)fieldModel.analyze()
-                return
+                is Operation.ShowHelp -> photoFlow.helpOpen = operation.visible
+                Operation.Exit -> finish()
+                Operation.CloseNote -> closeNote()
+                Operation.CloseJournal -> fieldModel.journalOpen = false
+                Operation.ClosePhotoFlow -> closePhotoFlow()
+                Operation.StopSpeech -> speaker.stop()
+                is Operation.Scroll -> photoFlow.scroll(operation.direction)
+                is Operation.OpenNote -> openNote(operation.dictate)
+                Operation.OpenJournal -> fieldModel.openJournal()
+                Operation.SaveInspection -> fieldModel.saveInspection()
+                is Operation.Assess -> fieldModel.assess(operation.review)
+                Operation.CompareModels -> fieldModel.compareModels()
+                Operation.SpeakResult -> readResult()
+                is Operation.ShowBoxes -> fieldModel.showBoxes = operation.visible
+                is Operation.SelectModel -> fieldModel.setModel(operation.id, operation.analyze)
+                is Operation.SelectCrop -> fieldModel.selectCrop(operation.id, operation.analyze)
+                is Operation.SetThreshold -> {
+                    fieldModel.changeThreshold(operation.value)
+                    if (operation.analyze) {
+                        fieldModel.analyze()
+                    }
+                }
+                Operation.SystemGallery -> systemGallery()
+                is Operation.OpenGallery -> openGallery(operation.withVoice)
+                is Operation.OpenCamera -> openCamera(operation.immediate, operation.withVoice)
+                Operation.TakeShot -> {
+                    voice.stop()
+                    photoFlow.requestShot()
+                }
+                is Operation.SelectPhoto -> photoFlow.select(operation.number)
+                Operation.ConfirmGallery -> confirmGallery()
+                Operation.Analyze -> fieldModel.analyze()
             }
-            VoiceAction.SYSTEM_GALLERY->{systemGallery();return}
-            VoiceAction.GALLERY->{openGallery(true);return}
-            VoiceAction.CAMERA,VoiceAction.OPEN_CAMERA->{openCamera(false,true);return}
-            VoiceAction.CAMERA_NOW->{openCamera(true);return}
-            else->Unit
         }
-        if(photoFlow.cameraOpen) {
-            if(command.action==VoiceAction.CONFIRM){voice.stop();photoFlow.requestShot()}
-            else photoFlow.error("Наведи камеру и скажи «подтвердить» или «отмена».")
-            return
-        }
-        if(photoFlow.galleryOpen) {
-            when(command.action) {
-                VoiceAction.PHOTO_NUMBER->command.value.toIntOrNull()?.let(photoFlow::select)
-                VoiceAction.FIRST_PHOTO->photoFlow.select(1)
-                VoiceAction.LAST_PHOTO->photoFlow.select(photoFlow.photos.size)
-                VoiceAction.NEXT_PHOTO->photoFlow.select((photoFlow.selectedNumber ?: 0)+1)
-                VoiceAction.PREVIOUS_PHOTO->photoFlow.select((photoFlow.selectedNumber ?: 2)-1)
-                VoiceAction.CONFIRM->confirmGallery()
-                else->photoFlow.error("Назови номер фото или скажи «подтвердить» / «отмена».")
+
+        override fun tell(text: String, isError: Boolean, request: ActionRequest?) {
+            if (photoFlow.cameraOpen || photoFlow.galleryOpen) {
+                photoFlow.error(text)
+            } else if (isError) {
+                fieldModel.showError(text)
+            } else {
+                fieldModel.notify(text)
             }
-            return
-        }
-        when(command.action) {
-            VoiceAction.ANALYZE->if(fieldModel.bitmap!=null)fieldModel.analyze() else fieldModel.showError("Сначала сделай фото или выбери снимок")
-            else->fieldModel.showError("Сначала открой галерею, чтобы выбрать фото по номеру.")
+            // «Прочитай результат» without a result answers aloud, as the button did before.
+            if (isError && request?.action == VoiceAction.SPEAK_RESULT) {
+                speak(text)
+            }
         }
     }
+    internal val actions = ActionDispatcher(actionPort)
     private fun voiceButton() {
         if(voice.active || photoFlow.dialogVoice || photoFlow.continuousVoice){setContinuous(false);return}
         requestContinuous=false
@@ -159,7 +204,13 @@ class FieldDemoActivity : ComponentActivity() {
         photoFlow.galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
         else->VoiceCommands.grammar
     }
-    private fun currentScreen()=when {fieldModel.noteOpen->if(fieldModel.dictating)"note" else "note_review";photoFlow.cameraOpen->"camera";photoFlow.galleryOpen->"gallery";else->"main"}
+    private fun currentScreen(): Screen = when {
+        fieldModel.noteOpen -> if (fieldModel.dictating) Screen.NOTE else Screen.NOTE_REVIEW
+        photoFlow.cameraOpen -> Screen.CAMERA
+        photoFlow.galleryOpen -> Screen.GALLERY
+        fieldModel.journalOpen -> Screen.JOURNAL
+        else -> Screen.MAIN
+    }
     private fun openNote(dictate: Boolean=false){voice.stop();speaker.stop();fieldModel.noteOpen=true;fieldModel.noteReviewVoice=false;fieldModel.dictating=dictate && hasMicrophone();if(dictate && !hasMicrophone()){requestDictation=true;microphone.launch(Manifest.permission.RECORD_AUDIO)}}
     private fun closeNote(){voice.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;fieldModel.noteOpen=false}
     private fun dictateNote(){
@@ -169,11 +220,13 @@ class FieldDemoActivity : ComponentActivity() {
         if(hasMicrophone())fieldModel.dictating=true else {requestDictation=true;microphone.launch(Manifest.permission.RECORD_AUDIO)}
     }
     internal fun readResult(volume: Float=1f){
-        if(speaker.active){speaker.stop();return}
-        voice.stop()
-        if(!speaker.speak(fieldModel.spokenResult(),volume))fieldModel.showError(speaker.status)
+        speak(fieldModel.spokenResult(),volume)
     }
-    private fun startOneShot(){if(photoFlow.galleryOpen)photoFlow.dialogVoice=true else voice.start(currentGrammar(),screen=currentScreen())}
+    private fun speak(text: String, volume: Float=1f){
+        voice.stop()
+        if(!speaker.speak(text,volume))fieldModel.showError(speaker.status)
+    }
+    private fun startOneShot(){if(photoFlow.galleryOpen)photoFlow.dialogVoice=true else voice.start(currentGrammar(),screen=currentScreen().protocolName)}
     internal fun setContinuous(enabled: Boolean) {
         requestContinuous=enabled
         photoFlow.dialogVoice=false;voice.stop()
@@ -199,8 +252,8 @@ class FieldDemoActivity : ComponentActivity() {
                 val export=rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")){uri->if(uri!=null)model.exportJournal(uri)}
                 val systemPicker: ()->Unit={closePhotoFlow();gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))}
                 SideEffect {systemGallery=systemPicker}
-                BackHandler(model.noteOpen || model.journalOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen){if(model.noteOpen)closeNote() else if(model.journalOpen)model.journalOpen=false else if(photoFlow.helpOpen)photoFlow.helpOpen=false else closePhotoFlow()}
-                val context=currentScreen()
+                BackHandler(model.noteOpen || model.journalOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen){press(VoiceAction.BACK)}
+                val context=currentScreen().protocolName
                 val eligible=foreground && !speaker.active && !photoFlow.loading && !photoFlow.shotRequested && !photoFlow.cameraCapturing
                 LaunchedEffect(context,model.dictating,model.noteReviewVoice,photoFlow.continuousVoice,photoFlow.dialogVoice,eligible,voice.active) {
                     if(eligible && !voice.active && hasMicrophone() && (if(model.noteOpen)model.dictating || model.noteReviewVoice else photoFlow.continuousVoice || photoFlow.dialogVoice)) {
@@ -217,6 +270,10 @@ class FieldDemoActivity : ComponentActivity() {
                         photoFlow.error("Голосовой диалог остановлен через 2 минуты. Включи постоянное слушание, чтобы продолжить без ограничения.")
                     }
                 }
+                // A plan of several steps continues only after background work finished without an error.
+                LaunchedEffect(model.busy) {
+                    if(!model.busy)actions.settled(failed=model.message!=null && model.messageIsError)
+                }
                 val exportJournal: ()->Unit={voice.stop();export.launch("AgroVoice-journal-${System.currentTimeMillis()}.json")}
                 // Confirmations of finished actions («сохранено», «снято») appear for a moment; errors stay as banners.
                 val snackbar=remember {SnackbarHostState()}
@@ -229,21 +286,21 @@ class FieldDemoActivity : ComponentActivity() {
                         when {
                             photoFlow.cameraOpen->PlantCamera(photoFlow,onSaved={uri->
                                 if(foreground && photoFlow.cameraOpen){closePhotoFlow();model.importPhoto(uri)}
-                            },onCancel=::closePhotoFlow) {VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Наведи камеру → «подтвердить».",onDark=true)}
-                            photoFlow.galleryOpen->NumberedGallery(photoFlow,::confirmGallery,::closePhotoFlow,systemPicker) {
+                            },onCancel={press(VoiceAction.CANCEL)}) {VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Наведи камеру → «подтвердить».",onDark=true)}
+                            photoFlow.galleryOpen->NumberedGallery(photoFlow,{press(VoiceAction.CONFIRM)},{press(VoiceAction.CANCEL)},systemPicker) {
                                 VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Номер → просмотр → «подтвердить».")
                             }
-                            model.journalOpen->JournalScreen(model,onBack={model.journalOpen=false},onExport=exportJournal)
-                            else->FieldDemoScreen(model,Modifier,onGallery={openGallery(false)},onCamera={openCamera(false)},voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,onNote={openNote()},onSpeak={readResult()},speaking=speaker.active,speakerStatus=speaker.status)
+                            model.journalOpen->JournalScreen(model,onBack={press(VoiceAction.BACK)},onExport=exportJournal)
+                            else->FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status)
                         }
-                        InspectionDialogs(model,::dictateNote,::closeNote)
+                        InspectionDialogs(model,::dictateNote,onConfirm={press(VoiceAction.CONFIRM)},onCloseNote={press(VoiceAction.CANCEL)})
                     }
                 }
             }
         }
     }
     override fun onResume(){super.onResume();foreground=true}
-    override fun onStop(){foreground=false;voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
+    override fun onStop(){foreground=false;actions.cancelPlan();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
     override fun onDestroy(){voice.close();speaker.close();super.onDestroy()}
 }
 
