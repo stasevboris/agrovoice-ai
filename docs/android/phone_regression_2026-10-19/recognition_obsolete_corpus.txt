@@ -1,0 +1,20 @@
+com.agronomy.phytomonitor.VoiceRecognitionTest:
+Error in recognizesRussianSamplesAndRejectsNegativeCommands(com.agronomy.phytomonitor.VoiceRecognitionTest):
+java.lang.AssertionError: A supported synthetic command failed expected:<118> but was:<110>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:54)
+
+
+Time: 34,459
+There was 1 failure:
+1) recognizesRussianSamplesAndRejectsNegativeCommands(com.agronomy.phytomonitor.VoiceRecognitionTest)
+java.lang.AssertionError: A supported synthetic command failed expected:<118> but was:<110>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at com.agronomy.phytomonitor.VoiceRecognitionTest.recognizesRussianSamplesAndRejectsNegativeCommands(VoiceRecognitionTest.kt:54)
+
+FAILURES!!!
+Tests run: 1,  Failures: 1

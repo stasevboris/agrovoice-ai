@@ -1,0 +1,36 @@
+{
+  "source": "docs\\android\\features_v2_phone\\audio_samples",
+  "audio_unchanged": true,
+  "changes": [
+    {
+      "file": "irina_potato.wav",
+      "old_value": "Potato",
+      "new_value": "potato"
+    },
+    {
+      "file": "irina_tomato.wav",
+      "old_value": "Tomato",
+      "new_value": "tomato"
+    },
+    {
+      "file": "irina_cucumber.wav",
+      "old_value": "Cucumber",
+      "new_value": "cucumber"
+    },
+    {
+      "file": "pavel_potato.wav",
+      "old_value": "Potato",
+      "new_value": "potato"
+    },
+    {
+      "file": "pavel_tomato.wav",
+      "old_value": "Tomato",
+      "new_value": "tomato"
+    },
+    {
+      "file": "pavel_cucumber.wav",
+      "old_value": "Cucumber",
+      "new_value": "cucumber"
+    }
+  ]
+}

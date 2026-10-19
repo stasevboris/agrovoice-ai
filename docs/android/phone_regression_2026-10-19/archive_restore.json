@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "records": 4,
+  "photos": 4,
+  "missing_photos": 0,
+  "repeat_unchanged": 4,
+  "source_unchanged": true,
+  "scope": "Android archive\/Room restore in an isolated directory, with old photo paths changed to nonexistent paths to simulate another phone. Photo bytes unchanged; no document picker or replacement of the user's journal."
+}

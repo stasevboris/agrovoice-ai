@@ -225,12 +225,10 @@ class InspectionJournal(
 
     /**
      * Used by tests to remove their own entries; the app has no delete action. The test inspection, its
-     * pending sync rows and now-unused «TEST:» plots go, so a phone run leaves the journal as it was.
+     * pending sync rows and its now-unused «TEST:» plot go. Unrelated plots stay in place.
      */
     internal fun deleteForTest(id: String) {
-        dao.deleteInspection(id)
-        dao.deleteSync(id)
-        dao.deleteUnusedPlots(TEST_PREFIX)
+        dao.deleteTestInspection(id, TEST_PREFIX)
     }
 
     private fun importDocument(text: String, photos: Map<String, File>, issues: List<JournalIssue>, source: String): JournalReport {

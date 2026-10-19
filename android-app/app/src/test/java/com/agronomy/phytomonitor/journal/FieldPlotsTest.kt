@@ -84,11 +84,22 @@ class FieldPlotsTest {
         val plots = FieldPlots(database) { now }
         val test = journal.save(report("t.json"), "TEST: x", "unrated", "TEST: грядка 7")
         val real = journal.save(report("r.json"), "настоящая", "unrated", "Теплица")
-        plots.create("TEST: пустой с другим осмотром")
+        plots.create("TEST: чужой пустой участок")
         journal.deleteForTest(test.id)
-        assertEquals(listOf("Теплица"), plots.list().map { it.plot.name })
+        assertEquals(setOf("Теплица", "TEST: чужой пустой участок"), plots.list().map { it.plot.name }.toSet())
         assertTrue(database.journal().pendingSync().all { it.entityId == real.id })
         assertEquals(listOf(real.id), journal.list().map { it.id })
+    }
+
+    @Test
+    fun testCleanupKeepsSharedPlotAndOtherInspections() {
+        val journal = InspectionJournal(context, database) { now }
+        val test = journal.save(report("t.json"), "TEST: x", "unrated", "TEST: общий")
+        val other = journal.save(report("r.json"), "сохранить", "unrated", "TEST: общий")
+        journal.deleteForTest(test.id)
+        assertEquals("TEST: общий", journal.list().single().plot)
+        assertEquals(other.id, journal.list().single().id)
+        assertEquals(listOf(other.id), database.journal().pendingSync().map { it.entityId })
     }
 
     @Test

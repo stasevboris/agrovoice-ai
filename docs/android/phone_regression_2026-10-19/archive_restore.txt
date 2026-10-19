@@ -1,0 +1,5 @@
+com.agronomy.phytomonitor.JournalArchiveDeviceTest:.
+
+Time: 2,335
+
+OK (1 test)

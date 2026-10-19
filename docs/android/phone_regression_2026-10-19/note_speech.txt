@@ -1,0 +1,5 @@
+com.agronomy.phytomonitor.NoteSpeechFlowTest:..
+
+Time: 47,266
+
+OK (2 tests)

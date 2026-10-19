@@ -1,0 +1,70 @@
+{
+  "device": "Redmi Note 7, Android 13",
+  "jvm": {
+    "tests": 123,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": {
+    "command": "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+    "status": "passed",
+    "lint": "No errors; warnings remain (see local build report)."
+  },
+  "instrumentation": {
+    "NoteSpeechFlowTest": {
+      "tests": 2,
+      "status": "passed",
+      "voiceFolder": "voice_features_v1_phone"
+    },
+    "JournalArchiveDeviceTest": {
+      "tests": 1,
+      "status": "passed",
+      "isolated_restore": true
+    },
+    "VoiceRecognitionTest": {
+      "tests": 1,
+      "status": "passed",
+      "voiceFolder": "voice_current_20261019"
+    }
+  },
+  "commands": [
+    "adb install -r app-debug.apk",
+    "adb install -r app-debug-androidTest.apk",
+    "adb shell am instrument -w -e class com.agronomy.phytomonitor.NoteSpeechFlowTest -e voiceFolder voice_features_v1_phone com.agronomy.phytomonitor.test/androidx.test.runner.AndroidJUnitRunner",
+    "adb shell am instrument -w -e class com.agronomy.phytomonitor.JournalArchiveDeviceTest com.agronomy.phytomonitor.test/androidx.test.runner.AndroidJUnitRunner",
+    "adb shell am instrument -w -e class com.agronomy.phytomonitor.VoiceRecognitionTest -e voiceFolder voice_current_20261019 com.agronomy.phytomonitor.test/androidx.test.runner.AndroidJUnitRunner"
+  ],
+  "recognition_current": {
+    "accepted_commands": 118,
+    "expected_commands": 118,
+    "false_actions_on_negative_or_unrelated": 0
+  },
+  "recognition_obsolete_corpus": {
+    "accepted": 110,
+    "expected": 118,
+    "false_actions": 0,
+    "explanation": "Six crop expectations still used capitalized IDs; two old WAVs say an unsupported phrase. The latter limitation was already documented in FIELD_TOOLS_2026-10-04.md. No production speech behavior changed. Current corpus reuses features_v2_phone audio, changes only crop ID expectations, and tests the production main-screen grammar."
+  },
+  "data_preservation": {
+    "application_table_records_unchanged": true,
+    "photo_result_legacy_file_hashes_unchanged": true,
+    "preference_values_unchanged": true,
+    "inspection_count": 4,
+    "sync_queue_count": 4,
+    "hashed_files": 1014,
+    "scope": "Application table rows (excluding sqlite internal sequences), photos/results/inspections files, shared preference values. No private records or photos are included in this report."
+  },
+  "apk_sha256": {
+    "app-debug.apk": "9e4e8706884a777f3cc95b3e055aae45cfd2ad5f2b473c7a76827b46eb263d44",
+    "app-debug-androidTest.apk": "89d0ea3a3628d9451f6d03d6da8bfef05778c5074e3a554df1eff2a6f6f2ef31"
+  },
+  "limitations": [
+    "Synthetic WAV decoding is not live speech accuracy or field WER.",
+    "TTS callback checked at volume zero; audible sound not checked.",
+    "Archive restored in temporary storage with changed old photo paths; system document picker not exercised.",
+    "GPS outdoors, physical headset and full hands-free live interaction remain unverified.",
+    "PhotoVoiceFlowTest remains ignored; prior phone tests were not all repeated in this increment."
+  ],
+  "powershell_sample_generator": "Syntax parsed successfully; expected crop IDs updated; no audio regeneration or model training."
+}
