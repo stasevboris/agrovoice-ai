@@ -1,0 +1,9 @@
+# CPU-only tests and data preparation helpers; no Torch, models or datasets.
+numpy==2.2.6
+Pillow==12.3.0
+scipy==1.18.1
+ImageHash==4.3.2
+PyYAML==6.0.3
+jsonschema==4.26.0
+opencv-python-headless==4.13.0.92
+requests==2.34.2

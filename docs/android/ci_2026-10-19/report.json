@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-19",
+  "workflow": ".github/workflows/checks.yml",
+  "local_platform": "Windows; isolated snapshot of git tracked files, existing SDK/JDK25, fresh Python 3.12 venv",
+  "commands": [
+    "python -m pip install -r ml-pipeline/requirements-ci.txt",
+    "python -X utf8 -m unittest discover -s ml-pipeline/tests",
+    "python -X utf8 kb/validate_kb.py",
+    "gradlew.bat --no-daemon testDebugUnitTest assembleDebug lintDebug"
+  ],
+  "python": {
+    "tests": 97,
+    "skipped": 3,
+    "result": "OK",
+    "skip_reasons": [
+      "Local queue weights absent",
+      "Local review queue absent",
+      "Vosk graph absent"
+    ]
+  },
+  "python_with_local_assets": {
+    "tests": 97,
+    "result": "OK",
+    "skipped": 0
+  },
+  "jvm": {
+    "tests": 144,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "BUILD SUCCESSFUL",
+  "kb": "validator passed",
+  "initial_findings": [
+    "Missing requests dependency added.",
+    "Split queue structure test from optional local-weight existence test.",
+    "Initial local Python invocation preceded completion of pip installation; rerun after installation succeeded."
+  ],
+  "limitations": [
+    "GitHub Actions not run: no push authorized; no green badge claimed.",
+    "Ubuntu runner and fresh SDK installation not exercised locally.",
+    "CI APK omits ONNX/Vosk assets: compile-only artifact, not installed on a phone or uploaded.",
+    "Lint warnings remain; no instrumented device tests in CI."
+  ]
+}

@@ -65,7 +65,8 @@
 | `ml-pipeline/gpu_kit/` | комплект для обучения на арендованной GPU (README внутри) |
 | `ml-pipeline/pack_gpu_kit.py` | упаковка комплекта в zip |
 | `ml-pipeline/tests/` | Python-тесты |
-| `kb/` | справочник: `kb_v1.json` (каркас, все карточки draft), схема и `validate_kb.py` |
+| `kb/` | справочник: `kb_v1.json` (все карточки draft, частичное наполнение), схема и `validate_kb.py` |
+| `server/` | FastAPI/PostgreSQL, JWT, версии осмотров и фото; запуск и границы в `server/README.md` |
 | `ml-pipeline/README.md` | действующие сборщики, `external/`, `assistant/`, `gpu_kit/alternatives/` и граница исторических скриптов |
 | `ml-pipeline/*.py` вне действующих входов README | история экспериментов до 16.10 (clean v1/v2, серии N/S/M, DETR, классификаторы, аудиты Leaf v3). Переиспользовать можно, развивать — нет |
 | `docs/experiments/yolo26s_data_v1/` | результаты прежних аудитов данных: на них опирается сборщик (очередь r2, геометрия) |

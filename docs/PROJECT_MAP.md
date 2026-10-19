@@ -25,6 +25,9 @@ agrovoice-ai/
 │   ├── dataset*/           локальные подготовленные наборы, вне git
 │   └── source_candidates/  локальные исходники, вне git
 ├── docs/                    документация по назначению, см. docs/README.md
+├── kb/                      справочник, источники, схема и валидатор
+├── server/                  локальное API, PostgreSQL, миграции и тесты
+├── .github/workflows/       CI без весов и пользовательских данных
 ├── artifacts/               локальные APK, пакеты GPU, проверки, release staging
 └── runs/                    результаты запусков, вне git
 ```

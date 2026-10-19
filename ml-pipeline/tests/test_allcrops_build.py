@@ -112,6 +112,11 @@ class KitQueueTest(unittest.TestCase):
         for run in queue["runs"]:
             self.assertIn(run["model"], ("yolo26n.pt", "yolo26s.pt", "yolo26m.pt"))
             self.assertGreater(run["hours"], 0)
+
+    @unittest.skipUnless((build.ROOT / "ml-pipeline/yolo26s.pt").exists(), "Local model weights are not included in git")
+    def test_local_queue_weights_are_complete(self):
+        queue = json.loads((build.ROOT / "ml-pipeline/gpu_kit/queue.json").read_text(encoding="utf-8"))
+        for run in queue["runs"]:
             self.assertTrue((build.ROOT/"ml-pipeline"/run["model"]).exists(), run["model"])
 
 

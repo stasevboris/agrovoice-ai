@@ -19,6 +19,9 @@
 | [AGENTS.md](../AGENTS.md) | Инструкция для ИИ-агентов (Claude, Codex, Gemini, локальные модели) |
 | [CLAUDE.md](../CLAUDE.md) | CLAUDE |
 | [README.md](../README.md) | AgroVoice AI |
+| [server/README.md](../server/README.md) | Локальный сервер, версии осмотров и загрузка фото |
+| [docs/android/ci_2026-10-19/README.md](android/ci_2026-10-19/README.md) | CI и локальная проверка чистой копии без моделей |
+| [docs/experiments/home_training_2026-10-19/README.md](experiments/home_training_2026-10-19/README.md) | AMD-пилоты зрения и LoRA помощника с ограничениями |
 | [artifacts/field_photos/ATTRIBUTION.txt](../artifacts/field_photos/ATTRIBUTION.txt) | ATTRIBUTION |
 | [docs/ARCHIVE.md](ARCHIVE.md) | Что не хранится в git и где это лежит |
 | [docs/DOCUMENTATION_CATALOG.md](DOCUMENTATION_CATALOG.md) | Полный каталог документации |
