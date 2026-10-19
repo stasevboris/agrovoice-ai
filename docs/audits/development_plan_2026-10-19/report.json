@@ -1,0 +1,176 @@
+{
+  "date": "2026-10-19",
+  "source_commit": "d6fd35a31564238346421f6658de527d60bcb21d",
+  "scope": {
+    "tracked_paths_inventoried": 2025,
+    "markdown_files_indexed": 102,
+    "kotlin_files_scanned": 100,
+    "method": "Path inventory of tracked files; UTF-8 scan and declaration outline for Android Kotlin; heading/request scan of Markdown; targeted semantic reading of active components, requirements and saved result reports.",
+    "not_claimed": "Not a line-by-line audit of every historical source snapshot; no rereading of model tensors, all images, all old result rows or full DOCX binaries.",
+    "local_details": "artifacts/verification/development_plan_20261019/"
+  },
+  "manifest": {
+    "source": "android-app/app/src/main/assets/models/manifest.json",
+    "models": [
+      {
+        "id": "yolo11n",
+        "class_count": 30
+      },
+      {
+        "id": "yolo26n",
+        "class_count": 30
+      },
+      {
+        "id": "mobilenet_v3_large",
+        "class_count": 30
+      },
+      {
+        "id": "efficientnet_b0",
+        "class_count": 30
+      },
+      {
+        "id": "masked_mobilenet_v3_large",
+        "class_count": 30
+      },
+      {
+        "id": "distilled_mobilenet_v3_large",
+        "class_count": 30
+      },
+      {
+        "id": "yolo26s",
+        "class_count": 30
+      },
+      {
+        "id": "deimv2_n",
+        "class_count": 30
+      },
+      {
+        "id": "yolo26m",
+        "class_count": 30
+      }
+    ]
+  },
+  "kb": {
+    "source": "docs/data/KB_PREPARATION_REPORT.json",
+    "cards": 49,
+    "statuses": {
+      "draft": 49,
+      "verified": 0
+    },
+    "cards_with_statements": [
+      "potato__early_blight",
+      "potato__late_blight"
+    ],
+    "treatments": 0
+  },
+  "prior_verification": {
+    "android": {
+      "source": "docs/android/app019_2026-10-19/report.json",
+      "jvm": {
+        "tests": 144,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "device": {
+        "tests": 20,
+        "result": "OK",
+        "classes": [
+          "SettingsNavigationTest",
+          "InspectionToolsTest",
+          "PlotsNavigationTest",
+          "ResultNavigationTest",
+          "JournalArchiveDeviceTest",
+          "JournalNavigationTest",
+          "VoiceControlsTest",
+          "KnowledgeNavigationTest",
+          "VoiceRecognitionTest",
+          "VoiceUiTest",
+          "NoteSpeechFlowTest",
+          "PhotoPipelineTest"
+        ]
+      }
+    },
+    "python": {
+      "source": "docs/android/ci_2026-10-19/report.json",
+      "with_assets": {
+        "tests": 97,
+        "result": "OK",
+        "skipped": 0
+      },
+      "clean": {
+        "tests": 97,
+        "skipped": 3,
+        "result": "OK",
+        "skip_reasons": [
+          "Local queue weights absent",
+          "Local review queue absent",
+          "Vosk graph absent"
+        ]
+      }
+    },
+    "server": {
+      "source": "docs/server/s03_2026-10-19/report.json",
+      "pytest": {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "21",
+        "time": "3.553",
+        "timestamp": "2026-10-19T15:13:20.589675+00:00",
+        "hostname": "4e7fbfc8c49d"
+      }
+    },
+    "rerun": false,
+    "reason": "This increment changes documentation only; no models, app behavior or runtime verification claimed."
+  },
+  "evidence_files": [
+    "AGENTS.md",
+    "docs/STATUS.md",
+    "docs/ROADMAP.md",
+    "docs/architecture/PROJECT_REPORT_2026-10-19.md",
+    "docs/research/LOCAL_ASSISTANT_2026-10-19.md",
+    "docs/research/ROBUST_VISION_2026-10-19.md",
+    "docs/research/AGRONOMY_LIBRARY_2026-10-19.md",
+    "docs/research/FEATURE_IDEAS_2026-10-19.md",
+    "docs/research/ANALOGUES_2026-10-19.md",
+    "docs/research/DATA_AND_MODEL_SELECTION_2026-10-19.md",
+    "docs/data/TRAINING_PREPARATION_REPORT.json",
+    "docs/experiments/home_training_2026-10-19/README.md",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/actions/ActionPolicy.kt",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/actions/ActionModel.kt",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/voice/VoiceCommands.kt",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/voice/HeadsetButton.kt",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/knowledge/KnowledgeCatalog.kt",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/knowledge/KnowledgeScreen.kt",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/FieldDemoActivity.kt",
+    "android-app/app/src/main/java/com/agronomy/phytomonitor/journal/JournalEntities.kt"
+  ],
+  "memory_review": {
+    "directory": "C:/Users/Boris/AppData/Roaming/Velly/claude-velly/projects/F--agrovoice-ai/memory",
+    "read": [
+      "MEMORY.md",
+      "user-boris-diploma.md",
+      "agrovoice-ui-0-18-redesign.md",
+      "ext-v2-datasets-task.md",
+      "agrovoice-state-2026-10-17.md"
+    ],
+    "stale": [
+      "Old general RX training ban superseded by same-day authorization until 23:00 MSK.",
+      "No device testing and no intent/SFT training claims superseded by saved results.",
+      "Room/navigation/archives/server are already implemented; do not repeat them."
+    ],
+    "authority": "Current user instruction and AGENTS take precedence; historical memory is not new authorization."
+  },
+  "current_request": "Review unfinished user requirements and propose the next development plan; external hosting and Google Drive postponed; no new training or phone interaction in this increment.",
+  "documentation_verification": {
+    "command": "python -X utf8 artifacts/verification/development_plan_20261019/verify_plan.py",
+    "result": "passed",
+    "utf8_files": 10,
+    "new_local_links_checked": 42,
+    "roadmap_new_ids_unique": true,
+    "evidence_paths_exist": true,
+    "application_source_changed": false
+  }
+}

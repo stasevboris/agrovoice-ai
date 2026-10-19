@@ -30,6 +30,7 @@
 | [docs/README.md](README.md) | Документация AgroVoice AI |
 | [docs/ROADMAP.md](ROADMAP.md) | AgroVoice AI — подробный план разработки (все культуры) |
 | [docs/STATUS.md](STATUS.md) | Состояние проекта |
+| [docs/DEVELOPMENT_PLAN_2026-10-19.md](DEVELOPMENT_PLAN_2026-10-19.md) | Сверка незавершённых требований Бориса, приоритеты офлайн-приложения и критерии инкрементов |
 | [docs/architecture/PROJECT_REPORT_2026-10-19.md](architecture/PROJECT_REPORT_2026-10-19.md) | AgroVoice AI: полный технический отчёт |
 | [docs/audits/AUDIT_AND_PLAN_2026-10-16.md](audits/AUDIT_AND_PLAN_2026-10-16.md) | AgroVoice AI — аудит проекта и новый план разработки |
 | [docs/audits/PROJECT_AUDIT_2026-10-19.md](audits/PROJECT_AUDIT_2026-10-19.md) | Аудит AgroVoice AI — 19 октября 2026 |
