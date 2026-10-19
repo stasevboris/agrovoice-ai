@@ -8,7 +8,7 @@ import uuid
 
 from fastapi import HTTPException
 import pytest
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, event, func, select
 from starlette.requests import Request
 
 from app.models import Inspection, Photo, User
@@ -143,6 +143,34 @@ def test_photo_repeat_mismatch_truncation_and_retry(client, database, auth):
     downloaded = client.get(url, headers=auth)
     assert downloaded.content == content
     assert downloaded.headers["x-content-sha256"] == photo["sha256"]
+
+
+def test_metadata_update_does_not_read_photo_bytes(client, database, auth):
+    content = b"photo payload for metadata-only edit"
+    item = update(content)
+    assert push(client, auth, item).status_code == 200
+    photo = item["data"]["photos"][0]
+    assert client.put(f'/photos/{photo["id"]}', content=content,
+                      headers={**auth, "X-Content-SHA256": photo["sha256"]}).status_code == 200
+    database.expunge_all()
+    item["base_version"] = 1
+    item["updated_at"] = (datetime.now(timezone.utc) + timedelta(minutes=1)).isoformat()
+    item["data"]["note"] = "Metadata-only correction"
+    statements = []
+
+    def capture(connection, cursor, statement, parameters, context, executemany):
+        statements.append(statement)
+
+    connection = database.connection()
+    event.listen(connection, "before_cursor_execute", capture)
+    try:
+        response = push(client, auth, item)
+    finally:
+        event.remove(connection, "before_cursor_execute", capture)
+    assert response.json()["results"][0]["status"] == "accepted"
+    assert any("FROM photos" in statement for statement in statements)
+    assert all("photos.content" not in statement for statement in statements)
+    assert client.get(f'/photos/{photo["id"]}', headers=auth).content == content
 
 
 def test_disconnect_during_stream_and_full_retry(client, database, auth):

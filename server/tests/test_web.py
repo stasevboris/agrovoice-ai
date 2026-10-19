@@ -87,6 +87,42 @@ def test_photo_boxes_and_escaping(client, database, auth):
                                 "detections": [{"xyxy_pixels": [0, 0, 99, 99]}]}})[2] == []
 
 
+def test_preview_limits_pixels_before_decoding(client, database, auth, monkeypatch):
+    item = sample_record(client, auth)
+    owner = database.scalar(select(User).where(User.username == "alice"))
+    login(client)
+    # Use a small fixture with a lowered limit; never allocate a decompression bomb.
+    monkeypatch.setattr("app.web.MAX_PREVIEW_PIXELS", 100, raising=False)
+
+    def forbidden_decode(*args, **kwargs):
+        pytest.fail("Oversized preview must be rejected before decoding pixels")
+
+    monkeypatch.setattr(Image.Image, "load", forbidden_decode)
+    response = client.get(f'/preview/{owner.id}/{item["data"]["photos"][0]["id"]}')
+    assert response.status_code == 415
+    original = client.get(f'/photos/{item["data"]["photos"][0]["id"]}', headers=auth)
+    assert original.status_code == 200
+    assert len(original.content) == item["data"]["photos"][0]["bytes"]
+
+
+def test_preview_preserves_exif_orientation(client, database, auth):
+    source = Image.new("RGB", (20, 10), (70, 120, 50))
+    exif = source.getexif()
+    exif[274] = 6
+    content = io.BytesIO()
+    source.save(content, "JPEG", exif=exif)
+    item = update(content.getvalue())
+    assert push(client, auth, item).status_code == 200
+    photo = item["data"]["photos"][0]
+    assert client.put(f'/photos/{photo["id"]}', content=content.getvalue(),
+                      headers={**auth, "X-Content-SHA256": photo["sha256"]}).status_code == 200
+    owner = database.scalar(select(User).where(User.username == "alice"))
+    login(client)
+    response = client.get(f'/preview/{owner.id}/{photo["id"]}')
+    assert response.status_code == 200
+    assert Image.open(io.BytesIO(response.content)).size == (10, 20)
+
+
 def test_web_owner_isolation_and_expert_review_version(client, database, auth, other_auth):
     item = sample_record(client, auth)
     owner = database.scalar(select(User).where(User.username == "alice"))

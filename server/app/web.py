@@ -24,6 +24,7 @@ from app.security import dummy_hash, passwords
 from app.sync import lock_owner
 
 router = APIRouter(include_in_schema=False)
+MAX_PREVIEW_PIXELS = 24_000_000
 templates = Jinja2Templates(directory=Path(__file__).resolve().parents[1] / "templates")
 CROPS = {"potato": "Картофель", "tomato": "Томат", "cucumber": "Огурец", "apple": "Яблоня",
          "cherry": "Вишня", "strawberry": "Земляника", "raspberry": "Малина", "pepper": "Перец",
@@ -200,8 +201,11 @@ def preview(owner_id: UUID, photo_id: UUID, user: User = Depends(web_user), data
     owned_inspection(database, user, owner_id, photo.inspection_id)
     try:
         with Image.open(io.BytesIO(photo.content)) as source:
+            if source.width * source.height > MAX_PREVIEW_PIXELS:
+                raise HTTPException(415, "Photo exceeds the 24 megapixel preview limit; original is preserved")
+            # JPEG thumbnail uses decoder reduction; keep EXIF until orientation is applied.
+            source.thumbnail((2048, 2048))
             image = ImageOps.exif_transpose(source).convert("RGB")
-            image.thumbnail((2048, 2048))
             output = io.BytesIO()
             image.save(output, "JPEG", quality=88)
     except (UnidentifiedImageError, OSError, Image.DecompressionBombError):

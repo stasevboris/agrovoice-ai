@@ -8,7 +8,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, JsonValue, model_validator
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, defer
 from starlette.concurrency import run_in_threadpool
 from starlette.requests import ClientDisconnect
 
@@ -101,7 +101,7 @@ def apply_update(database: Session, owner: User, update: InspectionUpdate):
 
     existing_photos = {}
     for reference in update.data.photos:
-        photo = database.get(Photo, (owner.id, reference.id))
+        photo = database.get(Photo, (owner.id, reference.id), options=[defer(Photo.content)])
         if photo is not None:
             if (photo.inspection_id, photo.sha256, photo.size) != (update.id, reference.sha256, reference.bytes):
                 return {"status": "conflict", "id": update.id, "reason": "photo_identity",

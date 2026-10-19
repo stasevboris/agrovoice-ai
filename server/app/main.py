@@ -11,6 +11,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.config import settings
+from app.body_limit import BodySizeLimitMiddleware
 from app.db import session
 from app.models import User
 from app.security import current_user, denied, dummy_hash, issue_token, passwords
@@ -21,6 +22,7 @@ app = FastAPI(title="AgroVoice API", version="0.3.0")
 app.add_middleware(SessionMiddleware, secret_key=settings().jwt_secret,
                    session_cookie="agrovoice_session", max_age=1800, same_site="strict",
                    https_only=os.environ.get("COOKIE_SECURE") == "1")
+app.add_middleware(BodySizeLimitMiddleware)
 app.include_router(sync_router)
 app.include_router(web_router)
 app.mount("/static", StaticFiles(directory=Path(__file__).resolve().parents[1] / "static"), name="static")
@@ -28,7 +30,7 @@ app.mount("/static", StaticFiles(directory=Path(__file__).resolve().parents[1] /
 
 class Login(BaseModel):
     username: str = Field(min_length=1, max_length=80)
-    password: SecretStr
+    password: SecretStr = Field(max_length=1024)
 
 
 class Token(BaseModel):

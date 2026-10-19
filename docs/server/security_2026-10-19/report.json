@@ -1,0 +1,39 @@
+{
+  "database": "agrovoice_test",
+  "scope": "Bounded API body/password; bounded preview decode; metadata sync avoids reading photo BYTEA",
+  "command": "docker compose --profile test run --rm -v F:/agrovoice-ai/server:/app:ro -v F:/agrovoice-ai/artifacts/verification/autonomous_20261019:/results tests python -m pytest -q -p no:cacheprovider --junitxml=/results/server-green.xml",
+  "evidence": "artifacts/verification/autonomous_20261019/server-green.xml and server-review-independent.md",
+  "review": "Independent source review found no confirmed defects; EXIF regression uses a small JPEG, decoder reduction not independently benchmarked",
+  "limits": {"request_bytes": 12582912, "password_characters": 1024, "preview_pixels": 24000000},
+  "limitations": ["No memory or speed improvement measured", "No rate limiting or slow-client concurrency protection added", "Existing production and verify API containers not restarted by this increment", "No phone, live speech or field quality claim"],
+  "results": {
+    "server-red": {
+      "tests": "16",
+      "failures": "4",
+      "errors": "0",
+      "skipped": "0",
+      "time": "4.003"
+    },
+    "server-input-green": {
+      "tests": "16",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "3.837"
+    },
+    "server-photo-red": {
+      "tests": "1",
+      "failures": "1",
+      "errors": "0",
+      "skipped": "0",
+      "time": "1.376"
+    },
+    "server-green": {
+      "tests": "34",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "4.795"
+    }
+  }
+}

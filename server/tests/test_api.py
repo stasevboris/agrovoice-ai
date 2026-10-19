@@ -71,3 +71,16 @@ def test_missing_and_expired_tokens_are_rejected(client):
                           "exp": now - timedelta(hours=1), "iss": config.jwt_issuer, "aud": config.jwt_audience},
                          config.jwt_secret, algorithm="HS256")
     assert client.get("/me", headers={"Authorization": f"Bearer {expired}"}).status_code == 401
+
+
+@pytest.mark.parametrize("streamed", [False, True])
+def test_direct_api_rejects_body_over_proxy_limit(client, streamed):
+    content = b" " * (12 * 1024 * 1024) + b'{"username":"alice","password":"correct-test-password"}'
+    body = iter([content[:100], content[100:]]) if streamed else content
+    response = client.post("/auth/token", content=body, headers={"Content-Type": "application/json"})
+    assert response.status_code == 413
+
+
+def test_api_password_has_same_length_limit_as_web(client):
+    response = client.post("/auth/token", json={"username": "alice", "password": "x" * 1025})
+    assert response.status_code == 422
