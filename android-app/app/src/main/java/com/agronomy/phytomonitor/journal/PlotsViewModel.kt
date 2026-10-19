@@ -3,6 +3,7 @@ package com.agronomy.phytomonitor.journal
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.agronomy.phytomonitor.actions.PlotTarget
 import com.agronomy.phytomonitor.JournalReport
 import com.agronomy.phytomonitor.settings.Keys
 import com.agronomy.phytomonitor.settings.SettingsStore
@@ -17,7 +18,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
-data class PlotsState(val plots: List<PlotSummary> = emptyList(), val busy: Boolean = false, val message: String? = null)
+data class PlotsState(val plots: List<PlotSummary> = emptyList(), val busy: Boolean = false,
+    val message: String? = null, val messageIsError: Boolean = false, val pendingDeletion: PlotTarget? = null)
 
 class PlotsViewModel(application: Application) : AndroidViewModel(application) {
     private val database = JournalDatabase.get(application)
@@ -41,9 +43,9 @@ class PlotsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun createPlot(name: String) = change { plots.create(name) }
+    fun createPlot(name: String) = change("Участок создан.") { plots.create(name) }
 
-    fun renamePlot(id: String, name: String) = change {
+    fun renamePlot(id: String, name: String) = change("Участок переименован.") {
         val old = database.journal().plot(id)?.name
         plots.rename(id, name).also { result ->
             if (result is PlotChange.Done && old != null) {
@@ -52,24 +54,28 @@ class PlotsViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deletePlot(id: String) = change {
-        val old = database.journal().plot(id)?.name
-        plots.delete(id)
-        if (old != null) settings.replaceIfMatches(Keys.plot, old, "").join()
+    fun askDelete(target: PlotTarget) = mutableState.update { it.copy(pendingDeletion = target, message = null) }
+    fun cancelDelete() = mutableState.update { it.copy(pendingDeletion = null) }
+
+    fun deletePlot(target: PlotTarget) = change("Участок удалён. Осмотры сохранены.") {
+        database.journal().deleteNamedPlot(target.id, target.name)
+        settings.replaceIfMatches(Keys.plot, target.name, "").join()
+        mutableState.update { it.copy(pendingDeletion = null) }
         null
     }
 
-    private fun change(operation: suspend () -> PlotChange?) = viewModelScope.launch {
+    private fun change(success: String, operation: suspend () -> PlotChange?) = viewModelScope.launch {
         writes.withLock {
-            mutableState.update { it.copy(busy = true, message = null) }
+            mutableState.update { it.copy(busy = true, message = null, messageIsError = false) }
             try {
                 migration.await()
                 val outcome = withContext(Dispatchers.IO) { operation() }
-                if (outcome is PlotChange.Rejected) mutableState.update { it.copy(message = outcome.reason) }
+                mutableState.update { it.copy(message = if (outcome is PlotChange.Rejected) outcome.reason else success,
+                    messageIsError = outcome is PlotChange.Rejected) }
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Exception) {
-                mutableState.update { it.copy(message = error.message ?: "Не удалось изменить участок") }
+                mutableState.update { it.copy(message = error.message ?: "Не удалось изменить участок", messageIsError = true) }
             } finally {
                 mutableState.update { it.copy(busy = false) }
             }

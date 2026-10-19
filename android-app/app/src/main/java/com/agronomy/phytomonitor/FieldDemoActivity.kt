@@ -37,6 +37,7 @@ import com.agronomy.phytomonitor.actions.FollowUpDialog
 import com.agronomy.phytomonitor.actions.Verdict
 import com.agronomy.phytomonitor.actions.Operation
 import com.agronomy.phytomonitor.actions.Screen
+import com.agronomy.phytomonitor.actions.PlotTarget
 import com.agronomy.phytomonitor.photos.*
 import com.agronomy.phytomonitor.ui.theme.AgroVoiceAITheme
 import com.agronomy.phytomonitor.voice.OfflineVoiceController
@@ -182,7 +183,7 @@ class FieldDemoActivity : ComponentActivity() {
         screen = currentScreen(),
         hasPhoto = fieldModel.bitmap != null,
         hasResult = fieldModel.reportName != null,
-        busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null,
+        busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null || plotsModel.state.value.busy,
         inspectionSaved = fieldModel.inspectionSaved,
         review = fieldModel.review,
         galleryCount = if (photoFlow.loading) 0 else photoFlow.photos.size,
@@ -201,6 +202,8 @@ class FieldDemoActivity : ComponentActivity() {
         selectedKnowledgeCode = knowledgeModel.state.value.selectedCode,
         availableModels = fieldModel.detector.models.map { it.id },
         plots = plotsModel.state.value.plots.map { it.plot.name },
+        plotTargets = plotsModel.state.value.plots.map { PlotTarget(it.plot.id, it.plot.name) },
+        pendingPlotDeletion = plotsModel.state.value.pendingDeletion,
         plot = fieldModel.plotName,
         row = fieldModel.rowName,
         inspectionOpen = navigation?.currentDestination?.route == "inspection/{id}",
@@ -275,7 +278,18 @@ class FieldDemoActivity : ComponentActivity() {
                     speak("Заметка сохранена в выбранном осмотре.")
                 }
                 Operation.OpenPlots -> navigation?.navigate("plots") { launchSingleTop = true }
-                Operation.ClosePlots -> navigation?.popBackStack()
+                is Operation.CreatePlot -> plotsModel.createPlot(operation.name)
+                is Operation.RenamePlot -> plotsModel.renamePlot(operation.id, operation.name)
+                is Operation.AskDeletePlot -> {
+                    plotsModel.askDelete(operation.target)
+                    speak("Удалить участок «${operation.target.name}»? Осмотры останутся без участка. Скажи «подтвердить» или «отмена».")
+                }
+                is Operation.DeletePlot -> plotsModel.deletePlot(operation.target)
+                Operation.CancelPlotDeletion -> plotsModel.cancelDelete()
+                Operation.ClosePlots -> {
+                    plotsModel.cancelDelete()
+                    navigation?.popBackStack()
+                }
                 Operation.OpenSettings -> navigation?.navigate("settings") { launchSingleTop = true }
                 Operation.CloseSettings -> navigation?.popBackStack()
                 is Operation.OpenKnowledge -> {
@@ -408,6 +422,7 @@ class FieldDemoActivity : ComponentActivity() {
         galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
         currentScreen() == Screen.KNOWLEDGE -> VoiceCommands.knowledgeGrammar(knowledgeModel.state.value.visible.size)
         currentScreen() == Screen.JOURNAL -> VoiceCommands.journalGrammar(journalModel.state.value.visible.size)
+        currentScreen() == Screen.PLOTS -> null // New plot names require the unrestricted Russian vocabulary.
         else->VoiceCommands.mainGrammar(plotsModel.state.value.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
     }
     private fun currentScreen(): Screen = voiceRouter.screen
@@ -512,6 +527,7 @@ class FieldDemoActivity : ComponentActivity() {
                 val route = backStackEntry?.destination?.route ?: "main"
                 var shownReport by rememberSaveable { mutableStateOf<String?>(null) }
                 val journalState by journalModel.state.collectAsState()
+                val plotsState by plotsModel.state.collectAsState()
                 val cameraState by cameraModel.state.collectAsState()
                 val galleryState by photoFlow.state.collectAsState()
                 val currentSettings by settingsModel.state.collectAsState()
@@ -568,11 +584,15 @@ class FieldDemoActivity : ComponentActivity() {
                     }
                 }
                 // A plan of several steps continues only after background work finished without an error.
-                LaunchedEffect(model.busy, journalState.busy, journalState.openingId) {
+                LaunchedEffect(model.busy, journalState.busy, journalState.openingId, plotsState.busy) {
                     if (!currentState().busy) {
                         actions.settled(failed = (model.message != null && model.messageIsError) ||
-                            (currentScreen() == Screen.JOURNAL && journalState.message != null && journalState.opened == null))
+                            (currentScreen() == Screen.JOURNAL && journalState.message != null && journalState.opened == null) ||
+                            (currentScreen() == Screen.PLOTS && plotsState.messageIsError))
                     }
+                }
+                LaunchedEffect(plotsState.message) {
+                    if (foreground && currentScreen() == Screen.PLOTS) plotsState.message?.let(::speak)
                 }
                 LaunchedEffect(model.busy) {
                     if(!model.busy){
@@ -644,7 +664,8 @@ class FieldDemoActivity : ComponentActivity() {
                                 }
                                 composable("plots") {
                                     PlotsScreen(plotsModel, model.plotName, model.rowName,
-                                        onBack = { press(VoiceAction.BACK) }, onSelect = { name -> press(VoiceAction.PLOT, name) })
+                                        onBack = { press(VoiceAction.BACK) }, onSelect = { name -> press(VoiceAction.PLOT, name) },
+                                        onAction = ::press)
                                 }
                                 composable("knowledge") {
                                     LaunchedEffect(Unit) { knowledgeModel.select(null) }
@@ -700,6 +721,7 @@ class FieldDemoActivity : ComponentActivity() {
     override fun onResume(){super.onResume();foreground=true;headset.setActive(true);if(fieldModel.locationEnabled && fieldModel.location.hasPermission())startLocation()}
     override fun onStop() {
         foreground = false
+        plotsModel.cancelDelete()
         headset.setActive(false)
         actions.cancelPlan()
         followUp.stop()

@@ -50,6 +50,12 @@ interface JournalDao {
     @Query("DELETE FROM plot WHERE id = :id")
     fun deletePlot(id: String)
 
+    @Transaction
+    fun deleteNamedPlot(id: String, expectedName: String) {
+        check(plot(id)?.name == expectedName) { "Участок изменился. Выбери его заново." }
+        deletePlot(id)
+    }
+
     @Query("SELECT * FROM inspection WHERE id = :id")
     fun inspection(id: String): InspectionEntity?
 

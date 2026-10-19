@@ -45,7 +45,7 @@ object ActionPolicy {
     private val actionsWithValue = setOf(
         VoiceAction.MODEL, VoiceAction.CROP, VoiceAction.THRESHOLD, VoiceAction.SCROLL,
         VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER,
-        VoiceAction.JOURNAL_NUMBER
+        VoiceAction.JOURNAL_NUMBER, VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -59,6 +59,11 @@ object ActionPolicy {
         if (request.action in controlActions) {
             return control(request, state)
         }
+        if (state.pendingPlotDeletion != null) {
+            if (state.busy) return Verdict.Clarify(WAIT)
+            return if (request.action == VoiceAction.CONFIRM) PlotActions.confirm(state)
+            else Verdict.Clarify("Сначала подтверди удаление участка или скажи «отмена».")
+        }
         val readingKnowledge = state.screen == Screen.KNOWLEDGE && request.action in setOf(
             VoiceAction.CROP, VoiceAction.KNOWLEDGE_NUMBER, VoiceAction.KNOWLEDGE_NEXT,
             VoiceAction.KNOWLEDGE_PREVIOUS, VoiceAction.READ_KNOWLEDGE
@@ -67,6 +72,7 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            in PlotActions.actions -> PlotActions.resolve(request, state)
             VoiceAction.JOURNAL_NUMBER -> openInspection(request, state)
             VoiceAction.NOTE -> if (state.screen == Screen.JOURNAL) {
                 val id = state.openedInspectionId
@@ -131,6 +137,7 @@ object ActionPolicy {
             return if (value.isEmpty()) null else Verdict.Reject("У этого действия нет параметров.")
         }
         return when (request.action) {
+            in PlotActions.actions -> null // PlotActions checks the names and structured rename argument.
             VoiceAction.MODEL -> if (value in state.availableModels) null else Verdict.Reject("Модель недоступна в текущем приложении.")
             VoiceAction.CROP -> when {
                 value != "all" && !state.canRefineCrop -> Verdict.Reject("Выбор культуры недоступен для этой демонстрационной модели.")
@@ -233,6 +240,7 @@ object ActionPolicy {
     /** «Назад» and «отмена» close the topmost layer only, one step per phrase. */
     private fun closeTopLayer(state: AppState): Verdict = when {
         state.helpOpen -> run(Operation.ShowHelp(false))
+        state.pendingPlotDeletion != null -> run(Operation.CancelPlotDeletion)
         state.screen == Screen.KNOWLEDGE && state.knowledgeCardOpen -> run(Operation.CloseKnowledgeCard)
         state.screen == Screen.KNOWLEDGE -> run(Operation.CloseKnowledge)
         state.followUp && state.screen == Screen.MAIN -> run(Operation.EndFollowUp)

@@ -30,6 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.agronomy.phytomonitor.journal.PlotEntity
+import com.agronomy.phytomonitor.actions.PlotActions
+import com.agronomy.phytomonitor.voice.VoiceAction
 import com.agronomy.phytomonitor.ui.AgroIcons
 import com.agronomy.phytomonitor.voice.VoiceCommands
 
@@ -38,11 +40,11 @@ import com.agronomy.phytomonitor.voice.VoiceCommands
  * «ряд четырнадцать», «назад».
  */
 @Composable
-internal fun PlotsScreen(model: PlotsViewModel, currentPlot: String, row: String, onBack: () -> Unit, onSelect: (String) -> Unit) {
+internal fun PlotsScreen(model: PlotsViewModel, currentPlot: String, row: String, onBack: () -> Unit,
+    onSelect: (String) -> Unit, onAction: (VoiceAction, String) -> Unit) {
     val state by model.state.collectAsState()
     var newName by remember { mutableStateOf("") }
     var renaming by remember { mutableStateOf<PlotEntity?>(null) }
-    var removing by remember { mutableStateOf<PlotEntity?>(null) }
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) { Icon(AgroIcons.Back, contentDescription = "Закрыть участки") }
@@ -63,7 +65,7 @@ internal fun PlotsScreen(model: PlotsViewModel, currentPlot: String, row: String
                         modifier = Modifier.weight(1f)
                     )
                     Button(onClick = {
-                        model.createPlot(newName)
+                        onAction(VoiceAction.CREATE_PLOT, newName)
                         newName = ""
                     }, enabled = newName.isNotBlank() && !state.busy) {
                         Text("Добавить")
@@ -73,7 +75,7 @@ internal fun PlotsScreen(model: PlotsViewModel, currentPlot: String, row: String
             item {
                 Text(
                     "Текущий: ${currentPlot.ifBlank { "не выбран" }}${if (row.isBlank()) "" else ", ряд $row"}. " +
-                        "Голосом: «участок …» с названием из списка, «ряд …» с номером.",
+                        "Голосом: «создай участок …», «переименуй участок … в …», «удали участок …». Удаление требует подтверждения.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -89,29 +91,28 @@ internal fun PlotsScreen(model: PlotsViewModel, currentPlot: String, row: String
                     current = summary.plot.name == currentPlot,
                     onSelect = { onSelect(summary.plot.name) },
                     onRename = { renaming = summary.plot },
-                    onDelete = { removing = summary.plot }
+                    onDelete = { onAction(VoiceAction.DELETE_PLOT, summary.plot.name) }
                 )
             }
         }
     }
     renaming?.let { plot ->
         RenamePlotDialog(plot, onDismiss = { renaming = null }) { name ->
-            model.renamePlot(plot.id, name)
+            onAction(VoiceAction.RENAME_PLOT, PlotActions.renameValue(plot.name, name))
             renaming = null
         }
     }
-    removing?.let { plot ->
+    state.pendingDeletion?.let { plot ->
         AlertDialog(
-            onDismissRequest = { removing = null },
+            onDismissRequest = { onAction(VoiceAction.CANCEL, "") },
             title = { Text("Удалить участок «${plot.name}»?") },
             text = { Text("Осмотры останутся в журнале, но без участка. Отменить удаление нельзя.") },
             confirmButton = {
                 TextButton(onClick = {
-                    model.deletePlot(plot.id)
-                    removing = null
-                }) { Text("Удалить") }
+                    onAction(VoiceAction.CONFIRM, "")
+                }, enabled = !state.busy) { Text("Удалить") }
             },
-            dismissButton = { TextButton(onClick = { removing = null }) { Text("Оставить") } }
+            dismissButton = { TextButton(onClick = { onAction(VoiceAction.CANCEL, "") }) { Text("Оставить") } }
         )
     }
 }

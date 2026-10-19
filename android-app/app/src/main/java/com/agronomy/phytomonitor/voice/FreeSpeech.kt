@@ -31,6 +31,11 @@ object FreeSpeech {
         if (phrase.isEmpty()) {
             return Understanding.NotUnderstood
         }
+        if (screen == "plots") {
+            com.agronomy.phytomonitor.actions.PlotActions.parse(phrase, plots)?.let {
+                return Understanding.Commands(listOf(it))
+            }
+        }
         refusal(phrase)?.let { return Understanding.Refusal(it) }
         val parts = phrase.split(connectors).map { it.trim(' ', ',') }.filter { it.isNotEmpty() }
         if (parts.size > 1) {

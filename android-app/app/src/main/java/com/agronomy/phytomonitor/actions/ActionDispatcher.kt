@@ -94,6 +94,8 @@ class ActionDispatcher(
         when (verdict) {
             is Verdict.Run -> {
                 verdict.operations.forEach(port::perform)
+                // A destructive operation needs a new utterance/tap after the user hears the question.
+                if (verdict.operations.any { it is Operation.AskDeletePlot }) plan.clear()
                 verdict.notice?.let { port.tell(it, verdict.noticeIsError, request) }
                 waiting = port.state().busy
             }

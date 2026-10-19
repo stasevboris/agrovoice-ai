@@ -5,6 +5,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import com.agronomy.phytomonitor.actions.Screen
+import com.agronomy.phytomonitor.actions.PlotActions
+import com.agronomy.phytomonitor.actions.PlotTarget
 import com.agronomy.phytomonitor.journal.FieldPlots
 import com.agronomy.phytomonitor.journal.JournalDatabase
 import com.agronomy.phytomonitor.settings.Keys
@@ -40,10 +42,12 @@ class PlotsNavigationTest {
             assertTrue(name in activity.currentState().plots)
             compose.runOnUiThread { activity.handleVoiceCommand(VoiceCommand(VoiceAction.PLOT, "", name)) }
             assertEquals(name, activity.fieldModel.plotName)
-            compose.runOnUiThread { activity.plotsModel.renamePlot(id!!, "$name renamed") }
+            compose.runOnUiThread { activity.handleVoiceCommand(VoiceCommand(VoiceAction.RENAME_PLOT, "", PlotActions.renameValue(name, "$name renamed"))) }
             compose.waitUntil(10000) { activity.fieldModel.plotName == "$name renamed" && "$name renamed" in activity.currentState().plots }
             assertTrue("$name renamed" in activity.currentState().plots)
-            compose.runOnUiThread { activity.plotsModel.deletePlot(id!!) }
+            compose.runOnUiThread { activity.handleVoiceCommand(VoiceCommand(VoiceAction.DELETE_PLOT, "", "$name renamed")) }
+            assertEquals(PlotTarget(id!!, "$name renamed"), activity.currentState().pendingPlotDeletion)
+            compose.runOnUiThread { activity.handleVoiceCommand(VoiceCommand(VoiceAction.CONFIRM, "")) }
             compose.waitUntil(10000) {
                 activity.fieldModel.plotName.isEmpty() && activity.plotsModel.state.value.plots.none { it.plot.id == id }
             }

@@ -54,6 +54,8 @@ data class AppState(
     val knowledgeCodes: List<String> = emptyList(),
     val selectedKnowledgeCode: String? = null,
     val plots: List<String> = emptyList(),
+    val plotTargets: List<PlotTarget> = emptyList(),
+    val pendingPlotDeletion: PlotTarget? = null,
     val plot: String = "",
     val row: String = "",
     val inspectionOpen: Boolean = false,
@@ -67,6 +69,7 @@ data class AppState(
     /** The object «да / подтвердить» would refer to, as `pending` in the corpus. */
     val pending: String?
         get() = when {
+            pendingPlotDeletion != null && screen == Screen.PLOTS -> "delete_plot"
             followUp && screen == Screen.MAIN -> "save"
             else -> when (screen) {
                 Screen.NOTE_REVIEW -> "note"
@@ -97,6 +100,11 @@ sealed interface Operation {
     data class OpenInspectionNote(val id: String, val dictate: Boolean) : Operation
     data class SaveInspectionNote(val id: String) : Operation
     data object OpenPlots : Operation
+    data class CreatePlot(val name: String) : Operation
+    data class RenamePlot(val id: String, val name: String) : Operation
+    data class AskDeletePlot(val target: PlotTarget) : Operation
+    data class DeletePlot(val target: PlotTarget) : Operation
+    data object CancelPlotDeletion : Operation
     data object ClosePlots : Operation
     data object OpenSettings : Operation
     data object CloseSettings : Operation
