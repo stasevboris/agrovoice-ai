@@ -28,11 +28,16 @@ class JournalNavigationTest {
             compose.activity.handleVoiceCommand(VoiceCommands.parse("открой журнал")!!)
         }
         compose.waitUntil(30000) { compose.activity.journalModel.state.value.entries.isNotEmpty() }
-        compose.onAllNodesWithText("Открыть осмотр")[0].performClick()
+        compose.runOnUiThread {
+            compose.activity.handleVoiceCommand(VoiceCommands.parseForScreen("открой осмотр один", "journal")!!)
+        }
         compose.waitUntil(30000) { compose.activity.journalModel.state.value.opened != null }
         val selected = compose.activity.journalModel.state.value.opened!!.details.inspection.id
         assertTrue(compose.activity.currentState().inspectionOpen)
         assertNull(compose.activity.fieldModel.result)
+        compose.runOnUiThread {
+            compose.activity.handleVoiceCommand(VoiceCommands.parseForScreen("прочитай результат", "journal")!!)
+        }
 
         compose.activityRule.scenario.recreate()
         compose.waitUntil(30000) { compose.activity.journalModel.state.value.opened != null }

@@ -31,6 +31,7 @@ data class JournalState(
     val report: JournalReport? = null,
     val message: String? = null,
     val opened: SavedInspectionView? = null,
+    val openingId: String? = null,
     val scrollDirection: String = "",
     val scrollSequence: Long = 0
 ) {
@@ -77,8 +78,9 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun openInspection(id: String) {
+        if (state.value.openingId == id || state.value.opened?.details?.inspection?.id == id) return
         opening?.cancel()
-        mutableState.update { it.copy(opened = null, message = null) }
+        mutableState.update { it.copy(opened = null, openingId = id, message = null) }
         opening = viewModelScope.launch {
             migration.await()
             try {
@@ -89,18 +91,18 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
                         ?.let { runCatching { PhotoFiles.decode(it) }.getOrNull() }
                     SavedInspectionView.of(details, bitmap)
                 }
-                mutableState.update { it.copy(opened = saved) }
+                mutableState.update { it.copy(opened = saved, openingId = null) }
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Exception) {
-                mutableState.update { it.copy(message = error.message ?: "Не удалось открыть осмотр") }
+                mutableState.update { it.copy(openingId = null, message = error.message ?: "Не удалось открыть осмотр") }
             }
         }
     }
 
     fun closeInspection() {
         opening?.cancel()
-        mutableState.update { it.copy(opened = null) }
+        mutableState.update { it.copy(opened = null, openingId = null) }
     }
 
     fun export(uri: Uri, format: JournalExport = JournalExport.JSON) = transact {

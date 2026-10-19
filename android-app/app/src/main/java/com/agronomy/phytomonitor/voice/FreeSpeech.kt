@@ -97,6 +97,14 @@ object FreeSpeech {
             }
         }
         scroll(phrase, words)?.let { return it }
+        if (screen == "journal") {
+            if (has("осмотр", "запис") && has("открой", "покажи", "открыть", "выбери")) {
+                number(words)?.let { return command(VoiceAction.JOURNAL_NUMBER, it.toString()) }
+            }
+            if (has("прочита", "прочти", "озвуч", "расскаж") && has("результат", "осмотр", "запис")) {
+                return command(VoiceAction.SPEAK_RESULT)
+            }
+        }
         return when {
             has("помолч") -> command(VoiceAction.SILENCE)
             has("отмен", "передумал", "отбой") || says("прекрати текущ") -> command(VoiceAction.CANCEL)

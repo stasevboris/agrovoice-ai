@@ -39,6 +39,9 @@ object AssistantProtocol {
         .put("analysis_running", state.busy)
         .put("gallery_count", state.galleryCount)
         .put("selected_photo", state.selectedPhoto ?: JSONObject.NULL)
+        .put("journal_count", state.journalIds.size)
+        .put("inspection_open", state.inspectionOpen)
+        .put("saved_result_ready", state.openedInspectionId != null)
         .put("pending", state.pending ?: JSONObject.NULL)
         .put("speaking", state.speaking)
         .put("help_open", state.helpOpen)
@@ -122,7 +125,7 @@ object NegationGuard {
         VoiceAction.SAVE_INSPECTION, VoiceAction.CONFIRM, VoiceAction.EXIT,
         VoiceAction.CAMERA, VoiceAction.OPEN_CAMERA, VoiceAction.CAMERA_NOW,
         VoiceAction.GALLERY, VoiceAction.SYSTEM_GALLERY, VoiceAction.ANALYZE, VoiceAction.COMPARE,
-        VoiceAction.NOTE, VoiceAction.JOURNAL, VoiceAction.LISTEN_ON
+        VoiceAction.NOTE, VoiceAction.JOURNAL, VoiceAction.JOURNAL_NUMBER, VoiceAction.LISTEN_ON
     )
 
     fun blocks(utterance: String, step: ActionRequest): Boolean {

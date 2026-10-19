@@ -52,7 +52,7 @@ data class SavedInspectionView(
 }
 
 @Composable
-internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit, onReanalyse: () -> Unit) {
+internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit, onRead: () -> Unit, onReanalyse: () -> Unit) {
     val inspection = view.details.inspection
     val date = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(inspection.createdAt))
     Column(Modifier.fillMaxSize()) {
@@ -86,6 +86,9 @@ internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit
                 LeafResultRow(number = index + 1, label = label, confidence = view.boxes[index].confidence, prominent = index == 0)
             }
             SavedFacts(view)
+            OutlinedButton(onClick = onRead, modifier = Modifier.fillMaxWidth()) {
+                Text("Прочитать сохранённый результат")
+            }
             OutlinedButton(onClick = onReanalyse, enabled = photo != null, modifier = Modifier.fillMaxWidth()) {
                 Icon(AgroIcons.Refresh, contentDescription = null, modifier = Modifier.size(18.dp))
                 Spacer(Modifier.width(8.dp))

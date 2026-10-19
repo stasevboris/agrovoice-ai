@@ -57,6 +57,8 @@ data class AppState(
     val plot: String = "",
     val row: String = "",
     val inspectionOpen: Boolean = false,
+    val journalIds: List<String> = emptyList(),
+    val openedInspectionId: String? = null,
     val resultOpen: Boolean = false,
     /** The app has just asked «Сохранить осмотр?» and waits for «да» or «нет». */
     val followUp: Boolean = false
@@ -88,6 +90,8 @@ sealed interface Operation {
     data class Scroll(val direction: String) : Operation
     data class OpenNote(val dictate: Boolean) : Operation
     data object OpenJournal : Operation
+    data class OpenInspection(val id: String) : Operation
+    data class SpeakInspection(val id: String) : Operation
     data object OpenPlots : Operation
     data object ClosePlots : Operation
     data object OpenSettings : Operation

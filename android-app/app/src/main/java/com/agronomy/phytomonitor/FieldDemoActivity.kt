@@ -2,6 +2,7 @@ package com.agronomy.phytomonitor
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
@@ -181,7 +182,7 @@ class FieldDemoActivity : ComponentActivity() {
         screen = currentScreen(),
         hasPhoto = fieldModel.bitmap != null,
         hasResult = fieldModel.reportName != null,
-        busy = fieldModel.busy || journalModel.state.value.busy,
+        busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null,
         inspectionSaved = fieldModel.inspectionSaved,
         review = fieldModel.review,
         galleryCount = if (photoFlow.loading) 0 else photoFlow.photos.size,
@@ -203,6 +204,10 @@ class FieldDemoActivity : ComponentActivity() {
         plot = fieldModel.plotName,
         row = fieldModel.rowName,
         inspectionOpen = navigation?.currentDestination?.route == "inspection/{id}",
+        journalIds = journalModel.state.value.visible.map { it.id },
+        openedInspectionId = journalModel.state.value.opened?.details?.inspection?.id?.takeIf {
+            it == navigation?.currentBackStackEntry?.arguments?.getString("id")
+        },
         resultOpen = navigation?.currentDestination?.route == "result",
         followUp = followUp.awaitingAnswer
     )
@@ -240,6 +245,21 @@ class FieldDemoActivity : ComponentActivity() {
                 Operation.OpenJournal -> {
                     journalModel.refresh()
                     navigation?.navigate("journal") { launchSingleTop = true }
+                }
+                is Operation.OpenInspection -> {
+                    voice.stop()
+                    speaker.stop()
+                    journalModel.openInspection(operation.id)
+                    navigation?.navigate("inspection/${Uri.encode(operation.id)}") {
+                        popUpTo("journal")
+                        launchSingleTop = true
+                    }
+                }
+                is Operation.SpeakInspection -> {
+                    val saved = journalModel.state.value.opened
+                    if (saved?.details?.inspection?.id == operation.id) {
+                        speak(com.agronomy.phytomonitor.journal.SavedInspectionSpeech.text(saved.details))
+                    }
                 }
                 Operation.OpenPlots -> navigation?.navigate("plots") { launchSingleTop = true }
                 Operation.ClosePlots -> navigation?.popBackStack()
@@ -374,6 +394,7 @@ class FieldDemoActivity : ComponentActivity() {
         cameraOpen->VoiceCommands.cameraGrammar
         galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
         currentScreen() == Screen.KNOWLEDGE -> VoiceCommands.knowledgeGrammar(knowledgeModel.state.value.visible.size)
+        currentScreen() == Screen.JOURNAL -> VoiceCommands.journalGrammar(journalModel.state.value.visible.size)
         else->VoiceCommands.mainGrammar(plotsModel.state.value.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
     }
     private fun currentScreen(): Screen = voiceRouter.screen
@@ -522,10 +543,15 @@ class FieldDemoActivity : ComponentActivity() {
                     }
                 }
                 // A plan of several steps continues only after background work finished without an error.
+                LaunchedEffect(model.busy, journalState.busy, journalState.openingId) {
+                    if (!currentState().busy) {
+                        actions.settled(failed = (model.message != null && model.messageIsError) ||
+                            (currentScreen() == Screen.JOURNAL && journalState.message != null && journalState.opened == null))
+                    }
+                }
                 LaunchedEffect(model.busy) {
                     if(!model.busy){
                         val failed=model.message!=null && model.messageIsError
-                        actions.settled(failed=failed)
                         val prompt=followUp.saveFinished(failed) ?: followUp.analysisFinished(hasResult=model.reportName!=null)
                         followUpPhase=followUp.phase
                         prompt?.let(::sayFollowUp)
@@ -585,7 +611,7 @@ class FieldDemoActivity : ComponentActivity() {
                                 }
                                 composable("journal") {
                                     JournalScreen(journalModel, model.detector.models.associate { it.id to it.name },
-                                        onOpen = { id -> navController.navigate("inspection/$id") },
+                                        onOpen = { id -> press(VoiceAction.JOURNAL_NUMBER, (journalModel.state.value.visible.indexOfFirst { it.id == id } + 1).toString()) },
                                         onBack = { press(VoiceAction.BACK) }, onExport = exportJournal, onImport = importJournal)
                                 }
                                 composable("settings") {
@@ -612,14 +638,15 @@ class FieldDemoActivity : ComponentActivity() {
                                 composable("inspection/{id}") { entry ->
                                     val id = requireNotNull(entry.arguments?.getString("id"))
                                     LaunchedEffect(id) { journalModel.openInspection(id) }
-                                    val saved = journalState.opened
+                                    val saved = journalState.opened?.takeIf { it.details.inspection.id == id }
                                     if (saved == null) {
                                         Column {
                                             Text(journalState.message ?: "Открываю сохранённый осмотр…")
                                             TextButton(onClick = { press(VoiceAction.BACK) }) { Text("Назад в журнал") }
                                         }
                                     } else {
-                                        SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) }, onReanalyse = {
+                                        SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) },
+                                            onRead = { press(VoiceAction.SPEAK_RESULT) }, onReanalyse = {
                                             val path = saved.details.photos.firstOrNull()?.photo?.localPath
                                             if (path != null) {
                                                 journalModel.closeInspection()

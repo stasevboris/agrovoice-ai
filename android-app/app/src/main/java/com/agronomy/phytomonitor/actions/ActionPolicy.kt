@@ -44,7 +44,8 @@ object ActionPolicy {
     )
     private val actionsWithValue = setOf(
         VoiceAction.MODEL, VoiceAction.CROP, VoiceAction.THRESHOLD, VoiceAction.SCROLL,
-        VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER
+        VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER,
+        VoiceAction.JOURNAL_NUMBER
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -66,6 +67,15 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            VoiceAction.JOURNAL_NUMBER -> openInspection(request, state)
+            VoiceAction.SPEAK_RESULT -> if (state.screen == Screen.JOURNAL) {
+                val id = state.openedInspectionId
+                when {
+                    !state.inspectionOpen || id == null -> Verdict.Clarify("Сначала открой сохранённый осмотр по номеру из журнала.")
+                    state.speaking -> Verdict.Skip("Уже читаю результат.")
+                    else -> run(Operation.SpeakInspection(id))
+                }
+            } else inspection(request, state)
             VoiceAction.KNOWLEDGE -> when (state.screen) {
                 Screen.MAIN, Screen.JOURNAL -> run(Operation.OpenKnowledge(request.source != ActionSource.BUTTON))
                 Screen.KNOWLEDGE -> Verdict.Skip("Справочник уже открыт.")
@@ -87,6 +97,15 @@ object ActionPolicy {
             in galleryActions -> gallery(request, state)
             else -> capture(request, state)
         }
+    }
+
+    private fun openInspection(request: ActionRequest, state: AppState): Verdict {
+        if (state.screen != Screen.JOURNAL) return Verdict.Clarify("Сначала открой журнал.")
+        if (state.journalIds.isEmpty()) return Verdict.Clarify("В текущем списке нет осмотров. Измени фильтр или сохрани осмотр.")
+        val id = state.journalIds.getOrNull(request.value.toInt() - 1)
+            ?: return Verdict.Clarify("Такого номера в текущем списке осмотров нет.")
+        if (state.inspectionOpen && state.openedInspectionId == id) return Verdict.Skip("Этот осмотр уже открыт.")
+        return run(Operation.OpenInspection(id))
     }
 
     private fun knowledgeCard(request: ActionRequest, state: AppState): Verdict {
@@ -119,6 +138,7 @@ object ActionPolicy {
             VoiceAction.ROW -> if ((value.toIntOrNull() ?: 0) in 1..MAX_ROW) null else Verdict.Clarify("Номер ряда — от 1 до $MAX_ROW.")
             VoiceAction.PLOT -> plotProblem(value, state)
             VoiceAction.KNOWLEDGE_NUMBER -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Назови номер карточки из списка.")
+            VoiceAction.JOURNAL_NUMBER -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Назови номер осмотра из журнала.")
             else -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Такого номера нет в галерее.")
         }
     }

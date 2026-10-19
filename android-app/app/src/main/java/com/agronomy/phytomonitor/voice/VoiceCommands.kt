@@ -3,7 +3,7 @@ package com.agronomy.phytomonitor.voice
 import com.agronomy.phytomonitor.ml.CropVocabulary
 import java.util.Locale
 
-enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, SETTINGS, KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS }
+enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, JOURNAL_NUMBER, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, SETTINGS, KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
 /** Exact fixed intents: no substring guessing and no action from partial speech. */
@@ -91,6 +91,13 @@ object VoiceCommands {
             // «да» is listened for only right after the app asked «Сохранить осмотр?».
             (if(followUp)listOf("да","подтвердить") else emptyList())).distinct()
     val noteReviewGrammar=listOf("подтвердить","да","отмена","нет","добавь заметку","стоп","не подтверждать","[unk]")
+    fun journalGrammar(count: Int): List<String>? {
+        if (count > 10000) return null
+        return (phrasesFor(globalActions + setOf(VoiceAction.SPEAK_RESULT, VoiceAction.SILENCE, VoiceAction.NOTE)) +
+            listOf("осмотр", "открой осмотр", "запись", "открой запись", "номер",
+                "не открывай осмотр", "не читай результат", "[unk]") +
+            (1..count.coerceAtLeast(1)).map(RussianPhotoNumber::words)).distinct()
+    }
     private val knowledgeActions = setOf(VoiceAction.KNOWLEDGE, VoiceAction.READ_KNOWLEDGE,
         VoiceAction.KNOWLEDGE_NUMBER, VoiceAction.KNOWLEDGE_NEXT, VoiceAction.KNOWLEDGE_PREVIOUS)
     fun knowledgeGrammar(count: Int): List<String> = (phrasesFor(globalActions + knowledgeActions) +
@@ -131,6 +138,18 @@ object VoiceCommands {
     }
     fun parseForScreen(text: String, screen: String, plots: Collection<String> = emptyList()): VoiceCommand? {
         if(screen=="note")return null
+        if (screen == "journal") {
+            val normalized = text.lowercase(Locale.ROOT).replace('ё', 'е')
+                .replace(Regex("[.,!?;:]"), " ").trim().replace(Regex("\\s+"), " ")
+            val prefix = listOf("открой осмотр ", "открой запись ", "осмотр ", "запись ")
+                .firstOrNull { normalized.startsWith(it) }
+            val value = if (prefix != null) normalized.removePrefix(prefix) else normalized
+            if ("фото" !in value) {
+                RussianPhotoNumber.parse(value)?.let {
+                    return VoiceCommand(VoiceAction.JOURNAL_NUMBER, "Осмотр №$it", it.toString())
+                }
+            }
+        }
         if (screen == "knowledge") {
             val normalized = text.trim().lowercase().replace('ё', 'е').replace(Regex("[.,!?;:]"), "")
             val prefix = listOf("открой карточку номер ", "карточка номер ", "открой карточку ", "карточка ")
@@ -140,6 +159,7 @@ object VoiceCommands {
             if (number != null) return VoiceCommand(VoiceAction.KNOWLEDGE_NUMBER, "Карточка №$number", number.toString())
         }
         val command=parse(text,plots) ?: return null
+        if (screen == "journal" && command.action in setOf(VoiceAction.SPEAK_RESULT, VoiceAction.NOTE, VoiceAction.SILENCE)) return command
         if (screen == "knowledge" && command.action in knowledgeActions) return command
         if(screen=="note_review")return command.takeIf {it.action in setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.NOTE,VoiceAction.LISTEN_OFF)}
         val plotActions=setOf(VoiceAction.ROW,VoiceAction.PLOT)

@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -360,15 +361,15 @@ internal fun JournalScreen(model: JournalViewModel, modelNames: Map<String, Stri
                     Text("Пока нет сохранённых осмотров. Дождись анализа и нажми «Сохранить осмотр».", style = MaterialTheme.typography.bodyLarge)
                 }
             }
-            items(state.visible, key = { it.id }) { entry ->
-                JournalEntryCard(modelNames, entry, onOpen = { onOpen(entry.id) })
+            itemsIndexed(state.visible, key = { _, entry -> entry.id }) { index, entry ->
+                JournalEntryCard(modelNames, entry, index + 1, onOpen = { onOpen(entry.id) })
             }
         }
     }
 }
 
 @Composable
-private fun JournalEntryCard(modelNames: Map<String, String>, entry: InspectionEntry, onOpen: () -> Unit) {
+private fun JournalEntryCard(modelNames: Map<String, String>, entry: InspectionEntry, number: Int, onOpen: () -> Unit) {
     val modelName = modelNames[entry.model] ?: entry.model
     val date = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(entry.created))
     val colors = MaterialTheme.colorScheme
@@ -387,7 +388,7 @@ private fun JournalEntryCard(modelNames: Map<String, String>, entry: InspectionE
             JournalThumbnail(entry.photo)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(date, style = MaterialTheme.typography.titleSmall)
+                Text("№$number · $date", style = MaterialTheme.typography.titleSmall)
                 Text("$modelName · ${boxesLabel(entry.detections)}", style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                 Pill(reviewLabel(entry.review), reviewContainer, reviewContent)
                 val place = listOfNotNull(
