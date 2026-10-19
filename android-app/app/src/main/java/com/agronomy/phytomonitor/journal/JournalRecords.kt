@@ -35,6 +35,7 @@ data class ParsedInspection(
     val row: String?,
     val expertStatus: String,
     val archivePhoto: String?,
+    val plant: String = "",
     val location: GeoPoint? = null
 ) {
     val photoPath: String get() = prediction.getString("photo")
@@ -79,6 +80,7 @@ object JournalRecords {
             row = data.optString("row").ifBlank { null },
             expertStatus = data.optString("expert_status", "none"),
             archivePhoto = data.optString("archive_photo").ifBlank { null },
+            plant = data.optString("plant").trim(),
             location = location(data.optJSONObject("location"))
         )
     }
@@ -113,7 +115,7 @@ object JournalRecords {
         Result.failure(JournalFormatException(error.reason, source))
     }
 
-    fun toRecord(parsed: ParsedInspection, plotId: String?, photoPath: String): InspectionRecord {
+    fun toRecord(parsed: ParsedInspection, plotId: String?, plantId: String?, photoPath: String): InspectionRecord {
         val inspection = InspectionEntity(
             id = parsed.id,
             plotId = plotId,
@@ -135,6 +137,7 @@ object JournalRecords {
         val photo = PhotoEntity(
             id = parsed.id,
             inspectionId = parsed.id,
+            plantId = plantId,
             localPath = photoPath,
             sha256 = parsed.photoSha256,
             width = parsed.prediction.optInt("decoded_width"),
@@ -177,6 +180,7 @@ object JournalRecords {
             .put("review", inspection.userReview)
             .put("plot", details.plot?.name ?: "")
             .put("row", inspection.row ?: "")
+            .put("plant", details.photos.firstOrNull()?.plantName ?: "")
             .put("expert_status", inspection.expertStatus)
             .put("review_scope", REVIEW_SCOPE)
             .put("photo_path", photo?.localPath ?: "")

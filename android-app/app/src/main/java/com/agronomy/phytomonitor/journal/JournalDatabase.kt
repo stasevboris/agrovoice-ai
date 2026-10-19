@@ -31,6 +31,15 @@ interface JournalDao {
     @Query("SELECT * FROM plot WHERE name = :name LIMIT 1")
     fun plotByName(name: String): PlotEntity?
 
+    @Query("SELECT * FROM plant WHERE plot_id IS :plotId AND name = :name LIMIT 1")
+    fun plantByName(plotId: String?, name: String): PlantEntity?
+
+    @Query("SELECT * FROM plant WHERE id = :id")
+    fun plant(id: String): PlantEntity?
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertPlant(plant: PlantEntity): Long
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPlot(plot: PlotEntity): Long
 
@@ -188,6 +197,7 @@ interface JournalDao {
 @Database(
     entities = [
         PlotEntity::class,
+        PlantEntity::class,
         InspectionEntity::class,
         PhotoEntity::class,
         DetectionEntity::class,
@@ -198,7 +208,7 @@ interface JournalDao {
         AchievementEntity::class,
         JournalEventEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class JournalDatabase : RoomDatabase() {
@@ -220,9 +230,41 @@ abstract class JournalDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * v3 adds plants and links existing photos to nothing (plant_id NULL): old inspections stay
+         * without a plant until the user names one during a new inspection or an edit.
+         */
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `plant` (`id` TEXT NOT NULL, `plot_id` TEXT, `name` TEXT NOT NULL, " +
+                        "`created_at` INTEGER NOT NULL, `updated_at` INTEGER NOT NULL, PRIMARY KEY(`id`), " +
+                        "FOREIGN KEY(`plot_id`) REFERENCES `plot`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL)"
+                )
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_plant_plot_id` ON `plant` (`plot_id`)")
+                // SQLite cannot add a REFERENCES column with ALTER TABLE: recreate photo with plant_id.
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `photo_new` (`id` TEXT NOT NULL, `inspection_id` TEXT NOT NULL, " +
+                        "`plant_id` TEXT, `local_path` TEXT NOT NULL, `sha256` TEXT NOT NULL, " +
+                        "`width` INTEGER NOT NULL, `height` INTEGER NOT NULL, `uploaded` INTEGER NOT NULL DEFAULT 0, " +
+                        "PRIMARY KEY(`id`), " +
+                        "FOREIGN KEY(`inspection_id`) REFERENCES `inspection`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE, " +
+                        "FOREIGN KEY(`plant_id`) REFERENCES `plant`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL)"
+                )
+                db.execSQL(
+                    "INSERT INTO `photo_new` (`id`, `inspection_id`, `plant_id`, `local_path`, `sha256`, `width`, `height`, `uploaded`) " +
+                        "SELECT `id`, `inspection_id`, NULL, `local_path`, `sha256`, `width`, `height`, `uploaded` FROM `photo`"
+                )
+                db.execSQL("DROP TABLE `photo`")
+                db.execSQL("ALTER TABLE `photo_new` RENAME TO `photo`")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_photo_inspection_id` ON `photo` (`inspection_id`)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS `index_photo_plant_id` ON `photo` (`plant_id`)")
+            }
+        }
+
         fun get(context: Context): JournalDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, JournalDatabase::class.java, "journal.db")
-                .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
                 .also { instance = it }
         }

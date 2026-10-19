@@ -7,7 +7,7 @@ class SavedInspectionSpeechTest {
     @Test
     fun readsPersistedLabelsAndNoteEvenWhenPhotoIsMissing() {
         val record = JournalRecords.toRecord(JournalRecords.parse(
-            JournalFixtures.legacyRecord("saved", "/missing.jpg", note = "Повторить осмотр")), null, "/missing.jpg")
+            JournalFixtures.legacyRecord("saved", "/missing.jpg", note = "Повторить осмотр")), null, null, "/missing.jpg")
         val details = InspectionWithDetails(record.inspection, null,
             listOf(PhotoWithDetections(record.photo, record.detections)))
         val text = SavedInspectionSpeech.text(details)

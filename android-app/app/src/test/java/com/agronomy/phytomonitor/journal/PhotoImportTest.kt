@@ -46,7 +46,7 @@ class PhotoImportTest {
     @Test
     fun savedViewKeepsFramesAndLabelsTogetherStrongestFirst() {
         val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("v", "/p.jpg"))
-        val record = JournalRecords.toRecord(parsed, null, "/p.jpg")
+        val record = JournalRecords.toRecord(parsed, null, null, "/p.jpg")
         val weak = record.detections.single().copy(id = 2, labelRu = "Томат: здоров", confidence = 0.3, x1 = 1.0)
         val strong = record.detections.single().copy(id = 1, labelRu = "Томат: фитофтороз", confidence = 0.9, x1 = 50.0)
         val details = InspectionWithDetails(record.inspection, null, listOf(PhotoWithDetections(record.photo, listOf(weak, strong))))

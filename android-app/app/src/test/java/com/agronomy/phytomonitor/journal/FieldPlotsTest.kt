@@ -119,9 +119,37 @@ class FieldPlotsTest {
     }
 
     @Test
+    fun plantIsKeptPerPlotAndSurvivesTheArchive() {
+        val journal = InspectionJournal(context, database) { now }
+        journal.save(report("p1.json"), "", "unrated", "Сад", plant = "Ёж 1")
+        journal.save(report("p2.json"), "", "unrated", "Сад", plant = "Ёж 1")
+        journal.save(report("p3.json"), "", "unrated", "Поле", plant = "Ёж 1")
+        journal.save(report("p4.json"), "", "unrated", "", "")
+        // Entries expose the plant label through the public list path.
+        assertEquals(
+            listOf("Ёж 1", "Ёж 1", "Ёж 1", ""),
+            journal.list().sortedBy { it.created }.map { it.plant }
+        )
+        // The archive round-trips the label; the restored journal re-creates plants by (plot, name).
+        val archive = java.io.ByteArrayOutputStream()
+        journal.exportArchive(archive)
+        val other = Room.inMemoryDatabaseBuilder(context, JournalDatabase::class.java).allowMainThreadQueries().build()
+        try {
+            val restored = InspectionJournal(context, other) { now }
+            restored.import(java.io.ByteArrayInputStream(archive.toByteArray()))
+            assertEquals(
+                listOf("Ёж 1", "Ёж 1", "Ёж 1", ""),
+                restored.list().sortedBy { it.created }.map { it.plant }
+            )
+        } finally {
+            other.close()
+        }
+    }
+
+    @Test
     fun coordinatesSurviveTheArchive() {
         val journal = InspectionJournal(context, database) { now }
-        journal.save(report("e.json"), "", "unrated", "Сад", row = "2", location = GeoPoint(52.1, 23.7, 12.0))
+        val source = journal.save(report("e.json"), "", "unrated", "Сад", row = "2", location = GeoPoint(52.1, 23.7, 12.0))
         val archive = java.io.ByteArrayOutputStream()
         journal.exportArchive(archive)
         val other = Room.inMemoryDatabaseBuilder(context, JournalDatabase::class.java).allowMainThreadQueries().build()
@@ -129,6 +157,7 @@ class FieldPlotsTest {
             val restored = InspectionJournal(context, other) { now }
             restored.import(java.io.ByteArrayInputStream(archive.toByteArray()))
             val entry = restored.list().single()
+            assertEquals("restored id keeps the source", source.id, entry.id)
             assertEquals(52.1, entry.location!!.lat, 0.0)
             assertEquals("2", entry.row)
             assertEquals("Сад", entry.plot)

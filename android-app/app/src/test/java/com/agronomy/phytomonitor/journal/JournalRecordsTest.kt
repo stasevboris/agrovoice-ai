@@ -21,7 +21,7 @@ class JournalRecordsTest {
     @Test
     fun legacyRecordBecomesInspectionPhotoAndDetections() {
         val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("a1", "/data/photos/import_1.jpg", "ff00"))
-        val record = JournalRecords.toRecord(parsed, plotId = "plot-1", photoPath = "/data/photos/import_1.jpg")
+        val record = JournalRecords.toRecord(parsed, plotId = "plot-1", plantId = null, photoPath = "/data/photos/import_1.jpg")
         assertEquals("a1", record.inspection.id)
         assertEquals("plot-1", record.inspection.plotId)
         assertEquals("incorrect", record.inspection.userReview)
@@ -56,7 +56,7 @@ class JournalRecordsTest {
     @Test
     fun exportedRecordReadsBackWithTheSameFields() {
         val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("b2", "/p.jpg", "aa"))
-        val record = JournalRecords.toRecord(parsed, "plot-1", "/restored.jpg")
+        val record = JournalRecords.toRecord(parsed, "plot-1", null, "/restored.jpg")
         val details = InspectionWithDetails(
             record.inspection,
             PlotEntity("plot-1", "Теплица 2", updatedAt = 1L),
@@ -100,7 +100,7 @@ class JournalRecordsTest {
     @Test
     fun csvHasHeaderAndOneLinePerInspection() {
         val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("d4", "/p.jpg", note = "Пятна; жёлтые"))
-        val record = JournalRecords.toRecord(parsed, "plot-1", "/p.jpg")
+        val record = JournalRecords.toRecord(parsed, "plot-1", null, "/p.jpg")
         val details = InspectionWithDetails(record.inspection, PlotEntity("plot-1", "Теплица 2", updatedAt = 1L), listOf(PhotoWithDetections(record.photo, record.detections)))
         val csv = JournalCsv.write(listOf(details)) { false }
         assertTrue(csv.startsWith("\uFEFFid;дата;участок"))

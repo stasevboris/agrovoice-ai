@@ -48,16 +48,34 @@ data class InspectionEntity(
     @ColumnInfo(name = "updated_at") val updatedAt: Long
 )
 
+/** One named plant inside a plot; later inspections of the same plant attach to it. */
+@Entity(
+    tableName = "plant",
+    foreignKeys = [
+        ForeignKey(entity = PlotEntity::class, parentColumns = ["id"], childColumns = ["plot_id"], onDelete = ForeignKey.SET_NULL)
+    ],
+    indices = [Index("plot_id")]
+)
+data class PlantEntity(
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "plot_id") val plotId: String?,
+    val name: String,
+    @ColumnInfo(name = "created_at") val createdAt: Long,
+    @ColumnInfo(name = "updated_at") val updatedAt: Long
+)
+
 @Entity(
     tableName = "photo",
     foreignKeys = [
-        ForeignKey(entity = InspectionEntity::class, parentColumns = ["id"], childColumns = ["inspection_id"], onDelete = ForeignKey.CASCADE)
+        ForeignKey(entity = InspectionEntity::class, parentColumns = ["id"], childColumns = ["inspection_id"], onDelete = ForeignKey.CASCADE),
+        ForeignKey(entity = PlantEntity::class, parentColumns = ["id"], childColumns = ["plant_id"], onDelete = ForeignKey.SET_NULL)
     ],
-    indices = [Index("inspection_id")]
+    indices = [Index("inspection_id"), Index("plant_id")]
 )
 data class PhotoEntity(
     @PrimaryKey val id: String,
     @ColumnInfo(name = "inspection_id") val inspectionId: String,
+    @ColumnInfo(name = "plant_id") val plantId: String? = null,
     @ColumnInfo(name = "local_path") val localPath: String,
     val sha256: String,
     val width: Int,
@@ -131,7 +149,9 @@ data class SyncQueueEntity(
 data class PhotoWithDetections(
     @Embedded val photo: PhotoEntity,
     @Relation(parentColumn = "id", entityColumn = "photo_id")
-    val detections: List<DetectionEntity>
+    val detections: List<DetectionEntity>,
+    @Relation(entity = PlantEntity::class, parentColumn = "plant_id", entityColumn = "id", projection = ["name"])
+    val plantName: String? = null
 )
 
 data class InspectionWithDetails(

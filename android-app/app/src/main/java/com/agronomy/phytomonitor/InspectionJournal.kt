@@ -17,6 +17,7 @@ import com.agronomy.phytomonitor.journal.JournalStorage
 import com.agronomy.phytomonitor.journal.MAX_NOTE
 import com.agronomy.phytomonitor.journal.MAX_PLOT
 import com.agronomy.phytomonitor.journal.ParsedInspection
+import com.agronomy.phytomonitor.journal.PlantEntity
 import com.agronomy.phytomonitor.journal.PlotEntity
 import com.agronomy.phytomonitor.journal.REVIEWS
 import com.agronomy.phytomonitor.journal.SyncQueueEntity
@@ -41,6 +42,7 @@ data class InspectionEntry(
     val review: String,
     val detections: Int,
     val plot: String = "",
+    val plant: String = "",
     val photoAvailable: Boolean = true,
     val row: String = "",
     val location: GeoPoint? = null
@@ -118,7 +120,8 @@ class InspectionJournal(
         review: String,
         plot: String = "",
         row: String? = null,
-        location: GeoPoint? = null
+        location: GeoPoint? = null,
+        plant: String = ""
     ): InspectionEntry {
         require(review in REVIEWS)
         require(note.length <= MAX_NOTE)
@@ -139,6 +142,7 @@ class InspectionJournal(
             row = row?.trim()?.ifEmpty { null },
             expertStatus = previous?.expertStatus ?: "none",
             archivePhoto = null,
+            plant = plant.trim(),
             location = previous?.let(::storedLocation) ?: location
         )
         store(parsed, parsed.photoPath, operation = "upsert")
@@ -363,12 +367,24 @@ class InspectionJournal(
     }
 
     private fun store(parsed: ParsedInspection, photoPath: String, operation: String) {
-        val record = JournalRecords.toRecord(parsed, plotId(parsed.plot), photoPath)
+        val plotRef = plotId(parsed.plot)
+        val plantRef = plantId(plotRef, parsed.plant)
+        val record = JournalRecords.toRecord(parsed, plotRef, plantRef, photoPath)
         val change = SyncQueueEntity(entity = "inspection", entityId = parsed.id, operation = operation, createdAt = clock())
         database.runInTransaction(Callable {
             dao.saveRecord(record, change)
             recomputeAchievements()
         })
+    }
+
+    private fun plantId(plotRef: String?, name: String): String? {
+        val trimmed = name.trim()
+        if (trimmed.isEmpty()) {
+            return null
+        }
+        dao.plantByName(plotRef, trimmed)?.let { return it.id }
+        dao.insertPlant(PlantEntity(UUID.randomUUID().toString(), plotRef, trimmed, createdAt = clock(), updatedAt = clock()))
+        return requireNotNull(dao.plantByName(plotRef, trimmed)).id
     }
 
     private fun plotId(name: String): String? {
@@ -401,6 +417,7 @@ class InspectionJournal(
             review = inspection.userReview,
             detections = photo?.detections?.size ?: 0,
             plot = details.plot?.name.orEmpty(),
+            plant = photo?.plantName.orEmpty(),
             photoAvailable = path.isNotEmpty() && File(path).isFile,
             row = inspection.row.orEmpty(),
             location = storedLocation(inspection)
