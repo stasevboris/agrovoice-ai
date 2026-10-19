@@ -11,7 +11,7 @@
 | Сборка allcrops | [build_allcrops_v1.py](build_allcrops_v1.py), [taxonomy_v1.json](allcrops/taxonomy_v1.json) | Набор, manifest и report; порядок классов не менять |
 | Источники и ext_v2 | [external/](external/), [источники](../docs/data/SOURCES.md) | Данные с происхождением и ограничениями геометрии |
 | Строгий набор, unknown, негативы, веб-фото | [external/prepare_vision_alternatives.py](external/prepare_vision_alternatives.py), остальные `external/prepare_*` | Раздельные наборы по назначению, не новые диагнозы |
-| Русский помощник | [assistant/prepare_corpus.py](assistant/prepare_corpus.py), [scenarios.json](assistant/scenarios.json) | Синтетические сценарии и проверяемые целевые действия; это ещё не Android-runtime |
+| Русский помощник | [assistant/prepare_corpus.py](assistant/prepare_corpus.py), [scenarios.json](assistant/scenarios.json), [run_ollama_router.py](assistant/run_ollama_router.py) | Синтетические сценарии и целевые действия; Android проверяет тот же JSON-протокол. Сбор ответов локальной LLM для сравнения — [отчёт V-06](../docs/experiments/v06_intent_baseline/README.md) |
 | Baseline allcrops | [gpu_kit/README.md](gpu_kit/README.md), [train_queue.py](gpu_kit/train_queue.py) | Обучение, оценка, экспорт и пакет результатов |
 | Дополнение ext_v2 | [gpu_kit/README_ext_v2.md](gpu_kit/README_ext_v2.md), [pack_ext_addon.py](pack_ext_addon.py) | Отдельный пакет дополнения |
 | Новое сравнение моделей | [gpu_kit/alternatives/README.md](gpu_kit/alternatives/README.md) | Одинаковые данные и field-val, test отложен |

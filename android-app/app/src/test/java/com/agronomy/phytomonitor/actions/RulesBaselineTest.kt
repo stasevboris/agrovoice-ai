@@ -67,6 +67,57 @@ class RulesBaselineTest {
         assertEquals(report.getJSONArray("false_execution_examples").toString(), 0, report.getJSONArray("false_execution_examples").length())
     }
 
+    /**
+     * Zero-shot answers of local LLMs collected by ml-pipeline/assistant/run_ollama_router.py. Each answer
+     * goes through AssistantProtocol (structure, dictation, negation guard) and the executor, as in the app.
+     */
+    @Test
+    fun localLlmAnswers() {
+        val folder = find("docs/experiments/v06_intent_baseline")
+        val files = folder.listFiles { file -> file.name.startsWith("llm_answers_") && file.name.endsWith(".jsonl") }.orEmpty()
+        for (file in files.sortedBy { it.name }) {
+            val rows = file.readLines().filter { it.isNotBlank() }.map(::JSONObject)
+            val answers = rows.associate { it.getString("utterance") to it.getString("answer") }
+            val latencies = rows.map { it.getLong("latency_ms") }.sorted()
+            val model = rows.first().getString("model")
+            val report = evaluate("$model zero-shot via Ollama, JSON schema decoding, temperature 0 + AssistantProtocol + ActionPolicy") { utterance, state ->
+                val answer = answers.getValue(utterance)
+                val plan = AssistantProtocol.read(answer, state, utterance)
+                if (plan.decision != Decision.EXECUTE) {
+                    emptyList()
+                } else {
+                    plan.steps.map { VoiceCommand(it.action, it.action.name, it.value) }
+                }
+            }
+            report.put("raw_execute_proposals_on_non_execute", rawExecuteProposals(answers))
+            report.put("desktop_latency_ms_median", latencies[latencies.size / 2])
+            report.put("desktop_latency_note", "Ollama on the development PC, first call includes loading; not a phone measurement.")
+            write("llm_${file.name.removePrefix("llm_answers_").removeSuffix(".jsonl")}.json", report)
+            assertEquals(201, rows.size)
+        }
+    }
+
+    /** Before the executor: how often the model itself said «execute» where the corpus expects no action. */
+    private fun rawExecuteProposals(answers: Map<String, String>): Int {
+        val scenarios = JSONObject(find("ml-pipeline/assistant/scenarios.json").readText()).getJSONArray("scenarios")
+        var count = 0
+        for (index in 0 until scenarios.length()) {
+            val scenario = scenarios.getJSONObject(index)
+            if (scenario.optString("decision", "execute") == "execute") {
+                continue
+            }
+            val utterances = scenario.getJSONArray("utterances")
+            for (u in 0 until utterances.length()) {
+                val answer = answers.getValue(utterances.getString(u))
+                val decision = runCatching { JSONObject(answer).optString("decision") }.getOrDefault("")
+                if (decision == "execute") {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+
     private fun evaluate(method: String, understand: (String, AppState) -> List<VoiceCommand>): JSONObject {
         val scenarios = JSONObject(find("ml-pipeline/assistant/scenarios.json").readText()).getJSONArray("scenarios")
         val bySplit = linkedMapOf("train" to Counts(), "val" to Counts(), "test" to Counts())

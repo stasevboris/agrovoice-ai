@@ -1,0 +1,740 @@
+{
+  "val": {
+    "execute_wrong_action": 1,
+    "non_execute_not_executed": 10,
+    "execute_utterances": 14,
+    "execute_exact": 0,
+    "non_execute_utterances": 10,
+    "execute_no_action": 13,
+    "false_executions": 0
+  },
+  "desktop_latency_ms_median": 825,
+  "method": "qwen3.5:0.8b zero-shot via Ollama, JSON schema decoding, temperature 0 + AssistantProtocol + ActionPolicy",
+  "test": {
+    "execute_wrong_action": 1,
+    "non_execute_not_executed": 19,
+    "execute_utterances": 20,
+    "execute_exact": 0,
+    "non_execute_utterances": 19,
+    "execute_no_action": 19,
+    "false_executions": 0
+  },
+  "raw_execute_proposals_on_non_execute": 10,
+  "desktop_latency_note": "Ollama on the development PC, first call includes loading; not a phone measurement.",
+  "source": "ml-pipeline/assistant/scenarios.json",
+  "false_execution_examples": [
+    {
+      "id": "threshold_invalid",
+      "got": "[(THRESHOLD_UP, )]",
+      "utterance": "Выставь порог сто двадцать процентов"
+    },
+    {
+      "id": "negation",
+      "got": "[(SPEAK_RESULT, )]",
+      "utterance": "Не выключай микрофон"
+    }
+  ],
+  "command": "gradlew testDebugUnitTest --tests *RulesBaselineTest",
+  "execute_misses": [
+    {
+      "id": "open_camera",
+      "got": "[]",
+      "utterance": "Включи камеру, хочу осмотреть лист"
+    },
+    {
+      "id": "open_camera",
+      "got": "[]",
+      "utterance": "Давай перейдём к съёмке"
+    },
+    {
+      "id": "open_camera",
+      "got": "[]",
+      "utterance": "Открой видоискатель"
+    },
+    {
+      "id": "capture",
+      "got": "[]",
+      "utterance": "Снимай сейчас"
+    },
+    {
+      "id": "capture",
+      "got": "[]",
+      "utterance": "Я навёл телефон, делай снимок"
+    },
+    {
+      "id": "capture",
+      "got": "[]",
+      "utterance": "Можно фотографировать сразу"
+    },
+    {
+      "id": "gallery",
+      "got": "[]",
+      "utterance": "Хочу взять снимок из нашей галереи"
+    },
+    {
+      "id": "gallery",
+      "got": "[]",
+      "utterance": "Покажи мои фотографии растений"
+    },
+    {
+      "id": "gallery",
+      "got": "[]",
+      "utterance": "Давай выберем уже снятый лист"
+    },
+    {
+      "id": "system_gallery",
+      "got": "[]",
+      "utterance": "Выбери фотографию из системной галереи"
+    },
+    {
+      "id": "system_gallery",
+      "got": "[]",
+      "utterance": "Открой фотографии телефона вне приложения"
+    },
+    {
+      "id": "analyze",
+      "got": "[]",
+      "utterance": "Посмотри, что видно на выбранном листе"
+    },
+    {
+      "id": "analyze",
+      "got": "[]",
+      "utterance": "Повтори анализ этого снимка"
+    },
+    {
+      "id": "analyze",
+      "got": "[]",
+      "utterance": "Проверь загруженную фотографию"
+    },
+    {
+      "id": "result",
+      "got": "[]",
+      "utterance": "Что показала проверка, прочитай"
+    },
+    {
+      "id": "result",
+      "got": "[]",
+      "utterance": "Озвучь вывод анализа"
+    },
+    {
+      "id": "save",
+      "got": "[]",
+      "utterance": "Добавь этот осмотр в историю"
+    },
+    {
+      "id": "save",
+      "got": "[]",
+      "utterance": "Сохрани текущую проверку в журнал"
+    },
+    {
+      "id": "save",
+      "got": "[]",
+      "utterance": "Запиши результаты осмотра"
+    },
+    {
+      "id": "journal",
+      "got": "[]",
+      "utterance": "Покажи предыдущие осмотры"
+    },
+    {
+      "id": "journal",
+      "got": "[]",
+      "utterance": "Где история моих проверок"
+    },
+    {
+      "id": "journal",
+      "got": "[]",
+      "utterance": "Перейди в журнал растений"
+    },
+    {
+      "id": "note_start",
+      "got": "[]",
+      "utterance": "Я хочу надиктовать комментарий"
+    },
+    {
+      "id": "note_start",
+      "got": "[]",
+      "utterance": "Добавим текстовую заметку к осмотру"
+    },
+    {
+      "id": "note_start",
+      "got": "[]",
+      "utterance": "Начни записывать мою заметку"
+    },
+    {
+      "id": "note_confirm",
+      "got": "[]",
+      "utterance": "Да, записано правильно, подтверждаю"
+    },
+    {
+      "id": "note_confirm",
+      "got": "[]",
+      "utterance": "Оставь эту заметку, всё верно"
+    },
+    {
+      "id": "note_cancel",
+      "got": "[]",
+      "utterance": "Не добавляй эту заметку"
+    },
+    {
+      "id": "note_cancel",
+      "got": "[]",
+      "utterance": "Отмени запись комментария"
+    },
+    {
+      "id": "cancel",
+      "got": "[]",
+      "utterance": "Передумал, отменяй"
+    },
+    {
+      "id": "cancel",
+      "got": "[]",
+      "utterance": "Не фотографируй, отмена"
+    },
+    {
+      "id": "cancel",
+      "got": "[]",
+      "utterance": "Прекрати текущее действие"
+    },
+    {
+      "id": "stop_listening",
+      "got": "[]",
+      "utterance": "Больше не слушай меня"
+    },
+    {
+      "id": "stop_listening",
+      "got": "[]",
+      "utterance": "Отключи микрофон"
+    },
+    {
+      "id": "stop_listening",
+      "got": "[]",
+      "utterance": "Стоп, прекрати слушать"
+    },
+    {
+      "id": "silence",
+      "got": "[]",
+      "utterance": "Хватит читать вслух"
+    },
+    {
+      "id": "silence",
+      "got": "[]",
+      "utterance": "Прерви озвучку результата"
+    },
+    {
+      "id": "silence",
+      "got": "[]",
+      "utterance": "Помолчи, но микрофон не выключай"
+    },
+    {
+      "id": "listen_on",
+      "got": "[]",
+      "utterance": "Слушай следующие команды постоянно"
+    },
+    {
+      "id": "listen_on",
+      "got": "[]",
+      "utterance": "Включи непрерывное голосовое управление"
+    },
+    {
+      "id": "help",
+      "got": "[]",
+      "utterance": "Объясни, как тобой управлять"
+    },
+    {
+      "id": "help",
+      "got": "[]",
+      "utterance": "Покажи доступные голосовые действия"
+    },
+    {
+      "id": "help",
+      "got": "[]",
+      "utterance": "Мне нужна помощь с приложением"
+    },
+    {
+      "id": "close_help",
+      "got": "[]",
+      "utterance": "Убери окно подсказок"
+    },
+    {
+      "id": "close_help",
+      "got": "[]",
+      "utterance": "Закрой справку по командам"
+    },
+    {
+      "id": "back",
+      "got": "[]",
+      "utterance": "Верни меня на предыдущий экран"
+    },
+    {
+      "id": "back",
+      "got": "[]",
+      "utterance": "Давай обратно"
+    },
+    {
+      "id": "back",
+      "got": "[]",
+      "utterance": "Шаг назад"
+    },
+    {
+      "id": "exit",
+      "got": "[]",
+      "utterance": "Заверши работу приложения"
+    },
+    {
+      "id": "exit",
+      "got": "[]",
+      "utterance": "Выйди из AgroVoice"
+    },
+    {
+      "id": "photo_number",
+      "got": "[]",
+      "utterance": "Покажи фотографию номер семь"
+    },
+    {
+      "id": "photo_number",
+      "got": "[]",
+      "utterance": "Выбираю седьмой снимок"
+    },
+    {
+      "id": "photo_number",
+      "got": "[]",
+      "utterance": "Открой фото 7"
+    },
+    {
+      "id": "photo_first",
+      "got": "[]",
+      "utterance": "Покажи самый свежий снимок"
+    },
+    {
+      "id": "photo_first",
+      "got": "[]",
+      "utterance": "Перейди к первой фотографии"
+    },
+    {
+      "id": "photo_last",
+      "got": "[]",
+      "utterance": "Перейди к самой старой фотографии"
+    },
+    {
+      "id": "photo_last",
+      "got": "[]",
+      "utterance": "Открой последний снимок списка"
+    },
+    {
+      "id": "photo_next",
+      "got": "[]",
+      "utterance": "Покажи следующий снимок"
+    },
+    {
+      "id": "photo_next",
+      "got": "[]",
+      "utterance": "Листни на одну фотографию вперёд"
+    },
+    {
+      "id": "photo_previous",
+      "got": "[]",
+      "utterance": "Покажи фото перед этим"
+    },
+    {
+      "id": "photo_previous",
+      "got": "[]",
+      "utterance": "На одну фотографию назад"
+    },
+    {
+      "id": "gallery_confirm",
+      "got": "[]",
+      "utterance": "Берём выбранную фотографию"
+    },
+    {
+      "id": "gallery_confirm",
+      "got": "[]",
+      "utterance": "Да, используй этот снимок"
+    },
+    {
+      "id": "scroll_down",
+      "got": "[]",
+      "utterance": "Прокрути список немного вниз"
+    },
+    {
+      "id": "scroll_down",
+      "got": "[]",
+      "utterance": "Покажи записи ниже"
+    },
+    {
+      "id": "scroll_up",
+      "got": "[]",
+      "utterance": "Подними список выше"
+    },
+    {
+      "id": "scroll_up",
+      "got": "[]",
+      "utterance": "Прокрути журнал вверх"
+    },
+    {
+      "id": "scroll_top",
+      "got": "[]",
+      "utterance": "Верни список в самое начало"
+    },
+    {
+      "id": "scroll_top",
+      "got": "[]",
+      "utterance": "Покажи верх журнала"
+    },
+    {
+      "id": "scroll_bottom",
+      "got": "[]",
+      "utterance": "Перейди в самый низ списка"
+    },
+    {
+      "id": "scroll_bottom",
+      "got": "[]",
+      "utterance": "Пролистай до конца журнала"
+    },
+    {
+      "id": "threshold",
+      "got": "[]",
+      "utterance": "Поставь порог на сорок процентов"
+    },
+    {
+      "id": "threshold",
+      "got": "[]",
+      "utterance": "Установи порог 40 процентов"
+    },
+    {
+      "id": "threshold_up",
+      "got": "[]",
+      "utterance": "Подними порог распознавания"
+    },
+    {
+      "id": "threshold_up",
+      "got": "[]",
+      "utterance": "Сделай порог выше"
+    },
+    {
+      "id": "threshold_down",
+      "got": "[]",
+      "utterance": "Снизь порог распознавания"
+    },
+    {
+      "id": "threshold_down",
+      "got": "[]",
+      "utterance": "Сделай порог немного меньше"
+    },
+    {
+      "id": "crop_tomato",
+      "got": "[]",
+      "utterance": "Выбери культуру томат"
+    },
+    {
+      "id": "crop_tomato",
+      "got": "[]",
+      "utterance": "Сейчас осматриваем помидоры"
+    },
+    {
+      "id": "crop_potato",
+      "got": "[]",
+      "utterance": "Переключись на картофель"
+    },
+    {
+      "id": "crop_potato",
+      "got": "[]",
+      "utterance": "Выбери картошку как культуру"
+    },
+    {
+      "id": "crop_cucumber",
+      "got": "[]",
+      "utterance": "Работаем с огурцами, выбери эту культуру"
+    },
+    {
+      "id": "crop_cucumber",
+      "got": "[]",
+      "utterance": "Установи культуру огурец"
+    },
+    {
+      "id": "crop_all",
+      "got": "[]",
+      "utterance": "Сними ограничение по культуре"
+    },
+    {
+      "id": "crop_all",
+      "got": "[]",
+      "utterance": "Показывай все культуры"
+    },
+    {
+      "id": "model_fast",
+      "got": "[]",
+      "utterance": "Используй быструю модель YOLO26n"
+    },
+    {
+      "id": "model_fast",
+      "got": "[]",
+      "utterance": "Выбери йоло двадцать шесть эн"
+    },
+    {
+      "id": "model_s",
+      "got": "[]",
+      "utterance": "Переключи распознавание на YOLO26s"
+    },
+    {
+      "id": "model_s",
+      "got": "[]",
+      "utterance": "Выбери йоло двадцать шесть эс"
+    },
+    {
+      "id": "compare",
+      "got": "[]",
+      "utterance": "Сравни ответы доступных моделей на этом снимке"
+    },
+    {
+      "id": "compare",
+      "got": "[]",
+      "utterance": "Проверь фото разными нейросетями"
+    },
+    {
+      "id": "assessment_good",
+      "got": "[]",
+      "utterance": "Отметь, что модель ответила правильно"
+    },
+    {
+      "id": "assessment_good",
+      "got": "[]",
+      "utterance": "Я согласен с результатом, пометь как верный"
+    },
+    {
+      "id": "assessment_bad",
+      "got": "[]",
+      "utterance": "Пометь результат как ошибочный"
+    },
+    {
+      "id": "assessment_bad",
+      "got": "[]",
+      "utterance": "По-моему, модель ошиблась, запиши это"
+    },
+    {
+      "id": "assessment_uncertain",
+      "got": "[]",
+      "utterance": "Отметь, что я сомневаюсь в ответе"
+    },
+    {
+      "id": "assessment_uncertain",
+      "got": "[]",
+      "utterance": "Не могу подтвердить диагноз, нужна проверка"
+    },
+    {
+      "id": "boxes_on",
+      "got": "[]",
+      "utterance": "Отобрази рамки вокруг найденных листьев"
+    },
+    {
+      "id": "boxes_on",
+      "got": "[]",
+      "utterance": "Покажи границы обнаруженных объектов"
+    },
+    {
+      "id": "boxes_off",
+      "got": "[]",
+      "utterance": "Скрой прямоугольники на фотографии"
+    },
+    {
+      "id": "boxes_off",
+      "got": "[]",
+      "utterance": "Убери отображение рамок"
+    },
+    {
+      "id": "compound",
+      "got": "[]",
+      "utterance": "Прочитай результат, а затем сохрани осмотр"
+    },
+    {
+      "id": "compound",
+      "got": "[]",
+      "utterance": "Сначала озвучь ответ и потом добавь его в журнал"
+    },
+    {
+      "id": "val_camera",
+      "got": "[]",
+      "utterance": "Мне бы сфотографировать растение, включи видоискатель"
+    },
+    {
+      "id": "val_camera",
+      "got": "[]",
+      "utterance": "Переведи меня на экран камеры"
+    },
+    {
+      "id": "val_capture",
+      "got": "[]",
+      "utterance": "Кадр готов, фотографируй"
+    },
+    {
+      "id": "val_capture",
+      "got": "[]",
+      "utterance": "Нажми затвор сейчас"
+    },
+    {
+      "id": "val_gallery",
+      "got": "[]",
+      "utterance": "Нужна фотография номер двенадцать"
+    },
+    {
+      "id": "val_gallery",
+      "got": "[]",
+      "utterance": "Покажи снимок 12"
+    },
+    {
+      "id": "val_save",
+      "got": "[]",
+      "utterance": "Пусть этот осмотр останется в журнале"
+    },
+    {
+      "id": "val_save",
+      "got": "[]",
+      "utterance": "Занеси проверку в историю"
+    },
+    {
+      "id": "val_cancel",
+      "got": "[]",
+      "utterance": "Нет, этот комментарий не нужен"
+    },
+    {
+      "id": "val_cancel",
+      "got": "[]",
+      "utterance": "Откажись от добавления заметки"
+    },
+    {
+      "id": "val_scroll",
+      "got": "[]",
+      "utterance": "Опусти список, хочу увидеть нижние записи"
+    },
+    {
+      "id": "val_scroll",
+      "got": "[]",
+      "utterance": "Ещё немного прокрути вниз"
+    },
+    {
+      "id": "val_compound",
+      "got": "[(SPEAK_RESULT, ), (GALLERY, )]",
+      "utterance": "Озвучь ответ и занеси осмотр в историю"
+    },
+    {
+      "id": "val_compound",
+      "got": "[]",
+      "utterance": "Проговори вывод, после этого сохрани"
+    },
+    {
+      "id": "test_camera",
+      "got": "[]",
+      "utterance": "Собираюсь снять лист, подготовь камеру"
+    },
+    {
+      "id": "test_camera",
+      "got": "[]",
+      "utterance": "Покажи мне изображение с камеры"
+    },
+    {
+      "id": "test_gallery",
+      "got": "[]",
+      "utterance": "У меня уже есть снимок в приложении, покажи список"
+    },
+    {
+      "id": "test_gallery",
+      "got": "[]",
+      "utterance": "Перейди к сохранённым фотографиям"
+    },
+    {
+      "id": "test_analyze",
+      "got": "[]",
+      "utterance": "Запусти распознавание на выбранном кадре"
+    },
+    {
+      "id": "test_analyze",
+      "got": "[]",
+      "utterance": "Исследуй этот загруженный снимок"
+    },
+    {
+      "id": "test_save",
+      "got": "[]",
+      "utterance": "Хочу оставить эту проверку в истории осмотров"
+    },
+    {
+      "id": "test_save",
+      "got": "[]",
+      "utterance": "Занеси текущий результат в журнал"
+    },
+    {
+      "id": "test_number",
+      "got": "[]",
+      "utterance": "Возьми фото двадцать один"
+    },
+    {
+      "id": "test_number",
+      "got": "[]",
+      "utterance": "Выбираю снимок номер 21"
+    },
+    {
+      "id": "test_confirm_context",
+      "got": "[]",
+      "utterance": "Да, подтверждаю съёмку"
+    },
+    {
+      "id": "test_confirm_context",
+      "got": "[]",
+      "utterance": "Подтверждаю этот кадр"
+    },
+    {
+      "id": "test_silence",
+      "got": "[]",
+      "utterance": "Не читай дальше"
+    },
+    {
+      "id": "test_silence",
+      "got": "[]",
+      "utterance": "Останови чтение, я уже услышал"
+    },
+    {
+      "id": "test_cancel",
+      "got": "[]",
+      "utterance": "Я передумал снимать, отмени"
+    },
+    {
+      "id": "test_cancel",
+      "got": "[]",
+      "utterance": "Отбой, снимок не делай"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[]",
+      "utterance": "Порог распознавания пусть будет пятьдесят пять процентов"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[(THRESHOLD_UP, )]",
+      "utterance": "Выставь порог 55"
+    },
+    {
+      "id": "test_crop_correction",
+      "got": "[]",
+      "utterance": "Не картофель, выбери томат"
+    },
+    {
+      "id": "test_crop_correction",
+      "got": "[]",
+      "utterance": "Я ошибся, это помидор, переключи культуру на томат"
+    }
+  ],
+  "limitations": [
+    "Authored synthetic Russian phrases; not recorded speech and not ASR output.",
+    "Exact phrases: Vosk grammar mode can only output grammar phrases, so paraphrases are not even transcribed.",
+    "Free phrases need Vosk without a grammar; its recognition errors are not included here.",
+    "FreeSpeech rules were written with every split of the corpus visible: no independent test."
+  ],
+  "train": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 32,
+    "execute_utterances": 104,
+    "execute_exact": 1,
+    "non_execute_utterances": 34,
+    "execute_no_action": 103,
+    "false_executions": 2
+  }
+}
