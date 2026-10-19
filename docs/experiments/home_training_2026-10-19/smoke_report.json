@@ -1,0 +1,25 @@
+{
+  "smoke": true,
+  "runs": [
+    {
+      "variant": "train",
+      "seconds": 68.36012652600039,
+      "metrics": {
+        "metrics/precision(B)": 0.0,
+        "metrics/recall(B)": 0.0,
+        "metrics/mAP50(B)": 0.0,
+        "metrics/mAP50-95(B)": 0.0,
+        "fitness": 0.0
+      },
+      "best": "/mnt/f/agrovoice-ai/runs/home_20261019_smoke2/train/weights/best.pt",
+      "last": "/mnt/f/agrovoice-ai/runs/home_20261019_smoke2/train/weights/last.pt",
+      "test_evaluated": false
+    }
+  ],
+  "deadline": "2026-10-19T23:00:00+03:00",
+  "limitations": [
+    "Strict dataset has missing train classes; not a full taxonomy release.",
+    "Only field validation; no test-based tuning or model release.",
+    "Negatives are a small assistant-screened pilot; no guarantee of unknown rejection."
+  ]
+}

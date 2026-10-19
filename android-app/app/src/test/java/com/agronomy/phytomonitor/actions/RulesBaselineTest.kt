@@ -98,6 +98,25 @@ class RulesBaselineTest {
         }
     }
 
+    @Test
+    fun trainedCpuClassifierThroughTheSameExecutor() {
+        val array = JSONArray(find("docs/experiments/intent_cpu_2026-10-19/predictions.json").readText())
+        val rows = (0 until array.length()).map { array.getJSONObject(it) }
+        val answers = rows.associate { it.getString("utterance") to it.getString("answer") }
+        val report = evaluate("CPU character/word softmax trained on train; epoch/threshold on val + AssistantProtocol + ActionPolicy") { utterance, state ->
+            val plan = AssistantProtocol.read(answers.getValue(utterance), state, utterance)
+            if (plan.decision == Decision.EXECUTE) {
+                plan.steps.map { VoiceCommand(it.action, it.action.name, it.value) }
+            } else {
+                emptyList()
+            }
+        }
+        report.put("raw_execute_proposals_on_non_execute", rawExecuteProposals(answers))
+        report.put("deployment", "Experimental baseline only; not installed as an Android router")
+        write("intent_cpu.json", report)
+        assertEquals(201, rows.size)
+    }
+
     /** Before the executor: how often the model itself said «execute» where the corpus expects no action. */
     private fun rawExecuteProposals(answers: Map<String, String>): Int {
         val scenarios = JSONObject(find("ml-pipeline/assistant/scenarios.json").readText()).getJSONArray("scenarios")

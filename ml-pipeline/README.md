@@ -2,7 +2,8 @@
 
 Начало работы — [практическая инструкция обучения](../docs/guides/TRAINING_PLAYBOOK.md),
 состояние и ограничения наборов — [STATUS](../docs/STATUS.md).
-Длинное обучение выполняется на арендованной GPU; домашняя RX для него не используется.
+Домашняя RX/CPU используются только по команде Бориса до 23:00 МСК того же дня,
+после проверки ускорения и короткого замера; автоматического продолжения нет.
 
 ## Рабочие входы
 
@@ -15,6 +16,8 @@
 | Baseline allcrops | [gpu_kit/README.md](gpu_kit/README.md), [train_queue.py](gpu_kit/train_queue.py) | Обучение, оценка, экспорт и пакет результатов |
 | Дополнение ext_v2 | [gpu_kit/README_ext_v2.md](gpu_kit/README_ext_v2.md), [pack_ext_addon.py](pack_ext_addon.py) | Отдельный пакет дополнения |
 | Новое сравнение моделей | [gpu_kit/alternatives/README.md](gpu_kit/alternatives/README.md) | Одинаковые данные и field-val, test отложен |
+| Ограниченное домашнее обучение | [train_home_pilot.py](gpu_kit/alternatives/train_home_pilot.py) | ROCm smoke и пара без/с негативами; чекпойнты и отдельный watchdog до явного дедлайна |
+| CPU-классификатор команд | [train_intent_classifier.py](assistant/train_intent_classifier.py) | Обучение только на train, выбор на val, JSON-предложения для проверки Android-исполнителем; не готовый свободный диалог |
 | Упаковка baseline | [pack_gpu_kit.py](pack_gpu_kit.py) | Самодостаточный архив в `artifacts/gpu_kit/` |
 | Подготовка релиза | [prepare_model_release.py](prepare_model_release.py) | Проверенные файлы в `artifacts/release/`; публикация отдельным поручением |
 | Регрессионные проверки | [tests/](tests/) | Тесты подготовки, разметки, загрузчика, упаковки и конфигов |

@@ -1,0 +1,163 @@
+{
+  "val": {
+    "execute_wrong_action": 2,
+    "non_execute_not_executed": 10,
+    "execute_utterances": 14,
+    "execute_exact": 6,
+    "non_execute_utterances": 10,
+    "execute_no_action": 6,
+    "false_executions": 0
+  },
+  "method": "CPU character/word softmax trained on train; epoch/threshold on val + AssistantProtocol + ActionPolicy",
+  "test": {
+    "execute_wrong_action": 1,
+    "non_execute_not_executed": 19,
+    "execute_utterances": 20,
+    "execute_exact": 4,
+    "non_execute_utterances": 19,
+    "execute_no_action": 15,
+    "false_executions": 0
+  },
+  "raw_execute_proposals_on_non_execute": 2,
+  "source": "ml-pipeline/assistant/scenarios.json",
+  "false_execution_examples": [],
+  "command": "gradlew testDebugUnitTest --tests *RulesBaselineTest",
+  "execute_misses": [
+    {
+      "id": "val_camera",
+      "got": "[]",
+      "utterance": "Мне бы сфотографировать растение, включи видоискатель"
+    },
+    {
+      "id": "val_camera",
+      "got": "[]",
+      "utterance": "Переведи меня на экран камеры"
+    },
+    {
+      "id": "val_capture",
+      "got": "[(CANCEL, )]",
+      "utterance": "Кадр готов, фотографируй"
+    },
+    {
+      "id": "val_capture",
+      "got": "[]",
+      "utterance": "Нажми затвор сейчас"
+    },
+    {
+      "id": "val_gallery",
+      "got": "[]",
+      "utterance": "Нужна фотография номер двенадцать"
+    },
+    {
+      "id": "val_gallery",
+      "got": "[]",
+      "utterance": "Покажи снимок 12"
+    },
+    {
+      "id": "val_compound",
+      "got": "[(SAVE_INSPECTION, )]",
+      "utterance": "Озвучь ответ и занеси осмотр в историю"
+    },
+    {
+      "id": "val_compound",
+      "got": "[]",
+      "utterance": "Проговори вывод, после этого сохрани"
+    },
+    {
+      "id": "test_camera",
+      "got": "[]",
+      "utterance": "Собираюсь снять лист, подготовь камеру"
+    },
+    {
+      "id": "test_camera",
+      "got": "[]",
+      "utterance": "Покажи мне изображение с камеры"
+    },
+    {
+      "id": "test_gallery",
+      "got": "[]",
+      "utterance": "Перейди к сохранённым фотографиям"
+    },
+    {
+      "id": "test_analyze",
+      "got": "[]",
+      "utterance": "Запусти распознавание на выбранном кадре"
+    },
+    {
+      "id": "test_analyze",
+      "got": "[]",
+      "utterance": "Исследуй этот загруженный снимок"
+    },
+    {
+      "id": "test_save",
+      "got": "[]",
+      "utterance": "Занеси текущий результат в журнал"
+    },
+    {
+      "id": "test_number",
+      "got": "[]",
+      "utterance": "Возьми фото двадцать один"
+    },
+    {
+      "id": "test_number",
+      "got": "[(PHOTO_NUMBER, 7)]",
+      "utterance": "Выбираю снимок номер 21"
+    },
+    {
+      "id": "test_confirm_context",
+      "got": "[]",
+      "utterance": "Да, подтверждаю съёмку"
+    },
+    {
+      "id": "test_confirm_context",
+      "got": "[]",
+      "utterance": "Подтверждаю этот кадр"
+    },
+    {
+      "id": "test_silence",
+      "got": "[]",
+      "utterance": "Не читай дальше"
+    },
+    {
+      "id": "test_silence",
+      "got": "[]",
+      "utterance": "Останови чтение, я уже услышал"
+    },
+    {
+      "id": "test_cancel",
+      "got": "[]",
+      "utterance": "Отбой, снимок не делай"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[]",
+      "utterance": "Порог распознавания пусть будет пятьдесят пять процентов"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[]",
+      "utterance": "Выставь порог 55"
+    },
+    {
+      "id": "test_crop_correction",
+      "got": "[]",
+      "utterance": "Не картофель, выбери томат"
+    }
+  ],
+  "limitations": [
+    "Authored synthetic Russian phrases; not recorded speech and not ASR output.",
+    "Exact phrases: Vosk grammar mode can only output grammar phrases, so paraphrases are not even transcribed.",
+    "Free phrases need Vosk without a grammar; its recognition errors are not included here.",
+    "FreeSpeech rules were written with every split of the corpus visible: no independent test."
+  ],
+  "train": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 34,
+    "execute_utterances": 104,
+    "execute_exact": 104,
+    "non_execute_utterances": 34,
+    "execute_no_action": 0,
+    "false_executions": 0
+  },
+  "deployment": "Experimental baseline only; not installed as an Android router"
+}

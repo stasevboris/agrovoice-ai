@@ -1,0 +1,16 @@
+{
+  "gpu_check": {
+    "gpu": "AMD Radeon RX 9060 XT",
+    "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+    "hip": "7.2.53211-e1a6bc5663",
+    "forward_backward": "passed",
+    "seconds": 3.2323676989999512,
+    "loss": 0.10323368012905121
+  },
+  "python_tests": {
+    "command": "ml-pipeline/venv/Scripts/python.exe -X utf8 -m unittest discover -s ml-pipeline/tests",
+    "tests": 90,
+    "status": "passed"
+  },
+  "scope": "GPU forward/backward and short training pipeline check, not model acceptance. Full pilot state is in STATUS and ignored runs output."
+}

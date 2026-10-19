@@ -1,0 +1,20 @@
+{
+  "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+  "hip": "7.2.53211-e1a6bc5663",
+  "ultralytics": "8.4.164",
+  "device": "AMD Radeon RX 9060 XT",
+  "data": {
+    "counts": {
+      "train": 24054,
+      "train_with_negatives": 24074,
+      "val_field": 349
+    },
+    "validation": "field_only",
+    "test_exposed": false,
+    "training_performed": false,
+    "data": "/mnt/f/agrovoice-ai/ml-pipeline/dataset_vision_training_v1"
+  },
+  "amp": false,
+  "batch": 16,
+  "seed": 20261019
+}
