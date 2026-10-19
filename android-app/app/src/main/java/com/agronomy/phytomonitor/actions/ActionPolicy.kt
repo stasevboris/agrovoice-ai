@@ -68,6 +68,11 @@ object ActionPolicy {
         }
         return when (request.action) {
             VoiceAction.JOURNAL_NUMBER -> openInspection(request, state)
+            VoiceAction.NOTE -> if (state.screen == Screen.JOURNAL) {
+                val id = state.openedInspectionId
+                if (!state.inspectionOpen || id == null) Verdict.Clarify("Сначала открой осмотр для исправления заметки.")
+                else run(Operation.OpenInspectionNote(id, request.source != ActionSource.BUTTON))
+            } else inspection(request, state)
             VoiceAction.SPEAK_RESULT -> if (state.screen == Screen.JOURNAL) {
                 val id = state.openedInspectionId
                 when {
@@ -188,9 +193,12 @@ object ActionPolicy {
     }
 
     private fun resolveNoteReview(request: ActionRequest, state: AppState): Verdict = when (request.action) {
+        VoiceAction.CLEAR_NOTE -> if (state.busy) Verdict.Clarify(WAIT) else run(Operation.ClearNoteDraft)
         VoiceAction.CONFIRM -> confirmNote(state)
         VoiceAction.CANCEL, VoiceAction.BACK -> run(Operation.CloseNote)
-        VoiceAction.NOTE -> run(Operation.OpenNote(dictate = request.source != ActionSource.BUTTON))
+        VoiceAction.NOTE -> state.editingInspectionId?.let {
+            run(Operation.OpenInspectionNote(it, request.source != ActionSource.BUTTON))
+        } ?: run(Operation.OpenNote(dictate = request.source != ActionSource.BUTTON))
         VoiceAction.LISTEN_OFF -> run(Operation.SetContinuousListening(false))
         VoiceAction.SILENCE -> run(Operation.StopSpeech)
         else -> Verdict.Clarify("Скажи «подтвердить», чтобы сохранить заметку, или «отмена».")
@@ -201,6 +209,7 @@ object ActionPolicy {
         if (state.busy) {
             return Verdict.Clarify(WAIT)
         }
+        state.editingInspectionId?.let { return run(Operation.SaveInspectionNote(it)) }
         val save = ActionRequest(VoiceAction.SAVE_INSPECTION, source = ActionSource.BUTTON)
         return when (val verdict = inspection(save, state.copy(screen = Screen.MAIN))) {
             is Verdict.Run -> Verdict.Run(listOf(Operation.CloseNote) + verdict.operations)

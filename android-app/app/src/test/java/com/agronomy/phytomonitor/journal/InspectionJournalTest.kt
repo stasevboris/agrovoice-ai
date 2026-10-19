@@ -58,6 +58,46 @@ class InspectionJournalTest {
     }
 
     @Test
+    fun editingSavedNotePreservesPhotosReportAndOtherRecordsAndSurvivesExport() {
+        val picture = photo("note.jpg")
+        legacy("note.json", JournalFixtures.legacyRecord("note", picture.path, InspectionJournal.sha256(picture)).toString())
+        legacy("other.json", JournalFixtures.legacyRecord("other", "/missing.jpg").toString())
+        val db = database()
+        val journal = journal(db)
+        journal.migrateLegacy()
+        val before = journal.details("note")!!
+        val other = journal.record("other").toString()
+        val queued = db.journal().pendingSync().size
+        val bytes = picture.readBytes()
+        val edited = journal.editNote("note", before.inspection.updatedAt, "Исправленная заметка")
+        val after = journal.details("note")!!
+        assertEquals(before.copy(inspection = before.inspection.copy(note = edited.note, updatedAt = edited.updatedAt)), after)
+        assertEquals(other, journal.record("other").toString())
+        assertTrue(bytes.contentEquals(picture.readBytes()))
+        assertEquals(queued + 1, db.journal().pendingSync().size)
+        journal.editNote("note", edited.updatedAt, edited.note)
+        assertEquals(queued + 1, db.journal().pendingSync().size)
+        val restored = journal()
+        restored.import(ByteArrayInputStream(journal.export().toByteArray(Charsets.UTF_8)))
+        assertEquals(edited.note, restored.details("note")!!.inspection.note)
+    }
+
+    @Test
+    fun staleMissingAndOversizedNoteEditsLeaveTheRecordUnchanged() {
+        legacy("note.json", JournalFixtures.legacyRecord("note", "/missing.jpg").toString())
+        val journal = journal()
+        journal.migrateLegacy()
+        val original = journal.details("note")!!.inspection
+        now = original.updatedAt - 100
+        val updated = journal.editNote("note", original.updatedAt, "Новая версия")
+        assertEquals(original.updatedAt + 1, updated.updatedAt)
+        assertTrue(runCatching { journal.editNote("note", original.updatedAt, "Старая версия") }.isFailure)
+        assertTrue(runCatching { journal.editNote("absent", updated.updatedAt, "Текст") }.isFailure)
+        assertTrue(runCatching { journal.editNote("note", updated.updatedAt, "а".repeat(MAX_NOTE + 1)) }.isFailure)
+        assertEquals(updated, journal.details("note")!!.inspection)
+    }
+
+    @Test
     fun oldJournalMovesOnceAndBrokenFilesAreListed() {
         val picture = photo("import_1.jpg")
         val sha = InspectionJournal.sha256(picture)

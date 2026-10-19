@@ -23,6 +23,8 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.io.File
 
+data class SavedNoteDraft(val id: String, val original: String, val text: String, val updatedAt: Long)
+
 data class JournalState(
     val entries: List<InspectionEntry> = emptyList(),
     val query: String = "",
@@ -32,6 +34,7 @@ data class JournalState(
     val message: String? = null,
     val opened: SavedInspectionView? = null,
     val openingId: String? = null,
+    val noteDraft: SavedNoteDraft? = null,
     val scrollDirection: String = "",
     val scrollSequence: Long = 0
 ) {
@@ -103,6 +106,35 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     fun closeInspection() {
         opening?.cancel()
         mutableState.update { it.copy(opened = null, openingId = null) }
+    }
+
+    fun beginNote(id: String): Boolean {
+        val inspection = state.value.opened?.details?.inspection?.takeIf { it.id == id } ?: return false
+        if (state.value.noteDraft?.id != id) {
+            mutableState.update { it.copy(noteDraft = SavedNoteDraft(id, inspection.note, inspection.note, inspection.updatedAt), message = null) }
+        }
+        return true
+    }
+
+    fun editNote(text: String) = mutableState.update {
+        it.copy(noteDraft = it.noteDraft?.copy(text = text.take(MAX_NOTE)))
+    }
+
+    fun cancelNote() = mutableState.update { it.copy(noteDraft = null) }
+
+    fun saveNote(id: String, onSaved: (InspectionEntity, String) -> Unit) {
+        val draft = state.value.noteDraft?.takeIf { it.id == id } ?: return
+        transact {
+            val updated = withContext(Dispatchers.IO) { journal.editNote(id, draft.updatedAt, draft.text) }
+            val entries = withContext(Dispatchers.IO) { journal.list() }
+            mutableState.update { state ->
+                val opened = state.opened?.takeIf { it.details.inspection.id == id }
+                state.copy(entries = entries, noteDraft = null,
+                    opened = opened?.copy(details = opened.details.copy(inspection = updated)) ?: state.opened,
+                    message = "Заметка сохранена.")
+            }
+            onSaved(updated, draft.original)
+        }
     }
 
     fun export(uri: Uri, format: JournalExport = JournalExport.JSON) = transact {

@@ -108,6 +108,19 @@ interface JournalDao {
     @Query("SELECT * FROM sync_queue ORDER BY id")
     fun pendingSync(): List<SyncQueueEntity>
 
+    /** Edit metadata in place: photos, detections and the original report remain untouched. */
+    @Transaction
+    fun editNote(id: String, expectedUpdatedAt: Long, note: String, now: Long): InspectionEntity {
+        require(note.length <= MAX_NOTE) { "Заметка слишком длинная: максимум $MAX_NOTE символов." }
+        val current = requireNotNull(inspection(id)) { "Осмотр не найден в журнале." }
+        check(current.updatedAt == expectedUpdatedAt) { "Осмотр изменился. Открой его заново перед исправлением заметки." }
+        if (current.note == note) return current
+        val updated = current.copy(note = note, updatedAt = maxOf(now, current.updatedAt + 1), syncState = "local")
+        upsertInspection(updated)
+        enqueueSync(SyncQueueEntity(entity = "inspection", entityId = id, operation = "upsert", createdAt = updated.updatedAt))
+        return updated
+    }
+
     /** Inspection, photo and detections replace the previous version of the same inspection. */
     @Transaction
     fun saveRecord(record: InspectionRecord, change: SyncQueueEntity) {

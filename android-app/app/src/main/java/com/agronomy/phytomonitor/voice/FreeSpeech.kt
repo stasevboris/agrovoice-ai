@@ -98,6 +98,9 @@ object FreeSpeech {
         }
         scroll(phrase, words)?.let { return it }
         if (screen == "journal") {
+            if (has("заметк", "комментари") && has("исправ", "измен", "добав", "запиш", "надикт")) {
+                return command(VoiceAction.NOTE)
+            }
             if (has("осмотр", "запис") && has("открой", "покажи", "открыть", "выбери")) {
                 number(words)?.let { return command(VoiceAction.JOURNAL_NUMBER, it.toString()) }
             }

@@ -3,7 +3,7 @@ package com.agronomy.phytomonitor.voice
 import com.agronomy.phytomonitor.ml.CropVocabulary
 import java.util.Locale
 
-enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, JOURNAL_NUMBER, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, SETTINGS, KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS }
+enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, CLEAR_NOTE, JOURNAL, JOURNAL_NUMBER, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, SETTINGS, KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
 /** Exact fixed intents: no substring guessing and no action from partial speech. */
@@ -14,7 +14,8 @@ object VoiceCommands {
         phrases.forEach { aliases[it] = command }
     }
     init {
-        add(VoiceCommand(VoiceAction.NOTE,"Заметка"),"добавь заметку","запиши заметку")
+        add(VoiceCommand(VoiceAction.NOTE,"Заметка"),"добавь заметку","запиши заметку","измени заметку","исправь заметку")
+        add(VoiceCommand(VoiceAction.CLEAR_NOTE,"Очистить текст заметки"),"очисти текст заметки","очисти заметку")
         add(VoiceCommand(VoiceAction.JOURNAL,"Журнал осмотров"),"открой журнал","покажи историю")
         add(VoiceCommand(VoiceAction.PLOTS,"Участки"),"открой участки","покажи участки")
         add(VoiceCommand(VoiceAction.SAVE_INSPECTION,"Сохраняю осмотр"),"сохрани осмотр","сохранить осмотр")
@@ -90,7 +91,7 @@ object VoiceCommands {
             plots.map {"участок ${spokenPlot(it)}"}.filter {it.length>"участок ".length} +
             // «да» is listened for only right after the app asked «Сохранить осмотр?».
             (if(followUp)listOf("да","подтвердить") else emptyList())).distinct()
-    val noteReviewGrammar=listOf("подтвердить","да","отмена","нет","добавь заметку","стоп","не подтверждать","[unk]")
+    val noteReviewGrammar=listOf("подтвердить","да","отмена","нет","добавь заметку","очисти текст заметки","очисти заметку","стоп","не подтверждать","[unk]")
     fun journalGrammar(count: Int): List<String>? {
         if (count > 10000) return null
         return (phrasesFor(globalActions + setOf(VoiceAction.SPEAK_RESULT, VoiceAction.SILENCE, VoiceAction.NOTE)) +
@@ -161,7 +162,7 @@ object VoiceCommands {
         val command=parse(text,plots) ?: return null
         if (screen == "journal" && command.action in setOf(VoiceAction.SPEAK_RESULT, VoiceAction.NOTE, VoiceAction.SILENCE)) return command
         if (screen == "knowledge" && command.action in knowledgeActions) return command
-        if(screen=="note_review")return command.takeIf {it.action in setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.NOTE,VoiceAction.LISTEN_OFF)}
+        if(screen=="note_review")return command.takeIf {it.action in setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.NOTE,VoiceAction.CLEAR_NOTE,VoiceAction.LISTEN_OFF)}
         val plotActions=setOf(VoiceAction.ROW,VoiceAction.PLOT)
         if(command.action in plotActions && screen=="plots")return command
         if(command.action in labActions && screen!="main")return null

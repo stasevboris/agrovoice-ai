@@ -59,6 +59,7 @@ data class AppState(
     val inspectionOpen: Boolean = false,
     val journalIds: List<String> = emptyList(),
     val openedInspectionId: String? = null,
+    val editingInspectionId: String? = null,
     val resultOpen: Boolean = false,
     /** The app has just asked «Сохранить осмотр?» and waits for «да» or «нет». */
     val followUp: Boolean = false
@@ -81,6 +82,7 @@ sealed interface Operation {
     data class ShowHelp(val visible: Boolean) : Operation
     data object Exit : Operation
     data object CloseNote : Operation
+    data object ClearNoteDraft : Operation
     data object CloseJournal : Operation
     data object CloseInspection : Operation
     data object CloseResult : Operation
@@ -92,6 +94,8 @@ sealed interface Operation {
     data object OpenJournal : Operation
     data class OpenInspection(val id: String) : Operation
     data class SpeakInspection(val id: String) : Operation
+    data class OpenInspectionNote(val id: String, val dictate: Boolean) : Operation
+    data class SaveInspectionNote(val id: String) : Operation
     data object OpenPlots : Operation
     data object ClosePlots : Operation
     data object OpenSettings : Operation

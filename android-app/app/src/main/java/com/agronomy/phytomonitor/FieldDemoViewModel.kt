@@ -205,6 +205,11 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         unsavedReport=report
     }
     fun editNote(text: String){noteDraft=text.take(4000)}
+    fun savedNoteChanged(name: String, before: String, after: String) {
+        if (reportName != name) return
+        if (noteDraft == before) noteDraft = after
+        savedInspection = savedInspection?.copy(note = after)
+    }
     fun editPlot(text: String){plotName=text.take(120);settings.set(Keys.plot, plotName)}
     /** The row of the next inspection: digits only, as in «ряд четырнадцать». */
     fun editRow(text: String){rowName=text.filter {it.isDigit()}.take(3);settings.set(Keys.row, rowName)}

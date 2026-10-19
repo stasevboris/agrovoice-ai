@@ -52,7 +52,8 @@ data class SavedInspectionView(
 }
 
 @Composable
-internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit, onRead: () -> Unit, onReanalyse: () -> Unit) {
+internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit, onRead: () -> Unit,
+    onEditNote: () -> Unit, onReanalyse: () -> Unit) {
     val inspection = view.details.inspection
     val date = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(inspection.createdAt))
     Column(Modifier.fillMaxSize()) {
@@ -86,6 +87,9 @@ internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit
                 LeafResultRow(number = index + 1, label = label, confidence = view.boxes[index].confidence, prominent = index == 0)
             }
             SavedFacts(view)
+            OutlinedButton(onClick = onEditNote, modifier = Modifier.fillMaxWidth()) {
+                Text("Изменить заметку")
+            }
             OutlinedButton(onClick = onRead, modifier = Modifier.fillMaxWidth()) {
                 Text("Прочитать сохранённый результат")
             }

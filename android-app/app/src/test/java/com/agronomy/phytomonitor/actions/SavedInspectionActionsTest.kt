@@ -47,6 +47,23 @@ class SavedInspectionActionsTest {
     }
 
     @Test
+    fun noteConfirmationTargetsTheSavedRecordAndCancelNeverWrites() {
+        val opened = journal.copy(inspectionOpen = true, openedInspectionId = "filtered-b")
+        assertEquals(Verdict.Run(listOf(Operation.OpenInspectionNote("filtered-b", true))),
+            ActionPolicy.resolve(request(VoiceAction.NOTE), opened))
+        assertTrue(ActionPolicy.resolve(request(VoiceAction.NOTE), journal) is Verdict.Clarify)
+        val review = opened.copy(screen = Screen.NOTE_REVIEW, editingInspectionId = "filtered-b", hasResult = true)
+        assertEquals(Verdict.Run(listOf(Operation.SaveInspectionNote("filtered-b"))),
+            ActionPolicy.resolve(request(VoiceAction.CONFIRM), review))
+        assertEquals(Verdict.Run(listOf(Operation.CloseNote)), ActionPolicy.resolve(request(VoiceAction.CANCEL), review))
+        assertEquals(Verdict.Run(listOf(Operation.ClearNoteDraft)), ActionPolicy.resolve(request(VoiceAction.CLEAR_NOTE), review))
+        assertEquals(Verdict.Dictate, ActionPolicy.resolve(request(VoiceAction.CLEAR_NOTE), review.copy(screen = Screen.NOTE)))
+        assertEquals(VoiceAction.CLEAR_NOTE, VoiceCommands.parseForScreen("очисти заметку", "note_review")!!.action)
+        assertEquals(Verdict.Dictate, ActionPolicy.resolve(request(VoiceAction.CONFIRM), review.copy(screen = Screen.NOTE)))
+        assertEquals(Verdict.Clarify(ActionPolicy.WAIT), ActionPolicy.resolve(request(VoiceAction.CONFIRM), review.copy(busy = true)))
+    }
+
+    @Test
     fun russianRequestsStayInJournalAndNegationDoesNotOpenARecord() {
         for (phrase in listOf("открой осмотр номер два", "запись два", "2")) {
             val command = VoiceCommands.parseForScreen(phrase, "journal")!!

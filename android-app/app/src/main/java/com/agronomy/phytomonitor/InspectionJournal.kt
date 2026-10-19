@@ -140,6 +140,9 @@ class InspectionJournal(
 
     fun details(id: String): InspectionWithDetails? = dao.inspectionDetails(id)
 
+    fun editNote(id: String, expectedUpdatedAt: Long, note: String): InspectionEntity =
+        dao.editNote(id, expectedUpdatedAt, note, clock())
+
     /** The exported form of one inspection, or null. */
     fun record(id: String): JSONObject? = dao.inspectionDetails(id)?.let { JournalRecords.toJson(it) }
 

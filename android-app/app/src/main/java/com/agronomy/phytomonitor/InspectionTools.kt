@@ -245,41 +245,47 @@ private fun ToolButton(label: String, icon: ImageVector, enabled: Boolean, onCli
 }
 
 @Composable
-internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Unit, onConfirm: () -> Unit, onCloseNote: () -> Unit) {
+internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Unit, onConfirm: () -> Unit,
+    onCloseNote: () -> Unit, note: String = model.noteDraft, onEditNote: (String) -> Unit = model::editNote,
+    savedInspection: Boolean = false, error: String? = null, saving: Boolean = false) {
     if (!model.noteOpen) {
         return
     }
     AlertDialog(
         onDismissRequest = onCloseNote,
         icon = { Icon(AgroIcons.Edit, contentDescription = null) },
-        title = { Text("Заметка к снимку") },
+        title = { Text(if (savedInspection) "Заметка сохранённого осмотра" else "Заметка к снимку") },
         text = {
             Column(Modifier.heightIn(max = 420.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text("Автономная диктовка — тестовая. Проверь названия и исправь текст перед сохранением.", style = MaterialTheme.typography.bodySmall)
                 OutlinedTextField(
-                    value = model.noteDraft,
-                    onValueChange = model::editNote,
+                    value = note,
+                    onValueChange = onEditNote,
+                    enabled = !saving,
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Текст заметки") },
                     maxLines = 6
                 )
-                OutlinedButton(onClick = onDictation, modifier = Modifier.fillMaxWidth()) {
+                OutlinedButton(onClick = onDictation, enabled = !saving, modifier = Modifier.fillMaxWidth()) {
                     Icon(if (model.dictating) AgroIcons.Stop else AgroIcons.Mic, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(6.dp))
                     Text(if (model.dictating) "Остановить диктовку" else "Диктовать заметку")
                 }
                 val hint = when {
                     model.dictating -> "Говори заметку. «Закончить заметку» или «стоп» — завершить. Другие фразы здесь записываются текстом."
-                    model.noteReviewVoice -> "Проверь текст. «Подтвердить» — сохранить осмотр, «отмена» — к снимку."
+                    model.noteReviewVoice -> "Проверь текст. «Очисти заметку» — стереть черновик, «добавь заметку» — диктовать. «Подтвердить» — сохранить, «отмена» — вернуться."
                     else -> "Сейчас микрофон для заметки выключен."
                 }
                 Text(hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (savedInspection && error != null) Text(error, color = MaterialTheme.colorScheme.error)
             }
         },
         confirmButton = {
-            TextButton(onClick = onConfirm) { Text("Сохранить заметку и осмотр") }
+            TextButton(onClick = onConfirm, enabled = !saving) {
+                Text(if (savedInspection) "Сохранить заметку" else "Сохранить заметку и осмотр")
+            }
         },
-        dismissButton = { TextButton(onClick = onCloseNote) { Text("К снимку") } }
+        dismissButton = { TextButton(onClick = onCloseNote) { Text(if (savedInspection) "Отмена" else "К снимку") } }
     )
 }
 

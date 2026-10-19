@@ -208,6 +208,7 @@ class FieldDemoActivity : ComponentActivity() {
         openedInspectionId = journalModel.state.value.opened?.details?.inspection?.id?.takeIf {
             it == navigation?.currentBackStackEntry?.arguments?.getString("id")
         },
+        editingInspectionId = journalModel.state.value.noteDraft?.id,
         resultOpen = navigation?.currentDestination?.route == "result",
         followUp = followUp.awaitingAnswer
     )
@@ -226,6 +227,10 @@ class FieldDemoActivity : ComponentActivity() {
                 is Operation.ShowHelp -> photoFlow.helpOpen = operation.visible
                 Operation.Exit -> finish()
                 Operation.CloseNote -> closeNote()
+                Operation.ClearNoteDraft -> {
+                    editNote("")
+                    speak("Текст заметки очищен. Скажи «добавь заметку», чтобы продиктовать новый текст, или «отмена».")
+                }
                 Operation.CloseJournal -> navigation?.popBackStack()
                 Operation.CloseResult -> navigation?.popBackStack("main", false)
                 Operation.CloseInspection -> {
@@ -260,6 +265,14 @@ class FieldDemoActivity : ComponentActivity() {
                     if (saved?.details?.inspection?.id == operation.id) {
                         speak(com.agronomy.phytomonitor.journal.SavedInspectionSpeech.text(saved.details))
                     }
+                }
+                is Operation.OpenInspectionNote -> {
+                    if (journalModel.beginNote(operation.id)) openNote(operation.dictate)
+                }
+                is Operation.SaveInspectionNote -> journalModel.saveNote(operation.id) { saved, previous ->
+                    fieldModel.savedNoteChanged(saved.reportName, previous, saved.note)
+                    closeNote()
+                    speak("Заметка сохранена в выбранном осмотре.")
                 }
                 Operation.OpenPlots -> navigation?.navigate("plots") { launchSingleTop = true }
                 Operation.ClosePlots -> navigation?.popBackStack()
@@ -409,7 +422,16 @@ class FieldDemoActivity : ComponentActivity() {
         else -> Screen.MAIN
     }
     private fun openNote(dictate: Boolean=false){voice.stop();speaker.stop();fieldModel.noteOpen=true;fieldModel.noteReviewVoice=false;fieldModel.dictating=dictate && hasMicrophone();if(dictate && !hasMicrophone()){requestDictation=true;microphone.launch(Manifest.permission.RECORD_AUDIO)}}
-    private fun closeNote(){voice.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;fieldModel.noteOpen=false}
+    private fun closeNote() {
+        voice.stop()
+        fieldModel.dictating = false
+        fieldModel.noteReviewVoice = false
+        fieldModel.noteOpen = false
+        journalModel.cancelNote()
+    }
+    private fun editNote(text: String) {
+        if (journalModel.state.value.noteDraft != null) journalModel.editNote(text) else fieldModel.editNote(text)
+    }
     private fun dictateNote(){
         if (settings.state.value?.voiceEnabled != true) {
             fieldModel.showError("Включи голосовое управление в настройках приложения.")
@@ -477,7 +499,10 @@ class FieldDemoActivity : ComponentActivity() {
         voice.onCommand=::handleVoiceCommand
         voice.onCommands=voiceRouter::plan
         voice.onFailure={photoFlow.setContinuous(false);photoFlow.dialogVoice=false}
-        voice.onDictation={text->fieldModel.editNote((fieldModel.noteDraft+" "+text).trim())}
+        voice.onDictation = { text ->
+            val draft = journalModel.state.value.noteDraft?.text ?: fieldModel.noteDraft
+            editNote((draft + " " + text).trim())
+        }
         voice.onDictationFinished={fieldModel.dictating=false;fieldModel.noteReviewVoice=true}
         setContent {
             AgroVoiceAITheme {
@@ -646,7 +671,8 @@ class FieldDemoActivity : ComponentActivity() {
                                         }
                                     } else {
                                         SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) },
-                                            onRead = { press(VoiceAction.SPEAK_RESULT) }, onReanalyse = {
+                                            onRead = { press(VoiceAction.SPEAK_RESULT) },
+                                            onEditNote = { press(VoiceAction.NOTE) }, onReanalyse = {
                                             val path = saved.details.photos.firstOrNull()?.photo?.localPath
                                             if (path != null) {
                                                 journalModel.closeInspection()
@@ -657,7 +683,11 @@ class FieldDemoActivity : ComponentActivity() {
                                     }
                                 }
                         }
-                        InspectionDialogs(model,::dictateNote,onConfirm={press(VoiceAction.CONFIRM)},onCloseNote={press(VoiceAction.CANCEL)})
+                        InspectionDialogs(model, ::dictateNote, onConfirm = { press(VoiceAction.CONFIRM) },
+                            onCloseNote = { press(VoiceAction.CANCEL) },
+                            note = journalState.noteDraft?.text ?: model.noteDraft, onEditNote = ::editNote,
+                            savedInspection = journalState.noteDraft != null, error = journalState.message,
+                            saving = journalState.busy)
                         if (photoFlow.helpOpen) VoiceHelpDialog { press(VoiceAction.CLOSE_HELP) }
                     }
                 }
