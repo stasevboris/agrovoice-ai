@@ -149,7 +149,7 @@ internal fun FieldDemoScreen(
                             .padding(start = 16.dp, end = 8.dp, bottom = 16.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        PhotoZone(model, maxHeight = 640.dp)
+                        PhotoZone(model, onAction, maxHeight = 640.dp)
                         ErrorBanner(model)
                     }
                     Column(
@@ -184,7 +184,7 @@ internal fun FieldDemoScreen(
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    PhotoZone(model)
+                    PhotoZone(model, onAction)
                     if (model.busy) {
                         BusyLine()
                     }
@@ -205,7 +205,7 @@ internal fun FieldDemoScreen(
 }
 
 @Composable
-private fun PhotoZone(model: FieldDemoViewModel, maxHeight: androidx.compose.ui.unit.Dp = 340.dp) {
+private fun PhotoZone(model: FieldDemoViewModel, onAction: ActionButtons, maxHeight: androidx.compose.ui.unit.Dp = 340.dp) {
     val image = model.bitmap
     if (image == null) {
         Spacer(Modifier.height(4.dp))
@@ -213,6 +213,14 @@ private fun PhotoZone(model: FieldDemoViewModel, maxHeight: androidx.compose.ui.
     } else {
         PhotoWithDetections(image, model.result?.boxes.orEmpty(), model.showBoxes, busy = model.busy, maxHeight = maxHeight)
         model.photoQuality?.advice?.let { MessageBanner(it, isError = false) }
+        if (model.result == null && !model.busy) {
+            // A photo restored from the last session is shown unchecked until the user asks.
+            OutlinedButton(onClick = { onAction(VoiceAction.ANALYZE, "") }, modifier = Modifier.fillMaxWidth()) {
+                Icon(AgroIcons.Leaf, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(8.dp))
+                Text("Проверить фото")
+            }
+        }
     }
 }
 

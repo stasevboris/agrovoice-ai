@@ -37,6 +37,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     var plotsOpen by mutableStateOf(false)
     var plots by mutableStateOf<List<PlotSummary>>(emptyList()); private set
     var rowName by mutableStateOf(preferences.getString("row","") ?: ""); private set
+    /** A journal entry shown as saved: its own photo, frames and labels, without a new analysis. */
+    var openedInspection by mutableStateOf<SavedInspectionView?>(null); private set
     var noteDraft by mutableStateOf(""); private set
     var review by mutableStateOf("unrated"); private set
     var journalOpen by mutableStateOf(false)
@@ -79,7 +81,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         worker.execute {migrateJournal()}
         refreshPlots()
         val last=preferences.getString("last_photo",null)?.let(::File)
-        if(last?.isFile==true) openFile(last)
+        // The last photo comes back without a new analysis: the user decides when to check it.
+        if(last?.isFile==true) openFile(last,analyzePhoto=false)
     }
 
     fun setModel(id: String, analyzePhoto: Boolean=true) {
@@ -130,14 +133,14 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             } catch(error:Exception){postFailure(error)}
         }
     }
-    fun openFile(file: File) {
+    fun openFile(file: File, analyzePhoto: Boolean=true) {
         if(busy)return
         photoQuality = null
         busy=true;message=null;result=null;reportName=null
         worker.execute {
             try {
                 val decoded=PhotoFiles.decode(file)
-                main.post {if(!cleared){replacePhoto(file,decoded);busy=false;analyze()}else decoded.recycle()}
+                main.post {if(!cleared){replacePhoto(file,decoded);busy=false;if(analyzePhoto)analyze()}else decoded.recycle()}
             }catch(error:Exception){postFailure(error)}
         }
     }
@@ -219,6 +222,22 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             val entries=journal.list()
             main.post {if(!cleared){journalEntries=entries;savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
         }catch(error: Exception){postFailure(error)}}
+    }
+    fun openInspection(id: String){
+        worker.execute {
+            val details=journal.details(id) ?: return@execute
+            val path=details.photos.firstOrNull()?.photo?.localPath
+            val photo=path?.let(::File)?.takeIf {it.isFile}?.let {runCatching {PhotoFiles.decode(it)}.getOrNull()}
+            main.post {if(!cleared)openedInspection=SavedInspectionView.of(details,photo)}
+        }
+    }
+    fun closeInspection(){openedInspection=null}
+    /** An explicit new analysis of a saved photo; the saved inspection itself stays as it was. */
+    fun reanalyseOpened(){
+        val path=openedInspection?.details?.photos?.firstOrNull()?.photo?.localPath ?: return
+        openedInspection=null
+        journalOpen=false
+        openFile(File(path))
     }
     fun openJournal(){journalOpen=true;worker.execute {val entries=journal.list();main.post {if(!cleared)journalEntries=entries}}}
     /** Runs on the worker before any journal read or write. Old JSON files are kept. */

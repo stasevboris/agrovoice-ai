@@ -12,7 +12,11 @@ import androidx.core.content.FileProvider
 
 class InspectionToolsTest {
     @get:Rule val compose=createAndroidComposeRule<FieldDemoActivity>()
-    private fun idle(){compose.waitUntil(60000){!compose.activity.fieldModel.busy && compose.activity.fieldModel.result!=null}}
+    private fun idle(){compose.waitUntil(60000){
+        val model=compose.activity.fieldModel
+        if(model.result==null && model.bitmap!=null && !model.busy)compose.activity.runOnUiThread {model.analyze()}
+        !model.busy && model.result!=null
+    }}
     private fun say(text: String){compose.runOnUiThread {compose.activity.handleVoiceCommand(VoiceCommands.parseForScreen(text,"main")!!)}}
     @Test fun explicitJournalUsesExactPredictionAndUpdatesWithoutDuplicate() {
         idle();val model=compose.activity.fieldModel;val report=model.reportName!!

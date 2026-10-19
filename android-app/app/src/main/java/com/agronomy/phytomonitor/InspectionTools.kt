@@ -344,10 +344,7 @@ internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExpo
                 }
             }
             items(model.visibleInspections, key = { it.id }) { entry ->
-                JournalEntryCard(model, entry, onOpen = {
-                    model.journalOpen = false
-                    model.openFile(File(entry.photo))
-                })
+                JournalEntryCard(model, entry, onOpen = { model.openInspection(entry.id) })
             }
         }
     }
@@ -387,12 +384,11 @@ private fun JournalEntryCard(model: FieldDemoViewModel, entry: InspectionEntry, 
                 if (entry.note.isNotBlank()) {
                     Text(entry.note, style = MaterialTheme.typography.bodyMedium, maxLines = 3, overflow = TextOverflow.Ellipsis)
                 }
-                if (entry.photoAvailable) {
-                    TextButton(onClick = onOpen, contentPadding = PaddingValues(0.dp)) {
-                        Text("Открыть снимок")
-                    }
-                } else {
+                if (!entry.photoAvailable) {
                     Text("Фото не найдено на телефоне", style = MaterialTheme.typography.bodySmall, color = colors.error)
+                }
+                TextButton(onClick = onOpen, contentPadding = PaddingValues(0.dp)) {
+                    Text("Открыть осмотр")
                 }
             }
         }

@@ -47,7 +47,8 @@ data class AppState(
     val verifiedKnowledge: Boolean = false,
     val plots: List<String> = emptyList(),
     val plot: String = "",
-    val row: String = ""
+    val row: String = "",
+    val inspectionOpen: Boolean = false
 ) {
     /** The object «да / подтвердить» would refer to, as `pending` in the corpus. */
     val pending: String?
@@ -65,6 +66,7 @@ sealed interface Operation {
     data object Exit : Operation
     data object CloseNote : Operation
     data object CloseJournal : Operation
+    data object CloseInspection : Operation
     data object ClosePhotoFlow : Operation
     data object StopSpeech : Operation
     data class Scroll(val direction: String) : Operation

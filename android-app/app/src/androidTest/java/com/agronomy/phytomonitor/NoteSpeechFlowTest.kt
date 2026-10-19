@@ -17,7 +17,11 @@ import java.nio.ByteOrder
 
 class NoteSpeechFlowTest {
     @get:Rule val compose=createAndroidComposeRule<FieldDemoActivity>()
-    private fun idle(){compose.waitUntil(60000){!compose.activity.fieldModel.busy && compose.activity.fieldModel.result!=null}}
+    private fun idle(){compose.waitUntil(60000){
+        val model=compose.activity.fieldModel
+        if(model.result==null && model.bitmap!=null && !model.busy)compose.activity.runOnUiThread {model.analyze()}
+        !model.busy && model.result!=null
+    }}
     private fun folder()=File(compose.activity.getExternalFilesDir(null),InstrumentationRegistry.getArguments().getString("voiceFolder")!!)
     private fun listening(){compose.waitUntil(30000){compose.activity.voiceListening && !compose.activity.voiceController.status.contains("Подготавливаю")}}
     private fun pcm(bytes: ByteArray): ByteArray {

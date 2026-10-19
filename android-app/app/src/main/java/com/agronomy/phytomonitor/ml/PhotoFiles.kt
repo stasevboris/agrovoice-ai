@@ -36,23 +36,34 @@ object PhotoFiles {
     fun folder(context: Context) = File(context.getExternalFilesDir(null) ?: context.filesDir,"photos").apply { mkdirs() }
     fun newCapture(context: Context) = File(folder(context),"camera_${UUID.randomUUID()}.jpg")
 
+    /**
+     * Copies a picked or captured photo into the app folder once: the file is named by its SHA-256, so
+     * choosing the same photo again reuses the existing copy instead of adding another one.
+     */
     fun import(context: Context, uri: Uri): File {
         val extension=when(context.contentResolver.getType(uri)) {
             "image/png"->"png"; "image/webp"->"webp"; "image/heic","image/heif"->"heic"; else->"jpg"
         }
-        val target=File(folder(context),"import_${UUID.randomUUID()}.$extension")
+        val folder=folder(context)
+        val temporary=File(folder,"incoming_${UUID.randomUUID()}.part")
         try {
+            val digest=java.security.MessageDigest.getInstance("SHA-256")
             val input=context.contentResolver.openInputStream(uri) ?: error("Фото недоступно")
-            input.use { source -> target.outputStream().use { destination ->
+            input.use { source -> temporary.outputStream().use { destination ->
                 var total=0L; val chunk=ByteArray(64*1024)
                 while(true){
                     val read=source.read(chunk); if(read<0)break
                     total+=read; require(total<=64L*1024*1024){"Фото больше 64 МБ"}
+                    digest.update(chunk,0,read)
                     destination.write(chunk,0,read)
                 }
             } }
+            val hash=digest.digest().joinToString(""){"%02x".format(it)}
+            val target=File(folder,"import_${hash.take(32)}.$extension")
+            if(target.isFile && target.length()==temporary.length()){temporary.delete();return target}
+            require(temporary.renameTo(target)){"Не удалось сохранить фото"}
             return target
-        } catch(error: Exception){target.delete();throw error}
+        } catch(error: Exception){temporary.delete();throw error}
     }
 
     /** Small preview of a saved photo for the journal list. */

@@ -131,7 +131,8 @@ class FieldDemoActivity : ComponentActivity() {
         availableModels = fieldModel.detector.models.map { it.id },
         plots = fieldModel.plots.map { it.plot.name },
         plot = fieldModel.plotName,
-        row = fieldModel.rowName
+        row = fieldModel.rowName,
+        inspectionOpen = fieldModel.openedInspection != null
     )
 
     private val actionPort = object : ActionPort {
@@ -149,6 +150,7 @@ class FieldDemoActivity : ComponentActivity() {
                 Operation.Exit -> finish()
                 Operation.CloseNote -> closeNote()
                 Operation.CloseJournal -> fieldModel.journalOpen = false
+                Operation.CloseInspection -> fieldModel.closeInspection()
                 Operation.ClosePhotoFlow -> closePhotoFlow()
                 Operation.StopSpeech -> speaker.stop()
                 is Operation.Scroll -> photoFlow.scroll(operation.direction)
@@ -329,6 +331,7 @@ class FieldDemoActivity : ComponentActivity() {
                                 VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Номер → просмотр → «подтвердить».")
                             }
                             model.plotsOpen->PlotsScreen(model,onBack={press(VoiceAction.BACK)},onSelect={name->press(VoiceAction.PLOT,name)})
+                            model.journalOpen && model.openedInspection!=null->SavedInspectionScreen(model.openedInspection!!,onBack={press(VoiceAction.BACK)},onReanalyse=model::reanalyseOpened)
                             model.journalOpen->JournalScreen(model,onBack={press(VoiceAction.BACK)},onExport=exportJournal,onImport=importJournal)
                             else->FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation)
                         }

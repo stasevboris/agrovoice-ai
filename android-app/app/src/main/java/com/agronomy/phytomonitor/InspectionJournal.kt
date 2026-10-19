@@ -138,6 +138,8 @@ class InspectionJournal(
 
     fun list(): List<InspectionEntry> = dao.inspections().map(::entry)
 
+    fun details(id: String): InspectionWithDetails? = dao.inspectionDetails(id)
+
     /** The exported form of one inspection, or null. */
     fun record(id: String): JSONObject? = dao.inspectionDetails(id)?.let { JournalRecords.toJson(it) }
 
