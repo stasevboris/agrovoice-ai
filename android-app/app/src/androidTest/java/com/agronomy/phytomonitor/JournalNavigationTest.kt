@@ -27,7 +27,9 @@ class JournalNavigationTest {
         compose.runOnUiThread {
             compose.activity.handleVoiceCommand(VoiceCommands.parse("открой журнал")!!)
         }
-        compose.waitUntil(30000) { compose.activity.journalModel.state.value.entries.isNotEmpty() }
+        compose.waitUntil(30000) {
+            compose.activity.journalModel.state.value.entries.isNotEmpty() && !compose.activity.currentState().busy
+        }
         compose.runOnUiThread {
             compose.activity.handleVoiceCommand(VoiceCommands.parseForScreen("открой осмотр один", "journal")!!)
         }

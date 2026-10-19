@@ -162,6 +162,15 @@ internal fun InspectionTools(
                 modifier = Modifier.width(88.dp)
             )
         }
+        OutlinedTextField(
+            value = model.plantName,
+            onValueChange = { onAction(VoiceAction.PLANT, it) },
+            label = { Text("Растение") },
+            supportingText = { Text("Необязательно. Одинаковое имя на одном участке объединяет осмотры. Например: куст 7.") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
+        OutlinedButton(onClick = { onAction(VoiceAction.PLANT_HISTORY, "") }) { Text("История растения") }
         LocationLine(model, onLocation)
         Surface(
             color = MaterialTheme.colorScheme.surfaceContainerLow,

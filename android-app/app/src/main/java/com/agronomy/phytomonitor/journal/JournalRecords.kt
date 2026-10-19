@@ -36,7 +36,8 @@ data class ParsedInspection(
     val expertStatus: String,
     val archivePhoto: String?,
     val plant: String = "",
-    val location: GeoPoint? = null
+    val location: GeoPoint? = null,
+    val plantId: String? = null
 ) {
     val photoPath: String get() = prediction.getString("photo")
     val photoSha256: String get() = prediction.optString("photo_sha256")
@@ -60,7 +61,7 @@ object JournalRecords {
         }
         val note = data.optString("note")
         val plot = data.optString("plot")
-        if (note.length > MAX_NOTE || plot.length > MAX_PLOT) {
+        if (note.length > MAX_NOTE || plot.length > MAX_PLOT || data.optString("plant").length > MAX_PLOT) {
             throw JournalFormatException("заметка или участок длиннее допустимого")
         }
         val created = data.optLong("created_epoch_ms", 0L)
@@ -81,6 +82,9 @@ object JournalRecords {
             expertStatus = data.optString("expert_status", "none"),
             archivePhoto = data.optString("archive_photo").ifBlank { null },
             plant = data.optString("plant").trim(),
+            plantId = data.optString("plant_id").takeIf { it.isNotBlank() && it != "null" }?.also {
+                if (it.length > 120 || data.optString("plant").isBlank()) throw JournalFormatException("неверная ссылка на растение")
+            },
             location = location(data.optJSONObject("location"))
         )
     }
@@ -181,6 +185,7 @@ object JournalRecords {
             .put("plot", details.plot?.name ?: "")
             .put("row", inspection.row ?: "")
             .put("plant", details.photos.firstOrNull()?.plantName ?: "")
+            .put("plant_id", details.photos.firstOrNull()?.photo?.plantId ?: "")
             .put("expert_status", inspection.expertStatus)
             .put("review_scope", REVIEW_SCOPE)
             .put("photo_path", photo?.localPath ?: "")

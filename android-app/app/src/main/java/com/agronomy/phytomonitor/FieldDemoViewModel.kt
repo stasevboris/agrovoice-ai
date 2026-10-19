@@ -41,6 +41,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     val location=FieldLocation(application)
     var locationEnabled by mutableStateOf(false); private set
     var rowName by mutableStateOf(""); private set
+    var plantName by mutableStateOf(""); private set
     var noteDraft by mutableStateOf(""); private set
     var review by mutableStateOf("unrated"); private set
     var plotName by mutableStateOf(""); private set
@@ -66,7 +67,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     /** What the journal holds for the current result; a repeated «сохрани осмотр» compares against it. */
     private var savedInspection by mutableStateOf<SavedInspection?>(null)
     val inspectionSaved: Boolean
-        get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName, rowName)
+        get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName, rowName, plantName)
 
     /** Journal screens await the one startup migration before reading or restoring records. */
     val journalReady = CompletableDeferred<JournalReport?>()
@@ -210,7 +211,13 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if (noteDraft == before) noteDraft = after
         savedInspection = savedInspection?.copy(note = after)
     }
-    fun editPlot(text: String){plotName=text.take(120);settings.set(Keys.plot, plotName)}
+    fun editPlot(text: String) {
+        val next = text.take(120)
+        if (next != plotName) plantName = ""
+        plotName = next
+        settings.set(Keys.plot, plotName)
+    }
+    fun editPlant(text: String) { plantName = text.take(120) }
     /** The row of the next inspection: digits only, as in «ряд четырнадцать». */
     fun editRow(text: String){rowName=text.filter {it.isDigit()}.take(3);settings.set(Keys.row, rowName)}
     fun switchLocation(enabled: Boolean){locationEnabled=enabled;settings.set(Keys.location, enabled);if(!enabled)location.stop()}
@@ -221,11 +228,14 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         val report=File(getApplication<Application>().getExternalFilesDir(null) ?: getApplication<Application>().filesDir,"results/$name")
         val note=noteDraft;val rating=review;val plot=plotName;val row=rowName
         val place=if(locationEnabled)LocationFixes.forInspection(location.latest,System.currentTimeMillis()) else null
-        val saved=SavedInspection(name,note,rating,plot,row)
+        val plant = plantName
+        val achievementsEnabled = settings.state.value?.achievements != false
+        val saved=SavedInspection(name,note,rating,plot,row,plant)
         busy=true
         message=null
         work.submit {try {
-            journal.save(report,note,rating,plot,row,place)
+            journal.achievementsEnabled = achievementsEnabled
+            journal.save(report,note,rating,plot,row,place,plant)
             if(unsavedReport?.name==report.name)unsavedReport=null
             publish {if(!cleared){savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
         }catch(error: Exception){postFailure(error)}}
@@ -272,7 +282,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
 }
 
-private data class SavedInspection(val reportName: String?, val note: String, val review: String, val plot: String, val row: String)
+private data class SavedInspection(val reportName: String?, val note: String, val review: String, val plot: String, val row: String, val plant: String)
 
 enum class JournalExport(val mimeType: String, val extension: String) {
     JSON("application/json", "json"),

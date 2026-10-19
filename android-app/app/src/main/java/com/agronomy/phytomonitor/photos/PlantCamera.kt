@@ -35,9 +35,15 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicBoolean
+import android.os.SystemClock
+import com.agronomy.phytomonitor.PhotoVerdict
 
 @Composable
-fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,onShoot: ()->Unit,voicePanel: @Composable ()->Unit) {
+fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,onShoot: ()->Unit,
+    onGuidance: (Boolean) -> Unit,
+    onAdvice: (String) -> Boolean = { false }, voicePanel: @Composable ()->Unit) {
     val state by flow.state.collectAsState()
     val context=LocalContext.current
     val owner=LocalLifecycleOwner.current
@@ -48,6 +54,8 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
     var shooting by remember {mutableStateOf(false)}
     var streamed by remember {mutableStateOf(false)}
     val saveCallback by rememberUpdatedState(onSaved)
+    val adviceCallback by rememberUpdatedState(onAdvice)
+    var qualityMessage by remember { mutableStateOf("Оцениваю освещение и детализацию…") }
     fun takePhoto() {
         if(!ready || shooting)return
         shooting=true;flow.capturing(true)
@@ -76,15 +84,59 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
         var provider: ProcessCameraProvider?=null
         var disposed=false
         val preview=Preview.Builder().build().also {it.surfaceProvider=previewView.surfaceProvider}
+        val active = AtomicBoolean(true)
+        val worker = Executors.newSingleThreadExecutor()
+        val guidance = PreviewGuidance()
+        val analysis = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .setTargetResolution(android.util.Size(640, 480))
+            .build()
+        analysis.setAnalyzer(worker) { frame ->
+            try {
+                val now = SystemClock.elapsedRealtime()
+                if (active.get() && flow.state.value.guidanceEnabled && !flow.state.value.capturing && guidance.shouldSample(now)) {
+                    val verdict = runCatching {
+                        val plane = frame.planes.first()
+                        val crop = frame.cropRect
+                        previewVerdict(plane.buffer, plane.rowStride, plane.pixelStride, crop.left, crop.top, crop.width(), crop.height())
+                    }.getOrDefault(PhotoVerdict.NOT_ASSESSED)
+                    executor.execute {
+                        if (active.get() && flow.state.value.guidanceEnabled &&
+                            owner.lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
+                            qualityMessage = previewAdvice(verdict)
+                            flow.quality(verdict)
+                            if (guidance.accept(verdict, now) && adviceCallback(qualityMessage)) guidance.speechDelivered(verdict, now)
+                        }
+                    }
+                }
+            } finally {
+                frame.close()
+            }
+        }
         val future=ProcessCameraProvider.getInstance(context)
         future.addListener({if(!disposed)runCatching {
             provider=future.get()
-            provider!!.bindToLifecycle(owner,CameraSelector.DEFAULT_BACK_CAMERA,preview,capture)
+            try {
+                provider!!.bindToLifecycle(owner,CameraSelector.DEFAULT_BACK_CAMERA,preview,capture,analysis)
+            } catch (unsupported: IllegalArgumentException) {
+                analysis.clearAnalyzer()
+                provider!!.unbind(preview, capture, analysis)
+                provider!!.bindToLifecycle(owner,CameraSelector.DEFAULT_BACK_CAMERA,preview,capture)
+                qualityMessage = "Подсказки превью недоступны. Съёмка доступна."
+            }
             ready=true
         }.onFailure {flow.error("Камера недоступна: ${it.message}")}},executor)
         val observer=androidx.lifecycle.Observer<PreviewView.StreamState> {streamed=it==PreviewView.StreamState.STREAMING}
         previewView.previewStreamState.observe(owner,observer)
-        onDispose {disposed=true;ready=false;previewView.previewStreamState.removeObserver(observer);provider?.unbind(preview,capture)}
+        onDispose {
+            disposed = true
+            active.set(false)
+            ready = false
+            analysis.clearAnalyzer()
+            worker.shutdown()
+            previewView.previewStreamState.removeObserver(observer)
+            provider?.unbind(preview, capture, analysis)
+        }
     }
     LaunchedEffect(ready,streamed,state.shotRequested) {
         if(ready && streamed) {
@@ -92,7 +144,10 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
             if(ready && streamed && flow.consumeAutoShot())takePhoto()
         }
     }
-    CameraLayout(previewView, shooting, ready, state.message, onShoot=onShoot, onCancel=onCancel, voicePanel=voicePanel)
+    CameraLayout(previewView, shooting, ready, state.message,
+        qualityMessage = if (state.guidanceEnabled) qualityMessage else "Подсказки качества выключены.",
+        guidanceEnabled = state.guidanceEnabled, onToggleGuidance = { onGuidance(!state.guidanceEnabled) },
+        onShoot=onShoot, onCancel=onCancel, voicePanel=voicePanel)
 }
 
 /**
@@ -105,6 +160,9 @@ private fun CameraLayout(
     shooting: Boolean,
     ready: Boolean,
     message: String?,
+    qualityMessage: String,
+    guidanceEnabled: Boolean,
+    onToggleGuidance: () -> Unit,
     onShoot: () -> Unit,
     onCancel: () -> Unit,
     voicePanel: @Composable () -> Unit
@@ -141,6 +199,10 @@ private fun CameraLayout(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             message?.let { MessageBanner(it, isError = true) }
+            Text(qualityMessage, color = Color.White, modifier = Modifier.background(Color.Black.copy(alpha = 0.7f)).padding(8.dp))
+            TextButton(onClick = onToggleGuidance) {
+                Text(if (guidanceEnabled) "Выключить подсказки кадра" else "Включить подсказки кадра", color = Color.White)
+            }
             voicePanel()
             ShutterButton(enabled = ready && !shooting, onClick = onShoot)
         }

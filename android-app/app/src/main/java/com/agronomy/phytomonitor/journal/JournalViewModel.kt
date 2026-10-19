@@ -38,12 +38,17 @@ data class JournalState(
     val noteDraft: SavedNoteDraft? = null,
     val scrollDirection: String = "",
     val scrollSequence: Long = 0,
-    val earned: List<AchievementEntity> = emptyList()
+    val earned: List<AchievementEntity> = emptyList(),
+    val historyPlantId: String? = null,
+    val comparison: List<SavedInspectionView> = emptyList()
 ) {
+    val history: List<InspectionEntry>
+        get() = entries.filter { historyPlantId != null && it.plantId == historyPlantId }
+            .sortedWith(compareBy<InspectionEntry> { it.created }.thenBy { it.id })
     val visible: List<InspectionEntry>
         get() = entries.filter { entry ->
             (filter == "all" || entry.review == filter) &&
-                (query.isBlank() || listOf(entry.plot, entry.note, entry.model)
+                (query.isBlank() || listOf(entry.plot, entry.plant, entry.note, entry.model)
                     .any { it.contains(query.trim(), ignoreCase = true) })
         }
 }
@@ -89,6 +94,51 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
         val entries = withContext(Dispatchers.IO) { journal.list() }
         val earned = withContext(Dispatchers.IO) { journal.achievements() }
         mutableState.update { it.copy(entries = entries, earned = earned) }
+    }
+
+    fun findPlantHistory(id: String?, plot: String, name: String, onFound: (String) -> Unit) = transact {
+        val entries = withContext(Dispatchers.IO) { journal.list() }
+        val matching = entries.filter {
+            it.plot.equals(plot.trim(), ignoreCase = true) &&
+                com.agronomy.phytomonitor.voice.VoiceCommands.spokenPlot(it.plant) ==
+                com.agronomy.phytomonitor.voice.VoiceCommands.spokenPlot(name)
+        }.mapNotNull { it.plantId }.distinct()
+        val target = id ?: matching.singleOrNull()
+        require(target != null && entries.any { it.plantId == target }) {
+            "История не найдена или имя неоднозначно. Сохрани осмотр с растением либо открой его запись в журнале."
+        }
+        mutableState.update { it.copy(entries = entries) }
+        onFound(target)
+    }
+
+    fun openPlantHistory(id: String) = transact {
+        val entries = withContext(Dispatchers.IO) { journal.list() }
+        mutableState.update { it.copy(entries = entries, historyPlantId = id, comparison = emptyList()) }
+        val history = state.value.history
+        require(history.isNotEmpty()) { "У растения нет сохранённых осмотров." }
+        val ids = listOf(history.first().id, history.last().id).distinct()
+        loadComparison(ids)
+    }
+
+    fun compareInspections(first: String, second: String) = transact {
+        val allowed = state.value.history.map { it.id }.toSet()
+        require(first != second && first in allowed && second in allowed) { "Выбери два осмотра этого растения." }
+        loadComparison(listOf(first, second))
+    }
+
+    fun closePlantHistory() = mutableState.update { it.copy(historyPlantId = null, comparison = emptyList()) }
+
+    private suspend fun loadComparison(ids: List<String>) {
+        val views = withContext(Dispatchers.IO) {
+            ids.map { id ->
+                val details = requireNotNull(journal.details(id)) { "Осмотр больше не доступен." }
+                val path = details.photos.firstOrNull()?.photo?.localPath
+                val bitmap = path?.let(::File)?.takeIf { it.isFile }
+                    ?.let { runCatching { PhotoFiles.decode(it) }.getOrNull() }
+                SavedInspectionView.of(details, bitmap)
+            }.sortedBy { it.details.inspection.createdAt }
+        }
+        mutableState.update { it.copy(comparison = views) }
     }
 
     fun openInspection(id: String) {

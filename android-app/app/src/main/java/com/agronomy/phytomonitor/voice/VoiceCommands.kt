@@ -10,7 +10,8 @@ enum class VoiceAction {
     CONFIRM, NOTE, CLEAR_NOTE, JOURNAL, JOURNAL_NUMBER, SAVE_INSPECTION, ASSESS, COMPARE,
     SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, CREATE_PLOT, RENAME_PLOT,
     DELETE_PLOT, SETTINGS, SET_SETTING, SEARCH, JOURNAL_FILTER, EXPORT_JOURNAL, IMPORT_JOURNAL,
-    KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS, LEAF_KNOWLEDGE
+    KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS, LEAF_KNOWLEDGE,
+    PLANT, PLANT_HISTORY, COMPARE_INSPECTIONS, CAMERA_GUIDANCE
 }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
@@ -22,6 +23,10 @@ object VoiceCommands {
         phrases.forEach { aliases[it] = command }
     }
     init {
+        add(VoiceCommand(VoiceAction.CAMERA_GUIDANCE, "Подсказки кадра включены", "true"), "включи подсказки кадра")
+        add(VoiceCommand(VoiceAction.CAMERA_GUIDANCE, "Подсказки кадра выключены", "false"), "выключи подсказки кадра")
+        add(VoiceCommand(VoiceAction.PLANT_HISTORY, "История растения"), "история растения", "открой историю растения", "покажи историю растения")
+        add(VoiceCommand(VoiceAction.PLANT, "Без растения", ""), "убери растение", "без растения")
         add(VoiceCommand(VoiceAction.NOTE,"Заметка"),"добавь заметку","запиши заметку","измени заметку","исправь заметку")
         add(VoiceCommand(VoiceAction.CLEAR_NOTE,"Очистить текст заметки"),"очисти текст заметки","очисти заметку")
         add(VoiceCommand(VoiceAction.JOURNAL,"Журнал осмотров"),"открой журнал","покажи историю")
@@ -115,7 +120,7 @@ object VoiceCommands {
         (1..count.coerceIn(1, 1000)).map(RussianPhotoNumber::words)).distinct()
     val grammar: List<String> get() = phrasesFor(globalActions + labActions + setOf(VoiceAction.CAMERA,VoiceAction.CAMERA_NOW,VoiceAction.OPEN_CAMERA,VoiceAction.GALLERY,VoiceAction.SYSTEM_GALLERY,VoiceAction.ANALYZE)) +
         listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не делай фото","не открывай галерею","не проверяй фото","не выключай голос","сегодня хорошая погода","[unk]")
-    val cameraGrammar: List<String> get()=(phrasesFor(globalActions+setOf(VoiceAction.CONFIRM,VoiceAction.CAMERA_NOW,VoiceAction.CAMERA,VoiceAction.GALLERY))+listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не подтверждать","не делай фото","не выключай голос","[unk]")).distinct()
+    val cameraGrammar: List<String> get()=(phrasesFor(globalActions+setOf(VoiceAction.CONFIRM,VoiceAction.CAMERA_NOW,VoiceAction.CAMERA,VoiceAction.GALLERY,VoiceAction.CAMERA_GUIDANCE))+listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не подтверждать","не делай фото","не выключай голос","[unk]")).distinct()
     fun galleryGrammar(count: Int): List<String>? {
         if(count>10000)return null // Use the full Russian vocabulary for unusually large libraries.
         val galleryActions=setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.BACK,VoiceAction.FIRST_PHOTO,VoiceAction.LAST_PHOTO,VoiceAction.NEXT_PHOTO,VoiceAction.PREVIOUS_PHOTO,VoiceAction.PHOTO_NUMBER,VoiceAction.SCROLL,VoiceAction.HELP,VoiceAction.CLOSE_HELP,VoiceAction.LISTEN_ON,VoiceAction.LISTEN_OFF,VoiceAction.EXIT)
@@ -129,6 +134,16 @@ object VoiceCommands {
         val normalized = text.lowercase(Locale.ROOT).replace('ё','е')
             .replace(Regex("[.,!?;:]")," ").trim().replace(Regex("\\s+")," ")
         aliases.entries.firstOrNull { it.key.replace('ё','е') == normalized }?.value?.let {return it}
+        val plantPrefix = listOf("растение ", "выбери растение ", "это растение ").firstOrNull { normalized.startsWith(it) }
+        if (plantPrefix != null) {
+            val name = normalized.removePrefix(plantPrefix).trim()
+            if (name.isNotEmpty()) return VoiceCommand(VoiceAction.PLANT, "Растение: $name", name)
+        }
+        if (normalized.startsWith("сравни осмотры ")) {
+            val parts = normalized.removePrefix("сравни осмотры ").split(" и ")
+            val numbers = parts.mapNotNull(RussianPhotoNumber::parse)
+            if (parts.size == 2 && numbers.size == 2) return VoiceCommand(VoiceAction.COMPARE_INSPECTIONS, "Сравнение осмотров", numbers.joinToString(":"))
+        }
         if(normalized.startsWith("ряд ")) {
             val number=RussianPhotoNumber.parse(normalized.removePrefix("ряд ")) ?: return null
             return number.takeIf {it in 1..MAX_ROW}?.let {VoiceCommand(VoiceAction.ROW,"Ряд $it",it.toString())}

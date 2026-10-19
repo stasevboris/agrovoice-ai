@@ -53,7 +53,8 @@ data class SavedInspectionView(
 
 @Composable
 internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit, onRead: () -> Unit,
-    onEditNote: () -> Unit, onKnowledge: (Int) -> Unit, onReanalyse: () -> Unit) {
+    onEditNote: () -> Unit, onKnowledge: (Int) -> Unit, onReanalyse: () -> Unit,
+    onPlantHistory: () -> Unit = {}) {
     val inspection = view.details.inspection
     val date = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(inspection.createdAt))
     Column(Modifier.fillMaxSize()) {
@@ -88,6 +89,9 @@ internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit
                 OutlinedButton(onClick = { onKnowledge(index + 1) }) { Text("Справка по листу ${index + 1}") }
             }
             SavedFacts(view)
+            if (view.details.photos.any { it.photo.plantId != null }) {
+                OutlinedButton(onClick = onPlantHistory) { Text("История растения") }
+            }
             OutlinedButton(onClick = onEditNote, modifier = Modifier.fillMaxWidth()) {
                 Text("Изменить заметку")
             }
@@ -115,6 +119,7 @@ private fun SavedFacts(view: SavedInspectionView) {
         "Оценка: ${reviewText(inspection.userReview)}",
         view.details.plot?.name?.let { "Участок: $it" },
         inspection.row?.let { "Ряд: $it" },
+        view.details.photos.firstOrNull()?.plantName?.let { "Растение: $it" },
         inspection.lat?.let { lat -> "Координаты: %.5f, %.5f ±%.0f м".format(Locale.ROOT, lat, inspection.lon ?: 0.0, inspection.accuracyM ?: 0.0) },
         inspection.note.takeIf { it.isNotBlank() }?.let { "Заметка: $it" }
     )

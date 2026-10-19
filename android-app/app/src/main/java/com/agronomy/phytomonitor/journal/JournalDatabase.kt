@@ -37,6 +37,9 @@ interface JournalDao {
     @Query("SELECT * FROM plant WHERE id = :id")
     fun plant(id: String): PlantEntity?
 
+    @Query("SELECT * FROM plant WHERE plot_id IS :plotId")
+    fun plantsInPlot(plotId: String?): List<PlantEntity>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPlant(plant: PlantEntity): Long
 
@@ -242,22 +245,9 @@ abstract class JournalDatabase : RoomDatabase() {
                         "FOREIGN KEY(`plot_id`) REFERENCES `plot`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL)"
                 )
                 db.execSQL("CREATE INDEX IF NOT EXISTS `index_plant_plot_id` ON `plant` (`plot_id`)")
-                // SQLite cannot add a REFERENCES column with ALTER TABLE: recreate photo with plant_id.
-                db.execSQL(
-                    "CREATE TABLE IF NOT EXISTS `photo_new` (`id` TEXT NOT NULL, `inspection_id` TEXT NOT NULL, " +
-                        "`plant_id` TEXT, `local_path` TEXT NOT NULL, `sha256` TEXT NOT NULL, " +
-                        "`width` INTEGER NOT NULL, `height` INTEGER NOT NULL, `uploaded` INTEGER NOT NULL DEFAULT 0, " +
-                        "PRIMARY KEY(`id`), " +
-                        "FOREIGN KEY(`inspection_id`) REFERENCES `inspection`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE, " +
-                        "FOREIGN KEY(`plant_id`) REFERENCES `plant`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL)"
-                )
-                db.execSQL(
-                    "INSERT INTO `photo_new` (`id`, `inspection_id`, `plant_id`, `local_path`, `sha256`, `width`, `height`, `uploaded`) " +
-                        "SELECT `id`, `inspection_id`, NULL, `local_path`, `sha256`, `width`, `height`, `uploaded` FROM `photo`"
-                )
-                db.execSQL("DROP TABLE `photo`")
-                db.execSQL("ALTER TABLE `photo_new` RENAME TO `photo`")
-                db.execSQL("CREATE INDEX IF NOT EXISTS `index_photo_inspection_id` ON `photo` (`inspection_id`)")
+                // A nullable REFERENCES column is supported with default NULL. Keeping the table
+                // also keeps detections: dropping photo would cascade-delete its child rows.
+                db.execSQL("ALTER TABLE `photo` ADD COLUMN `plant_id` TEXT REFERENCES `plant`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL")
                 db.execSQL("CREATE INDEX IF NOT EXISTS `index_photo_plant_id` ON `photo` (`plant_id`)")
             }
         }

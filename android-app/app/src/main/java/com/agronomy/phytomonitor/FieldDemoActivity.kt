@@ -211,8 +211,11 @@ class FieldDemoActivity : ComponentActivity() {
         pendingPlotDeletion = plotsModel.state.value.pendingDeletion,
         plot = fieldModel.plotName,
         row = fieldModel.rowName,
+        plant = fieldModel.plantName,
+        plantHistoryOpen = navigation?.currentDestination?.route == "plant/{id}",
         inspectionOpen = navigation?.currentDestination?.route == "inspection/{id}",
-        journalIds = journalModel.state.value.visible.map { it.id },
+        journalIds = (if (journalModel.state.value.historyPlantId != null) journalModel.state.value.history
+            else journalModel.state.value.visible).map { it.id },
         journalCount = journalModel.state.value.entries.size,
         settings = settings.state.value?.let { mapOf("voice_enabled" to it.voiceEnabled,
             "spoken_follow_up" to it.spokenFollowUp, "free_speech" to it.freeSpeech,
@@ -281,7 +284,7 @@ class FieldDemoActivity : ComponentActivity() {
                     speaker.stop()
                     journalModel.openInspection(operation.id)
                     navigation?.navigate("inspection/${Uri.encode(operation.id)}") {
-                        popUpTo("journal")
+                        popUpTo(if (journalModel.state.value.historyPlantId != null) "plant/{id}" else "journal")
                         launchSingleTop = true
                     }
                 }
@@ -392,6 +395,23 @@ class FieldDemoActivity : ComponentActivity() {
                 Operation.ReadKnowledge -> speak(knowledgeModel.spoken())
                 is Operation.SelectPlot -> fieldModel.editPlot(operation.name)
                 is Operation.SetRow -> fieldModel.editRow(operation.row)
+                is Operation.SetPlant -> fieldModel.editPlant(operation.name)
+                is Operation.SetCameraGuidance -> cameraModel.guidance(operation.enabled)
+                Operation.OpenPlantHistory -> {
+                    val id = if (currentState().inspectionOpen) journalModel.state.value.opened?.details?.photos?.firstOrNull()?.photo?.plantId else null
+                    if (currentState().inspectionOpen && id == null) speak("Этот осмотр не привязан к растению.")
+                    else journalModel.findPlantHistory(id, fieldModel.plotName, fieldModel.plantName) { plantId ->
+                        navigation?.navigate("plant/${Uri.encode(plantId)}") { launchSingleTop = true }
+                    }
+                }
+                Operation.ClosePlantHistory -> {
+                    journalModel.closePlantHistory()
+                    navigation?.popBackStack()
+                }
+                is Operation.CompareInspections -> journalModel.compareInspections(operation.firstId, operation.secondId)
+                Operation.SpeakPlantHistory -> speak(journalModel.state.value.comparison.joinToString("\n") {
+                    com.agronomy.phytomonitor.journal.SavedInspectionSpeech.text(it.details)
+                })
                 Operation.SaveInspection -> fieldModel.saveInspection()
                 is Operation.Assess -> fieldModel.assess(operation.review)
                 Operation.CompareModels -> fieldModel.compareModels()
@@ -486,14 +506,14 @@ class FieldDemoActivity : ComponentActivity() {
         cameraOpen->VoiceCommands.cameraGrammar
         galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
         currentScreen() in setOf(Screen.KNOWLEDGE, Screen.JOURNAL, Screen.PLOTS, Screen.SETTINGS) -> null // Search and new names need unrestricted vocabulary.
-        else->VoiceCommands.mainGrammar(plotsModel.state.value.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
+        else -> null // Plant names, like plot creation and search, need unrestricted vocabulary.
     }
     private fun currentScreen(): Screen = voiceRouter.screen
     private fun screenFromNavigation(): Screen = when {
         fieldModel.noteOpen -> if (fieldModel.dictating) Screen.NOTE else Screen.NOTE_REVIEW
         cameraOpen -> Screen.CAMERA
         galleryOpen -> Screen.GALLERY
-        navigation?.currentDestination?.route in setOf("journal", "inspection/{id}") -> Screen.JOURNAL
+        navigation?.currentDestination?.route in setOf("journal", "inspection/{id}", "plant/{id}") -> Screen.JOURNAL
         navigation?.currentDestination?.route == "settings" -> Screen.SETTINGS
         navigation?.currentDestination?.route in setOf("knowledge", "knowledge/{code}") -> Screen.KNOWLEDGE
         navigation?.currentDestination?.route == "plots" -> Screen.PLOTS
@@ -662,7 +682,7 @@ class FieldDemoActivity : ComponentActivity() {
                     if (foreground && currentScreen() == Screen.PLOTS) plotsState.message?.let(::speak)
                 }
                 LaunchedEffect(journalState.message) {
-                    if (foreground && (currentScreen() == Screen.JOURNAL || journalState.noteDraft != null)) {
+                    if (foreground && (currentScreen() in setOf(Screen.MAIN, Screen.JOURNAL) || journalState.noteDraft != null)) {
                         journalState.message?.let(::speak)
                     }
                 }
@@ -717,7 +737,14 @@ class FieldDemoActivity : ComponentActivity() {
                                             navController.popBackStack("main", false)
                                             model.importPhoto(uri)
                                         }
-                                    }, onCancel = { press(VoiceAction.CANCEL) }, onShoot = { press(VoiceAction.CONFIRM) }) {
+                                    }, onCancel = { press(VoiceAction.CANCEL) }, onShoot = { press(VoiceAction.CONFIRM) },
+                                        onGuidance = { press(VoiceAction.CAMERA_GUIDANCE, it.toString()) },
+                                        onAdvice = { advice ->
+                                            if (foreground && cameraOpen && !speaker.active && !voice.active && settings.state.value?.voiceEnabled == true) {
+                                                speak(advice)
+                                                true
+                                            } else false
+                                        }) {
                                         VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Наведи камеру → «подтвердить».",onDark=true)
                                     }
                                 }
@@ -731,6 +758,7 @@ class FieldDemoActivity : ComponentActivity() {
                                     }
                                 }
                                 composable("journal") {
+                                    LaunchedEffect(Unit) { journalModel.closePlantHistory() }
                                     JournalScreen(journalModel, model.detector.models.associate { it.id to it.name },
                                         onOpen = { id -> press(VoiceAction.JOURNAL_NUMBER, (journalModel.state.value.visible.indexOfFirst { it.id == id } + 1).toString()) },
                                         onBack = { press(VoiceAction.BACK) },
@@ -773,6 +801,7 @@ class FieldDemoActivity : ComponentActivity() {
                                         }
                                     } else {
                                         SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) },
+                                            onPlantHistory = { press(VoiceAction.PLANT_HISTORY) },
                                             onRead = { press(VoiceAction.SPEAK_RESULT) },
                                             onKnowledge = { press(VoiceAction.LEAF_KNOWLEDGE, it.toString()) },
                                             onEditNote = { press(VoiceAction.NOTE) }, onReanalyse = {
@@ -784,6 +813,14 @@ class FieldDemoActivity : ComponentActivity() {
                                             }
                                         })
                                     }
+                                }
+                                composable("plant/{id}") { entry ->
+                                    val id = requireNotNull(entry.arguments?.getString("id"))
+                                    LaunchedEffect(id) { journalModel.openPlantHistory(id) }
+                                    PlantHistoryScreen(journalState, onBack = { press(VoiceAction.BACK) },
+                                        onOpen = { press(VoiceAction.JOURNAL_NUMBER, it.toString()) },
+                                        onCompare = { press(VoiceAction.COMPARE_INSPECTIONS, it) },
+                                        onRead = { press(VoiceAction.SPEAK_RESULT) })
                                 }
                         }
                         InspectionDialogs(model, ::dictateNote, onConfirm = { press(VoiceAction.CONFIRM) },

@@ -46,7 +46,8 @@ object ActionPolicy {
         VoiceAction.MODEL, VoiceAction.CROP, VoiceAction.THRESHOLD, VoiceAction.SCROLL,
         VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER,
         VoiceAction.JOURNAL_NUMBER, VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT,
-        VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL, VoiceAction.LEAF_KNOWLEDGE
+        VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL, VoiceAction.LEAF_KNOWLEDGE,
+        VoiceAction.PLANT, VoiceAction.COMPARE_INSPECTIONS, VoiceAction.CAMERA_GUIDANCE
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -73,6 +74,24 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            VoiceAction.CAMERA_GUIDANCE -> if (state.screen == Screen.CAMERA) run(Operation.SetCameraGuidance(request.value.toBoolean()))
+                else Verdict.Clarify("Подсказки кадра доступны в камере.")
+            VoiceAction.PLANT -> if (state.screen != Screen.MAIN) Verdict.Clarify("Назови растение на главном экране перед сохранением.")
+                else run(Operation.SetPlant(request.value))
+            VoiceAction.PLANT_HISTORY -> when {
+                state.plantHistoryOpen -> Verdict.Skip("История растения уже открыта.")
+                state.screen == Screen.MAIN || state.screen == Screen.JOURNAL && state.inspectionOpen -> run(Operation.OpenPlantHistory)
+                else -> Verdict.Clarify("Выбери растение на главном экране или открой сохранённый осмотр.")
+            }
+            VoiceAction.COMPARE_INSPECTIONS -> {
+                if (!state.plantHistoryOpen) Verdict.Clarify("Сначала открой историю растения.")
+                else {
+                    val indices = request.value.split(":").map { it.toInt() - 1 }
+                    val ids = indices.mapNotNull(state.journalIds::getOrNull)
+                    if (ids.size != 2 || ids[0] == ids[1]) Verdict.Clarify("Назови два разных номера из истории растения.")
+                    else run(Operation.CompareInspections(ids[0], ids[1]))
+                }
+            }
             in BrowseActions.actions -> BrowseActions.resolve(request, state)
             in PlotActions.actions -> PlotActions.resolve(request, state)
             VoiceAction.JOURNAL_NUMBER -> openInspection(request, state)
@@ -84,6 +103,7 @@ object ActionPolicy {
             VoiceAction.SPEAK_RESULT -> if (state.screen == Screen.JOURNAL) {
                 val id = state.openedInspectionId
                 when {
+                    state.plantHistoryOpen -> run(Operation.SpeakPlantHistory)
                     !state.inspectionOpen || id == null -> Verdict.Clarify("Сначала открой сохранённый осмотр по номеру из журнала.")
                     state.speaking -> Verdict.Skip("Уже читаю результат.")
                     else -> run(Operation.SpeakInspection(id))
@@ -140,6 +160,10 @@ object ActionPolicy {
             return if (value.isEmpty()) null else Verdict.Reject("У этого действия нет параметров.")
         }
         return when (request.action) {
+            VoiceAction.PLANT -> if (value.length <= 120 && value.none { it.isISOControl() }) null else Verdict.Reject("Название растения — до 120 символов.")
+            VoiceAction.CAMERA_GUIDANCE -> if (value in setOf("true", "false")) null else Verdict.Reject("Укажи, включить или выключить подсказки.")
+            VoiceAction.COMPARE_INSPECTIONS -> if (value.split(":").let { it.size == 2 && it.all { part -> (part.toIntOrNull() ?: 0) > 0 } }) null
+                else Verdict.Clarify("Назови два номера: сравни осмотры один и два.")
             in BrowseActions.actions -> null
             in PlotActions.actions -> null // PlotActions checks the names and structured rename argument.
             VoiceAction.MODEL -> if (value in state.availableModels) null else Verdict.Reject("Модель недоступна в текущем приложении.")
@@ -251,6 +275,7 @@ object ActionPolicy {
         state.followUp && state.screen == Screen.MAIN -> run(Operation.EndFollowUp)
         state.resultOpen && state.screen == Screen.MAIN -> run(Operation.CloseResult)
         state.screen == Screen.JOURNAL && state.inspectionOpen -> run(Operation.CloseInspection)
+        state.plantHistoryOpen -> run(Operation.ClosePlantHistory)
         state.screen == Screen.JOURNAL -> run(Operation.CloseJournal)
         state.screen == Screen.PLOTS -> run(Operation.ClosePlots)
         state.screen == Screen.SETTINGS -> run(Operation.CloseSettings)

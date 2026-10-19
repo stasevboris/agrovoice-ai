@@ -19,6 +19,7 @@ object SavedInspectionSpeech {
             add("Результат модели не подтверждает диагноз.")
             details.plot?.name?.let { add("Участок: $it.") }
             inspection.row?.let { add("Ряд: $it.") }
+            details.photos.firstOrNull()?.plantName?.let { add("Растение: $it.") }
             if (inspection.note.isNotBlank()) add("Заметка: ${inspection.note}")
         }.joinToString(" ")
     }

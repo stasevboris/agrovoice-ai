@@ -122,7 +122,7 @@ class FieldPlotsTest {
     fun plantIsKeptPerPlotAndSurvivesTheArchive() {
         val journal = InspectionJournal(context, database) { now }
         journal.save(report("p1.json"), "", "unrated", "Сад", plant = "Ёж 1")
-        journal.save(report("p2.json"), "", "unrated", "Сад", plant = "Ёж 1")
+        journal.save(report("p2.json"), "", "unrated", "Сад", plant = "еж один")
         journal.save(report("p3.json"), "", "unrated", "Поле", plant = "Ёж 1")
         journal.save(report("p4.json"), "", "unrated", "", "")
         // Entries expose the plant label through the public list path.
@@ -130,13 +130,16 @@ class FieldPlotsTest {
             listOf("Ёж 1", "Ёж 1", "Ёж 1", ""),
             journal.list().sortedBy { it.created }.map { it.plant }
         )
-        // The archive round-trips the label; the restored journal re-creates plants by (plot, name).
+        val before = journal.list().associate { it.id to it.plantId }
+        assertEquals(2, before.values.filterNotNull().distinct().size)
+        // Both labels and stable plant IDs survive an archive, including repeat observations.
         val archive = java.io.ByteArrayOutputStream()
         journal.exportArchive(archive)
         val other = Room.inMemoryDatabaseBuilder(context, JournalDatabase::class.java).allowMainThreadQueries().build()
         try {
             val restored = InspectionJournal(context, other) { now }
             restored.import(java.io.ByteArrayInputStream(archive.toByteArray()))
+            assertEquals(before, restored.list().associate { it.id to it.plantId })
             assertEquals(
                 listOf("Ёж 1", "Ёж 1", "Ёж 1", ""),
                 restored.list().sortedBy { it.created }.map { it.plant }

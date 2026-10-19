@@ -59,6 +59,8 @@ data class AppState(
     val pendingPlotDeletion: PlotTarget? = null,
     val plot: String = "",
     val row: String = "",
+    val plant: String = "",
+    val plantHistoryOpen: Boolean = false,
     val inspectionOpen: Boolean = false,
     val journalIds: List<String> = emptyList(),
     val journalCount: Int = 0,
@@ -125,6 +127,12 @@ sealed interface Operation {
     data object ReadKnowledge : Operation
     data class SelectPlot(val name: String) : Operation
     data class SetRow(val row: String) : Operation
+    data class SetPlant(val name: String) : Operation
+    data object OpenPlantHistory : Operation
+    data object ClosePlantHistory : Operation
+    data class CompareInspections(val firstId: String, val secondId: String) : Operation
+    data object SpeakPlantHistory : Operation
+    data class SetCameraGuidance(val enabled: Boolean) : Operation
     data object SaveInspection : Operation
     data class Assess(val review: String) : Operation
     data object CompareModels : Operation

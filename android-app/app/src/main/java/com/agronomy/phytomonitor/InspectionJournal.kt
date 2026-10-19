@@ -45,7 +45,8 @@ data class InspectionEntry(
     val plant: String = "",
     val photoAvailable: Boolean = true,
     val row: String = "",
-    val location: GeoPoint? = null
+    val location: GeoPoint? = null,
+    val plantId: String? = null
 )
 
 /** The result of a migration or an import: counts and every record that was not taken. */
@@ -126,6 +127,7 @@ class InspectionJournal(
         require(review in REVIEWS)
         require(note.length <= MAX_NOTE)
         require(plot.length <= MAX_PLOT)
+        require(plant.length <= MAX_PLOT)
         val prediction = JSONObject(report.readText())
         val previous = dao.inspectionByReport(report.name)
         val now = clock()
@@ -367,22 +369,35 @@ class InspectionJournal(
     }
 
     private fun store(parsed: ParsedInspection, photoPath: String, operation: String) {
-        val plotRef = plotId(parsed.plot)
-        val plantRef = plantId(plotRef, parsed.plant)
-        val record = JournalRecords.toRecord(parsed, plotRef, plantRef, photoPath)
         val change = SyncQueueEntity(entity = "inspection", entityId = parsed.id, operation = operation, createdAt = clock())
         database.runInTransaction(Callable {
+            val plotRef = plotId(parsed.plot)
+            val plantRef = plantId(plotRef, parsed.plant, parsed.plantId)
+            val record = JournalRecords.toRecord(parsed, plotRef, plantRef, photoPath)
             dao.saveRecord(record, change)
             recomputeAchievements()
         })
     }
 
-    private fun plantId(plotRef: String?, name: String): String? {
+    private fun plantId(plotRef: String?, name: String, importedId: String? = null): String? {
         val trimmed = name.trim()
         if (trimmed.isEmpty()) {
             return null
         }
-        dao.plantByName(plotRef, trimmed)?.let { return it.id }
+        if (importedId != null) {
+            val existing = dao.plant(importedId)
+            require(existing == null || existing.plotId == plotRef && existing.name == trimmed) {
+                "ID растения относится к другому участку или имени. Импорт остановлен."
+            }
+            if (existing == null) dao.insertPlant(PlantEntity(importedId, plotRef, trimmed, clock(), clock()))
+            return importedId
+        }
+        val spoken = com.agronomy.phytomonitor.voice.VoiceCommands.spokenPlot(trimmed)
+        val matches = dao.plantsInPlot(plotRef).filter {
+            com.agronomy.phytomonitor.voice.VoiceCommands.spokenPlot(it.name) == spoken
+        }
+        require(matches.size <= 1) { "Название растения неоднозначно. Укажи другое имя." }
+        matches.singleOrNull()?.let { return it.id }
         dao.insertPlant(PlantEntity(UUID.randomUUID().toString(), plotRef, trimmed, createdAt = clock(), updatedAt = clock()))
         return requireNotNull(dao.plantByName(plotRef, trimmed)).id
     }
@@ -420,7 +435,8 @@ class InspectionJournal(
             plant = photo?.plantName.orEmpty(),
             photoAvailable = path.isNotEmpty() && File(path).isFile,
             row = inspection.row.orEmpty(),
-            location = storedLocation(inspection)
+            location = storedLocation(inspection),
+            plantId = photo?.photo?.plantId
         )
     }
 
