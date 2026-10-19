@@ -11,6 +11,7 @@ from app.security import passwords
 def main():
     parser = argparse.ArgumentParser(description="Create a local AgroVoice user")
     parser.add_argument("username")
+    parser.add_argument("--expert", action="store_true", help="Allow this account to review all inspections on this server")
     args = parser.parse_args()
     if not 1 <= len(args.username) <= 80:
         raise SystemExit("Username must contain 1..80 characters")
@@ -20,7 +21,7 @@ def main():
     with Session.begin() as database:
         if database.scalar(select(User).where(User.username == args.username)) is not None:
             raise SystemExit("User already exists; nothing changed")
-        database.add(User(username=args.username, password_hash=passwords.hash(password)))
+        database.add(User(username=args.username, password_hash=passwords.hash(password), is_expert=args.expert))
     print("User created")
 
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<section class="login card">
+  <p class="eyebrow">AGROVOICE / ЛОКАЛЬНЫЙ СЕРВЕР</p>
+  <h1>Осмотры под рукой</h1>
+  <p class="muted">Фотографии, заметки и результаты проверки растений в одном журнале.</p>
+  {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+  <form method="post" action="/login" class="login-form">
+    <input type="hidden" name="token" value="{{ csrf }}">
+    <label>Логин<input name="username" autocomplete="username" required maxlength="80"></label>
+    <label>Пароль<input name="password" type="password" autocomplete="current-password" required maxlength="1024"></label>
+    <button class="primary">Войти в журнал</button>
+  </form>
+  <p class="muted small">Учётную запись выдаёт администратор хозяйства.</p>
+</section>
+{% endblock %}

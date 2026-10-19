@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="htmx-config" content='{"allowEval":false,"allowScriptTags":false}'>
+  <title>{% block title %}Осмотры{% endblock %} · AgroVoice</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <link rel="stylesheet" href="/static/vendor/leaflet.css">
+  <script src="/static/vendor/htmx.min.js" defer></script>
+  <script src="/static/vendor/leaflet.js" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand">AgroVoice <span>Журнал хозяйства</span></a>
+    {% if user %}<div class="account"><span>{{ user.username }} · {{ 'специалист' if user.is_expert else 'агроном' }}</span>
+    <form action="/logout" method="post"><input type="hidden" name="token" value="{{ csrf }}"><button class="quiet">Выйти</button></form></div>{% endif %}
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer>Предварительное распознавание листа. Отметка специалиста не заменяет регламент применения препарата.</footer>
+</body>
+</html>

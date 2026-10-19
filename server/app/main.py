@@ -1,6 +1,10 @@
 import uuid
+from pathlib import Path
+import os
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
 from pydantic import BaseModel, ConfigDict, Field, SecretStr
 from sqlalchemy import select, text
 from sqlalchemy.exc import SQLAlchemyError
@@ -11,9 +15,15 @@ from app.db import session
 from app.models import User
 from app.security import current_user, denied, dummy_hash, issue_token, passwords
 from app.sync import router as sync_router
+from app.web import router as web_router
 
-app = FastAPI(title="AgroVoice API", version="0.2.0")
+app = FastAPI(title="AgroVoice API", version="0.3.0")
+app.add_middleware(SessionMiddleware, secret_key=settings().jwt_secret,
+                   session_cookie="agrovoice_session", max_age=1800, same_site="strict",
+                   https_only=os.environ.get("COOKIE_SECURE") == "1")
 app.include_router(sync_router)
+app.include_router(web_router)
+app.mount("/static", StaticFiles(directory=Path(__file__).resolve().parents[1] / "static"), name="static")
 
 
 class Login(BaseModel):

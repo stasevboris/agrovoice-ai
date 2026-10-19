@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-heading"><div><p class="eyebrow">ПОЛЕВОЙ ЖУРНАЛ</p><h1>Осмотры растений</h1>
+<p class="muted">{{ 'Все записи хозяйства для проверки специалистом.' if user.is_expert else 'Ваши сохранённые осмотры и отметки специалиста.' }}</p></div>
+<a class="button" id="export-link" href="/export.xlsx?{{ request.query_params }}">Скачать XLSX</a></div>
+<form class="filters card" action="/" method="get" hx-get="/" hx-target="#results" hx-push-url="true">
+  <label>Культура <select name="crop"><option value="">Все культуры</option>{% for code, name in crops.items() %}<option value="{{ code }}" {{ 'selected' if code == filters.crop else '' }}>{{ name }}</option>{% endfor %}</select></label>
+  <label>Состояние <select name="disease"><option value="">Все состояния</option>{% for code, name in conditions %}<option value="{{ code }}" {{ 'selected' if code == filters.disease else '' }}>{{ name or code }}</option>{% endfor %}</select></label>
+  <label>Участок <input name="plot" value="{{ filters.plot }}" placeholder="Название участка" maxlength="256"></label>
+  <label>С даты (UTC) <input name="start" type="date" value="{{ filters.start or '' }}"></label>
+  <label>По дату (UTC) <input name="end" type="date" value="{{ filters.end or '' }}"></label>
+  <button class="primary">Применить</button><a href="/" class="quiet">Сбросить</a>
+</form>
+<p class="small muted">Культура и состояние — по первому результату модели. Полный список рамок доступен в осмотре.</p>
+<div id="results">{% include "rows.html" %}</div>
+{% endblock %}

@@ -42,6 +42,9 @@ PlantSeg в новый обучающий пакет не включены: ус
 | [Ultralytics YOLO](https://github.com/ultralytics/ultralytics) (YOLO11, YOLO26) | AGPL-3.0 | обучение и экспорт детекторов; веса — производные работы |
 | [Vosk](https://alphacephei.com/vosk/), модель `vosk-model-small-ru-0.22` | Apache-2.0 | офлайн-распознавание речи; модель скачивается с сайта авторов, в релизах проекта не перевыкладывается |
 | [ONNX Runtime](https://github.com/microsoft/onnxruntime) | MIT | запуск моделей на телефоне |
+| [HTMX 2.0.11](https://htmx.org) | Zero-Clause BSD | веб-панель; лицензия и исходные URL/SHA в `server/static/vendor/` |
+| [Leaflet 1.9.4](https://leafletjs.com) | BSD-2-Clause | карта осмотров; лицензия и исходные URL/SHA в `server/static/vendor/` |
+| [OpenStreetMap](https://www.openstreetmap.org/copyright) | ODbL, © OpenStreetMap contributors | необязательная интернет-подложка карты, атрибуция показывается на карте |
 | JNA | Apache-2.0 / LGPL-2.1 | зависимость Vosk |
 | DEIMv2 | собственная лицензия правообладателя (all rights reserved), см. `android-app/app/src/main/assets/licenses/DEIMv2-LICENSE.md` | только экспериментальный режим lab-сборки; **веса DEIMv2 проектом не публикуются** |
 # Дополнительные источники: обычные фото и OPTIMA (19.10.2026)

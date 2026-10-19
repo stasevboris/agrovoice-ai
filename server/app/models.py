@@ -17,6 +17,7 @@ class User(Base):
     active: Mapped[bool] = mapped_column(Boolean, default=True, server_default=true())
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     sync_revision: Mapped[int] = mapped_column(BigInteger, default=0, server_default="0")
+    is_expert: Mapped[bool] = mapped_column(Boolean, default=False, server_default="false")
 
 
 class Inspection(Base):
@@ -43,3 +44,19 @@ class Photo(Base):
     sha256: Mapped[str] = mapped_column(String(64))
     size: Mapped[int] = mapped_column(Integer)
     content: Mapped[bytes | None] = mapped_column(LargeBinary, nullable=True)
+
+
+class ReviewEvent(Base):
+    __tablename__ = "review_events"
+    __table_args__ = (
+        ForeignKeyConstraint(["owner_id", "inspection_id"], ["inspections.owner_id", "inspections.client_id"]),
+        ForeignKeyConstraint(["reviewer_id"], ["users.id"]),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    owner_id: Mapped[uuid.UUID] = mapped_column(Uuid)
+    inspection_id: Mapped[uuid.UUID] = mapped_column(Uuid)
+    reviewer_id: Mapped[uuid.UUID] = mapped_column(Uuid)
+    evidence_version: Mapped[int] = mapped_column(Integer)
+    status: Mapped[str] = mapped_column(String(32))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

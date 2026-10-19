@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-19",
+  "commands": [
+    "docker compose up -d --build",
+    "docker compose --profile test run --rm tests"
+  ],
+  "pytest": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "21",
+    "time": "3.553",
+    "timestamp": "2026-10-19T15:13:20.589675+00:00",
+    "hostname": "4e7fbfc8c49d"
+  },
+  "test_names": [
+    "test_health_uses_real_postgresql_and_migration",
+    "test_password_login_and_bearer_profile",
+    "test_invalid_credentials_have_the_same_response[alice-wrong]",
+    "test_invalid_credentials_have_the_same_response[unknown-wrong]",
+    "test_missing_and_expired_tokens_are_rejected",
+    "test_repeat_conflict_and_server_expert_status",
+    "test_reject_stale_clock_even_with_current_version",
+    "test_changed_prediction_requires_new_expert_review",
+    "test_accounts_are_isolated_even_for_same_uuid",
+    "test_pagination_and_incremental_update",
+    "test_photo_repeat_mismatch_truncation_and_retry",
+    "test_disconnect_during_stream_and_full_retry",
+    "test_metadata_rebinding_and_duplicate_batch_are_rejected",
+    "test_authentication_required",
+    "test_concurrent_retries_use_one_version",
+    "test_web_login_session_csrf_and_logout",
+    "test_dashboard_filters_map_and_htmx_fragment",
+    "test_photo_boxes_and_escaping",
+    "test_web_owner_isolation_and_expert_review_version",
+    "test_xlsx_filters_and_formula_safety",
+    "test_rendered_preview_fixture"
+  ],
+  "health": {
+    "status": 200,
+    "body": {
+      "status": "ok",
+      "database": "ok"
+    }
+  },
+  "login_http": 200,
+  "browser": {
+    "tool": "Velly browser_open + browser_read",
+    "pages": [
+      "http://127.0.0.1:8027/login",
+      "artifacts/verification/server_20261019/dashboard-preview.html"
+    ],
+    "observed": "Russian login form; rendered synthetic dashboard, filters, table, Leaflet map controls and export link",
+    "credentials_entered": false,
+    "external_map_tiles_loaded": false
+  },
+  "initial_failure": "Cookie test expected Set-Cookie on a read-only page; assertion moved to successful login response.",
+  "data": "Only synthetic fixtures in agrovoice_test; no real accounts or inspections imported.",
+  "limitations": [
+    "Single-farm deployment; expert role can view all accounts on this server.",
+    "Crop and condition filters use the first detection; table/map paginated at 50 records.",
+    "Map has local points; online tile background is opt-in.",
+    "Browser interactive authenticated workflow not run; covered with HTTPX on PostgreSQL.",
+    "No phone sync client or external deployment; HTTPX deprecation warning remains."
+  ]
+}

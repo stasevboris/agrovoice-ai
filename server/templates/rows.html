@@ -1,0 +1,15 @@
+<div class="results-layout">
+  <section class="card table-wrap" aria-label="Таблица осмотров">
+  <table><thead><tr><th>Дата · UTC</th><th>Результат</th><th>Участок</th><th>Проверка</th></tr></thead><tbody>
+  {% for row in rows %}<tr><td><a href="{{ row.path }}">{{ row.date }}</a></td><td><a href="{{ row.path }}">{{ row.label }}</a><small>{{ row.crop }}</small></td><td>{{ row.plot }}</td><td><span class="badge {{ row.status }}">{{ {'confirmed':'Подтверждено','error':'Ошибка','unreviewed':'Не проверено'}.get(row.status, 'Не проверено') }}</span></td></tr>
+  {% else %}<tr><td colspan="4" class="empty"><strong>Осмотров пока нет</strong><p>Здесь появятся записи после синхронизации. Если заданы фильтры, попробуйте изменить их.</p></td></tr>{% endfor %}
+  </tbody></table>
+  <nav class="pagination" aria-label="Страницы">
+  {% if filters.page > 1 %}<a href="{{ request.url.include_query_params(page=filters.page-1) }}">← Назад</a>{% endif %}
+  <span>Страница {{ filters.page }} · {{ rows|length }} записей</span>
+  {% if more %}<a href="{{ request.url.include_query_params(page=filters.page+1) }}">Далее →</a>{% endif %}
+  </nav></section>
+  <aside class="card map-card"><h2>Точки осмотров</h2><p class="small muted">На карте — записи текущей страницы с координатами.</p><div id="map" aria-label="Карта осмотров"></div>
+  <button type="button" id="enable-tiles" class="quiet">Загрузить карту из интернета</button><p class="small muted">Подложка OpenStreetMap требует сети; её включение передаёт серверу карт область просмотра.</p></aside>
+</div>
+<div id="map-data" data-points="{{ rows|tojson|forceescape }}" hidden></div>
