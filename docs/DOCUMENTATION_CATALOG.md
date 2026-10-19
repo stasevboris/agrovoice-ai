@@ -49,6 +49,7 @@
 | Файл | Название / назначение |
 |---|---|
 | [android-app/branding/README.md](../android-app/branding/README.md) | Логотип AgroVoice AI |
+| [kb/README.md](../kb/README.md) | Справочник AgroVoice (K-01): формат карточек и правила проверки |
 | [ml-pipeline/README.md](../ml-pipeline/README.md) | Пайплайн AgroVoice |
 | [ml-pipeline/external/licenses/IBEAN-MIT.txt](../ml-pipeline/external/licenses/IBEAN-MIT.txt) | Условия использования и распространения компонента |
 | [ml-pipeline/gpu_kit/README.md](../ml-pipeline/gpu_kit/README.md) | AgroVoice — обучение на арендованной RTX 5090 |

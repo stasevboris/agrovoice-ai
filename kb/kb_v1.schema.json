@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/agrovoice-ai/kb/kb_v1.schema.json",
+  "title": "AgroVoice knowledge base v1",
+  "description": "Structure only. Meaning rules (taxonomy coverage, Belarus register, expert verification, explicit gaps) are checked by kb/validate_kb.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "kb_version", "region", "taxonomy", "sources", "cards"],
+  "properties": {
+    "schema": {"const": "agrovoice-kb-v1"},
+    "kb_version": {"type": "string", "minLength": 1},
+    "region": {"const": "BY"},
+    "taxonomy": {"type": "string", "minLength": 1},
+    "notes": {"type": "string"},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "cards": {"type": "array", "items": {"$ref": "#/$defs/card"}}
+  },
+  "$defs": {
+    "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "nonEmpty": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "title", "url", "edition", "accessed", "region", "rights"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Z][0-9]{2,3}$"},
+        "kind": {"enum": ["by_register", "by_recommendation", "textbook", "extension_guide", "scientific", "expert"]},
+        "title": {"$ref": "#/$defs/nonEmpty"},
+        "publisher": {"type": "string"},
+        "url": {"type": "string", "pattern": "^https?://"},
+        "edition": {"$ref": "#/$defs/nonEmpty"},
+        "accessed": {"$ref": "#/$defs/date"},
+        "region": {"type": "string", "minLength": 2},
+        "rights": {"$ref": "#/$defs/nonEmpty"},
+        "extracted": {"type": "boolean"}
+      }
+    },
+    "statement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "source", "locator"],
+      "properties": {
+        "text": {"$ref": "#/$defs/nonEmpty"},
+        "source": {"$ref": "#/$defs/nonEmpty"},
+        "locator": {"$ref": "#/$defs/nonEmpty"}
+      }
+    },
+    "treatment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product", "active_substance", "rate", "unit", "registered_in", "register_year", "register_entry", "user_category", "source", "locator"],
+      "properties": {
+        "product": {"$ref": "#/$defs/nonEmpty"},
+        "active_substance": {"$ref": "#/$defs/nonEmpty"},
+        "rate": {"$ref": "#/$defs/nonEmpty"},
+        "unit": {"$ref": "#/$defs/nonEmpty"},
+        "max_treatments": {"type": ["integer", "null"], "minimum": 1},
+        "waiting_days": {"type": ["integer", "null"], "minimum": 0},
+        "hazard_class": {"type": ["string", "null"]},
+        "bees_class": {"type": ["string", "null"]},
+        "registered_in": {"const": "BY"},
+        "register_year": {"type": "integer", "minimum": 2000},
+        "register_entry": {"$ref": "#/$defs/nonEmpty"},
+        "user_category": {"enum": ["professional", "household"]},
+        "source": {"$ref": "#/$defs/nonEmpty"},
+        "locator": {"$ref": "#/$defs/nonEmpty"},
+        "note": {"type": "string"}
+      }
+    },
+    "fertilization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product", "nutrient", "rate", "unit", "method", "source", "locator"],
+      "properties": {
+        "product": {"$ref": "#/$defs/nonEmpty"},
+        "nutrient": {"$ref": "#/$defs/nonEmpty"},
+        "rate": {"$ref": "#/$defs/nonEmpty"},
+        "unit": {"$ref": "#/$defs/nonEmpty"},
+        "method": {"$ref": "#/$defs/nonEmpty"},
+        "source": {"$ref": "#/$defs/nonEmpty"},
+        "locator": {"$ref": "#/$defs/nonEmpty"},
+        "note": {"type": "string"}
+      }
+    },
+    "section": {"enum": ["symptoms", "conditions", "prevention", "agrotech", "treatments", "fertilization"]},
+    "card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code", "crop", "kind", "name_ru", "latin", "status", "verified_by", "verified_at", "review_due", "year",
+        "symptoms", "conditions", "prevention", "agrotech", "treatments", "fertilization",
+        "missing", "none_found", "sources", "candidate_sources"
+      ],
+      "properties": {
+        "code": {"type": "string", "pattern": "^[a-z]+__[a-z0-9_]+$"},
+        "crop": {"$ref": "#/$defs/nonEmpty"},
+        "kind": {"enum": ["disease", "pest", "nutrition", "healthy"]},
+        "name_ru": {"$ref": "#/$defs/nonEmpty"},
+        "latin": {"type": ["string", "null"]},
+        "status": {"enum": ["draft", "verified"]},
+        "verified_by": {"type": ["string", "null"]},
+        "verified_at": {"oneOf": [{"$ref": "#/$defs/date"}, {"type": "null"}]},
+        "review_due": {"oneOf": [{"$ref": "#/$defs/date"}, {"type": "null"}]},
+        "year": {"type": ["integer", "null"]},
+        "symptoms": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+        "conditions": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+        "prevention": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+        "agrotech": {"type": "array", "items": {"$ref": "#/$defs/statement"}},
+        "treatments": {"type": "array", "items": {"$ref": "#/$defs/treatment"}},
+        "fertilization": {"type": "array", "items": {"$ref": "#/$defs/fertilization"}},
+        "missing": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/section"}},
+        "none_found": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/section"}},
+        "sources": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "candidate_sources": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}
+      }
+    }
+  }
+}
