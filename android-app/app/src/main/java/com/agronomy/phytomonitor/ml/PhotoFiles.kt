@@ -20,6 +20,7 @@ import com.agronomy.phytomonitor.analysePhoto
 import com.agronomy.phytomonitor.qualitySampleSize
 
 object PhotoFiles {
+    const val MAX_DECODE_SIDE = 2048
     /** Called on the analysis worker, before inference. The displayed source is never recycled. */
     fun measureQuality(bitmap: Bitmap): PhotoQuality {
         val (width, height) = qualitySampleSize(bitmap.width, bitmap.height)
@@ -85,7 +86,7 @@ object PhotoFiles {
         BitmapFactory.decodeFile(file.absolutePath,bounds)
         require(bounds.outWidth>0 && bounds.outHeight>0){"Не удалось прочитать фото. Попробуйте JPEG или PNG."}
         var sample=1
-        while(max(bounds.outWidth,bounds.outHeight).toLong()>2048L*sample)sample*=2
+        while(max(bounds.outWidth,bounds.outHeight).toLong()>MAX_DECODE_SIDE.toLong()*sample)sample*=2
         val options=BitmapFactory.Options().apply {
             inSampleSize=sample; inPreferredConfig=Bitmap.Config.ARGB_8888
             inPreferredColorSpace=ColorSpace.get(ColorSpace.Named.SRGB)
@@ -107,7 +108,12 @@ object PhotoFiles {
     }
 
     fun saveResult(context: Context, photo: File, bitmap: Bitmap, result: DetectionResult,
-                   detector: FieldDetector, crop: String, threshold: Float): File {
+                   detector: FieldDetector, crop: String, threshold: Float): File =
+        saveResult(context, photo, bitmap, result, detector.manifest, crop, threshold)
+
+    /** Metadata-only overload: saving a completed result never needs a live ONNX session. */
+    internal fun saveResult(context: Context, photo: File, bitmap: Bitmap, result: DetectionResult,
+                            manifest: JSONObject, crop: String, threshold: Float): File {
         val directory=File(context.getExternalFilesDir(null) ?: context.filesDir,"results").apply{mkdirs()}
         val boxes=JSONArray()
         result.boxes.forEach { box->boxes.put(JSONObject()
@@ -117,13 +123,13 @@ object PhotoFiles {
         val report=JSONObject().put("created_epoch_ms",System.currentTimeMillis())
             .put("photo",photo.absolutePath).put("photo_sha256",FieldDetector.sha256(photo))
             .put("decoded_width",bitmap.width).put("decoded_height",bitmap.height)
-            .put("coordinate_space","EXIF-oriented decoded image, maximum side 2048")
+            .put("coordinate_space","EXIF-oriented decoded image, maximum side $MAX_DECODE_SIDE")
             .put("model",result.model.id).put("model_sha256",result.model.sha256)
             .put("dataset",result.model.dataset).put("seed",result.model.seed).put("provisional",result.model.provisional)
             .put("detector_seed",result.model.detectorSeed).put("family",result.model.family)
             .put("proposed_leaves",result.proposedLeaves).put("classified_leaves",result.classifiedLeaves).put("skipped_leaves",result.skippedLeaves)
             .put("score_policy",if(result.model.classifier==null) "detector class score" else "detector maximum class score times classifier softmax; uncalibrated")
-            .put("model_metadata",detector.manifest.getJSONArray("models").let {array ->
+            .put("model_metadata",manifest.getJSONArray("models").let {array ->
                 (0 until array.length()).map {array.getJSONObject(it)}.first {it.getString("id")==result.model.id}
             })
             .put("crop_filter",crop).put("confidence_threshold",threshold.toDouble())
@@ -133,6 +139,9 @@ object PhotoFiles {
             .put("detections",boxes).put("device","${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
             .put("scope","Whole leaf with crop/condition. Confidence is not disease probability or damaged area.")
         addAnalysisAssessment(report, result.boxes.size, result.photoQuality)
+        report.put("result_provenance", ResultProvenanceSnapshot.create(
+            result.model, bitmap.width, bitmap.height, crop, threshold, report.getJSONObject("model_metadata")
+        ))
         return File(directory,"${System.currentTimeMillis()}_${result.model.id}_${UUID.randomUUID().toString().take(8)}.json")
             .apply {writeText(report.toString(2))}
     }

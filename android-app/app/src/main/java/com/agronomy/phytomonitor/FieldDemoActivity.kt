@@ -187,6 +187,7 @@ class FieldDemoActivity : ComponentActivity() {
         screen = currentScreen(),
         hasPhoto = fieldModel.bitmap != null,
         hasResult = fieldModel.reportName != null,
+        hasDraft = fieldModel.hasDraft,
         busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null || plotsModel.state.value.busy,
         inspectionSaved = fieldModel.inspectionSaved,
         review = fieldModel.review,
@@ -246,6 +247,8 @@ class FieldDemoActivity : ComponentActivity() {
 
         override fun perform(operation: Operation) {
             when (operation) {
+                Operation.ResumeDraft -> fieldModel.resumeDraft()
+                Operation.DiscardDraft -> fieldModel.discardDraft()
                 is Operation.SetContinuousListening -> {
                     if (!operation.enabled) {
                         fieldModel.noteReviewVoice = false

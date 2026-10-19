@@ -1,0 +1,161 @@
+{
+  "scope": [
+    "A-11 durable draft and safe recovery",
+    "A-20 record/photo push and explicit single-photo pull",
+    "untrusted archive path protection",
+    "immutable model/processing provenance"
+  ],
+  "verification": {
+    "command": [
+      "gradlew.bat",
+      "testDebugUnitTest",
+      "assembleDebug",
+      "assembleDebugAndroidTest",
+      "lintDebug"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 45.664,
+    "jvm": {
+      "tests": 245,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "lint": {
+    "Warning": 61,
+    "Hint": 2
+  },
+  "device": {
+    "model": "Redmi Note 7",
+    "android": 13,
+    "sync_apks": {
+      "android-app\\app\\build\\outputs\\apk\\debug\\app-debug.apk": {
+        "bytes": 335427146,
+        "sha256": "5ef4e181d87d92efaab91fb293e9c5251777189cbc4fe49093b8c421db1da85c"
+      },
+      "android-app\\app\\build\\outputs\\apk\\androidTest\\debug\\app-debug-androidTest.apk": {
+        "bytes": 1241837,
+        "sha256": "1b15bb899136d321c91ff8344286f78ca8c29881aacc275e904f4546cd6aeb83"
+      }
+    },
+    "sync": {
+      "fixture_id": "211d54fe-c811-403a-81ef-2a5ad0f8c693",
+      "origin": "http://127.0.0.1:8028",
+      "isolated_database": "sync-device-211d54fe-c811-403a-81ef-2a5ad0f8c693.db",
+      "lost_reply_retried": true,
+      "photo_failure_not_synced": true,
+      "restart_preserves_queue": true,
+      "repeat_version": 1,
+      "resolved_version": 3,
+      "conflict_local_data_preserved": true,
+      "other_account_empty": true,
+      "download_sha_verified": true,
+      "repeated_import_no_duplicate": true,
+      "imported_edit_keeps_server_id": true,
+      "device": "Redmi Note 7",
+      "sdk": 33,
+      "transport": "HTTP via coordinator configured adb reverse; no Wi-Fi claim"
+    },
+    "real_http_drop": {
+      "dropped_uploads": 1,
+      "forwarded_requests": 9
+    },
+    "draft_run": {
+      "apks": {
+        "app": {
+          "sha256": "8bd3e8746e59132431005358a820789f4342183fb9dd429a1133afd04ef4198f",
+          "bytes": 335725709
+        },
+        "test": {
+          "sha256": "ba1606a20eab26d9eea31054fa72b808d408a8bc16418aecdb80085d83197a1c",
+          "bytes": 1250804
+        }
+      },
+      "phases": [
+        {
+          "method": "prepareInterruptedInspection",
+          "passed": true
+        },
+        {
+          "method": "restoreAfterProcessRestartAndSaveOnce",
+          "passed": true
+        },
+        {
+          "method": "recoverLostSaveResponseAndCleanUp",
+          "passed": true
+        },
+        {
+          "method": "corruptDraftCanStartNewInspectionWithoutLosingOriginalBytes",
+          "passed": true
+        }
+      ],
+      "scope": "Synthetic fixture and injected commands, real device process restarts; not live speech"
+    },
+    "draft_timings_and_results": {
+      "scope": "Physical Android; injected commands and synthetic solid-color frame, not live speech, field diagnosis or user study",
+      "timing_clock": "SystemClock.elapsedRealtime milliseconds; polling at 25 ms",
+      "fixture": "Owned 64x64 RGB(70,120,60) PNG, no agronomic label",
+      "activity_launch_to_model_ready_ms": 2160,
+      "open_file_to_result_ms": 639,
+      "activity_recreation": "passed",
+      "prepared_pid": 19462,
+      "phase": "complete",
+      "resume_draft_to_result_ms": 1081,
+      "save_request_to_confirmed_room_ms": 186,
+      "restored_pid": 19583,
+      "process_restart": "passed",
+      "repeat_save": "one_record",
+      "lost_save_response": "passed_without_replay_or_note_rollback",
+      "original_records_and_settings": "restored"
+    }
+  },
+  "preservation": {
+    "stage": "after_draft",
+    "files_hashed": 1067,
+    "records": 4,
+    "detections": 5,
+    "original_external_changed": [],
+    "original_rows_changed": [],
+    "original_data_preserved": true,
+    "settings_hashes_changed": [
+      "private/files/datastore/agrovoice.preferences_pb"
+    ],
+    "original_settings_changed": [],
+    "added_settings": {
+      "location": "0800",
+      "row": "2a00"
+    },
+    "note": "Existing preference values preserved; previously absent location=false and row=empty defaults now explicitly stored. Original photos and journal rows unchanged."
+  },
+  "review": [
+    "server-review-independent.md",
+    "draft-review-independent.md",
+    "draft-rereview.md",
+    "sync-review-independent.md",
+    "sync-provenance-rereview.md",
+    "provenance-review.md"
+  ],
+  "resolved": [
+    "stale ViewModel writer overwriting new draft",
+    "corrupt draft blocking new work",
+    "delayed login resurrecting logged-out session",
+    "request after logout during hashing",
+    "server identity lost after archive restore",
+    "Android ISO offset timestamp parsing",
+    "private-file attachment through imported JSON",
+    "restore path traversal through record ID",
+    "unknown provenance fields rendered as invented values"
+  ],
+  "limitations": [
+    "Device sync uses isolated Room and fixture accounts via adb reverse, not Wi-Fi or two physical devices",
+    "UI login/Keystore and actual WorkManager scheduling not yet verified on device",
+    "Sync UI voice actions remain a separate next increment",
+    "Remote imports with multiple photos explicitly skipped until series/archive support",
+    "No independent live speech, labeled field frames, headset or usability study",
+    "Draft timings use one synthetic 64x64 image and command injection, not field/end-to-end camera benchmark",
+    "Unsaved analysis reports retained for preservation; no automatic cleanup policy",
+    "Final full JVM/build/lint includes later security fixes; device APK identities recorded separately"
+  ],
+  "evidence_directory": "artifacts/verification/autonomous_20261019"
+}

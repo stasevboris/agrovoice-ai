@@ -134,7 +134,7 @@ class InspectionJournal(
         val parsed = ParsedInspection(
             id = previous?.id ?: UUID.randomUUID().toString(),
             createdAt = previous?.createdAt ?: now,
-            updatedAt = now,
+            updatedAt = maxOf(now, (previous?.updatedAt ?: 0L) + 1),
             reportName = report.name,
             reportSha256 = sha256(report),
             prediction = prediction,
@@ -174,8 +174,8 @@ class InspectionJournal(
         val records = JSONArray()
         val photos = linkedMapOf<String, File>()
         dao.inspections().forEach { details ->
-            val photo = details.photos.firstOrNull()?.photo?.localPath?.let(::File)
-            val name = photo?.takeIf { it.isFile }?.let { JournalArchive.photoEntry(details.inspection.id, it) }
+            val photo = details.photos.firstOrNull()?.photo?.localPath?.let(::ownedPhoto)
+            val name = photo?.let { JournalArchive.photoEntry(JournalRecords.photoFileId(details.inspection.id), it) }
             if (name != null) {
                 photos[name] = photo
             }
@@ -340,8 +340,9 @@ class InspectionJournal(
         localPhoto: String?,
         issues: MutableList<JournalIssue>
     ): String {
-        val original = File(parsed.photoPath)
-        val fallback = localPhoto ?: original.path
+        val original = ownedPhoto(parsed.photoPath)
+        val local = localPhoto?.let(::ownedPhoto)
+        val fallback = local?.path ?: original?.path.orEmpty()
         val name = parsed.archivePhoto ?: return fallback
         val staged = photos[name]
         if (staged == null) {
@@ -353,19 +354,30 @@ class InspectionJournal(
             issues += JournalIssue(parsed.id, "фото $name не совпадает с отчётом (SHA-256), не восстановлено")
             return fallback
         }
-        if (localPhoto != null && sha256(File(localPhoto)) == digest) {
-            return localPhoto
+        if (local != null && sha256(local) == digest) {
+            return local.path
         }
-        if (original.isFile && sha256(original) == digest) {
+        if (original != null && sha256(original) == digest) {
             return original.path
         }
         photoFolder.mkdirs()
-        val target = File(photoFolder, "restored_${parsed.id}_${digest}.${staged.extension}")
-        if (target.isFile && sha256(target) == digest) {
-            return target.path
+        val target = File(photoFolder, "restored_${JournalRecords.photoFileId(parsed.id)}_${digest}.${staged.extension}")
+        val existingTarget = ownedPhoto(target.path)
+        if (existingTarget != null && sha256(existingTarget) == digest) {
+            return existingTarget.path
         }
         JournalStorage.copyPhoto(staged, target, availableSpace)
         return target.path
+    }
+
+    /** JSON paths are untrusted. Resolve containment before inspecting or reading a file. */
+    private fun ownedPhoto(path: String): File? {
+        if (path.isBlank()) return null
+        return runCatching {
+            val file = File(path).canonicalFile
+            val root = photoFolder.canonicalFile
+            file.takeIf { it.toPath().startsWith(root.toPath()) && it != root && it.isFile }
+        }.getOrNull()
     }
 
     private fun store(parsed: ParsedInspection, photoPath: String, operation: String) {

@@ -74,6 +74,12 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            VoiceAction.RESUME_DRAFT, VoiceAction.DISCARD_DRAFT -> when {
+                state.screen != Screen.MAIN -> Verdict.Clarify("Черновик доступен на главном экране.")
+                !state.hasDraft -> Verdict.Skip("Нет черновика для восстановления.")
+                request.action == VoiceAction.RESUME_DRAFT -> run(Operation.ResumeDraft)
+                else -> run(Operation.DiscardDraft)
+            }
             VoiceAction.CAMERA_GUIDANCE -> if (state.screen == Screen.CAMERA) run(Operation.SetCameraGuidance(request.value.toBoolean()))
                 else Verdict.Clarify("Подсказки кадра доступны в камере.")
             VoiceAction.PLANT -> if (state.screen != Screen.MAIN) Verdict.Clarify("Назови растение на главном экране перед сохранением.")

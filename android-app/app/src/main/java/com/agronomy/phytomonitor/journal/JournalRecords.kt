@@ -3,6 +3,7 @@ package com.agronomy.phytomonitor.journal
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.security.MessageDigest
 
 const val JOURNAL_SCHEMA = "agrovoice-inspections-v2"
 const val LEGACY_JOURNAL_SCHEMA = "agrovoice-inspections-v1"
@@ -47,6 +48,10 @@ data class ParsedInspection(
 
 /** Converts between the JSON record and Room entities. Pure Kotlin + org.json, tested on the JVM. */
 object JournalRecords {
+    /** The logical legacy ID is preserved in Room/JSON, never interpreted as a filesystem path. */
+    fun photoFileId(id: String): String = MessageDigest.getInstance("SHA-256")
+        .digest(id.toByteArray(Charsets.UTF_8)).joinToString("") { "%02x".format(it) }
+
     fun parse(data: JSONObject): ParsedInspection {
         val id = requiredString(data, "id")
         val prediction = data.optJSONObject("prediction") ?: throw JournalFormatException("нет отчёта анализа (prediction)")

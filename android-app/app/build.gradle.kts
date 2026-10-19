@@ -68,6 +68,7 @@ androidComponents.onVariants { variant ->
 }
 
 dependencies {
+    implementation("androidx.work:work-runtime-ktx:2.10.5")
     implementation("androidx.navigation:navigation-compose:2.9.5")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4")
     implementation("androidx.datastore:datastore-preferences:1.1.7")

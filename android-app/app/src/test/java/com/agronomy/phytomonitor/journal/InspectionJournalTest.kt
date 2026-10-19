@@ -168,7 +168,7 @@ class InspectionJournalTest {
         assertTrue(report.issues.isEmpty())
         val restored = target.list().single()
         assertTrue(restored.photoAvailable)
-        assertTrue(restored.photo.endsWith("restored_r_${sha}.jpg"))
+        assertEquals(File(files, "photos").canonicalFile, File(restored.photo).canonicalFile.parentFile)
         assertEquals(sha, InspectionJournal.sha256(File(restored.photo)))
         assertEquals("Нижние листья", restored.note)
 

@@ -63,12 +63,7 @@ fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (Str
                 }
             }
             Text("Выбор модели, культуры и порога — в настройках анализа на экране осмотра.")
-            Text("Синхронизация", style = MaterialTheme.typography.titleMedium)
-            var server by rememberSaveable(current.server) { mutableStateOf(current.server) }
-            OutlinedTextField(server, { server = it }, label = { Text("Адрес сервера") },
-                modifier = Modifier.fillMaxWidth(), singleLine = true)
-            Button(onClick = { model.server(server) }, enabled = server.trim() != current.server) { Text("Сохранить адрес") }
-            Text("Подключение к серверу пока недоступно. Осмотры хранятся на телефоне.", style = MaterialTheme.typography.bodySmall)
+            com.agronomy.phytomonitor.sync.SyncSettingsPanel(current.server)
             error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         }
     }

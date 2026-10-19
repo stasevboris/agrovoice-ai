@@ -81,10 +81,11 @@ object ModelCatalog {
         val sharedClasses = manifest.optJSONArray("classes")?.let(::strings).orEmpty()
         val sharedLabels = manifest.optJSONArray("labels_ru")?.let(::strings).orEmpty()
         val items = manifest.getJSONArray("models")
-        return List(items.length()) { index -> model(items.getJSONObject(index), sharedClasses, sharedLabels) }
+        val sharedTaxonomy = taxonomyVersion(manifest)
+        return List(items.length()) { index -> model(items.getJSONObject(index), sharedClasses, sharedLabels, sharedTaxonomy) }
     }
 
-    private fun model(data: JSONObject, sharedClasses: List<String>, sharedLabels: List<String>): DetectorModel {
+    private fun model(data: JSONObject, sharedClasses: List<String>, sharedLabels: List<String>, sharedTaxonomy: String?): DetectorModel {
         val id = data.getString("id")
         val own = data.optJSONArray("classes")
         val classes = own?.let(::strings) ?: sharedClasses
@@ -122,9 +123,13 @@ object ModelCatalog {
             labels = labels,
             classCrops = classCrops,
             crops = crops,
-            cropNames = cropNames
+            cropNames = cropNames,
+            taxonomyVersion = taxonomyVersion(data) ?: sharedTaxonomy.takeIf { own == null }
         )
     }
+
+    private fun taxonomyVersion(data: JSONObject): String? = data.optString("taxonomy_version")
+        .takeIf { it.isNotBlank() && it != "null" }
 
     private fun strings(array: JSONArray): List<String> = List(array.length()) { array.getString(it) }
 }

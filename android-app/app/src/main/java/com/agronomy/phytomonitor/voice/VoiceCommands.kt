@@ -11,7 +11,7 @@ enum class VoiceAction {
     SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, CREATE_PLOT, RENAME_PLOT,
     DELETE_PLOT, SETTINGS, SET_SETTING, SEARCH, JOURNAL_FILTER, EXPORT_JOURNAL, IMPORT_JOURNAL,
     KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS, LEAF_KNOWLEDGE,
-    PLANT, PLANT_HISTORY, COMPARE_INSPECTIONS, CAMERA_GUIDANCE
+    PLANT, PLANT_HISTORY, COMPARE_INSPECTIONS, CAMERA_GUIDANCE, RESUME_DRAFT, DISCARD_DRAFT
 }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
@@ -23,6 +23,8 @@ object VoiceCommands {
         phrases.forEach { aliases[it] = command }
     }
     init {
+        add(VoiceCommand(VoiceAction.RESUME_DRAFT, "Продолжаю осмотр"), "продолжить осмотр", "продолжи осмотр", "восстанови черновик")
+        add(VoiceCommand(VoiceAction.DISCARD_DRAFT, "Отменяю черновик"), "отменить черновик", "отмени черновик", "начать новый осмотр", "начни новый осмотр")
         add(VoiceCommand(VoiceAction.CAMERA_GUIDANCE, "Подсказки кадра включены", "true"), "включи подсказки кадра")
         add(VoiceCommand(VoiceAction.CAMERA_GUIDANCE, "Подсказки кадра выключены", "false"), "выключи подсказки кадра")
         add(VoiceCommand(VoiceAction.PLANT_HISTORY, "История растения"), "история растения", "открой историю растения", "покажи историю растения")
@@ -89,7 +91,7 @@ object VoiceCommands {
     val phrases: List<String> get() = aliases.keys.toList()
     private val globalActions=setOf(VoiceAction.MODEL,VoiceAction.CROP,VoiceAction.HELP,VoiceAction.CLOSE_HELP,VoiceAction.LISTEN_ON,VoiceAction.LISTEN_OFF,VoiceAction.BACK,VoiceAction.EXIT,VoiceAction.CANCEL,VoiceAction.SCROLL,VoiceAction.THRESHOLD_UP,VoiceAction.THRESHOLD_DOWN)
     private fun phrasesFor(actions: Set<VoiceAction>)=aliases.filterValues {it.action in actions}.keys.toList()
-    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES,VoiceAction.ROW,VoiceAction.PLOT,VoiceAction.PLOTS,VoiceAction.SETTINGS,VoiceAction.KNOWLEDGE,VoiceAction.READ_KNOWLEDGE)
+    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES,VoiceAction.ROW,VoiceAction.PLOT,VoiceAction.PLOTS,VoiceAction.SETTINGS,VoiceAction.KNOWLEDGE,VoiceAction.READ_KNOWLEDGE,VoiceAction.RESUME_DRAFT,VoiceAction.DISCARD_DRAFT)
     const val MAX_ROW=999
     private const val SPOKEN_ROWS=200
 

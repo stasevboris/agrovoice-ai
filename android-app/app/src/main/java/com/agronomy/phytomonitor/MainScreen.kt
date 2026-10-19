@@ -111,6 +111,30 @@ internal fun FieldDemoScreen(
     onOpenResult: () -> Unit = {},
     onBackToPhoto: (() -> Unit)? = null
 ) {
+    if (model.hasDraft) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text(if (model.damagedDraft) "Черновик не читается" else "Незавершённый осмотр") },
+            text = {
+                Text(model.message?.takeIf { model.messageIsError }
+                    ?: "Сохранены фото, заметка и результат последнего анализа, если он завершился. Продолжить работу с ними?")
+            },
+            confirmButton = {
+                TextButton(enabled = !model.busy, onClick = {
+                    onAction(if (model.damagedDraft) VoiceAction.DISCARD_DRAFT else VoiceAction.RESUME_DRAFT, "")
+                }) {
+                    Text(if (model.damagedDraft) "Начать новый осмотр" else "Продолжить осмотр")
+                }
+            },
+            dismissButton = {
+                TextButton(enabled = !model.busy, onClick = {
+                    onAction(if (model.damagedDraft) VoiceAction.RESUME_DRAFT else VoiceAction.DISCARD_DRAFT, "")
+                }) {
+                    Text(if (model.damagedDraft) "Попробовать снова" else "Отменить черновик")
+                }
+            }
+        )
+    }
     val onCamera = { onAction(VoiceAction.OPEN_CAMERA, "") }
     val onGallery = { onAction(VoiceAction.GALLERY, "") }
     val onSpeak = { onAction(if (speaking) VoiceAction.SILENCE else VoiceAction.SPEAK_RESULT, "") }
@@ -142,6 +166,17 @@ internal fun FieldDemoScreen(
                 onSettings = { settingsOpen = true },
                 status = if (model.busy) "Анализ…" else model.selectedModelName()
             )
+            if (model.photo != null && !model.inspectionSaved) {
+                Text(
+                    when {
+                        model.draftError != null -> "Последние правки черновика не записаны"
+                        model.draftSaving || model.busy -> "Черновик сохраняется…"
+                        else -> "Черновик сохранён на устройстве"
+                    },
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
             Row {
                 onBackToPhoto?.let { back -> TextButton(onClick = back) { Text("К снимку") } }
                 TextButton(onClick = { onAction(VoiceAction.SETTINGS, "") }) {
@@ -344,9 +379,12 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
     var explain by remember { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         BlockHeader(title = "Результат", icon = AgroIcons.Leaf)
-        if (model.crop != "all") {
-            Text("Культура указана вручную: ${model.cropName(model.crop)}", style = MaterialTheme.typography.bodySmall,
+        if (model.resultCrop != "all") {
+            Text("Культура анализа указана вручную: ${result.model.cropNames[model.resultCrop] ?: model.resultCrop}", style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary)
+        }
+        model.resultThreshold?.let { score ->
+            Text("Порог исходного анализа: ${(score * 100).roundToInt()} %", style = MaterialTheme.typography.bodySmall)
         }
         Text(
             "${result.model.name} · ${formatSeconds(result.inferenceMs)} · предварительная модель: " +

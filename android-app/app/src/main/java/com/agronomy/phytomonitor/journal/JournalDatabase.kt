@@ -209,16 +209,30 @@ interface JournalDao {
         KbVersionEntity::class,
         SyncQueueEntity::class,
         AchievementEntity::class,
-        JournalEventEntity::class
+        JournalEventEntity::class,
+        com.agronomy.phytomonitor.sync.SyncRecord::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 abstract class JournalDatabase : RoomDatabase() {
     abstract fun journal(): JournalDao
+    abstract fun sync(): com.agronomy.phytomonitor.sync.SyncDao
 
     companion object {
         @Volatile private var instance: JournalDatabase? = null
+
+        /** Sync is opt-in: migration creates no outbox entries for the existing journal. */
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS `sync_record` (" +
+                    "`account` TEXT NOT NULL, `localId` TEXT NOT NULL, `serverId` TEXT NOT NULL, " +
+                    "`serverVersion` INTEGER NOT NULL, `snapshotUpdatedAt` INTEGER NOT NULL, " +
+                    "`request` TEXT NOT NULL, `photoFiles` TEXT NOT NULL, `state` TEXT NOT NULL, " +
+                    "`error` TEXT, `conflictJson` TEXT, `expertStatus` TEXT NOT NULL, " +
+                    "PRIMARY KEY(`account`, `localId`))")
+            }
+        }
 
         /** v2 adds local optional badges; existing journals are kept and badges start unearned. */
         val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -254,7 +268,7 @@ abstract class JournalDatabase : RoomDatabase() {
 
         fun get(context: Context): JournalDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, JournalDatabase::class.java, "journal.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                 .build()
                 .also { instance = it }
         }

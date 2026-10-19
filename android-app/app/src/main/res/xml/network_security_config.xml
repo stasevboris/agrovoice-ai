@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Local LAN addresses are dynamic. SyncEndpoint restricts HTTP to literal private/loopback
+     addresses before a connection is opened; UI explicitly describes LAN HTTP visibility.
+     HTTPS uses the platform trust store and certificate/hostname verification. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors><certificates src="system" /></trust-anchors>
+    </base-config>
+</network-security-config>

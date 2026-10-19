@@ -33,7 +33,8 @@ data class DetectorModel(val id: String, val name: String, val asset: String, va
                          /** Output classes of this graph, their Russian labels and crop ids (manifest schema 3). */
                          val classes: List<String> = emptyList(), val labels: List<String> = emptyList(),
                          val classCrops: List<String> = emptyList(), val crops: List<String> = emptyList(),
-                         val cropNames: Map<String,String> = emptyMap())
+                         val cropNames: Map<String,String> = emptyMap(),
+                         val taxonomyVersion: String? = null)
 data class DetectionResult(val model: DetectorModel, val boxes: List<LeafDetection>,
                            val inferenceMs: Double, val pipelineMs: Double,
                            val proposedLeaves: Int = 0, val classifiedLeaves: Int = 0,
@@ -114,8 +115,8 @@ class FieldDetector(private val context: Context) : Closeable {
                 trace?.invoke(input.asReadOnlyBuffer(),output)
                 stageTrace?.invoke("detector",input.asReadOnlyBuffer(),output.flatMap {it.asIterable()}.toFloatArray(),intArrayOf(1,output.size,output[0].size))
                 if(model.family=="detr")decodeDetr(output,geometry,threshold,allowed,model.classes.size)
-                else YoloPostprocessor.decode(output,geometry,if(classifier==null)threshold else .10f,
-                    if(classifier==null)allowed else null,classAgnostic=classifier!=null)
+                else YoloPostprocessor.decode(output,geometry,if(classifier==null)threshold else PROPOSAL_THRESHOLD,
+                    if(classifier==null)allowed else null,iouThreshold=NMS_IOU,classAgnostic=classifier!=null)
             }
         }
         if(classifier==null)return DetectionResult(model,proposals,inferenceNanos/1e6,(SystemClock.elapsedRealtimeNanos()-started)/1e6)
@@ -149,14 +150,14 @@ class FieldDetector(private val context: Context) : Closeable {
     fun prepareInput(bitmap: Bitmap, geometry: Letterbox=Letterbox(bitmap.width,bitmap.height)): ByteBuffer {
         val frame=Bitmap.createBitmap(geometry.side,geometry.side,Bitmap.Config.ARGB_8888)
         Canvas(frame).apply {
-            drawColor(Color.rgb(114,114,114))
+            drawColor(Color.rgb(PADDING_VALUE,PADDING_VALUE,PADDING_VALUE))
             drawBitmap(bitmap,null,Rect(geometry.padX,geometry.padY,geometry.padX+geometry.resizedWidth,geometry.padY+geometry.resizedHeight),Paint(Paint.FILTER_BITMAP_FLAG))
         }
         return pixels(frame).also {frame.recycle()}
     }
 
     private fun prepareLeaf(bitmap: Bitmap, b: LeafDetection, side: Int): ByteBuffer {
-        val px=(b.right-b.left)*.1f;val py=(b.bottom-b.top)*.1f
+        val px=(b.right-b.left)*LEAF_MARGIN;val py=(b.bottom-b.top)*LEAF_MARGIN
         val l=floor((b.left-px).toDouble()).toInt().coerceIn(0,bitmap.width-1)
         val t=floor((b.top-py).toDouble()).toInt().coerceIn(0,bitmap.height-1)
         val r=ceil((b.right+px).toDouble()).toInt().coerceIn(l+1,bitmap.width)
@@ -164,7 +165,7 @@ class FieldDetector(private val context: Context) : Closeable {
         val w=r-l;val h=bottom-t;val square=max(w,h)
         val frame=Bitmap.createBitmap(square,square,Bitmap.Config.ARGB_8888)
         Canvas(frame).apply {
-            drawColor(Color.rgb(114,114,114))
+            drawColor(Color.rgb(PADDING_VALUE,PADDING_VALUE,PADDING_VALUE))
             val x=(square-w)/2;val y=(square-h)/2
             drawBitmap(bitmap,Rect(l,t,r,bottom),Rect(x,y,x+w,y+h),null)
         }
@@ -176,7 +177,7 @@ class FieldDetector(private val context: Context) : Closeable {
         val count=frame.width*frame.height;val values=IntArray(count)
         frame.getPixels(values,0,frame.width,0,0,frame.width,frame.height)
         val buffer=ByteBuffer.allocateDirect(3*count*4).order(ByteOrder.LITTLE_ENDIAN)
-        for(shift in intArrayOf(16,8,0))for(pixel in values)buffer.putFloat(((pixel shr shift) and 255)/255f)
+        for(shift in intArrayOf(16,8,0))for(pixel in values)buffer.putFloat(((pixel shr shift) and 255)/PIXEL_DIVISOR)
         buffer.rewind();return buffer
     }
 
@@ -198,6 +199,11 @@ class FieldDetector(private val context: Context) : Closeable {
 
     companion object {
         const val MAX_CLASSIFIED_LEAVES=32
+        const val PROPOSAL_THRESHOLD=.10f
+        const val NMS_IOU=.7f
+        const val LEAF_MARGIN=.1f
+        const val PADDING_VALUE=114
+        const val PIXEL_DIVISOR=255f
         fun sha256(file: File): String {
             val digest=MessageDigest.getInstance("SHA-256")
             file.inputStream().use {input ->

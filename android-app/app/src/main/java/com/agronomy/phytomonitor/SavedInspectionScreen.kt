@@ -89,6 +89,8 @@ internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit
                 OutlinedButton(onClick = { onKnowledge(index + 1) }) { Text("Справка по листу ${index + 1}") }
             }
             SavedFacts(view)
+            ResultProvenance(inspection.predictionJson)
+            com.agronomy.phytomonitor.sync.InspectionSyncPanel(inspection.id, inspection.updatedAt)
             if (view.details.photos.any { it.photo.plantId != null }) {
                 OutlinedButton(onClick = onPlantHistory) { Text("История растения") }
             }

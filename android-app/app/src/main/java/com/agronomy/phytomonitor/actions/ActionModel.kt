@@ -34,6 +34,7 @@ data class AppState(
     val screen: Screen = Screen.MAIN,
     val hasPhoto: Boolean = false,
     val hasResult: Boolean = false,
+    val hasDraft: Boolean = false,
     val busy: Boolean = false,
     val inspectionSaved: Boolean = false,
     val review: String = "unrated",
@@ -86,6 +87,8 @@ data class AppState(
 
 /** A concrete change of the app. The Activity performs it without further decisions. */
 sealed interface Operation {
+    data object ResumeDraft : Operation
+    data object DiscardDraft : Operation
     data class SetContinuousListening(val enabled: Boolean) : Operation
     data class ShowHelp(val visible: Boolean) : Operation
     data object Exit : Operation

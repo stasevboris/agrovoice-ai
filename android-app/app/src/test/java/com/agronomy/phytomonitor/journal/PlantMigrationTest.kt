@@ -66,7 +66,7 @@ class PlantMigrationTest {
             old.version = 1
         }
         val migrated = Room.databaseBuilder(context, JournalDatabase::class.java, name)
-            .addMigrations(JournalDatabase.MIGRATION_1_2, JournalDatabase.MIGRATION_2_3)
+            .addMigrations(JournalDatabase.MIGRATION_1_2, JournalDatabase.MIGRATION_2_3, JournalDatabase.MIGRATION_3_4)
             .allowMainThreadQueries().build()
         try {
             val record = migrated.journal().inspectionDetails("i")!!
@@ -75,6 +75,7 @@ class PlantMigrationTest {
             assertNull(record.photos.single().photo.plantId)
             assertEquals("Сохранённая метка", record.photos.single().detections.single().labelRu)
             assertEquals(0.7, record.photos.single().detections.single().confidence, 0.0)
+            assertTrue(migrated.sync().records("http://127.0.0.1|test-user").isEmpty())
         } finally {
             migrated.close()
             context.deleteDatabase(name)
