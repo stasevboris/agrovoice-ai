@@ -43,6 +43,19 @@ def supervise(args):
     command = [sys.executable, "-u", str(Path(__file__).resolve()), *sys.argv[1:], "--worker"]
     status = {"deadline": args.deadline, "soft_stop_epoch_boundary": soft,
               "hard_stop_process_group": hard, "automatic_resume": False, "status": "running"}
+    if args.after is not None:
+        status["status"] = "waiting_for_previous_run"
+        write_json(args.out / "status.json", status)
+        while time.time() < soft:
+            previous = args.after / "status.json"
+            if previous.is_file() and json.loads(previous.read_text(encoding="utf-8")).get("status") in {"finished", "interrupted_or_failed"}:
+                break
+            time.sleep(10)
+        else:
+            status["status"] = "skipped_deadline"
+            write_json(args.out / "status.json", status)
+            return 0
+    status["status"] = "running"
     write_json(args.out / "status.json", status)
     with (args.out / "training.log").open("w", encoding="utf-8") as log:
         process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
@@ -68,6 +81,8 @@ def supervise(args):
 
 def train(args):
     soft, _ = deadlines(args.deadline)
+    if args.weights is None:
+        raise ValueError("Detector pilot requires --weights")
     os.environ.setdefault("OMP_NUM_THREADS", "4")
     os.environ.setdefault("MKL_NUM_THREADS", "4")
     os.environ.setdefault("YOLO_CONFIG_DIR", str(args.out / "ultralytics"))
@@ -130,15 +145,30 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--deadline", required=True)
     parser.add_argument("--data", type=Path, required=True)
-    parser.add_argument("--weights", type=Path, required=True)
+    parser.add_argument("--weights", type=Path)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--batch", type=int, default=16)
+    parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--task", choices=("detect", "crop-probe", "evaluate-detectors", "assistant-sft"), default="detect")
+    parser.add_argument("--model", type=Path, help="Local pretrained language-model snapshot for assistant-sft")
+    parser.add_argument("--after", type=Path, help="Wait for another bounded run before using the GPU")
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     if args.worker:
-        train(args)
+        if args.task == "crop-probe":
+            from train_crop_probe import train_probe
+            train_probe(args)
+        elif args.task == "evaluate-detectors":
+            from evaluate_home_pilot import evaluate
+            evaluate(args)
+        elif args.task == "assistant-sft":
+            sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "assistant"))
+            from train_assistant_sft import train_sft
+            train_sft(args)
+        else:
+            train(args)
     else:
         sys.exit(supervise(args))
 

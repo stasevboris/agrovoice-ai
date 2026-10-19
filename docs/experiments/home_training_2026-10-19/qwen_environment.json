@@ -1,0 +1,30 @@
+{
+  "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+  "transformers": "4.57.1",
+  "peft": "0.17.1",
+  "gpu": "AMD Radeon RX 9060 XT",
+  "dtype": "float32",
+  "attention": "eager",
+  "model_snapshot": "/mnt/f/agrovoice-ai/ml-pipeline/.cache/huggingface/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca",
+  "trainable_parameters": 1146880,
+  "lora": {
+    "r": 8,
+    "alpha": 16,
+    "dropout": 0.05,
+    "targets": [
+      "q_proj",
+      "v_proj"
+    ]
+  },
+  "learning_rate": 0.0002,
+  "microbatch": 1,
+  "gradient_accumulation": 8,
+  "maximum_sequence_tokens": {
+    "train": 696,
+    "val": 695,
+    "test": 690
+  },
+  "loss_scope": "assistant answer tokens only",
+  "thinking": false,
+  "seed": 20261019
+}

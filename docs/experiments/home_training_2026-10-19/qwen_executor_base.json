@@ -1,0 +1,142 @@
+{
+  "val": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 0,
+    "execute_utterances": 0,
+    "execute_exact": 0,
+    "non_execute_utterances": 0,
+    "execute_no_action": 0,
+    "false_executions": 0
+  },
+  "method": "qwen_base_test: local FP32, selected on val; AssistantProtocol + ActionPolicy",
+  "test": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 19,
+    "execute_utterances": 20,
+    "execute_exact": 0,
+    "non_execute_utterances": 19,
+    "execute_no_action": 20,
+    "false_executions": 0
+  },
+  "source": "ml-pipeline/assistant/scenarios.json",
+  "false_execution_examples": [],
+  "command": "gradlew testDebugUnitTest --tests *RulesBaselineTest",
+  "execute_misses": [
+    {
+      "id": "test_camera",
+      "got": "[]",
+      "utterance": "Собираюсь снять лист, подготовь камеру"
+    },
+    {
+      "id": "test_camera",
+      "got": "[]",
+      "utterance": "Покажи мне изображение с камеры"
+    },
+    {
+      "id": "test_gallery",
+      "got": "[]",
+      "utterance": "У меня уже есть снимок в приложении, покажи список"
+    },
+    {
+      "id": "test_gallery",
+      "got": "[]",
+      "utterance": "Перейди к сохранённым фотографиям"
+    },
+    {
+      "id": "test_analyze",
+      "got": "[]",
+      "utterance": "Запусти распознавание на выбранном кадре"
+    },
+    {
+      "id": "test_analyze",
+      "got": "[]",
+      "utterance": "Исследуй этот загруженный снимок"
+    },
+    {
+      "id": "test_save",
+      "got": "[]",
+      "utterance": "Хочу оставить эту проверку в истории осмотров"
+    },
+    {
+      "id": "test_save",
+      "got": "[]",
+      "utterance": "Занеси текущий результат в журнал"
+    },
+    {
+      "id": "test_number",
+      "got": "[]",
+      "utterance": "Возьми фото двадцать один"
+    },
+    {
+      "id": "test_number",
+      "got": "[]",
+      "utterance": "Выбираю снимок номер 21"
+    },
+    {
+      "id": "test_confirm_context",
+      "got": "[]",
+      "utterance": "Да, подтверждаю съёмку"
+    },
+    {
+      "id": "test_confirm_context",
+      "got": "[]",
+      "utterance": "Подтверждаю этот кадр"
+    },
+    {
+      "id": "test_silence",
+      "got": "[]",
+      "utterance": "Не читай дальше"
+    },
+    {
+      "id": "test_silence",
+      "got": "[]",
+      "utterance": "Останови чтение, я уже услышал"
+    },
+    {
+      "id": "test_cancel",
+      "got": "[]",
+      "utterance": "Я передумал снимать, отмени"
+    },
+    {
+      "id": "test_cancel",
+      "got": "[]",
+      "utterance": "Отбой, снимок не делай"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[]",
+      "utterance": "Порог распознавания пусть будет пятьдесят пять процентов"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[]",
+      "utterance": "Выставь порог 55"
+    },
+    {
+      "id": "test_crop_correction",
+      "got": "[]",
+      "utterance": "Не картофель, выбери томат"
+    },
+    {
+      "id": "test_crop_correction",
+      "got": "[]",
+      "utterance": "Я ошибся, это помидор, переключи культуру на томат"
+    }
+  ],
+  "limitations": [
+    "Authored synthetic Russian phrases; not recorded speech and not ASR output.",
+    "Exact phrases: Vosk grammar mode can only output grammar phrases, so paraphrases are not even transcribed.",
+    "Free phrases need Vosk without a grammar; its recognition errors are not included here.",
+    "FreeSpeech rules were written with every split of the corpus visible: no independent test."
+  ],
+  "train": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 0,
+    "execute_utterances": 0,
+    "execute_exact": 0,
+    "non_execute_utterances": 0,
+    "execute_no_action": 0,
+    "false_executions": 0
+  },
+  "deployment": "No model installed; results include failed proposals and are not an acceptance claim"
+}

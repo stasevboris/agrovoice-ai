@@ -1,0 +1,97 @@
+{
+  "val": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 0,
+    "execute_utterances": 0,
+    "execute_exact": 0,
+    "non_execute_utterances": 0,
+    "execute_no_action": 0,
+    "false_executions": 0
+  },
+  "method": "qwen_trained_test: local FP32, selected on val; AssistantProtocol + ActionPolicy",
+  "test": {
+    "execute_wrong_action": 3,
+    "non_execute_not_executed": 19,
+    "execute_utterances": 20,
+    "execute_exact": 9,
+    "non_execute_utterances": 19,
+    "execute_no_action": 8,
+    "false_executions": 0
+  },
+  "source": "ml-pipeline/assistant/scenarios.json",
+  "false_execution_examples": [],
+  "command": "gradlew testDebugUnitTest --tests *RulesBaselineTest",
+  "execute_misses": [
+    {
+      "id": "test_gallery",
+      "got": "[]",
+      "utterance": "Перейди к сохранённым фотографиям"
+    },
+    {
+      "id": "test_analyze",
+      "got": "[(CROP, tomato)]",
+      "utterance": "Запусти распознавание на выбранном кадре"
+    },
+    {
+      "id": "test_number",
+      "got": "[(PHOTO_NUMBER, 20)]",
+      "utterance": "Возьми фото двадцать один"
+    },
+    {
+      "id": "test_silence",
+      "got": "[]",
+      "utterance": "Не читай дальше"
+    },
+    {
+      "id": "test_silence",
+      "got": "[(LISTEN_OFF, )]",
+      "utterance": "Останови чтение, я уже услышал"
+    },
+    {
+      "id": "test_cancel",
+      "got": "[]",
+      "utterance": "Я передумал снимать, отмени"
+    },
+    {
+      "id": "test_cancel",
+      "got": "[]",
+      "utterance": "Отбой, снимок не делай"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[]",
+      "utterance": "Порог распознавания пусть будет пятьдесят пять процентов"
+    },
+    {
+      "id": "test_threshold",
+      "got": "[]",
+      "utterance": "Выставь порог 55"
+    },
+    {
+      "id": "test_crop_correction",
+      "got": "[]",
+      "utterance": "Не картофель, выбери томат"
+    },
+    {
+      "id": "test_crop_correction",
+      "got": "[]",
+      "utterance": "Я ошибся, это помидор, переключи культуру на томат"
+    }
+  ],
+  "limitations": [
+    "Authored synthetic Russian phrases; not recorded speech and not ASR output.",
+    "Exact phrases: Vosk grammar mode can only output grammar phrases, so paraphrases are not even transcribed.",
+    "Free phrases need Vosk without a grammar; its recognition errors are not included here.",
+    "FreeSpeech rules were written with every split of the corpus visible: no independent test."
+  ],
+  "train": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 0,
+    "execute_utterances": 0,
+    "execute_exact": 0,
+    "non_execute_utterances": 0,
+    "execute_no_action": 0,
+    "false_executions": 0
+  },
+  "deployment": "No model installed; results include failed proposals and are not an acceptance claim"
+}

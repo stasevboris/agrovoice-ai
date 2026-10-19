@@ -1,0 +1,25 @@
+{
+  "runs": {
+    "home_20261019_mobilenet_probe": {
+      "deadline": "2026-10-19T23:00:00+03:00",
+      "soft_stop_epoch_boundary": 1792438200.0,
+      "hard_stop_process_group": 1792439700.0,
+      "automatic_resume": false,
+      "status": "interrupted_or_failed",
+      "returncode": 1
+    },
+    "home_20261019_qwen_sft": {
+      "deadline": "2026-10-19T23:00:00+03:00",
+      "soft_stop_epoch_boundary": 1792438200.0,
+      "hard_stop_process_group": 1792439700.0,
+      "automatic_resume": false,
+      "status": "interrupted_or_failed",
+      "returncode": 1
+    }
+  },
+  "cause": "Both initial auxiliary runs failed with errno 12 during the concurrent CPU evaluation. Evaluation passed; memory pressure was removed by sequential scheduling and bounded image-list batches.",
+  "successful_retries": [
+    "home_20261019_mobilenet_retry",
+    "home_20261019_qwen_retry"
+  ]
+}

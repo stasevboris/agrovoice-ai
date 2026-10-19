@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-19",
+  "python_command": "ml-pipeline/venv/Scripts/python.exe -X utf8 -m unittest discover -s ml-pipeline/tests",
+  "python_tests": 96,
+  "python_result": "OK",
+  "training_statuses": {
+    "home_20261019_pilot": {
+      "deadline": "2026-10-19T23:00:00+03:00",
+      "soft_stop_epoch_boundary": 1792438200.0,
+      "hard_stop_process_group": 1792439700.0,
+      "automatic_resume": false,
+      "status": "finished",
+      "returncode": 0
+    },
+    "home_20261019_evaluation": {
+      "deadline": "2026-10-19T23:00:00+03:00",
+      "soft_stop_epoch_boundary": 1792438200.0,
+      "hard_stop_process_group": 1792439700.0,
+      "automatic_resume": false,
+      "status": "finished",
+      "returncode": 0
+    },
+    "home_20261019_mobilenet_retry": {
+      "deadline": "2026-10-19T23:00:00+03:00",
+      "soft_stop_epoch_boundary": 1792438200.0,
+      "hard_stop_process_group": 1792439700.0,
+      "automatic_resume": false,
+      "status": "finished",
+      "returncode": 0
+    },
+    "home_20261019_qwen_retry": {
+      "deadline": "2026-10-19T23:00:00+03:00",
+      "soft_stop_epoch_boundary": 1792438200.0,
+      "hard_stop_process_group": 1792439700.0,
+      "automatic_resume": false,
+      "status": "finished",
+      "returncode": 0
+    }
+  },
+  "process_check": "WSL ps -eo pid,comm,args: no training/evaluation/worker processes at 17:45 MSK; no automatic resume"
+}

@@ -117,6 +117,24 @@ class RulesBaselineTest {
         assertEquals(201, rows.size)
     }
 
+    @Test
+    fun selectedSftAdapterThroughTheSameExecutor() {
+        for (name in listOf("qwen_base_test", "qwen_trained_test")) {
+            val array = JSONArray(find("docs/experiments/home_training_2026-10-19/$name.json").readText())
+            val rows = (0 until array.length()).map { array.getJSONObject(it) }
+            val answers = rows.associate { it.getString("utterance") to it.getString("answer") }
+            val report = evaluate("$name: local FP32, selected on val; AssistantProtocol + ActionPolicy",
+                splits = setOf("test")) { utterance, state ->
+                val plan = AssistantProtocol.read(answers.getValue(utterance), state, utterance)
+                if (plan.decision == Decision.EXECUTE) plan.steps.map { VoiceCommand(it.action, it.action.name, it.value) }
+                else emptyList()
+            }
+            report.put("deployment", "No model installed; results include failed proposals and are not an acceptance claim")
+            write("$name.json", report)
+            assertEquals(39, rows.size)
+        }
+    }
+
     /** Before the executor: how often the model itself said «execute» where the corpus expects no action. */
     private fun rawExecuteProposals(answers: Map<String, String>): Int {
         val scenarios = JSONObject(find("ml-pipeline/assistant/scenarios.json").readText()).getJSONArray("scenarios")
@@ -138,13 +156,14 @@ class RulesBaselineTest {
         return count
     }
 
-    private fun evaluate(method: String, understand: (String, AppState) -> List<VoiceCommand>): JSONObject {
+    private fun evaluate(method: String, splits: Set<String> = setOf("train", "val", "test"), understand: (String, AppState) -> List<VoiceCommand>): JSONObject {
         val scenarios = JSONObject(find("ml-pipeline/assistant/scenarios.json").readText()).getJSONArray("scenarios")
         val bySplit = linkedMapOf("train" to Counts(), "val" to Counts(), "test" to Counts())
         val falseExamples = JSONArray()
         val misses = JSONArray()
         for (index in 0 until scenarios.length()) {
             val scenario = scenarios.getJSONObject(index)
+            if (scenario.getString("split") !in splits) continue
             val counts = bySplit.getValue(scenario.getString("split"))
             val state = state(scenario)
             val expected = expectedActions(scenario)

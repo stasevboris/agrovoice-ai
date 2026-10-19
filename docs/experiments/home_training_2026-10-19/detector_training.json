@@ -1,0 +1,39 @@
+{
+  "smoke": false,
+  "runs": [
+    {
+      "variant": "train",
+      "seconds": 4898.157241438999,
+      "metrics": {
+        "metrics/precision(B)": 0.5562383398947917,
+        "metrics/recall(B)": 0.40912932039682837,
+        "metrics/mAP50(B)": 0.4366763678776614,
+        "metrics/mAP50-95(B)": 0.2996215734435611,
+        "fitness": 0.2996215734435611
+      },
+      "best": "/mnt/f/agrovoice-ai/runs/home_20261019_pilot/train/weights/best.pt",
+      "last": "/mnt/f/agrovoice-ai/runs/home_20261019_pilot/train/weights/last.pt",
+      "test_evaluated": false
+    },
+    {
+      "variant": "train_with_negatives",
+      "seconds": 5016.383387751001,
+      "metrics": {
+        "metrics/precision(B)": 0.5168759536298416,
+        "metrics/recall(B)": 0.46520947147096803,
+        "metrics/mAP50(B)": 0.4415665211690237,
+        "metrics/mAP50-95(B)": 0.30088459469476253,
+        "fitness": 0.30088459469476253
+      },
+      "best": "/mnt/f/agrovoice-ai/runs/home_20261019_pilot/train_with_negatives/weights/best.pt",
+      "last": "/mnt/f/agrovoice-ai/runs/home_20261019_pilot/train_with_negatives/weights/last.pt",
+      "test_evaluated": false
+    }
+  ],
+  "deadline": "2026-10-19T23:00:00+03:00",
+  "limitations": [
+    "Strict dataset has missing train classes; not a full taxonomy release.",
+    "Only field validation; no test-based tuning or model release.",
+    "Negatives are a small assistant-screened pilot; no guarantee of unknown rejection."
+  ]
+}

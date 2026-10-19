@@ -1,0 +1,8 @@
+[
+  {"id":"knowledge_open","text":"открой справочник","context":"main","action":"KNOWLEDGE","value":""},
+  {"id":"knowledge_number","text":"карточка два","context":"knowledge","count":49,"action":"KNOWLEDGE_NUMBER","value":"2"},
+  {"id":"knowledge_read","text":"прочитай справку","context":"knowledge","count":49,"action":"READ_KNOWLEDGE","value":""},
+  {"id":"knowledge_next","text":"следующая карточка","context":"knowledge","count":49,"action":"KNOWLEDGE_NEXT","value":""},
+  {"id":"knowledge_previous","text":"предыдущая карточка","context":"knowledge","count":49,"action":"KNOWLEDGE_PREVIOUS","value":""},
+  {"id":"knowledge_negative","text":"не открывай карточку два","context":"knowledge","count":49,"action":"","value":""}
+]

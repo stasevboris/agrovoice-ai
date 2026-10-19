@@ -1,0 +1,68 @@
+{
+  "selected_epoch": 3,
+  "history": [
+    {
+      "epoch": 1,
+      "mean_train_loss": 0.5490723044436047,
+      "val": {
+        "examples": 24,
+        "exact_decision_actions_or_dictation": 2,
+        "correct_executions": 2,
+        "false_execute_proposals": 9,
+        "invalid_json": 0
+      }
+    },
+    {
+      "epoch": 2,
+      "mean_train_loss": 0.26985073985153996,
+      "val": {
+        "examples": 24,
+        "exact_decision_actions_or_dictation": 8,
+        "correct_executions": 6,
+        "false_execute_proposals": 6,
+        "invalid_json": 0
+      }
+    },
+    {
+      "epoch": 3,
+      "mean_train_loss": 0.17507877608801684,
+      "val": {
+        "examples": 24,
+        "exact_decision_actions_or_dictation": 14,
+        "correct_executions": 10,
+        "false_execute_proposals": 4,
+        "invalid_json": 0
+      }
+    }
+  ],
+  "smoke": false,
+  "test_evaluated": true,
+  "base_val": {
+    "examples": 24,
+    "exact_decision_actions_or_dictation": 0,
+    "correct_executions": 0,
+    "false_execute_proposals": 0,
+    "invalid_json": 24
+  },
+  "base_test": {
+    "examples": 39,
+    "exact_decision_actions_or_dictation": 0,
+    "correct_executions": 0,
+    "false_execute_proposals": 0,
+    "invalid_json": 39
+  },
+  "trained_test": {
+    "examples": 39,
+    "exact_decision_actions_or_dictation": 16,
+    "correct_executions": 9,
+    "false_execute_proposals": 5,
+    "invalid_json": 0
+  },
+  "selection": "val only: false execute proposals first, then exact executions",
+  "limitations": [
+    "Authored synthetic corpus; not independent speech or an acceptance benchmark.",
+    "Unconstrained HF FP32 generation differs from earlier Ollama JSON-schema baselines.",
+    "Raw text still needs manual review; action metrics do not validate agronomic advice.",
+    "Adapter is not quantized, not installed on Android, and not published."
+  ]
+}
