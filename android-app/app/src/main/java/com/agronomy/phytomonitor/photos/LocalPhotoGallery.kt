@@ -90,6 +90,9 @@ class PhotoFlowViewModel(application: Application): AndroidViewModel(application
     var scrollDirection="down";private set
     fun scroll(direction: String){scrollDirection=direction;scrollEvent++}
     fun setContinuous(value: Boolean){continuousVoice=value;voicePreferences.edit().putBoolean("continuous",value).apply()}
+    /** Experimental free Russian speech: Vosk without a phrase list, FreeSpeech rules, the same executor. */
+    var freeSpeech by mutableStateOf(voicePreferences.getBoolean("free_speech",false)); private set
+    fun switchFreeSpeech(value: Boolean){freeSpeech=value;voicePreferences.edit().putBoolean("free_speech",value).apply()}
     var cameraOpen by mutableStateOf(false); private set
     var shotRequested by mutableStateOf(false); private set
     var cameraCapturing by mutableStateOf(false); private set

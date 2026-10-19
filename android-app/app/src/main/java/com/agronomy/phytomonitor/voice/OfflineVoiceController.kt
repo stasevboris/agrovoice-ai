@@ -40,7 +40,10 @@ object VoiceModelFiles {
     }
 }
 
-data class RecognizedVoice(val text: String, val confidence: Double, val command: VoiceCommand?)
+data class RecognizedVoice(val text: String, val confidence: Double, val command: VoiceCommand?) {
+    /** Vosk word confidences are high enough and no word was unknown to the model. */
+    val confident: Boolean get() = confidence.isFinite() && confidence>=0.65 && !text.contains("[unk]")
+}
 object VoiceHypotheses {
     fun decode(hypothesis: String, screen: String="main", plots: Collection<String> = emptyList()): RecognizedVoice {
         val data=JSONObject(hypothesis);val text=data.optString("text").trim()
@@ -64,6 +67,10 @@ class OfflineVoiceController(private val context: Context) {
     var status by mutableStateOf("Голос работает без интернета"); private set
     var heard by mutableStateOf(""); private set
     var onCommand: (VoiceCommand)->Unit = {}
+    /** Several commands from one free phrase («прочитай результат и сохрани осмотр»). */
+    var onCommands: (List<VoiceCommand>)->Unit = {}
+    /** Experimental: free Russian phrases are understood by FreeSpeech when no fixed phrase matches. */
+    var freeSpeech = false
     var onFailure: ()->Unit = {}
     var onDictation: (String)->Unit = {}
     var onDictationFinished: ()->Unit = {}
@@ -117,21 +124,27 @@ class OfflineVoiceController(private val context: Context) {
             } else {heard=text;onDictation(text)}
             return
         }
-        val command=recognized.command
+        val understood=if(recognized.command==null && freeSpeech && recognized.confident)FreeSpeech.understand(text,screen,plotNames) else null
+        val plan=(understood as? Understanding.Commands)?.commands.orEmpty()
+        val command=recognized.command ?: plan.singleOrNull()
+        val several=plan.takeIf {it.size>1}
+        val refusal=(understood as? Understanding.Refusal)?.text
         heard=text.replace("[unk]","").trim()
+        val failure=refusal ?: if(freeSpeech)"Не понял. Скажи по-другому или фразу из списка." else "Команда не распознана. Попробуй фразу из списка."
         if(continuous) {
-            status=if(command==null)"Не понял команду. Продолжаю слушать…" else "Слушаю постоянно…"
+            status=if(command==null && several==null)failure else "Слушаю постоянно…"
             if(command!=null)onCommand(command)
-        } else finish(session,command?.label ?: "Команда не распознана. Попробуй фразу из списка.",command)
+            if(several!=null)onCommands(several)
+        } else finish(session,command?.label ?: several?.joinToString(", ") {it.label} ?: failure,command,several=several)
     }
     /** Also exercised by the on-device PCM test bench; microphone listeners use the same final-result path. */
     internal fun acceptFinalHypothesis(hypothesis: String) {if(active)finishPhrase(token,hypothesis)}
-    private fun finish(session: Int, message: String, command: VoiceCommand? = null, failed: Boolean=false,onEnded: ()->Unit={}) {
+    private fun finish(session: Int, message: String, command: VoiceCommand? = null, failed: Boolean=false,onEnded: ()->Unit={},several: List<VoiceCommand>?=null) {
         if(session!=token || closed)return
         val finished=++token // Drop any queued duplicate result from this recording.
         worker.execute {
             releaseSession()
-            main.post {if(finished==token && !closed){active=false;status=message;if(failed)onFailure();if(command!=null)onCommand(command);onEnded()}}
+            main.post {if(finished==token && !closed){active=false;status=message;if(failed)onFailure();if(command!=null)onCommand(command);if(several!=null)onCommands(several);onEnded()}}
         }
     }
     private fun releaseSession() {

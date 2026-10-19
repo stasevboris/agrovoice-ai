@@ -38,6 +38,13 @@ class ActionDispatcher(
         return execute(request)
     }
 
+    /** Several steps from one free phrase; each step is checked when its turn comes. */
+    fun submitPlan(steps: List<ActionRequest>) {
+        cancelPlan()
+        plan.addAll(steps)
+        runNext()
+    }
+
     /** A router answer in the assistant JSON protocol for the phrase [utterance]. */
     fun submit(json: String, utterance: String): AssistantPlan {
         val reviewed = AssistantProtocol.read(json, port.state(), utterance)

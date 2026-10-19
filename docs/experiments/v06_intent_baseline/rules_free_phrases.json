@@ -1,0 +1,44 @@
+{
+  "val": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 10,
+    "execute_utterances": 14,
+    "execute_exact": 14,
+    "non_execute_utterances": 10,
+    "execute_no_action": 0,
+    "false_executions": 0
+  },
+  "method": "FreeSpeech.understand (stems, numbers, negation, connectors) + ActionPolicy",
+  "test": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 19,
+    "execute_utterances": 20,
+    "execute_exact": 19,
+    "non_execute_utterances": 19,
+    "execute_no_action": 1,
+    "false_executions": 0
+  },
+  "source": "ml-pipeline/assistant/scenarios.json",
+  "false_execution_examples": [],
+  "command": "gradlew testDebugUnitTest --tests *RulesBaselineTest",
+  "execute_misses": [{
+    "id": "test_crop_correction",
+    "got": "[]",
+    "utterance": "Я ошибся, это помидор, переключи культуру на томат"
+  }],
+  "limitations": [
+    "Authored synthetic Russian phrases; not recorded speech and not ASR output.",
+    "Exact phrases: Vosk grammar mode can only output grammar phrases, so paraphrases are not even transcribed.",
+    "Free phrases need Vosk without a grammar; its recognition errors are not included here.",
+    "FreeSpeech rules were written with every split of the corpus visible: no independent test."
+  ],
+  "train": {
+    "execute_wrong_action": 0,
+    "non_execute_not_executed": 34,
+    "execute_utterances": 104,
+    "execute_exact": 104,
+    "non_execute_utterances": 34,
+    "execute_no_action": 0,
+    "false_executions": 0
+  }
+}

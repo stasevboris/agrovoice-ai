@@ -246,6 +246,8 @@ class FieldDemoActivity : ComponentActivity() {
     private fun hasMicrophone()=ContextCompat.checkSelfPermission(this,Manifest.permission.RECORD_AUDIO)==PackageManager.PERMISSION_GRANTED
     private fun currentGrammar()=when {
         fieldModel.noteOpen->if(fieldModel.dictating)null else VoiceCommands.noteReviewGrammar
+        // Free speech: the whole Russian vocabulary of the model, understood by FreeSpeech rules.
+        photoFlow.freeSpeech->null
         photoFlow.cameraOpen->VoiceCommands.cameraGrammar
         photoFlow.galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
         else->VoiceCommands.mainGrammar(fieldModel.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
@@ -276,6 +278,7 @@ class FieldDemoActivity : ComponentActivity() {
     private fun startOneShot(){
         if(photoFlow.galleryOpen){photoFlow.dialogVoice=true;return}
         voice.plotNames=fieldModel.plots.map {it.plot.name}
+        voice.freeSpeech=photoFlow.freeSpeech
         voice.start(currentGrammar(),screen=currentScreen().protocolName)
     }
     private val locationPermission=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
@@ -307,6 +310,13 @@ class FieldDemoActivity : ComponentActivity() {
         photoFlow=ViewModelProvider(this)[PhotoFlowViewModel::class.java]
         fieldModel=ViewModelProvider(this)[FieldDemoViewModel::class.java]
         voice.onCommand=::handleVoiceCommand
+        voice.onCommands={commands->
+            if(foreground){
+                followUp.stop()
+                followUpPhase=followUp.phase
+                actions.submitPlan(commands.map {ActionRequest(it.action,it.value,ActionSource.VOICE)})
+            }
+        }
         voice.onFailure={photoFlow.setContinuous(false);photoFlow.dialogVoice=false}
         voice.onDictation={text->fieldModel.editNote((fieldModel.noteDraft+" "+text).trim())}
         voice.onDictationFinished={fieldModel.dictating=false;fieldModel.noteReviewVoice=true}
@@ -330,6 +340,7 @@ class FieldDemoActivity : ComponentActivity() {
                     if(eligible && !voice.active && hasMicrophone() && (if(model.noteOpen)model.dictating || model.noteReviewVoice else photoFlow.continuousVoice || photoFlow.dialogVoice || answering)) {
                         delay(400)
                         voice.plotNames=model.plots.map {it.plot.name}
+                        voice.freeSpeech=photoFlow.freeSpeech
                         if(answering)followUp.listeningStarted()
                         voice.start(currentGrammar(),continuous=model.dictating || photoFlow.continuousVoice,screen=context)
                     }

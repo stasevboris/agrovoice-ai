@@ -200,7 +200,7 @@ internal fun FieldDemoScreen(
         }
     }
     if (settingsOpen) {
-        AnalysisSheet(model, controlsEnabled, onAction) { settingsOpen = false }
+        AnalysisSheet(model, controlsEnabled, onAction, flow) { settingsOpen = false }
     }
 }
 
@@ -533,16 +533,16 @@ internal fun ModelChips(model: FieldDemoViewModel, enabled: Boolean, onAction: A
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun AnalysisSheet(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons, onDismiss: () -> Unit) {
+internal fun AnalysisSheet(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons, flow: PhotoFlowViewModel, onDismiss: () -> Unit) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
-        AnalysisSheetContent(model, enabled, onAction)
+        AnalysisSheetContent(model, enabled, onAction, flow)
         Spacer(Modifier.height(24.dp))
     }
 }
 
 @Composable
-private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons) {
+private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean, onAction: ActionButtons, flow: PhotoFlowViewModel) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -599,6 +599,24 @@ private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean, on
             Text("Сравнить модели")
         }
         ComparisonList(model)
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.small)
+                .toggleable(value = flow.freeSpeech, role = Role.Switch, onValueChange = flow::switchFreeSpeech)
+                .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text("Свободная речь (эксперимент)")
+                Text(
+                    "Команды обычными словами: «включи камеру», «прочитай результат и сохрани». Распознавание без списка фраз, на людях ещё не проверено.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Switch(checked = flow.freeSpeech, onCheckedChange = null)
+        }
         Text(
             "Огурец: модель пока определяет лист без диагноза болезни.",
             style = MaterialTheme.typography.bodySmall,

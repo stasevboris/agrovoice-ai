@@ -107,6 +107,7 @@
 | [docs/experiments/README.md](experiments/README.md) | Эксперименты и доказательства |
 | [docs/experiments/STUDY10_PROTOCOL_2026-10-03.md](experiments/STUDY10_PROTOCOL_2026-10-03.md) | Серия по десять обучений YOLO11n и YOLO26n |
 | [docs/experiments/YOLO_COMPARISON_2026-10-03.md](experiments/YOLO_COMPARISON_2026-10-03.md) | YOLO11n и YOLO26n: сравнение для AgroVoice AI |
+| [docs/experiments/v06_intent_baseline/README.md](experiments/v06_intent_baseline/README.md) | V-06: понимание команд без обучения (19.10.2026) |
 | [docs/experiments/accuracy_v1/CONTINUE.md](experiments/accuracy_v1/CONTINUE.md) | Историческая инструкция — очередь80 отменена |
 | [docs/experiments/accuracy_v1/ETA_2026-10-04.md](experiments/accuracy_v1/ETA_2026-10-04.md) | Оценка оставшегося времени accuracy_v1 |
 | [docs/experiments/accuracy_v1/PROTOCOL.md](experiments/accuracy_v1/PROTOCOL.md) | Новая серия по пяти направлениям — accuracy_v1 |
