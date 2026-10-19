@@ -168,13 +168,58 @@ class InspectionJournalTest {
         assertTrue(report.issues.isEmpty())
         val restored = target.list().single()
         assertTrue(restored.photoAvailable)
-        assertTrue(restored.photo.endsWith("restored_r.jpg"))
+        assertTrue(restored.photo.endsWith("restored_r_${sha}.jpg"))
         assertEquals(sha, InspectionJournal.sha256(File(restored.photo)))
         assertEquals("Нижние листья", restored.note)
 
         val again = target.import(ByteArrayInputStream(archive.toByteArray()))
         assertEquals(1, again.unchanged)
         assertEquals(1, target.list().size)
+    }
+
+    @Test
+    fun lackOfSpaceDuringPhotoRestoreRollsBackAllRecordsAndRetryRecovers() {
+        val first = photo("archive_a.jpg", byteArrayOf(1, 2, 3))
+        val second = photo("archive_b.jpg", byteArrayOf(4, 5, 6))
+        val records = org.json.JSONArray()
+        for ((id, picture) in listOf("a" to first, "b" to second)) {
+            records.put(JournalFixtures.legacyRecord(id, "/absent/$id.jpg", InspectionJournal.sha256(picture))
+                .put("archive_photo", "photos/$id.jpg"))
+        }
+        val bytes = ByteArrayOutputStream()
+        JournalArchive.write(bytes, JournalRecords.document(records, true, now).toString(),
+            mapOf("photos/a.jpg" to first, "photos/b.jpg" to second))
+        val db = database()
+        var checks = 0
+        val constrained = InspectionJournal(context, db, availableSpace = { directory ->
+            if (directory.name == "photos" && ++checks >= 3) 0L else Long.MAX_VALUE
+        }) { now }
+        assertTrue(runCatching { constrained.import(ByteArrayInputStream(bytes.toByteArray())) }.isFailure)
+        assertTrue(constrained.list().isEmpty())
+        assertTrue(db.journal().pendingSync().isEmpty())
+        assertTrue(db.journal().plotsWithCounts().isEmpty())
+        assertTrue(File(files, "photos").listFiles().orEmpty().none { it.extension == "part" })
+        assertTrue(first.readBytes().contentEquals(byteArrayOf(1, 2, 3)))
+        val recovered = journal(db)
+        assertEquals(2, recovered.import(ByteArrayInputStream(bytes.toByteArray())).added)
+        assertTrue(recovered.list().all { it.photoAvailable })
+        assertEquals(2, recovered.import(ByteArrayInputStream(bytes.toByteArray())).unchanged)
+    }
+
+    @Test
+    fun insufficientStagingSpaceLeavesExistingJournalUntouched() {
+        val db = database()
+        val source = journal(db)
+        val picture = photo("existing.jpg")
+        legacy("old.json", JournalFixtures.legacyRecord("old", picture.path).toString())
+        source.migrateLegacy()
+        val before = source.record("old").toString()
+        val archive = ByteArrayOutputStream()
+        source.exportArchive(archive)
+        val constrained = InspectionJournal(context, db, availableSpace = { 0L }) { now }
+        val report = constrained.import(ByteArrayInputStream(archive.toByteArray()))
+        assertTrue(report.issues.any { it.reason.contains("свободного места") })
+        assertEquals(before, source.record("old").toString())
     }
 
     @Test
@@ -225,6 +270,12 @@ class InspectionJournalTest {
         assertTrue(report.issues.isNotEmpty())
         val json = journal.import(ByteArrayInputStream("{\"schema\":\"чужой\"}".toByteArray()))
         assertTrue(json.issues.single().reason.contains("неизвестный формат"))
+        assertTrue(journal.list().isEmpty())
+        val records = org.json.JSONArray().put(JournalFixtures.legacyRecord("cut", "/absent.jpg"))
+        val bytes = ByteArrayOutputStream()
+        JournalArchive.write(bytes, JournalRecords.document(records, true, now).toString(), emptyMap())
+        val missingFooter = bytes.toByteArray().copyOf(bytes.size() - 22)
+        assertTrue(journal.import(ByteArrayInputStream(missingFooter)).issues.isNotEmpty())
         assertTrue(journal.list().isEmpty())
     }
 

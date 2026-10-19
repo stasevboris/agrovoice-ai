@@ -11,6 +11,7 @@ import com.agronomy.phytomonitor.journal.JournalDatabase
 import com.agronomy.phytomonitor.journal.JournalFormatException
 import com.agronomy.phytomonitor.journal.JournalIssue
 import com.agronomy.phytomonitor.journal.JournalRecords
+import com.agronomy.phytomonitor.journal.JournalStorage
 import com.agronomy.phytomonitor.journal.MAX_NOTE
 import com.agronomy.phytomonitor.journal.MAX_PLOT
 import com.agronomy.phytomonitor.journal.ParsedInspection
@@ -26,6 +27,8 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.security.MessageDigest
 import java.util.UUID
+import java.util.concurrent.Callable
+import java.util.zip.ZipFile
 
 data class InspectionEntry(
     val id: String,
@@ -89,7 +92,8 @@ data class JournalReport(
  */
 class InspectionJournal(
     context: Context,
-    database: JournalDatabase = JournalDatabase.get(context),
+    private val database: JournalDatabase = JournalDatabase.get(context),
+    private val availableSpace: (File) -> Long = File::getUsableSpace,
     private val clock: () -> Long = System::currentTimeMillis
 ) {
     private val dao = database.journal()
@@ -178,18 +182,26 @@ class InspectionJournal(
         val zip = stream.read() == 'P'.code && stream.read() == 'K'.code
         stream.reset()
         if (!zip) {
-            val text = String(stream.readBytes(), Charsets.UTF_8)
+            val text = try {
+                JournalArchive.readDocument(stream)
+            } catch (error: JournalFormatException) {
+                return JournalReport(SOURCE_JSON, issues = listOf(JournalIssue("журнал", error.message.orEmpty())))
+            }
             return importDocument(text, emptyMap(), emptyList(), SOURCE_JSON)
         }
         staging.deleteRecursively()
         try {
             val content: ArchiveContent = try {
-                JournalArchive.read(stream, staging)
+                val archive = File(staging, "incoming.zip")
+                JournalStorage.stageArchive(stream, archive, availableSpace)
+                // ZipInputStream alone accepts an archive cut off after the last local entry.
+                ZipFile(archive).use { it.size() }
+                archive.inputStream().use { JournalArchive.read(it, staging, availableSpace) }
             } catch (error: JournalFormatException) {
                 return JournalReport(SOURCE_ARCHIVE, issues = listOf(JournalIssue("архив", error.message ?: "архив не прочитан")))
             } catch (error: IOException) {
                 // A truncated download ends the zip stream early: nothing is imported.
-                return JournalReport(SOURCE_ARCHIVE, issues = listOf(JournalIssue("архив", "архив повреждён или обрезан")))
+                return JournalReport(SOURCE_ARCHIVE, issues = listOf(JournalIssue("архив", error.message ?: "архив повреждён или обрезан")))
             }
             val journal = content.journal ?: return JournalReport(SOURCE_ARCHIVE, issues = content.issues)
             return importDocument(journal, content.photos, content.issues, SOURCE_ARCHIVE)
@@ -239,7 +251,8 @@ class InspectionJournal(
         if (problem != null) {
             return JournalReport(source, issues = issues + problem)
         }
-        return importRecords(records, photos, issues, source)
+        JournalStorage.requireSpace(photoFolder, photos.values.sumOf { it.length() } + text.toByteArray(Charsets.UTF_8).size * 2L, availableSpace)
+        return database.runInTransaction(Callable { importRecords(records, photos, issues, source) })
     }
 
     private fun importRecords(
@@ -326,11 +339,11 @@ class InspectionJournal(
             return original.path
         }
         photoFolder.mkdirs()
-        val target = File(photoFolder, "restored_${parsed.id}.${staged.extension}")
+        val target = File(photoFolder, "restored_${parsed.id}_${digest}.${staged.extension}")
         if (target.isFile && sha256(target) == digest) {
             return target.path
         }
-        staged.copyTo(target, overwrite = false)
+        JournalStorage.copyPhoto(staged, target, availableSpace)
         return target.path
     }
 

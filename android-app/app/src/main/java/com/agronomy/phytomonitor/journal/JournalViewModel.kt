@@ -32,6 +32,7 @@ data class JournalState(
     val busy: Boolean = false,
     val report: JournalReport? = null,
     val message: String? = null,
+    val messageIsError: Boolean = false,
     val opened: SavedInspectionView? = null,
     val openingId: String? = null,
     val noteDraft: SavedNoteDraft? = null,
@@ -83,7 +84,7 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     fun openInspection(id: String) {
         if (state.value.openingId == id || state.value.opened?.details?.inspection?.id == id) return
         opening?.cancel()
-        mutableState.update { it.copy(opened = null, openingId = id, message = null) }
+        mutableState.update { it.copy(opened = null, openingId = id, message = null, messageIsError = false) }
         opening = viewModelScope.launch {
             migration.await()
             try {
@@ -98,7 +99,7 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Exception) {
-                mutableState.update { it.copy(openingId = null, message = error.message ?: "Не удалось открыть осмотр") }
+                mutableState.update { it.copy(openingId = null, message = error.message ?: "Не удалось открыть осмотр", messageIsError = true) }
             }
         }
     }
@@ -163,19 +164,19 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
             requireNotNull(resolver.openInputStream(uri)) { "Не удалось открыть файл" }.use(journal::import)
         }
         val entries = withContext(Dispatchers.IO) { journal.list() }
-        mutableState.update { it.copy(entries = entries, report = report) }
+        mutableState.update { it.copy(entries = entries, report = report, message = report.summary(), messageIsError = report.issues.isNotEmpty()) }
     }
 
     private fun transact(block: suspend () -> Unit) = viewModelScope.launch {
         writes.withLock {
-            mutableState.update { it.copy(busy = true, message = null) }
+            mutableState.update { it.copy(busy = true, message = null, messageIsError = false) }
             try {
                 migration.await()
                 block()
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Exception) {
-                mutableState.update { it.copy(message = error.message ?: "Операция с журналом не выполнена") }
+                mutableState.update { it.copy(message = error.message ?: "Операция с журналом не выполнена", messageIsError = true) }
             } finally {
                 mutableState.update { it.copy(busy = false) }
             }

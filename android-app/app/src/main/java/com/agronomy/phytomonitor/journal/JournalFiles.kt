@@ -102,12 +102,13 @@ object JournalArchive {
         }
     }
 
-    fun read(input: InputStream, staging: File): ArchiveContent {
+    fun read(input: InputStream, staging: File, available: (File) -> Long = File::getUsableSpace): ArchiveContent {
         staging.mkdirs()
         var journal: String? = null
         val photos = mutableMapOf<String, File>()
         val issues = mutableListOf<JournalIssue>()
         var count = 0
+        val names = mutableSetOf<String>()
         ZipInputStream(input).use { zip ->
             while (true) {
                 val entry = zip.nextEntry ?: break
@@ -117,10 +118,11 @@ object JournalArchive {
                     break
                 }
                 val name = entry.name
+                if (!names.add(name)) throw JournalFormatException("повторяющийся файл в архиве", name)
                 when {
                     entry.isDirectory -> Unit
                     name == JOURNAL_ENTRY -> journal = String(readLimited(zip, MAX_JOURNAL_BYTES, name), Charsets.UTF_8)
-                    isPhotoEntry(name) -> photos[name] = stage(zip, name, staging, issues) ?: continue
+                    isPhotoEntry(name) -> photos[name] = stage(zip, name, staging, issues, available) ?: continue
                     else -> issues += JournalIssue(name, "посторонний файл в архиве пропущен")
                 }
             }
@@ -131,10 +133,12 @@ object JournalArchive {
         return ArchiveContent(journal, photos, issues)
     }
 
-    private fun stage(zip: ZipInputStream, name: String, staging: File, issues: MutableList<JournalIssue>): File? {
+    private fun stage(zip: ZipInputStream, name: String, staging: File, issues: MutableList<JournalIssue>, available: (File) -> Long): File? {
         val target = File(staging, name.substringAfter('/'))
         try {
-            target.outputStream().use { output -> copyLimited(zip, output, MAX_PHOTO_BYTES) }
+            target.outputStream().use { output ->
+                copyLimited(zip, output, MAX_PHOTO_BYTES) { size -> JournalStorage.requireSpace(staging, size, available) }
+            }
             return target
         } catch (error: JournalFormatException) {
             target.delete()
@@ -142,6 +146,8 @@ object JournalArchive {
             return null
         }
     }
+
+    fun readDocument(input: InputStream): String = String(readLimited(input, MAX_JOURNAL_BYTES, JOURNAL_ENTRY), Charsets.UTF_8)
 
     private fun readLimited(input: InputStream, limit: Long, name: String): ByteArray {
         val buffer = java.io.ByteArrayOutputStream()
@@ -153,7 +159,7 @@ object JournalArchive {
         return buffer.toByteArray()
     }
 
-    private fun copyLimited(input: InputStream, output: OutputStream, limit: Long) {
+    private fun copyLimited(input: InputStream, output: OutputStream, limit: Long, beforeWrite: (Long) -> Unit = {}) {
         val chunk = ByteArray(64 * 1024)
         var total = 0L
         while (true) {
@@ -165,6 +171,7 @@ object JournalArchive {
             if (total > limit) {
                 throw JournalFormatException("файл больше ${limit / (1024 * 1024)} МБ")
             }
+            beforeWrite(read.toLong())
             output.write(chunk, 0, read)
         }
     }

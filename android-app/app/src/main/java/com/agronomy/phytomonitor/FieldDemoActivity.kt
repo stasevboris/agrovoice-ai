@@ -296,7 +296,6 @@ class FieldDemoActivity : ComponentActivity() {
                 is Operation.SaveInspectionNote -> journalModel.saveNote(operation.id) { saved, previous ->
                     fieldModel.savedNoteChanged(saved.reportName, previous, saved.note)
                     closeNote()
-                    speak("Заметка сохранена в выбранном осмотре.")
                 }
                 Operation.OpenPlots -> navigation?.navigate("plots") { launchSingleTop = true }
                 is Operation.CreatePlot -> plotsModel.createPlot(operation.name)
@@ -594,6 +593,7 @@ class FieldDemoActivity : ComponentActivity() {
                 val galleryState by photoFlow.state.collectAsState()
                 val currentSettings by settingsModel.state.collectAsState()
                 SideEffect { navigation = navController }
+                SideEffect { voice.plotNames = plotsState.plots.map { it.plot.name } }
                 LaunchedEffect(model.busy, model.reportName, route) {
                     if (!model.busy && model.result != null && route == "main" && shownReport != model.reportName) {
                         shownReport = model.reportName
@@ -649,12 +649,17 @@ class FieldDemoActivity : ComponentActivity() {
                 LaunchedEffect(model.busy, journalState.busy, journalState.openingId, plotsState.busy) {
                     if (!currentState().busy) {
                         actions.settled(failed = (model.message != null && model.messageIsError) ||
-                            (currentScreen() == Screen.JOURNAL && journalState.message != null && journalState.opened == null) ||
+                            (currentScreen() == Screen.JOURNAL && journalState.messageIsError) ||
                             (currentScreen() == Screen.PLOTS && plotsState.messageIsError))
                     }
                 }
                 LaunchedEffect(plotsState.message) {
                     if (foreground && currentScreen() == Screen.PLOTS) plotsState.message?.let(::speak)
+                }
+                LaunchedEffect(journalState.message) {
+                    if (foreground && (currentScreen() == Screen.JOURNAL || journalState.noteDraft != null)) {
+                        journalState.message?.let(::speak)
+                    }
                 }
                 LaunchedEffect(model.busy) {
                     if(!model.busy){
