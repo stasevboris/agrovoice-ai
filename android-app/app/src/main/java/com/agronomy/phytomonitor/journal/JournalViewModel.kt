@@ -37,7 +37,8 @@ data class JournalState(
     val openingId: String? = null,
     val noteDraft: SavedNoteDraft? = null,
     val scrollDirection: String = "",
-    val scrollSequence: Long = 0
+    val scrollSequence: Long = 0,
+    val earned: List<AchievementEntity> = emptyList()
 ) {
     val visible: List<InspectionEntry>
         get() = entries.filter { entry ->
@@ -60,6 +61,9 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     /** The user's settings switch; writing badge rows stops, earned rows stay for a later re-enable. */
     fun setAchievementsEnabled(enabled: Boolean) {
         journal.achievementsEnabled = enabled
+        viewModelScope.launch(Dispatchers.IO) {
+            mutableState.update { it.copy(earned = journal.achievements()) }
+        }
     }
 
     fun connect(migration: Deferred<JournalReport?>) {
@@ -83,7 +87,8 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
 
     fun refresh() = transact {
         val entries = withContext(Dispatchers.IO) { journal.list() }
-        mutableState.update { it.copy(entries = entries) }
+        val earned = withContext(Dispatchers.IO) { journal.achievements() }
+        mutableState.update { it.copy(entries = entries, earned = earned) }
     }
 
     fun openInspection(id: String) {

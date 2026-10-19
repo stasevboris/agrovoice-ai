@@ -127,6 +127,33 @@ class AchievementsTest {
     }
 
     @Test
+    fun geoMarkedShotNeedsPhotoAndCoordinates() {
+        val db = database()
+        File(files, "inspections").mkdirs()
+        val picture = photo("geo.jpg")
+        val plain = JournalFixtures.legacyRecord("geo", picture.path, InspectionJournal.sha256(picture),
+            note = "", plot = "")
+        plain.put("location", org.json.JSONObject().put("lat", 52.1).put("lon", 23.7).put("accuracy_m", 12.0))
+        File(files, "inspections/geo.json").writeText(plain.toString())
+        journal(db).migrateLegacy()
+        val earned = journal(db).achievements().map { it.id }
+        // Photo and coordinates earn the badge; the empty note and plot keep complete_record locked.
+        assertTrue(AchievementCatalog.GEO_MARKED_SHOT in earned)
+        assertTrue(AchievementCatalog.COMPLETE_RECORD !in earned)
+    }
+
+    @Test
+    fun coordinatesWithoutPhotoDoNotEarnTheGeoBadge() {
+        val db = database()
+        File(files, "inspections").mkdirs()
+        val record = JournalFixtures.legacyRecord("nogps", "/missing.jpg")
+        record.put("location", org.json.JSONObject().put("lat", 52.1).put("lon", 23.7).put("accuracy_m", 12.0))
+        File(files, "inspections/nogps.json").writeText(record.toString())
+        journal(db).migrateLegacy()
+        assertTrue(journal(db).achievements().isEmpty())
+    }
+
+    @Test
     fun inspectionWithoutPhotoDoesNotEarnRecordBadges() {
         val db = database()
         File(files, "inspections").mkdirs()

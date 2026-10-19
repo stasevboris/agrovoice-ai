@@ -740,7 +740,8 @@ class FieldDemoActivity : ComponentActivity() {
                                 }
                                 composable("settings") {
                                     SettingsScreen(settingsModel, onBack = { press(VoiceAction.BACK) },
-                                        onSetting = { key, enabled -> press(VoiceAction.SET_SETTING, "$key:$enabled") })
+                                        onSetting = { key, enabled -> press(VoiceAction.SET_SETTING, "$key:$enabled") },
+                                        earned = journalState.earned)
                                 }
                                 composable("plots") {
                                     PlotsScreen(plotsModel, model.plotName, model.rowName,

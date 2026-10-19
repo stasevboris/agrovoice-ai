@@ -168,6 +168,10 @@ interface JournalDao {
                 details.inspection.plotId != null && details.inspection.note.isNotBlank() &&
                     details.photos.firstOrNull()?.photo?.localPath?.let(photoAvailable) == true
             },
+            withLocation = inspections().count { details ->
+                details.inspection.lat != null && details.inspection.lon != null &&
+                    details.photos.firstOrNull()?.photo?.localPath?.let(photoAvailable) == true
+            },
             backups = eventCount(JournalEventEntity.FULL_BACKUP)
         )
         val earned = achievements().map { it.id }.toSet()

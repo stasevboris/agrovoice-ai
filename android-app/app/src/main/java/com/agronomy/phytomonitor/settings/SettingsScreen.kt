@@ -1,5 +1,6 @@
 package com.agronomy.phytomonitor.settings
 
+import com.agronomy.phytomonitor.journal.AchievementCatalog
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +28,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (String, Boolean) -> Unit) {
+fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (String, Boolean) -> Unit,
+                   earned: List<com.agronomy.phytomonitor.journal.AchievementEntity> = emptyList()) {
     val settings by model.state.collectAsState()
     val error by model.error.collectAsState()
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -42,6 +44,24 @@ fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (Str
             SettingToggle("Озвучка после фото", "Прочитать результат и спросить о сохранении после голосового снимка", current.spokenFollowUp) { onSetting("spoken_follow_up", it) }
             SettingToggle("Свободная речь (эксперимент)", "Обычные формулировки команд; на речи людей пока не проверено", current.freeSpeech) { onSetting("free_speech", it) }
             SettingToggle("Достижения", "Локальные значки за законченные действия; основная работа от них не зависит", current.achievements) { onSetting("achievements", it) }
+            if (current.achievements) {
+                if (earned.isEmpty()) {
+                    Text("Пока нет заработанных значков: первый появится после сохранённого осмотра.",
+                        style = MaterialTheme.typography.bodySmall)
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        earned.sortedBy { it.unlockedAt }.forEach { award ->
+                            val definition = AchievementCatalog.definition(award.id)
+                            if (definition != null) {
+                                Text("• ${definition.title} — ${definition.condition.lowercase()}",
+                                    style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        Text("Значки не подтверждают квалификацию и не открывают лечение.",
+                            style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+            }
             Text("Выбор модели, культуры и порога — в настройках анализа на экране осмотра.")
             Text("Синхронизация", style = MaterialTheme.typography.titleMedium)
             var server by rememberSaveable(current.server) { mutableStateOf(current.server) }

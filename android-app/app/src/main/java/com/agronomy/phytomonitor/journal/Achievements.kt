@@ -20,11 +20,13 @@ data class AchievementDefinition(
 object AchievementCatalog {
     const val FIRST_INSPECTION = "first_inspection"
     const val COMPLETE_RECORD = "complete_record"
+    const val GEO_MARKED_SHOT = "geo_marked_shot"
     const val BACKUP_CREATED = "backup_created"
 
     val all = listOf(
         AchievementDefinition(FIRST_INSPECTION, "Первый осмотр", "Один сохранённый осмотр с существующим фото"),
         AchievementDefinition(COMPLETE_RECORD, "Полевая запись", "Осмотр с участком, фото и заметкой"),
+        AchievementDefinition(GEO_MARKED_SHOT, "Кадр с координатами", "Осмотр, сохранённый с фото и точкой GPS"),
         AchievementDefinition(BACKUP_CREATED, "Данные сохранены", "Успешный полный архив журнала с фото")
     )
 
@@ -58,6 +60,7 @@ data class JournalEventEntity(
 data class JournalFacts(
     val withPhoto: Int,
     val complete: Int,
+    val withLocation: Int,
     val backups: Int
 )
 
@@ -66,6 +69,7 @@ object AchievementRules {
     fun unlocked(facts: JournalFacts): Set<String> = buildSet {
         if (facts.withPhoto >= 1) add(AchievementCatalog.FIRST_INSPECTION)
         if (facts.complete >= 1) add(AchievementCatalog.COMPLETE_RECORD)
+        if (facts.withLocation >= 1) add(AchievementCatalog.GEO_MARKED_SHOT)
         if (facts.backups >= 1) add(AchievementCatalog.BACKUP_CREATED)
     }
 }
