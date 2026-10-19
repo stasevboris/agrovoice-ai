@@ -79,6 +79,19 @@ class FieldPlotsTest {
     }
 
     @Test
+    fun testCleanupRemovesOnlyItsOwnUnusedPlotsAndSyncRows() {
+        val journal = InspectionJournal(context, database) { now }
+        val plots = FieldPlots(database) { now }
+        val test = journal.save(report("t.json"), "TEST: x", "unrated", "TEST: грядка 7")
+        val real = journal.save(report("r.json"), "настоящая", "unrated", "Теплица")
+        plots.create("TEST: пустой с другим осмотром")
+        journal.deleteForTest(test.id)
+        assertEquals(listOf("Теплица"), plots.list().map { it.plot.name })
+        assertTrue(database.journal().pendingSync().all { it.entityId == real.id })
+        assertEquals(listOf(real.id), journal.list().map { it.id })
+    }
+
+    @Test
     fun coordinatesOfTheFirstSaveStayWithThePhoto() {
         val journal = InspectionJournal(context, database) { now }
         val report = report("c.json")

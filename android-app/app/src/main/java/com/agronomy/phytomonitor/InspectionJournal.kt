@@ -223,9 +223,14 @@ class InspectionJournal(
         JournalReport.fromJson(JSONObject(migrationMarker.readText()))
     }.getOrNull()
 
-    /** Used by tests to remove their own entries; the app has no delete action. */
+    /**
+     * Used by tests to remove their own entries; the app has no delete action. The test inspection, its
+     * pending sync rows and now-unused «TEST:» plots go, so a phone run leaves the journal as it was.
+     */
     internal fun deleteForTest(id: String) {
         dao.deleteInspection(id)
+        dao.deleteSync(id)
+        dao.deleteUnusedPlots(TEST_PREFIX)
     }
 
     private fun importDocument(text: String, photos: Map<String, File>, issues: List<JournalIssue>, source: String): JournalReport {
@@ -372,6 +377,7 @@ class InspectionJournal(
 
     companion object {
         const val MIGRATION_REPORT = "journal_migration_v1.json"
+        const val TEST_PREFIX = "TEST:"
         const val SOURCE_LEGACY = "Перенос старого журнала"
         const val SOURCE_JSON = "Импорт JSON"
         const val SOURCE_ARCHIVE = "Восстановление из архива"

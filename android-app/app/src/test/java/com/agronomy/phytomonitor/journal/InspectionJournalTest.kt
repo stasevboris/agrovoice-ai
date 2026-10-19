@@ -196,6 +196,7 @@ class InspectionJournalTest {
         journal.migrateLegacy()
         journal.deleteForTest("z")
         assertEquals(0, database.journal().inspectionCount())
+        assertTrue(database.journal().pendingSync().none { it.entityId == "z" })
         assertNull(database.journal().inspectionDetails("z"))
         val photos = database.query("SELECT COUNT(*) FROM photo", null).use { it.moveToFirst(); it.getInt(0) }
         val detections = database.query("SELECT COUNT(*) FROM detection", null).use { it.moveToFirst(); it.getInt(0) }

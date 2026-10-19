@@ -81,6 +81,13 @@ interface JournalDao {
     @Query("DELETE FROM inspection WHERE id = :id")
     fun deleteInspection(id: String)
 
+    @Query("DELETE FROM sync_queue WHERE entity_id = :entityId")
+    fun deleteSync(entityId: String)
+
+    /** Plots whose name starts with [prefix] and that no inspection refers to. */
+    @Query("DELETE FROM plot WHERE name LIKE :prefix || '%' AND id NOT IN (SELECT plot_id FROM inspection WHERE plot_id IS NOT NULL)")
+    fun deleteUnusedPlots(prefix: String)
+
     @Insert
     fun enqueueSync(change: SyncQueueEntity)
 
