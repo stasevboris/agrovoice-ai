@@ -15,6 +15,9 @@ const val MAX_PLOT = 120
 data class JournalIssue(val source: String, val reason: String)
 
 /** [source] names the file or record; the message is «source: reason» when the source is known. */
+/** Where the photo was taken: WGS84 degrees and the receiver's accuracy radius in metres. */
+data class GeoPoint(val lat: Double, val lon: Double, val accuracyM: Double)
+
 class JournalFormatException(val reason: String, val source: String = "") :
     Exception(if (source.isEmpty()) reason else "$source: $reason")
 
@@ -31,7 +34,8 @@ data class ParsedInspection(
     val plot: String,
     val row: String?,
     val expertStatus: String,
-    val archivePhoto: String?
+    val archivePhoto: String?,
+    val location: GeoPoint? = null
 ) {
     val photoPath: String get() = prediction.getString("photo")
     val photoSha256: String get() = prediction.optString("photo_sha256")
@@ -74,8 +78,21 @@ object JournalRecords {
             plot = plot,
             row = data.optString("row").ifBlank { null },
             expertStatus = data.optString("expert_status", "none"),
-            archivePhoto = data.optString("archive_photo").ifBlank { null }
+            archivePhoto = data.optString("archive_photo").ifBlank { null },
+            location = location(data.optJSONObject("location"))
         )
+    }
+
+    private fun location(data: JSONObject?): GeoPoint? {
+        if (data == null) {
+            return null
+        }
+        val point = GeoPoint(data.optDouble("lat"), data.optDouble("lon"), data.optDouble("accuracy_m"))
+        val valid = point.lat in -90.0..90.0 && point.lon in -180.0..180.0 && point.accuracyM >= 0.0
+        if (!valid) {
+            throw JournalFormatException("координаты вне допустимого диапазона")
+        }
+        return point
     }
 
     /** Reads one file of the old journal; a broken file becomes an issue, not an exception. */
@@ -102,6 +119,9 @@ object JournalRecords {
             plotId = plotId,
             row = parsed.row,
             createdAt = parsed.createdAt,
+            lat = parsed.location?.lat,
+            lon = parsed.location?.lon,
+            accuracyM = parsed.location?.accuracyM,
             note = parsed.note,
             userReview = parsed.review,
             expertStatus = parsed.expertStatus,
@@ -161,6 +181,11 @@ object JournalRecords {
             .put("review_scope", REVIEW_SCOPE)
             .put("photo_path", photo?.localPath ?: "")
             .put("photo_sha256", photo?.sha256 ?: "")
+        val lat = inspection.lat
+        val lon = inspection.lon
+        if (lat != null && lon != null) {
+            record.put("location", JSONObject().put("lat", lat).put("lon", lon).put("accuracy_m", inspection.accuracyM ?: 0.0))
+        }
         if (archivePhoto != null) {
             record.put("archive_photo", archivePhoto)
         }

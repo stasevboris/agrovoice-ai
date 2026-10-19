@@ -2,7 +2,7 @@ package com.agronomy.phytomonitor.voice
 
 import java.util.Locale
 
-enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES }
+enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, JOURNAL, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS }
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
 /** Exact fixed intents: no substring guessing and no action from partial speech. */
@@ -15,6 +15,7 @@ object VoiceCommands {
     init {
         add(VoiceCommand(VoiceAction.NOTE,"Заметка"),"добавь заметку","запиши заметку")
         add(VoiceCommand(VoiceAction.JOURNAL,"Журнал осмотров"),"открой журнал","покажи историю")
+        add(VoiceCommand(VoiceAction.PLOTS,"Участки"),"открой участки","покажи участки")
         add(VoiceCommand(VoiceAction.SAVE_INSPECTION,"Сохраняю осмотр"),"сохрани осмотр","сохранить осмотр")
         add(VoiceCommand(VoiceAction.ASSESS,"Оценка: верно","correct"),"результат верный","всё верно")
         add(VoiceCommand(VoiceAction.ASSESS,"Оценка: неверно","incorrect"),"результат неверный","ошибка модели")
@@ -66,7 +67,19 @@ object VoiceCommands {
     val phrases: List<String> get() = aliases.keys.toList()
     private val globalActions=setOf(VoiceAction.MODEL,VoiceAction.CROP,VoiceAction.HELP,VoiceAction.CLOSE_HELP,VoiceAction.LISTEN_ON,VoiceAction.LISTEN_OFF,VoiceAction.BACK,VoiceAction.EXIT,VoiceAction.CANCEL,VoiceAction.SCROLL,VoiceAction.THRESHOLD_UP,VoiceAction.THRESHOLD_DOWN)
     private fun phrasesFor(actions: Set<VoiceAction>)=aliases.filterValues {it.action in actions}.keys.toList()
-    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES)
+    private val labActions=setOf(VoiceAction.NOTE,VoiceAction.JOURNAL,VoiceAction.SAVE_INSPECTION,VoiceAction.ASSESS,VoiceAction.COMPARE,VoiceAction.SPEAK_RESULT,VoiceAction.SILENCE,VoiceAction.SHOW_BOXES,VoiceAction.HIDE_BOXES,VoiceAction.ROW,VoiceAction.PLOT,VoiceAction.PLOTS)
+    const val MAX_ROW=999
+    private const val SPOKEN_ROWS=200
+
+    /** «Теплица 2» is heard as «теплица два»: lower case, «ё» as «е», digits as Russian words. */
+    fun spokenPlot(name: String): String = name.lowercase(Locale.ROOT).replace('ё','е')
+        .replace(Regex("[^\\p{L}0-9]+")," ").trim().split(" ").filter {it.isNotEmpty()}
+        .joinToString(" ") {word -> word.toIntOrNull()?.takeIf {it in 1..999999}?.let(RussianPhotoNumber::words) ?: word}
+
+    /** Main-screen grammar with «ряд N» and «участок <name>» for the plots that exist now. */
+    fun mainGrammar(plots: Collection<String>): List<String> =
+        (grammar + listOf("ряд") + (1..SPOKEN_ROWS).map(RussianPhotoNumber::words) +
+            plots.map {"участок ${spokenPlot(it)}"}.filter {it.length>"участок ".length}).distinct()
     val noteReviewGrammar=listOf("подтвердить","отмена","добавь заметку","стоп","не подтверждать","[unk]")
     val grammar: List<String> get() = phrasesFor(globalActions + labActions + setOf(VoiceAction.CAMERA,VoiceAction.CAMERA_NOW,VoiceAction.OPEN_CAMERA,VoiceAction.GALLERY,VoiceAction.SYSTEM_GALLERY,VoiceAction.ANALYZE)) +
         listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не делай фото","не открывай галерею","не проверяй фото","не выключай голос","сегодня хорошая погода","[unk]")
@@ -80,10 +93,19 @@ object VoiceCommands {
             listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+
             listOf("не подтверждать","не выбирай фото","не делай фото","не выключай голос","сегодня хорошая погода","[unk]")).distinct()
     }
-    fun parse(text: String): VoiceCommand? {
+    fun parse(text: String, plots: Collection<String> = emptyList()): VoiceCommand? {
         val normalized = text.lowercase(Locale.ROOT).replace('ё','е')
             .replace(Regex("[.,!?;:]")," ").trim().replace(Regex("\\s+")," ")
         aliases.entries.firstOrNull { it.key.replace('ё','е') == normalized }?.value?.let {return it}
+        if(normalized.startsWith("ряд ")) {
+            val number=RussianPhotoNumber.parse(normalized.removePrefix("ряд ")) ?: return null
+            return number.takeIf {it in 1..MAX_ROW}?.let {VoiceCommand(VoiceAction.ROW,"Ряд $it",it.toString())}
+        }
+        if(normalized.startsWith("участок ")) {
+            val spoken=normalized.removePrefix("участок ")
+            val plot=plots.firstOrNull {spokenPlot(it)==spoken} ?: return null
+            return VoiceCommand(VoiceAction.PLOT,"Участок: $plot",plot)
+        }
         if(normalized.startsWith("порог ")) {
             val number=RussianPhotoNumber.parse(normalized.removePrefix("порог ").removeSuffix(" процентов")) ?: return null
             return number.takeIf {it in 10..80}?.let {VoiceCommand(VoiceAction.THRESHOLD,"Порог $it%",it.toString())}
@@ -91,10 +113,12 @@ object VoiceCommands {
         val number=RussianPhotoNumber.parse(normalized) ?: return null
         return VoiceCommand(VoiceAction.PHOTO_NUMBER,"Фото №$number",number.toString())
     }
-    fun parseForScreen(text: String, screen: String): VoiceCommand? {
+    fun parseForScreen(text: String, screen: String, plots: Collection<String> = emptyList()): VoiceCommand? {
         if(screen=="note")return null
-        val command=parse(text) ?: return null
+        val command=parse(text,plots) ?: return null
         if(screen=="note_review")return command.takeIf {it.action in setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.NOTE,VoiceAction.LISTEN_OFF)}
+        val plotActions=setOf(VoiceAction.ROW,VoiceAction.PLOT)
+        if(command.action in plotActions && screen=="plots")return command
         if(command.action in labActions && screen!="main")return null
         val photoActions=setOf(VoiceAction.PHOTO_NUMBER,VoiceAction.FIRST_PHOTO,VoiceAction.LAST_PHOTO,VoiceAction.NEXT_PHOTO,VoiceAction.PREVIOUS_PHOTO)
         if(command.action in photoActions && screen!="gallery")return null

@@ -2,6 +2,8 @@ package com.agronomy.phytomonitor
 
 import android.content.Context
 import com.agronomy.phytomonitor.journal.ArchiveContent
+import com.agronomy.phytomonitor.journal.GeoPoint
+import com.agronomy.phytomonitor.journal.InspectionEntity
 import com.agronomy.phytomonitor.journal.InspectionWithDetails
 import com.agronomy.phytomonitor.journal.JournalArchive
 import com.agronomy.phytomonitor.journal.JournalCsv
@@ -34,7 +36,9 @@ data class InspectionEntry(
     val review: String,
     val detections: Int,
     val plot: String = "",
-    val photoAvailable: Boolean = true
+    val photoAvailable: Boolean = true,
+    val row: String = "",
+    val location: GeoPoint? = null
 )
 
 /** The result of a migration or an import: counts and every record that was not taken. */
@@ -95,7 +99,18 @@ class InspectionJournal(
     private val photoFolder = File(files, "photos")
     private val staging = File(context.cacheDir, "journal-import")
 
-    fun save(report: File, note: String, review: String, plot: String = ""): InspectionEntry {
+    /**
+     * Saves the analysed result. A repeated save of the same report keeps the first coordinates:
+     * they describe where the photo was taken, not where the note was edited.
+     */
+    fun save(
+        report: File,
+        note: String,
+        review: String,
+        plot: String = "",
+        row: String? = null,
+        location: GeoPoint? = null
+    ): InspectionEntry {
         require(review in REVIEWS)
         require(note.length <= MAX_NOTE)
         require(plot.length <= MAX_PLOT)
@@ -112,9 +127,10 @@ class InspectionJournal(
             note = note,
             review = review,
             plot = plot,
-            row = previous?.row,
+            row = row?.trim()?.ifEmpty { null },
             expertStatus = previous?.expertStatus ?: "none",
-            archivePhoto = null
+            archivePhoto = null,
+            location = previous?.let(::storedLocation) ?: location
         )
         store(parsed, parsed.photoPath, operation = "upsert")
         return entry(requireNotNull(dao.inspectionDetails(parsed.id)))
@@ -321,9 +337,16 @@ class InspectionJournal(
         if (trimmed.isEmpty()) {
             return null
         }
-        dao.plotByName(trimmed)?.let { return it.id }
+        // Same plot whatever the letter case; SQLite NOCASE would fold only Latin letters.
+        dao.plotsWithCounts().firstOrNull { it.plot.name.equals(trimmed, ignoreCase = true) }?.let { return it.plot.id }
         dao.insertPlot(PlotEntity(UUID.randomUUID().toString(), trimmed, updatedAt = clock()))
         return requireNotNull(dao.plotByName(trimmed)).id
+    }
+
+    private fun storedLocation(inspection: InspectionEntity): GeoPoint? {
+        val lat = inspection.lat ?: return null
+        val lon = inspection.lon ?: return null
+        return GeoPoint(lat, lon, inspection.accuracyM ?: 0.0)
     }
 
     private fun entry(details: InspectionWithDetails): InspectionEntry {
@@ -339,7 +362,9 @@ class InspectionJournal(
             review = inspection.userReview,
             detections = photo?.detections?.size ?: 0,
             plot = details.plot?.name.orEmpty(),
-            photoAvailable = path.isNotEmpty() && File(path).isFile
+            photoAvailable = path.isNotEmpty() && File(path).isFile,
+            row = inspection.row.orEmpty(),
+            location = storedLocation(inspection)
         )
     }
 

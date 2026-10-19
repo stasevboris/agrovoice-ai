@@ -37,7 +37,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.Switch
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.KeyboardType
+import com.agronomy.phytomonitor.location.LocationFixes
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -100,7 +106,14 @@ private fun reviewLabel(review: String) = when (review) {
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-internal fun InspectionTools(model: FieldDemoViewModel, onAction: ActionButtons, onSpeak: () -> Unit, speaking: Boolean, speakerStatus: String) {
+internal fun InspectionTools(
+    model: FieldDemoViewModel,
+    onAction: ActionButtons,
+    onSpeak: () -> Unit,
+    speaking: Boolean,
+    speakerStatus: String,
+    onLocation: (Boolean) -> Unit
+) {
     val hasResult = !model.busy && model.reportName != null
     val onNote = { onAction(VoiceAction.NOTE, "") }
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -125,14 +138,30 @@ internal fun InspectionTools(model: FieldDemoViewModel, onAction: ActionButtons,
                 )
             }
         }
-        OutlinedTextField(
-            value = model.plotName,
-            onValueChange = model::editPlot,
-            label = { Text("Участок / место (вручную)") },
-            leadingIcon = { Icon(AgroIcons.Place, contentDescription = null) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            OutlinedTextField(
+                value = model.plotName,
+                onValueChange = model::editPlot,
+                label = { Text("Участок") },
+                leadingIcon = { Icon(AgroIcons.Place, contentDescription = null) },
+                trailingIcon = {
+                    IconButton(onClick = { onAction(VoiceAction.PLOTS, "") }) {
+                        Icon(AgroIcons.ExpandMore, contentDescription = "Выбрать участок из списка")
+                    }
+                },
+                singleLine = true,
+                modifier = Modifier.weight(1f)
+            )
+            OutlinedTextField(
+                value = model.rowName,
+                onValueChange = model::editRow,
+                label = { Text("Ряд") },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.width(88.dp)
+            )
+        }
+        LocationLine(model, onLocation)
         Surface(
             color = MaterialTheme.colorScheme.surfaceContainerLow,
             shape = MaterialTheme.shapes.small,
@@ -163,6 +192,36 @@ internal fun InspectionTools(model: FieldDemoViewModel, onAction: ActionButtons,
             ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { onAction(VoiceAction.JOURNAL, "") }, modifier = Modifier.width(104.dp))
         }
         Text(speakerStatus, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    }
+}
+
+/** Coordinates are optional: the switch asks for permission, the line shows the fix that will be saved. */
+@Composable
+private fun LocationLine(model: FieldDemoViewModel, onLocation: (Boolean) -> Unit) {
+    val now by produceState(System.currentTimeMillis(), model.location.latest) {
+        while (true) {
+            value = System.currentTimeMillis()
+            kotlinx.coroutines.delay(1000)
+        }
+    }
+    val status = when {
+        !model.locationEnabled -> "Координаты не записываются"
+        !model.location.active -> "Геолокация недоступна"
+        else -> LocationFixes.describe(model.location.latest, now)
+    }
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.small)
+            .toggleable(value = model.locationEnabled, role = Role.Switch, onValueChange = onLocation)
+            .padding(vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text("Координаты (GPS, без интернета)", style = MaterialTheme.typography.bodyMedium)
+            Text(status, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Switch(checked = model.locationEnabled, onCheckedChange = null)
     }
 }
 
@@ -317,8 +376,13 @@ private fun JournalEntryCard(model: FieldDemoViewModel, entry: InspectionEntry, 
                 Text(date, style = MaterialTheme.typography.titleSmall)
                 Text("$modelName · ${boxesLabel(entry.detections)}", style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant)
                 Pill(reviewLabel(entry.review), reviewContainer, reviewContent)
-                if (entry.plot.isNotBlank()) {
-                    Text("Участок: ${entry.plot}", style = MaterialTheme.typography.bodyMedium)
+                val place = listOfNotNull(
+                    entry.plot.takeIf { it.isNotBlank() }?.let { "Участок: $it" },
+                    entry.row.takeIf { it.isNotBlank() }?.let { "ряд $it" },
+                    entry.location?.let { "GPS ±${it.accuracyM.toInt()} м" }
+                ).joinToString(" · ")
+                if (place.isNotEmpty()) {
+                    Text(place, style = MaterialTheme.typography.bodyMedium)
                 }
                 if (entry.note.isNotBlank()) {
                     Text(entry.note, style = MaterialTheme.typography.bodyMedium, maxLines = 3, overflow = TextOverflow.Ellipsis)

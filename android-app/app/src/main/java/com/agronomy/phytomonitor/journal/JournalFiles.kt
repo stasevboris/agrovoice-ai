@@ -18,7 +18,8 @@ import java.util.zip.ZipOutputStream
 object JournalCsv {
     val header = listOf(
         "id", "дата", "участок", "ряд", "оценка", "экспертиза", "модель", "рамок",
-        "первая метка", "уверенность первой", "все метки", "заметка", "фото", "фото есть"
+        "первая метка", "уверенность первой", "все метки", "заметка", "фото", "фото есть",
+        "широта", "долгота", "точность, м"
     )
 
     fun write(rows: List<InspectionWithDetails>, photoExists: (String) -> Boolean): String {
@@ -46,7 +47,10 @@ object JournalCsv {
             detections.joinToString(", ") { it.labelRu },
             inspection.note,
             photo?.photo?.localPath.orEmpty(),
-            if (photo != null && photoExists(photo.photo.localPath)) "да" else "нет"
+            if (photo != null && photoExists(photo.photo.localPath)) "да" else "нет",
+            inspection.lat?.let { String.format(Locale.ROOT, "%.6f", it) }.orEmpty(),
+            inspection.lon?.let { String.format(Locale.ROOT, "%.6f", it) }.orEmpty(),
+            inspection.accuracyM?.let { String.format(Locale.ROOT, "%.0f", it) }.orEmpty()
         )
     }
 

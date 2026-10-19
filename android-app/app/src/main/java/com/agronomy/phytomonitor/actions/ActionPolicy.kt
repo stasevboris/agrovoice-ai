@@ -14,6 +14,7 @@ object ActionPolicy {
     const val MIN_THRESHOLD = 10
     const val MAX_THRESHOLD = 80
     const val THRESHOLD_STEP = 5
+    const val MAX_ROW = 999
 
     const val WAIT = "Подожди: идёт обработка фото."
     const val NEED_PHOTO = "Сначала сделай фото или выбери снимок."
@@ -32,14 +33,19 @@ object ActionPolicy {
         VoiceAction.ANALYZE
     )
     /** Reading the journal and hiding boxes do not touch the photo, so they work during analysis too. */
-    private val availableWhileBusy = setOf(VoiceAction.JOURNAL, VoiceAction.SHOW_BOXES, VoiceAction.HIDE_BOXES)
+    private val availableWhileBusy = setOf(
+        VoiceAction.JOURNAL, VoiceAction.SHOW_BOXES, VoiceAction.HIDE_BOXES,
+        VoiceAction.PLOTS, VoiceAction.PLOT, VoiceAction.ROW
+    )
+    /** The plot and the row describe the next inspection; they can be set next to the photo or in the plot list. */
+    private val placeActions = setOf(VoiceAction.ROW, VoiceAction.PLOT)
     private val galleryActions = setOf(
         VoiceAction.PHOTO_NUMBER, VoiceAction.FIRST_PHOTO, VoiceAction.LAST_PHOTO,
         VoiceAction.NEXT_PHOTO, VoiceAction.PREVIOUS_PHOTO
     )
     private val actionsWithValue = setOf(
         VoiceAction.MODEL, VoiceAction.CROP, VoiceAction.THRESHOLD, VoiceAction.SCROLL,
-        VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS
+        VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -57,6 +63,8 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            in placeActions -> place(request, state)
+            VoiceAction.PLOTS -> openPlots(state)
             in inspectionActions -> inspection(request, state)
             in galleryActions -> gallery(request, state)
             else -> capture(request, state)
@@ -74,8 +82,34 @@ object ActionPolicy {
             VoiceAction.SCROLL -> if (value in scrollDirections) null else Verdict.Reject("Неизвестное направление прокрутки.")
             VoiceAction.ASSESS -> if (value in reviews) null else Verdict.Reject("Неизвестная оценка результата.")
             VoiceAction.THRESHOLD -> thresholdProblem(value)
+            VoiceAction.ROW -> if ((value.toIntOrNull() ?: 0) in 1..MAX_ROW) null else Verdict.Clarify("Номер ряда — от 1 до $MAX_ROW.")
+            VoiceAction.PLOT -> plotProblem(value, state)
             else -> if ((value.toIntOrNull() ?: 0) >= 1) null else Verdict.Clarify("Такого номера нет в галерее.")
         }
+    }
+
+    private fun plotProblem(name: String, state: AppState): Verdict? {
+        if (state.plots.any { it.equals(name, ignoreCase = true) }) {
+            return null
+        }
+        return Verdict.Clarify("Нет участка «$name». Создай его на экране «Участки».")
+    }
+
+    private fun place(request: ActionRequest, state: AppState): Verdict {
+        if (state.screen != Screen.MAIN && state.screen != Screen.PLOTS) {
+            return Verdict.Clarify(wrongScreenText(state.screen))
+        }
+        if (request.action == VoiceAction.ROW) {
+            return if (request.value == state.row) Verdict.Skip("Ряд ${request.value} уже указан.") else run(Operation.SetRow(request.value))
+        }
+        val name = state.plots.first { it.equals(request.value, ignoreCase = true) }
+        return if (name == state.plot) Verdict.Skip("Участок «$name» уже выбран.") else run(Operation.SelectPlot(name))
+    }
+
+    private fun openPlots(state: AppState): Verdict = when (state.screen) {
+        Screen.MAIN -> run(Operation.OpenPlots)
+        Screen.PLOTS -> Verdict.Skip("Список участков уже открыт.")
+        else -> Verdict.Clarify(wrongScreenText(state.screen))
     }
 
     private fun thresholdProblem(value: String): Verdict? {
@@ -135,6 +169,7 @@ object ActionPolicy {
     /** «Назад» and «отмена» close the topmost layer only, one step per phrase. */
     private fun closeTopLayer(state: AppState): Verdict = when {
         state.screen == Screen.JOURNAL -> run(Operation.CloseJournal)
+        state.screen == Screen.PLOTS -> run(Operation.ClosePlots)
         state.helpOpen -> run(Operation.ShowHelp(false))
         state.screen == Screen.CAMERA || state.screen == Screen.GALLERY -> run(Operation.ClosePhotoFlow)
         else -> Verdict.Skip("Нечего отменять.")
@@ -250,6 +285,7 @@ object ActionPolicy {
         Screen.CAMERA -> "Наведи камеру и скажи «подтвердить» или «отмена»."
         Screen.GALLERY -> "Назови номер фото или скажи «подтвердить» / «отмена»."
         Screen.JOURNAL -> "Сначала закрой журнал: скажи «назад»."
+        Screen.PLOTS -> "Сначала закрой список участков: скажи «назад»."
         else -> "Сначала открой галерею, чтобы выбрать фото по номеру."
     }
 

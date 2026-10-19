@@ -11,7 +11,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import com.agronomy.phytomonitor.ml.DetectionResult
 import com.agronomy.phytomonitor.ml.FieldDetector
+import com.agronomy.phytomonitor.journal.FieldPlots
+import com.agronomy.phytomonitor.journal.JournalDatabase
 import com.agronomy.phytomonitor.journal.JournalIssue
+import com.agronomy.phytomonitor.journal.PlotChange
+import com.agronomy.phytomonitor.journal.PlotSummary
+import com.agronomy.phytomonitor.location.FieldLocation
+import com.agronomy.phytomonitor.location.LocationFixes
 import com.agronomy.phytomonitor.ml.PhotoFiles
 import java.io.File
 import java.util.concurrent.Executors
@@ -24,6 +30,13 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     private var cleared=false
     private var unsavedReport: File?=null // touched only on the worker thread
     private val journal=InspectionJournal(application)
+    private val fieldPlots=FieldPlots(JournalDatabase.get(application))
+    /** Receiver readings while the screen is open; a fresh fix is attached to the next saved inspection. */
+    val location=FieldLocation(application)
+    var locationEnabled by mutableStateOf(preferences.getBoolean("location",false)); private set
+    var plotsOpen by mutableStateOf(false)
+    var plots by mutableStateOf<List<PlotSummary>>(emptyList()); private set
+    var rowName by mutableStateOf(preferences.getString("row","") ?: ""); private set
     var noteDraft by mutableStateOf(""); private set
     var review by mutableStateOf("unrated"); private set
     var journalOpen by mutableStateOf(false)
@@ -56,7 +69,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     /** What the journal holds for the current result; a repeated «сохрани осмотр» compares against it. */
     private var savedInspection by mutableStateOf<SavedInspection?>(null)
     val inspectionSaved: Boolean
-        get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName)
+        get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName, rowName)
 
     /** The last migration or import with its problems; shown in the journal until dismissed. */
     var journalReport by mutableStateOf<JournalReport?>(null); private set
@@ -64,6 +77,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     init {
         if(detector.models.none {it.id==selectedModel})selectedModel=detector.models.first().id
         worker.execute {migrateJournal()}
+        refreshPlots()
         val last=preferences.getString("last_photo",null)?.let(::File)
         if(last?.isFile==true) openFile(last)
     }
@@ -162,17 +176,45 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun editNote(text: String){noteDraft=text.take(4000)}
     fun editPlot(text: String){plotName=text.take(120);preferences.edit().putString("plot",plotName).apply()}
+    /** The row of the next inspection: digits only, as in «ряд четырнадцать». */
+    fun editRow(text: String){rowName=text.filter {it.isDigit()}.take(3);preferences.edit().putString("row",rowName).apply()}
+    fun switchLocation(enabled: Boolean){locationEnabled=enabled;preferences.edit().putBoolean("location",enabled).apply();if(!enabled)location.stop()}
+    fun openPlots(){plotsOpen=true;refreshPlots()}
+    fun refreshPlots(){worker.execute {val rows=fieldPlots.list();main.post {if(!cleared)plots=rows}}}
+    fun createPlot(name: String){changePlots {fieldPlots.create(name)}}
+    fun renamePlot(id: String, name: String){
+        val renamingCurrent=plots.firstOrNull {it.plot.id==id}?.plot?.name==plotName
+        changePlots {fieldPlots.rename(id,name).also {if(renamingCurrent && it is PlotChange.Done)main.post {editPlot(it.plot.name)}}}
+    }
+    fun deletePlot(id: String){
+        val removed=plots.firstOrNull {it.plot.id==id}?.plot?.name
+        worker.execute {
+            fieldPlots.delete(id)
+            val rows=fieldPlots.list()
+            main.post {if(!cleared){plots=rows;if(removed==plotName)editPlot("");notify("Участок удалён. Его осмотры остались в журнале без участка.")}}
+        }
+    }
+    private fun changePlots(change: ()->PlotChange){
+        worker.execute {
+            val outcome=change()
+            val rows=fieldPlots.list()
+            main.post {if(!cleared){plots=rows;if(outcome is PlotChange.Rejected)showError(outcome.reason) else clearMessage()}}
+        }
+    }
     fun assess(value: String){if(value in setOf("unrated","correct","incorrect","uncertain")){review=value;saveInspection()}}
     fun saveInspection(){
         val name=reportName ?: run {showError("Сначала дождись результата анализа");return}
         if(busy)return
         val report=File(getApplication<Application>().getExternalFilesDir(null) ?: getApplication<Application>().filesDir,"results/$name")
-        val note=noteDraft;val rating=review;val plot=plotName
-        val saved=SavedInspection(name,note,rating,plot)
+        val note=noteDraft;val rating=review;val plot=plotName;val row=rowName
+        val place=if(locationEnabled)LocationFixes.forInspection(location.latest,System.currentTimeMillis()) else null
+        val saved=SavedInspection(name,note,rating,plot,row)
         busy=true
         message=null
         worker.execute {try {
-            journal.save(report,note,rating,plot)
+            journal.save(report,note,rating,plot,row,place)
+            val rows=fieldPlots.list()
+            main.post {if(!cleared)plots=rows}
             if(unsavedReport?.name==report.name)unsavedReport=null
             val entries=journal.list()
             main.post {if(!cleared){journalEntries=entries;savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
@@ -247,13 +289,14 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     private fun postFailure(error:Exception){main.post {if(!cleared){busy=false;showError(error.message ?: "Не удалось обработать фото")}}}
     override fun onCleared(){
         cleared=true
+        location.stop()
         worker.execute {replaceUnsavedReport(null);detector.close()}
         worker.shutdown()
         super.onCleared()
     }
 }
 
-private data class SavedInspection(val reportName: String?, val note: String, val review: String, val plot: String)
+private data class SavedInspection(val reportName: String?, val note: String, val review: String, val plot: String, val row: String)
 
 enum class JournalExport(val mimeType: String, val extension: String) {
     JSON("application/json", "json"),

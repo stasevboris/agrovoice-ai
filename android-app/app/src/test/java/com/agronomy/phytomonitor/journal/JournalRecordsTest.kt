@@ -109,7 +109,7 @@ class JournalRecordsTest {
         assertTrue(lines[1], lines[1].startsWith("d4;"))
         assertTrue(lines[1].contains(";Теплица 2;"))
         assertTrue(lines[1].contains("\"Пятна; жёлтые\""))
-        assertTrue(lines[1].endsWith(";нет"))
+        assertTrue(lines[1], lines[1].endsWith(";нет;;;"))
     }
 
     @Test

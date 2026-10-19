@@ -8,6 +8,7 @@ enum class Screen(val protocolName: String) {
     CAMERA("camera"),
     GALLERY("gallery"),
     JOURNAL("journal"),
+    PLOTS("plots"),
     NOTE("note"),
     NOTE_REVIEW("note_review");
 
@@ -43,7 +44,10 @@ data class AppState(
     val selectedModel: String = "",
     val crop: String = "all",
     val availableModels: List<String> = emptyList(),
-    val verifiedKnowledge: Boolean = false
+    val verifiedKnowledge: Boolean = false,
+    val plots: List<String> = emptyList(),
+    val plot: String = "",
+    val row: String = ""
 ) {
     /** The object «да / подтвердить» would refer to, as `pending` in the corpus. */
     val pending: String?
@@ -66,6 +70,10 @@ sealed interface Operation {
     data class Scroll(val direction: String) : Operation
     data class OpenNote(val dictate: Boolean) : Operation
     data object OpenJournal : Operation
+    data object OpenPlots : Operation
+    data object ClosePlots : Operation
+    data class SelectPlot(val name: String) : Operation
+    data class SetRow(val row: String) : Operation
     data object SaveInspection : Operation
     data class Assess(val review: String) : Operation
     data object CompareModels : Operation

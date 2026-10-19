@@ -128,7 +128,10 @@ class FieldDemoActivity : ComponentActivity() {
         threshold = fieldModel.threshold,
         selectedModel = fieldModel.selectedModel,
         crop = fieldModel.crop,
-        availableModels = fieldModel.detector.models.map { it.id }
+        availableModels = fieldModel.detector.models.map { it.id },
+        plots = fieldModel.plots.map { it.plot.name },
+        plot = fieldModel.plotName,
+        row = fieldModel.rowName
     )
 
     private val actionPort = object : ActionPort {
@@ -151,6 +154,10 @@ class FieldDemoActivity : ComponentActivity() {
                 is Operation.Scroll -> photoFlow.scroll(operation.direction)
                 is Operation.OpenNote -> openNote(operation.dictate)
                 Operation.OpenJournal -> fieldModel.openJournal()
+                Operation.OpenPlots -> fieldModel.openPlots()
+                Operation.ClosePlots -> fieldModel.plotsOpen = false
+                is Operation.SelectPlot -> fieldModel.editPlot(operation.name)
+                is Operation.SetRow -> fieldModel.editRow(operation.row)
                 Operation.SaveInspection -> fieldModel.saveInspection()
                 is Operation.Assess -> fieldModel.assess(operation.review)
                 Operation.CompareModels -> fieldModel.compareModels()
@@ -202,13 +209,14 @@ class FieldDemoActivity : ComponentActivity() {
         fieldModel.noteOpen->if(fieldModel.dictating)null else VoiceCommands.noteReviewGrammar
         photoFlow.cameraOpen->VoiceCommands.cameraGrammar
         photoFlow.galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
-        else->VoiceCommands.grammar
+        else->VoiceCommands.mainGrammar(fieldModel.plots.map {it.plot.name})
     }
     private fun currentScreen(): Screen = when {
         fieldModel.noteOpen -> if (fieldModel.dictating) Screen.NOTE else Screen.NOTE_REVIEW
         photoFlow.cameraOpen -> Screen.CAMERA
         photoFlow.galleryOpen -> Screen.GALLERY
         fieldModel.journalOpen -> Screen.JOURNAL
+        fieldModel.plotsOpen -> Screen.PLOTS
         else -> Screen.MAIN
     }
     private fun openNote(dictate: Boolean=false){voice.stop();speaker.stop();fieldModel.noteOpen=true;fieldModel.noteReviewVoice=false;fieldModel.dictating=dictate && hasMicrophone();if(dictate && !hasMicrophone()){requestDictation=true;microphone.launch(Manifest.permission.RECORD_AUDIO)}}
@@ -226,7 +234,25 @@ class FieldDemoActivity : ComponentActivity() {
         voice.stop()
         if(!speaker.speak(text,volume))fieldModel.showError(speaker.status)
     }
-    private fun startOneShot(){if(photoFlow.galleryOpen)photoFlow.dialogVoice=true else voice.start(currentGrammar(),screen=currentScreen().protocolName)}
+    private fun startOneShot(){
+        if(photoFlow.galleryOpen){photoFlow.dialogVoice=true;return}
+        voice.plotNames=fieldModel.plots.map {it.plot.name}
+        voice.start(currentGrammar(),screen=currentScreen().protocolName)
+    }
+    private val locationPermission=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        if(fieldModel.location.hasPermission()){fieldModel.switchLocation(true);startLocation()}
+        else fieldModel.showError("Без разрешения на геолокацию координаты к осмотру не прикрепляются. Остальное работает.")
+    }
+    /** The switch next to the plot: asks for permission once, then follows the screen lifecycle. */
+    private fun toggleLocation(enabled: Boolean){
+        if(!enabled){fieldModel.switchLocation(false);return}
+        if(fieldModel.location.hasPermission()){fieldModel.switchLocation(true);startLocation()}
+        else locationPermission.launch(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION))
+    }
+    private fun startLocation(){
+        if(fieldModel.locationEnabled && !fieldModel.location.start())
+            fieldModel.showError("Геолокация выключена в настройках телефона: включите её, чтобы записывать координаты.")
+    }
     internal fun setContinuous(enabled: Boolean) {
         requestContinuous=enabled
         photoFlow.dialogVoice=false;voice.stop()
@@ -256,12 +282,13 @@ class FieldDemoActivity : ComponentActivity() {
                 val restore=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()){uri->if(uri!=null)model.importJournal(uri)}
                 val systemPicker: ()->Unit={closePhotoFlow();gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))}
                 SideEffect {systemGallery=systemPicker}
-                BackHandler(model.noteOpen || model.journalOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen){press(VoiceAction.BACK)}
+                BackHandler(model.noteOpen || model.journalOpen || model.plotsOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen){press(VoiceAction.BACK)}
                 val context=currentScreen().protocolName
                 val eligible=foreground && !speaker.active && !photoFlow.loading && !photoFlow.shotRequested && !photoFlow.cameraCapturing
                 LaunchedEffect(context,model.dictating,model.noteReviewVoice,photoFlow.continuousVoice,photoFlow.dialogVoice,eligible,voice.active) {
                     if(eligible && !voice.active && hasMicrophone() && (if(model.noteOpen)model.dictating || model.noteReviewVoice else photoFlow.continuousVoice || photoFlow.dialogVoice)) {
                         delay(400)
+                        voice.plotNames=model.plots.map {it.plot.name}
                         voice.start(currentGrammar(),continuous=model.dictating || photoFlow.continuousVoice,screen=context)
                     }
                 }
@@ -301,8 +328,9 @@ class FieldDemoActivity : ComponentActivity() {
                             photoFlow.galleryOpen->NumberedGallery(photoFlow,{press(VoiceAction.CONFIRM)},{press(VoiceAction.CANCEL)},systemPicker) {
                                 VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Номер → просмотр → «подтвердить».")
                             }
+                            model.plotsOpen->PlotsScreen(model,onBack={press(VoiceAction.BACK)},onSelect={name->press(VoiceAction.PLOT,name)})
                             model.journalOpen->JournalScreen(model,onBack={press(VoiceAction.BACK)},onExport=exportJournal,onImport=importJournal)
-                            else->FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status)
+                            else->FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation)
                         }
                         InspectionDialogs(model,::dictateNote,onConfirm={press(VoiceAction.CONFIRM)},onCloseNote={press(VoiceAction.CANCEL)})
                     }
@@ -310,8 +338,8 @@ class FieldDemoActivity : ComponentActivity() {
             }
         }
     }
-    override fun onResume(){super.onResume();foreground=true}
-    override fun onStop(){foreground=false;actions.cancelPlan();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
+    override fun onResume(){super.onResume();foreground=true;if(fieldModel.locationEnabled && fieldModel.location.hasPermission())startLocation()}
+    override fun onStop(){foreground=false;actions.cancelPlan();fieldModel.location.stop();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
     override fun onDestroy(){voice.close();speaker.close();super.onDestroy()}
 }
 

@@ -11,6 +11,11 @@ import androidx.room.RoomDatabase
 import androidx.room.Transaction
 import androidx.room.Upsert
 
+data class PlotSummary(
+    @androidx.room.Embedded val plot: PlotEntity,
+    val inspections: Int
+)
+
 /** One inspection with everything that belongs to it, written in one transaction. */
 data class InspectionRecord(
     val inspection: InspectionEntity,
@@ -25,6 +30,21 @@ interface JournalDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPlot(plot: PlotEntity): Long
+
+    @Query("SELECT * FROM plot WHERE id = :id")
+    fun plot(id: String): PlotEntity?
+
+    @Query(
+        "SELECT plot.*, (SELECT COUNT(*) FROM inspection WHERE inspection.plot_id = plot.id) AS inspections " +
+            "FROM plot"
+    )
+    fun plotsWithCounts(): List<PlotSummary>
+
+    @Query("UPDATE plot SET name = :name, updated_at = :updatedAt WHERE id = :id")
+    fun renamePlot(id: String, name: String, updatedAt: Long)
+
+    @Query("DELETE FROM plot WHERE id = :id")
+    fun deletePlot(id: String)
 
     @Query("SELECT * FROM inspection WHERE id = :id")
     fun inspection(id: String): InspectionEntity?

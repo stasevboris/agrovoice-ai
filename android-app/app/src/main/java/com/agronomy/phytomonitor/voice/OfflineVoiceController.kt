@@ -42,11 +42,11 @@ object VoiceModelFiles {
 
 data class RecognizedVoice(val text: String, val confidence: Double, val command: VoiceCommand?)
 object VoiceHypotheses {
-    fun decode(hypothesis: String, screen: String="main"): RecognizedVoice {
+    fun decode(hypothesis: String, screen: String="main", plots: Collection<String> = emptyList()): RecognizedVoice {
         val data=JSONObject(hypothesis);val text=data.optString("text").trim()
         val words=data.optJSONArray("result")
         val confidence=if(words!=null && words.length()>0)(0 until words.length()).map {words.getJSONObject(it).optDouble("conf",0.0)}.average() else 0.0
-        val command=VoiceCommands.parseForScreen(text,screen).takeIf {confidence.isFinite() && confidence>=0.65 && !text.contains("[unk]")}
+        val command=VoiceCommands.parseForScreen(text,screen,plots).takeIf {confidence.isFinite() && confidence>=0.65 && !text.contains("[unk]")}
         return RecognizedVoice(text,confidence,command)
     }
 }
@@ -67,6 +67,8 @@ class OfflineVoiceController(private val context: Context) {
     var onFailure: ()->Unit = {}
     var onDictation: (String)->Unit = {}
     var onDictationFinished: ()->Unit = {}
+    /** Names of the existing plots, so «участок теплица два» can be understood. */
+    var plotNames: List<String> = emptyList()
     private var continuous=false
     private var screen="main"
 
@@ -106,7 +108,7 @@ class OfflineVoiceController(private val context: Context) {
     private fun finishPhrase(session: Int, hypothesis: String) {
         if(Looper.myLooper()!=Looper.getMainLooper()){main.post {finishPhrase(session,hypothesis)};return}
         if(session!=token || closed)return
-        val recognized=VoiceHypotheses.decode(hypothesis,screen);val text=recognized.text
+        val recognized=VoiceHypotheses.decode(hypothesis,screen,plotNames);val text=recognized.text
         if(text.isEmpty())return
         if(screen=="note") {
             val normalized=text.lowercase().replace('ё','е').trim()
