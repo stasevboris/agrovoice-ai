@@ -1,0 +1,14 @@
+{
+  "jvm_queue_tests": {
+    "tests": 2,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "full_build_command": "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+  "full_build_status": "passed",
+  "phone_tests": 5,
+  "phone_tests_status": "passed",
+  "phone_command": "adb shell am instrument -w -e class com.agronomy.phytomonitor.InspectionToolsTest,com.agronomy.phytomonitor.NoteSpeechFlowTest,com.agronomy.phytomonitor.JournalNavigationTest -e voiceFolder voice_current_20261019 com.agronomy.phytomonitor.test/androidx.test.runner.AndroidJUnitRunner",
+  "semantics": "Serial coroutines own the detector. Closing accepts no new work, finishes already accepted operations including saves, then closes the native session. Closed ViewModel receives no UI updates."
+}

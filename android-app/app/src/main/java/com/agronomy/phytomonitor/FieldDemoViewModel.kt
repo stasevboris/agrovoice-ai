@@ -3,8 +3,6 @@ package com.agronomy.phytomonitor
 import android.app.Application
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -18,7 +16,10 @@ import com.agronomy.phytomonitor.location.FieldLocation
 import com.agronomy.phytomonitor.location.LocationFixes
 import com.agronomy.phytomonitor.ml.PhotoFiles
 import java.io.File
-import java.util.concurrent.Executors
+import com.agronomy.phytomonitor.ml.SerialModelWork
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.CompletableDeferred
 import androidx.lifecycle.viewModelScope
 import com.agronomy.phytomonitor.settings.Keys
@@ -33,8 +34,6 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     val detector=FieldDetector(application)
     private val settings = SettingsStore.get(application)
     private var pendingCapture: String? = null
-    private val worker=Executors.newSingleThreadExecutor()
-    private val main=Handler(Looper.getMainLooper())
     private var cleared=false
     private var unsavedReport: File?=null // touched only on the worker thread
     private val journal=InspectionJournal(application)
@@ -71,9 +70,13 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
 
     /** Journal screens await the one startup migration before reading or restoring records. */
     val journalReady = CompletableDeferred<JournalReport?>()
+    private val work = SerialModelWork(
+        onFailure = ::postFailure,
+        onClosed = { replaceUnsavedReport(null); detector.close() }
+    )
 
     init {
-        worker.execute {migrateJournal()}
+        work.submit {migrateJournal()}
         viewModelScope.launch {
             val saved = settings.state.filterNotNull().first()
             selectedModel = saved.model.takeIf { id -> detector.models.any { it.id == id } } ?: detector.models.first().id
@@ -143,11 +146,11 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(busy)return
         photoQuality = null
         busy=true;message=null;result=null;reportName=null
-        worker.execute {
+        work.submit {
             try {
                 val imported=PhotoFiles.import(getApplication(),uri)
                 val decoded=PhotoFiles.decode(imported)
-                main.post { if(!cleared){replacePhoto(imported,decoded);busy=false;analyze()} }
+                publish { if(!cleared){replacePhoto(imported,decoded);busy=false;analyze()} else decoded.recycle() }
             } catch(error:Exception){postFailure(error)}
         }
     }
@@ -155,10 +158,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(busy)return
         photoQuality = null
         busy=true;message=null;result=null;reportName=null
-        worker.execute {
+        work.submit {
             try {
                 val decoded=PhotoFiles.decode(file)
-                main.post {if(!cleared){replacePhoto(file,decoded);busy=false;if(analyzePhoto)analyze()}else decoded.recycle()}
+                publish {if(!cleared){replacePhoto(file,decoded);busy=false;if(analyzePhoto)analyze()}else decoded.recycle()}
             }catch(error:Exception){postFailure(error)}
         }
     }
@@ -175,15 +178,15 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         val model=detector.models.firstOrNull {it.id==selectedModel} ?: return
         val cropSnapshot=crop;val thresholdSnapshot=threshold
         busy=true;message=null;result=null;reportName=null
-        worker.execute {
+        work.submit {
             try {
                 val quality = PhotoFiles.measureQuality(source)
-                main.post { if (!cleared) photoQuality = quality }
+                publish { if (!cleared) photoQuality = quality }
                 val detection = detector.detect(source, model, cropSnapshot, thresholdSnapshot)
                     .copy(photoQuality = quality)
                 val report=PhotoFiles.saveResult(getApplication(),file,source,detection,detector,cropSnapshot,thresholdSnapshot)
                 replaceUnsavedReport(report)
-                main.post {if(!cleared){result=detection;reportName=report.name;busy=false}}
+                publish {if(!cleared){result=detection;reportName=report.name;busy=false}}
             }catch(error:Exception){postFailure(error)}
         }
     }
@@ -210,10 +213,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         val saved=SavedInspection(name,note,rating,plot,row)
         busy=true
         message=null
-        worker.execute {try {
+        work.submit {try {
             journal.save(report,note,rating,plot,row,place)
             if(unsavedReport?.name==report.name)unsavedReport=null
-            main.post {if(!cleared){savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
+            publish {if(!cleared){savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
         }catch(error: Exception){postFailure(error)}}
     }
     /** Runs on the worker before any journal read or write. Old JSON files are kept. */
@@ -230,22 +233,30 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(busy)return
         val filter=crop;val score=threshold
         busy=true;message=null;comparison=emptyList()
-        worker.execute {try {
+        work.submit {try {
             // Comparison results are shown on screen only; they are not journal records.
             val rows=detector.models.map {m -> m.name to detector.detect(source,m,filter,score)}
-            main.post {if(!cleared){comparison=rows;busy=false;notify("Модели проверены на одном фото при одинаковом пороге")}}
+            publish {if(!cleared){comparison=rows;busy=false;notify("Модели проверены на одном фото при одинаковом пороге")}}
         }catch(error: Exception){postFailure(error)}}
     }
     fun spokenResult(): String {
         val found=result ?: return "Сначала сделай фото и дождись анализа."
         return spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality)
     }
-    private fun postFailure(error:Exception){main.post {if(!cleared){busy=false;showError(error.message ?: "Не удалось обработать фото")}}}
+    private suspend fun publish(block: () -> Unit) = withContext(Dispatchers.Main.immediate) { block() }
+    private suspend fun postFailure(error: Exception) {
+        if (error is CancellationException) throw error
+        publish {
+            if (!cleared) {
+                busy = false
+                showError(error.message ?: "Не удалось обработать фото")
+            }
+        }
+    }
     override fun onCleared(){
         cleared=true
         location.stop()
-        worker.execute {replaceUnsavedReport(null);detector.close()}
-        worker.shutdown()
+        work.close()
         super.onCleared()
     }
 }

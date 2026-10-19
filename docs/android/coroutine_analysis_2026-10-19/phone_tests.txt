@@ -1,0 +1,7 @@
+com.agronomy.phytomonitor.InspectionToolsTest:..
+com.agronomy.phytomonitor.JournalNavigationTest:.
+com.agronomy.phytomonitor.NoteSpeechFlowTest:..
+
+Time: 62,164
+
+OK (5 tests)
