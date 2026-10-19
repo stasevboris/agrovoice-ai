@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import com.agronomy.phytomonitor.ml.DetectionResult
 import com.agronomy.phytomonitor.ml.FieldDetector
+import com.agronomy.phytomonitor.journal.JournalIssue
 import com.agronomy.phytomonitor.ml.PhotoFiles
 import java.io.File
 import java.util.concurrent.Executors
@@ -57,8 +58,12 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     val inspectionSaved: Boolean
         get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName)
 
+    /** The last migration or import with its problems; shown in the journal until dismissed. */
+    var journalReport by mutableStateOf<JournalReport?>(null); private set
+
     init {
         if(detector.models.none {it.id==selectedModel})selectedModel=detector.models.first().id
+        worker.execute {migrateJournal()}
         val last=preferences.getString("last_photo",null)?.let(::File)
         if(last?.isFile==true) openFile(last)
     }
@@ -174,14 +179,54 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         }catch(error: Exception){postFailure(error)}}
     }
     fun openJournal(){journalOpen=true;worker.execute {val entries=journal.list();main.post {if(!cleared)journalEntries=entries}}}
-    fun exportJournal(uri: Uri) {
+    /** Runs on the worker before any journal read or write. Old JSON files are kept. */
+    private fun migrateJournal() {
+        val report = try {
+            journal.migrateLegacy()
+        } catch (error: Exception) {
+            JournalReport(InspectionJournal.SOURCE_LEGACY, issues = listOf(JournalIssue("журнал", error.message ?: "перенос не выполнен")))
+        }
+        if (report != null && report.worthShowing) {
+            main.post { if (!cleared) journalReport = report }
+        }
+    }
+    fun dismissJournalReport() {
+        journalReport = null
+    }
+    fun exportJournal(uri: Uri, format: JournalExport = JournalExport.JSON) {
         if(busy)return
         busy=true
         worker.execute {try {
-            val json=journal.export()
-            requireNotNull(getApplication<Application>().contentResolver.openOutputStream(uri,"wt")) {"Не удалось открыть файл"}
-                .bufferedWriter(Charsets.UTF_8).use {it.write(json)}
-            main.post {if(!cleared){busy=false;notify("Журнал сохранён в файл JSON. Фотографии остаются отдельно.")}}
+            val output=requireNotNull(getApplication<Application>().contentResolver.openOutputStream(uri,"wt")) {"Не удалось открыть файл"}
+            val done=output.use {stream ->
+                when(format) {
+                    JournalExport.JSON -> {
+                        stream.write(journal.export().toByteArray(Charsets.UTF_8))
+                        "Журнал сохранён в файл JSON. Фотографии в него не входят."
+                    }
+                    JournalExport.CSV -> {
+                        stream.write(journal.exportCsv().toByteArray(Charsets.UTF_8))
+                        "Таблица CSV сохранена. Фотографии в неё не входят."
+                    }
+                    JournalExport.ARCHIVE -> {
+                        val photos=journal.exportArchive(stream)
+                        "Архив журнала сохранён, фото в нём: $photos."
+                    }
+                }
+            }
+            main.post {if(!cleared){busy=false;notify(done)}}
+        }catch(error: Exception){postFailure(error)}}
+    }
+    /** A journal JSON or archive chosen by the user; the report lists what was taken and what was not. */
+    fun importJournal(uri: Uri) {
+        if(busy)return
+        busy=true
+        message=null
+        worker.execute {try {
+            val input=requireNotNull(getApplication<Application>().contentResolver.openInputStream(uri)) {"Не удалось открыть файл"}
+            val report=input.use {journal.import(it)}
+            val entries=journal.list()
+            main.post {if(!cleared){journalEntries=entries;journalReport=report;busy=false}}
         }catch(error: Exception){postFailure(error)}}
     }
     fun compareModels(){
@@ -209,3 +254,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
 }
 
 private data class SavedInspection(val reportName: String?, val note: String, val review: String, val plot: String)
+
+enum class JournalExport(val mimeType: String, val extension: String) {
+    JSON("application/json", "json"),
+    CSV("text/csv", "csv"),
+    ARCHIVE("application/zip", "zip")
+}

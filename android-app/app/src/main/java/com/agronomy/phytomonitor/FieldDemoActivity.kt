@@ -249,7 +249,11 @@ class FieldDemoActivity : ComponentActivity() {
             AgroVoiceAITheme {
                 val model=fieldModel
                 val gallery=rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri -> if(uri!=null)model.importPhoto(uri) }
-                val export=rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")){uri->if(uri!=null)model.exportJournal(uri)}
+                // One document type per format, so the file picker suggests the right extension.
+                val exports=JournalExport.entries.associateWith {format->
+                    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(format.mimeType)){uri->if(uri!=null)model.exportJournal(uri,format)}
+                }
+                val restore=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()){uri->if(uri!=null)model.importJournal(uri)}
                 val systemPicker: ()->Unit={closePhotoFlow();gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))}
                 SideEffect {systemGallery=systemPicker}
                 BackHandler(model.noteOpen || model.journalOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen){press(VoiceAction.BACK)}
@@ -274,7 +278,14 @@ class FieldDemoActivity : ComponentActivity() {
                 LaunchedEffect(model.busy) {
                     if(!model.busy)actions.settled(failed=model.message!=null && model.messageIsError)
                 }
-                val exportJournal: ()->Unit={voice.stop();export.launch("AgroVoice-journal-${System.currentTimeMillis()}.json")}
+                val exportJournal: (JournalExport)->Unit={format->
+                    voice.stop()
+                    exports.getValue(format).launch("AgroVoice-journal-${System.currentTimeMillis()}.${format.extension}")
+                }
+                val importJournal: ()->Unit={
+                    voice.stop()
+                    restore.launch(arrayOf("application/zip","application/json","application/octet-stream"))
+                }
                 // Confirmations of finished actions («сохранено», «снято») appear for a moment; errors stay as banners.
                 val snackbar=remember {SnackbarHostState()}
                 val notice=model.message?.takeIf {!model.messageIsError}
@@ -290,7 +301,7 @@ class FieldDemoActivity : ComponentActivity() {
                             photoFlow.galleryOpen->NumberedGallery(photoFlow,{press(VoiceAction.CONFIRM)},{press(VoiceAction.CANCEL)},systemPicker) {
                                 VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Номер → просмотр → «подтвердить».")
                             }
-                            model.journalOpen->JournalScreen(model,onBack={press(VoiceAction.BACK)},onExport=exportJournal)
+                            model.journalOpen->JournalScreen(model,onBack={press(VoiceAction.BACK)},onExport=exportJournal,onImport=importJournal)
                             else->FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status)
                         }
                         InspectionDialogs(model,::dictateNote,onConfirm={press(VoiceAction.CONFIRM)},onCloseNote={press(VoiceAction.CANCEL)})

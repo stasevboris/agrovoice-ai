@@ -37,7 +37,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -219,17 +223,29 @@ internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Uni
     )
 }
 
-/** Full-screen journal of saved inspections with search, filter and JSON export. */
+/** Full-screen journal of saved inspections with search, filter, export and restore. */
 @Composable
-internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExport: () -> Unit) {
+internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExport: (JournalExport) -> Unit, onImport: () -> Unit) {
+    var exportMenu by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) { Icon(AgroIcons.Back, contentDescription = "Закрыть журнал") }
-            Text("Журнал осмотров", style = MaterialTheme.typography.titleLarge, modifier = Modifier.width(104.dp))
-            TextButton(onClick = onExport, enabled = !model.busy && model.journalEntries.isNotEmpty()) {
-                Icon(AgroIcons.Download, contentDescription = null, modifier = Modifier.size(18.dp))
-                Spacer(Modifier.width(6.dp))
-                Text("JSON")
+            Text("Журнал осмотров", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+            IconButton(onClick = onImport, enabled = !model.busy) {
+                Icon(AgroIcons.Upload, contentDescription = "Восстановить из архива или JSON")
+            }
+            Box {
+                IconButton(onClick = { exportMenu = true }, enabled = !model.busy && model.journalEntries.isNotEmpty()) {
+                    Icon(AgroIcons.Download, contentDescription = "Сохранить журнал в файл")
+                }
+                DropdownMenu(expanded = exportMenu, onDismissRequest = { exportMenu = false }) {
+                    exportOptions.forEach { (format, label) ->
+                        DropdownMenuItem(text = { Text(label) }, onClick = {
+                            exportMenu = false
+                            onExport(format)
+                        })
+                    }
+                }
             }
         }
         LazyColumn(
@@ -253,9 +269,12 @@ internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExpo
                     }
                 }
             }
+            model.journalReport?.let { report ->
+                item { JournalReportCard(report, onDismiss = model::dismissJournalReport) }
+            }
             item {
                 Text(
-                    "Найдено: ${model.visibleInspections.size} / ${model.journalEntries.size}. Экспорт JSON — осмотры и ссылки на фото, сами фото не включены.",
+                    "Найдено: ${model.visibleInspections.size} / ${model.journalEntries.size}. Архив с фото переносит журнал на другой телефон; JSON и CSV — без фото.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -304,9 +323,43 @@ private fun JournalEntryCard(model: FieldDemoViewModel, entry: InspectionEntry, 
                 if (entry.note.isNotBlank()) {
                     Text(entry.note, style = MaterialTheme.typography.bodyMedium, maxLines = 3, overflow = TextOverflow.Ellipsis)
                 }
-                TextButton(onClick = onOpen, contentPadding = PaddingValues(0.dp)) {
-                    Text("Открыть снимок")
+                if (entry.photoAvailable) {
+                    TextButton(onClick = onOpen, contentPadding = PaddingValues(0.dp)) {
+                        Text("Открыть снимок")
+                    }
+                } else {
+                    Text("Фото не найдено на телефоне", style = MaterialTheme.typography.bodySmall, color = colors.error)
                 }
+            }
+        }
+    }
+}
+
+private val exportOptions = listOf(
+    JournalExport.ARCHIVE to "Архив с фото (ZIP)",
+    JournalExport.JSON to "Журнал JSON",
+    JournalExport.CSV to "Таблица CSV"
+)
+
+private const val MAX_SHOWN_ISSUES = 8
+
+/** What a migration or an import did, with every unread record and its reason. */
+@Composable
+private fun JournalReportCard(report: JournalReport, onDismiss: () -> Unit) {
+    val colors = MaterialTheme.colorScheme
+    val container = if (report.issues.isEmpty()) colors.secondaryContainer else colors.errorContainer
+    val content = if (report.issues.isEmpty()) colors.onSecondaryContainer else colors.onErrorContainer
+    Card(shape = MaterialTheme.shapes.medium, colors = CardDefaults.cardColors(containerColor = container, contentColor = content)) {
+        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(report.summary(), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f))
+                IconButton(onClick = onDismiss) { Icon(AgroIcons.Close, contentDescription = "Скрыть отчёт") }
+            }
+            report.issues.take(MAX_SHOWN_ISSUES).forEach { issue ->
+                Text("• ${issue.source}: ${issue.reason}", style = MaterialTheme.typography.bodySmall)
+            }
+            if (report.issues.size > MAX_SHOWN_ISSUES) {
+                Text("…и ещё ${report.issues.size - MAX_SHOWN_ISSUES}", style = MaterialTheme.typography.bodySmall)
             }
         }
     }

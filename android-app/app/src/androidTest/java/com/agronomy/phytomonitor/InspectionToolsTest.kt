@@ -16,15 +16,15 @@ class InspectionToolsTest {
     private fun say(text: String){compose.runOnUiThread {compose.activity.handleVoiceCommand(VoiceCommands.parseForScreen(text,"main")!!)}}
     @Test fun explicitJournalUsesExactPredictionAndUpdatesWithoutDuplicate() {
         idle();val model=compose.activity.fieldModel;val report=model.reportName!!
-        val directory=File(compose.activity.getExternalFilesDir(null),"inspections");val before=directory.listFiles()?.map {it.name}?.toSet() ?: emptySet()
+        val journal=InspectionJournal(compose.activity);val before=journal.list().map {it.id}.toSet()
         val previousPlot=model.plotName
         try {
             compose.runOnUiThread {model.editNote("TEST: картофель, участок один");model.editPlot("TEST: грядка 7")};say("сохрани осмотр");idle()
             val first=model.journalEntries.first {it.note.startsWith("TEST:")};assertEquals(model.result!!.model.id,first.model)
-            val file=File(directory,"${first.id}.json");val json=JSONObject(file.readText())
+            val json=journal.record(first.id)!!
             assertEquals(report,json.getString("report_name"));assertEquals(model.result!!.model.sha256,json.getJSONObject("prediction").getString("model_sha256"))
             say("результат неверный");idle()
-            assertEquals("incorrect",JSONObject(file.readText()).getString("review"))
+            assertEquals("incorrect",journal.record(first.id)!!.getString("review"))
             assertEquals(1,model.journalEntries.count {it.id==first.id})
             val reloaded=InspectionJournal(compose.activity).list().first {it.id==first.id}
             assertEquals("incorrect",reloaded.review);assertEquals(first.note,reloaded.note)
@@ -49,9 +49,7 @@ class InspectionToolsTest {
             say("открой журнал");assertTrue(model.journalOpen);say("назад");assertFalse(model.journalOpen)
         } finally {
             compose.runOnUiThread {model.editPlot(previousPlot);model.journalQuery="";model.journalFilter="all"}
-            directory.listFiles()?.filter {it.name !in before && it.extension=="json"}?.forEach {file->
-                if(JSONObject(file.readText()).getString("note").startsWith("TEST:"))file.delete()
-            }
+            journal.list().filter {it.id !in before && it.note.startsWith("TEST:")}.forEach {journal.deleteForTest(it.id)}
         }
         val evidence=File(compose.activity.getExternalFilesDir(null),InstrumentationRegistry.getArguments().getString("voiceFolder") ?: "features_v1_phone").apply {mkdirs()}
         File(evidence,"inspection_tools.json").writeText(JSONObject().put("status","passed").put("report_binding",true).put("no_duplicate",true).put("persisted_review",true).put("plot_and_search",true).put("content_uri_export",true).put("own_test_entries_removed",true).toString(2))

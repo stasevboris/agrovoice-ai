@@ -55,6 +55,7 @@ object AgroIcons {
     )
     val Check = icon("M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z")
     val Download = icon("M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z")
+    val Upload = icon("M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z")
     val Place = icon(
         "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
     )

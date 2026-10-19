@@ -32,8 +32,8 @@ class NoteSpeechFlowTest {
     }
     @Test fun noteUsesFreeSpeechThenReviewAndVoiceConfirmation() {
         idle();val activity=compose.activity;val vm=activity.fieldModel
-        val directory=File(activity.getExternalFilesDir(null),"inspections")
-        val before=directory.listFiles()?.map {it.name}?.toSet() ?: emptySet()
+        val journal=InspectionJournal(activity)
+        val before=journal.list().map {it.id}.toSet()
         val cases=JSONArray(File(folder(),"cases.json").readText().removePrefix("\uFEFF"))
         val decoded=JSONArray()
         try {
@@ -82,7 +82,7 @@ class NoteSpeechFlowTest {
         }finally {
             File(folder(),"note_speech_debug.json").writeText(JSONObject().put("decoded",decoded).put("dictating",vm.dictating).put("review",vm.noteReviewVoice).put("note_open",vm.noteOpen).put("voice_active",activity.voiceListening).put("voice_status",activity.voiceController.status).toString(2))
             compose.runOnUiThread {activity.setContinuous(false);activity.voiceController.stop();vm.noteOpen=false;vm.dictating=false;vm.noteReviewVoice=false;vm.editNote("")}
-            directory.listFiles()?.filter {it.name !in before && it.extension=="json"}?.forEach {if(JSONObject(it.readText()).getString("note").startsWith("TEST:"))it.delete()}
+            journal.list().filter {it.id !in before && it.note.startsWith("TEST:")}.forEach {journal.deleteForTest(it.id)}
         }
     }
     @Test fun offlineSpeechReportsCompletionOrUnavailableAndStopsInBackground() {
