@@ -28,6 +28,8 @@ import com.agronomy.phytomonitor.actions.ActionRequest
 import com.agronomy.phytomonitor.actions.ActionSource
 import com.agronomy.phytomonitor.actions.AppState
 import com.agronomy.phytomonitor.actions.AssistantPlan
+import com.agronomy.phytomonitor.actions.FollowUpDialog
+import com.agronomy.phytomonitor.actions.Verdict
 import com.agronomy.phytomonitor.actions.Operation
 import com.agronomy.phytomonitor.actions.Screen
 import com.agronomy.phytomonitor.photos.*
@@ -91,7 +93,32 @@ class FieldDemoActivity : ComponentActivity() {
         if (!foreground) {
             return
         }
-        actions.dispatch(ActionRequest(command.action, command.value, ActionSource.VOICE))
+        val request = ActionRequest(command.action, command.value, ActionSource.VOICE)
+        val verdict = actions.dispatch(request)
+        afterVoiceCommand(request, verdict)
+    }
+
+    /** V-02: a photo or check asked by voice is answered aloud; the answer to the question is a command too. */
+    private fun afterVoiceCommand(request: ActionRequest, verdict: Verdict) {
+        if (followUp.phase == FollowUpDialog.Phase.FOLLOW_UP) {
+            followUp.commandHandled(request, verdict)?.let(::sayFollowUp)
+        } else if (request.action in setOf(VoiceAction.CANCEL, VoiceAction.BACK, VoiceAction.LISTEN_OFF, VoiceAction.EXIT)) {
+            followUp.stop()
+        } else if (verdict is Verdict.Run && verdict.operations.any { it in startsAnalysis || it is Operation.OpenCamera }) {
+            followUp.voiceAnalysisRequested()
+        }
+        followUpPhase = followUp.phase
+    }
+
+    private val startsAnalysis = setOf(Operation.TakeShot, Operation.ConfirmGallery, Operation.Analyze)
+
+    private fun sayFollowUp(prompt: FollowUpDialog.Prompt) {
+        val text = if (prompt == FollowUpDialog.Prompt.RESULT_AND_QUESTION) {
+            fieldModel.spokenResult() + " " + FollowUpDialog.QUESTION
+        } else {
+            FollowUpDialog.text(prompt)
+        }
+        speak(text)
     }
 
     /** A button of the screen: the same checks and the same operations as the spoken command. */
@@ -99,6 +126,9 @@ class FieldDemoActivity : ComponentActivity() {
         if (!foreground) {
             return
         }
+        // A tap means the hands are free again: the spoken question is no longer needed.
+        followUp.stop()
+        followUpPhase = followUp.phase
         actions.dispatch(ActionRequest(action, value, ActionSource.BUTTON))
     }
 
@@ -133,7 +163,8 @@ class FieldDemoActivity : ComponentActivity() {
         plots = fieldModel.plots.map { it.plot.name },
         plot = fieldModel.plotName,
         row = fieldModel.rowName,
-        inspectionOpen = fieldModel.openedInspection != null
+        inspectionOpen = fieldModel.openedInspection != null,
+        followUp = followUp.awaitingAnswer
     )
 
     private val actionPort = object : ActionPort {
@@ -152,6 +183,8 @@ class FieldDemoActivity : ComponentActivity() {
                 Operation.CloseNote -> closeNote()
                 Operation.CloseJournal -> fieldModel.journalOpen = false
                 Operation.CloseInspection -> fieldModel.closeInspection()
+                // The dialog itself answers «Не сохраняю» after the verdict.
+                Operation.EndFollowUp -> Unit
                 Operation.ClosePhotoFlow -> closePhotoFlow()
                 Operation.StopSpeech -> speaker.stop()
                 is Operation.Scroll -> photoFlow.scroll(operation.direction)
@@ -202,6 +235,9 @@ class FieldDemoActivity : ComponentActivity() {
         }
     }
     internal val actions = ActionDispatcher(actionPort)
+    private val followUp = FollowUpDialog()
+    /** Compose-visible copy of the dialog phase: it decides whether to listen after speech. */
+    private var followUpPhase by mutableStateOf(FollowUpDialog.Phase.IDLE)
     private fun voiceButton() {
         if(voice.active || photoFlow.dialogVoice || photoFlow.continuousVoice){setContinuous(false);return}
         requestContinuous=false
@@ -212,7 +248,7 @@ class FieldDemoActivity : ComponentActivity() {
         fieldModel.noteOpen->if(fieldModel.dictating)null else VoiceCommands.noteReviewGrammar
         photoFlow.cameraOpen->VoiceCommands.cameraGrammar
         photoFlow.galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
-        else->VoiceCommands.mainGrammar(fieldModel.plots.map {it.plot.name})
+        else->VoiceCommands.mainGrammar(fieldModel.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
     }
     private fun currentScreen(): Screen = when {
         fieldModel.noteOpen -> if (fieldModel.dictating) Screen.NOTE else Screen.NOTE_REVIEW
@@ -288,10 +324,13 @@ class FieldDemoActivity : ComponentActivity() {
                 BackHandler(model.noteOpen || model.journalOpen || model.plotsOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen){press(VoiceAction.BACK)}
                 val context=currentScreen().protocolName
                 val eligible=foreground && !speaker.active && !photoFlow.loading && !photoFlow.shotRequested && !photoFlow.cameraCapturing
-                LaunchedEffect(context,model.dictating,model.noteReviewVoice,photoFlow.continuousVoice,photoFlow.dialogVoice,eligible,voice.active) {
-                    if(eligible && !voice.active && hasMicrophone() && (if(model.noteOpen)model.dictating || model.noteReviewVoice else photoFlow.continuousVoice || photoFlow.dialogVoice)) {
+                LaunchedEffect(context,model.dictating,model.noteReviewVoice,photoFlow.continuousVoice,photoFlow.dialogVoice,eligible,voice.active,followUpPhase) {
+                    val answering=!voice.active && followUp.shouldListenAgain()
+                    followUpPhase=followUp.phase
+                    if(eligible && !voice.active && hasMicrophone() && (if(model.noteOpen)model.dictating || model.noteReviewVoice else photoFlow.continuousVoice || photoFlow.dialogVoice || answering)) {
                         delay(400)
                         voice.plotNames=model.plots.map {it.plot.name}
+                        if(answering)followUp.listeningStarted()
                         voice.start(currentGrammar(),continuous=model.dictating || photoFlow.continuousVoice,screen=context)
                     }
                 }
@@ -306,7 +345,13 @@ class FieldDemoActivity : ComponentActivity() {
                 }
                 // A plan of several steps continues only after background work finished without an error.
                 LaunchedEffect(model.busy) {
-                    if(!model.busy)actions.settled(failed=model.message!=null && model.messageIsError)
+                    if(!model.busy){
+                        val failed=model.message!=null && model.messageIsError
+                        actions.settled(failed=failed)
+                        val prompt=followUp.saveFinished(failed) ?: followUp.analysisFinished(hasResult=model.reportName!=null)
+                        followUpPhase=followUp.phase
+                        prompt?.let(::sayFollowUp)
+                    }
                 }
                 val exportJournal: (JournalExport)->Unit={format->
                     voice.stop()
@@ -343,7 +388,7 @@ class FieldDemoActivity : ComponentActivity() {
         }
     }
     override fun onResume(){super.onResume();foreground=true;if(fieldModel.locationEnabled && fieldModel.location.hasPermission())startLocation()}
-    override fun onStop(){foreground=false;actions.cancelPlan();fieldModel.location.stop();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
+    override fun onStop(){foreground=false;actions.cancelPlan();followUp.stop();followUpPhase=followUp.phase;fieldModel.location.stop();voice.stop();speaker.stop();fieldModel.dictating=false;fieldModel.noteReviewVoice=false;photoFlow.dialogVoice=false;if(photoFlow.cameraOpen)photoFlow.close();super.onStop()}
     override fun onDestroy(){voice.close();speaker.close();super.onDestroy()}
 }
 

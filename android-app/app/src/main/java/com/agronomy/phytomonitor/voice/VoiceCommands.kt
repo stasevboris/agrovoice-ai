@@ -41,8 +41,8 @@ object VoiceCommands {
             val phrases=CropVocabulary.spoken.getValue(crop)+CropVocabulary.chooseForms.getValue(crop).map {"выбери $it"}
             add(VoiceCommand(VoiceAction.CROP,name,crop),*phrases.distinct().toTypedArray())
         }
-        add(VoiceCommand(VoiceAction.CANCEL,"Команда отменена"),"отмена","отмени")
-        add(VoiceCommand(VoiceAction.CONFIRM,"Подтверждаю"),"подтвердить","подтверди","выбрать фото","выбери это фото")
+        add(VoiceCommand(VoiceAction.CANCEL,"Команда отменена"),"отмена","отмени","нет")
+        add(VoiceCommand(VoiceAction.CONFIRM,"Подтверждаю"),"подтвердить","подтверди","да","выбрать фото","выбери это фото")
         add(VoiceCommand(VoiceAction.BACK,"Назад"),"назад","вернись назад")
         add(VoiceCommand(VoiceAction.EXIT,"Закрываю приложение"),"закрой приложение","выход")
         add(VoiceCommand(VoiceAction.HELP,"Голосовые команды"),"помощь","покажи команды","список моделей","какие модели")
@@ -80,10 +80,12 @@ object VoiceCommands {
         .joinToString(" ") {word -> word.toIntOrNull()?.takeIf {it in 1..999999}?.let(RussianPhotoNumber::words) ?: word}
 
     /** Main-screen grammar with «ряд N» and «участок <name>» for the plots that exist now. */
-    fun mainGrammar(plots: Collection<String>): List<String> =
+    fun mainGrammar(plots: Collection<String>, followUp: Boolean=false): List<String> =
         (grammar + listOf("ряд") + (1..SPOKEN_ROWS).map(RussianPhotoNumber::words) +
-            plots.map {"участок ${spokenPlot(it)}"}.filter {it.length>"участок ".length}).distinct()
-    val noteReviewGrammar=listOf("подтвердить","отмена","добавь заметку","стоп","не подтверждать","[unk]")
+            plots.map {"участок ${spokenPlot(it)}"}.filter {it.length>"участок ".length} +
+            // «да» is listened for only right after the app asked «Сохранить осмотр?».
+            (if(followUp)listOf("да","подтвердить") else emptyList())).distinct()
+    val noteReviewGrammar=listOf("подтвердить","да","отмена","нет","добавь заметку","стоп","не подтверждать","[unk]")
     val grammar: List<String> get() = phrasesFor(globalActions + labActions + setOf(VoiceAction.CAMERA,VoiceAction.CAMERA_NOW,VoiceAction.OPEN_CAMERA,VoiceAction.GALLERY,VoiceAction.SYSTEM_GALLERY,VoiceAction.ANALYZE)) +
         listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не делай фото","не открывай галерею","не проверяй фото","не выключай голос","сегодня хорошая погода","[unk]")
     val cameraGrammar: List<String> get()=(phrasesFor(globalActions+setOf(VoiceAction.CONFIRM,VoiceAction.CAMERA_NOW,VoiceAction.CAMERA,VoiceAction.GALLERY))+listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не подтверждать","не делай фото","не выключай голос","[unk]")).distinct()
@@ -125,7 +127,7 @@ object VoiceCommands {
         if(command.action in labActions && screen!="main")return null
         val photoActions=setOf(VoiceAction.PHOTO_NUMBER,VoiceAction.FIRST_PHOTO,VoiceAction.LAST_PHOTO,VoiceAction.NEXT_PHOTO,VoiceAction.PREVIOUS_PHOTO)
         if(command.action in photoActions && screen!="gallery")return null
-        if(command.action==VoiceAction.CONFIRM && screen=="main")return null
+        // «да» on the main screen answers the app's own question; the executor refuses it otherwise.
         if(command.action==VoiceAction.ANALYZE && screen!="main")return null
         return command
     }

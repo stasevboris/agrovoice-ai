@@ -50,14 +50,19 @@ data class AppState(
     val plots: List<String> = emptyList(),
     val plot: String = "",
     val row: String = "",
-    val inspectionOpen: Boolean = false
+    val inspectionOpen: Boolean = false,
+    /** The app has just asked «Сохранить осмотр?» and waits for «да» or «нет». */
+    val followUp: Boolean = false
 ) {
     /** The object «да / подтвердить» would refer to, as `pending` in the corpus. */
     val pending: String?
-        get() = when (screen) {
-            Screen.NOTE_REVIEW -> "note"
-            Screen.CAMERA -> "capture"
-            else -> null
+        get() = when {
+            followUp && screen == Screen.MAIN -> "save"
+            else -> when (screen) {
+                Screen.NOTE_REVIEW -> "note"
+                Screen.CAMERA -> "capture"
+                else -> null
+            }
         }
 }
 
@@ -69,6 +74,7 @@ sealed interface Operation {
     data object CloseNote : Operation
     data object CloseJournal : Operation
     data object CloseInspection : Operation
+    data object EndFollowUp : Operation
     data object ClosePhotoFlow : Operation
     data object StopSpeech : Operation
     data class Scroll(val direction: String) : Operation

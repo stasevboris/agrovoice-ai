@@ -10,7 +10,7 @@ class VoiceCommandsTest {
     @Test fun cameraConfirmationAndImmediateCaptureAreDifferentIntents() {
         assertNull(VoiceCommands.parseForScreen("семь","main"))
         assertEquals("7",VoiceCommands.parseForScreen("семь","gallery")!!.value)
-        assertNull(VoiceCommands.parseForScreen("подтвердить","main"))
+        assertEquals(VoiceAction.CONFIRM,VoiceCommands.parseForScreen("подтвердить","main")!!.action) // the executor decides
         assertEquals(VoiceAction.CAMERA,VoiceCommands.parse("сделай фото")!!.action)
         assertEquals(VoiceAction.CAMERA_NOW,VoiceCommands.parse("сделай фото сразу")!!.action)
         assertEquals(VoiceAction.CONFIRM,VoiceCommands.parse("подтвердить")!!.action)
