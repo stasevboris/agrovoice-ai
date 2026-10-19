@@ -57,6 +57,11 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
     private var connected = false
     private var opening: Job? = null
 
+    /** The user's settings switch; writing badge rows stops, earned rows stay for a later re-enable. */
+    fun setAchievementsEnabled(enabled: Boolean) {
+        journal.achievementsEnabled = enabled
+    }
+
     fun connect(migration: Deferred<JournalReport?>) {
         if (connected) return
         connected = true

@@ -38,6 +38,7 @@ data class AppSettings(
     val freeSpeech: Boolean = false,
     val voiceEnabled: Boolean = true,
     val spokenFollowUp: Boolean = true,
+    val achievements: Boolean = true,
     val server: String = ""
 ) {
     companion object {
@@ -54,6 +55,7 @@ data class AppSettings(
             freeSpeech = preferences[Keys.freeSpeech] ?: false,
             voiceEnabled = preferences[Keys.voiceEnabled] ?: true,
             spokenFollowUp = preferences[Keys.spokenFollowUp] ?: true,
+            achievements = preferences[Keys.achievements] ?: true,
             server = preferences[Keys.server].orEmpty()
         )
     }
@@ -72,6 +74,7 @@ object Keys {
     val freeSpeech = booleanPreferencesKey("free_speech")
     val voiceEnabled = booleanPreferencesKey("voice_enabled")
     val spokenFollowUp = booleanPreferencesKey("spoken_follow_up")
+    val achievements = booleanPreferencesKey("achievements")
     val server = stringPreferencesKey("server")
     val migrated = booleanPreferencesKey("legacy_imported")
 }

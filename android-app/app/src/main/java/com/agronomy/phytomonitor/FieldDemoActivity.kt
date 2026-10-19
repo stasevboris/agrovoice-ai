@@ -215,7 +215,8 @@ class FieldDemoActivity : ComponentActivity() {
         journalIds = journalModel.state.value.visible.map { it.id },
         journalCount = journalModel.state.value.entries.size,
         settings = settings.state.value?.let { mapOf("voice_enabled" to it.voiceEnabled,
-            "spoken_follow_up" to it.spokenFollowUp, "free_speech" to it.freeSpeech) }.orEmpty(),
+            "spoken_follow_up" to it.spokenFollowUp, "free_speech" to it.freeSpeech,
+            "achievements" to it.achievements) }.orEmpty(),
         openedInspectionId = journalModel.state.value.opened?.details?.inspection?.id?.takeIf {
             it == navigation?.currentBackStackEntry?.arguments?.getString("id")
         },
@@ -315,6 +316,7 @@ class FieldDemoActivity : ComponentActivity() {
                     when (operation.key) {
                         "voice_enabled" -> settingsModel.voiceEnabled(operation.enabled)
                         "spoken_follow_up" -> settingsModel.spokenFollowUp(operation.enabled)
+                        "achievements" -> settingsModel.achievements(operation.enabled)
                         else -> settingsModel.freeSpeech(operation.enabled)
                     }.join()
                     val error = settingsModel.error.value
@@ -614,6 +616,9 @@ class FieldDemoActivity : ComponentActivity() {
                         followUp.stop()
                         followUpPhase = followUp.phase
                     }
+                }
+                LaunchedEffect(currentSettings?.achievements) {
+                    journalModel.setAchievementsEnabled(currentSettings?.achievements != false)
                 }
                 val gallery=rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri -> if(uri!=null)model.importPhoto(uri) }
                 // One document type per format, so the file picker suggests the right extension.

@@ -10,5 +10,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     fun voiceEnabled(value: Boolean) = store.set(Keys.voiceEnabled, value)
     fun spokenFollowUp(value: Boolean) = store.set(Keys.spokenFollowUp, value)
     fun freeSpeech(value: Boolean) = store.set(Keys.freeSpeech, value)
+    fun achievements(value: Boolean) = store.set(Keys.achievements, value)
     fun server(value: String) = store.set(Keys.server, value.trim().take(500))
 }

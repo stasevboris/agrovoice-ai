@@ -10,6 +10,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.Transaction
 import androidx.room.Upsert
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.flow.Flow
 
 data class PlotSummary(
@@ -136,6 +138,47 @@ interface JournalDao {
         insertDetections(record.detections)
         enqueueSync(change)
     }
+
+    @Query("SELECT COUNT(*) FROM journal_event WHERE kind = :kind")
+    fun eventCount(kind: String): Int
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun recordEvent(event: JournalEventEntity): Long
+
+    @Query("SELECT * FROM achievement")
+    fun achievements(): List<AchievementEntity>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun award(achievement: AchievementEntity): Long
+
+    @Query("UPDATE achievement SET notified_at = :notifiedAt WHERE id = :id AND notified_at IS NULL")
+    fun markNotified(id: String, notifiedAt: Long)
+
+    /**
+     * Recomputes badge conditions from unique journal facts; awards are inserted once and never
+     * deleted, so an imported backup of the same records cannot hand out a second copy.
+     */
+    @Transaction
+    fun recomputeAchievements(photoAvailable: (String) -> Boolean, now: Long): List<AchievementEntity> {
+        val facts = JournalFacts(
+            withPhoto = inspections().count { details ->
+                details.photos.firstOrNull()?.photo?.localPath?.let(photoAvailable) == true
+            },
+            complete = inspections().count { details ->
+                details.inspection.plotId != null && details.inspection.note.isNotBlank() &&
+                    details.photos.firstOrNull()?.photo?.localPath?.let(photoAvailable) == true
+            },
+            backups = eventCount(JournalEventEntity.FULL_BACKUP)
+        )
+        val earned = achievements().map { it.id }.toSet()
+        val newAwards = AchievementRules.unlocked(facts).filterNot { it in earned }.map { id ->
+            AchievementEntity(id, ACHIEVEMENT_RULES_VERSION, unlockedAt = now)
+        }
+        for (award in newAwards) {
+            award(award)
+        }
+        return newAwards
+    }
 }
 
 @Database(
@@ -147,9 +190,11 @@ interface JournalDao {
         DiseaseEntity::class,
         TreatmentEntity::class,
         KbVersionEntity::class,
-        SyncQueueEntity::class
+        SyncQueueEntity::class,
+        AchievementEntity::class,
+        JournalEventEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class JournalDatabase : RoomDatabase() {
@@ -158,8 +203,22 @@ abstract class JournalDatabase : RoomDatabase() {
     companion object {
         @Volatile private var instance: JournalDatabase? = null
 
+        /** v2 adds local optional badges; existing journals are kept and badges start unearned. */
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `achievement` (`id` TEXT NOT NULL, `rules_version` INTEGER NOT NULL, " +
+                        "`unlocked_at` INTEGER NOT NULL, `notified_at` INTEGER, PRIMARY KEY(`id`))"
+                )
+                db.execSQL(
+                    "CREATE TABLE IF NOT EXISTS `journal_event` (`kind` TEXT NOT NULL, `first_at` INTEGER NOT NULL, PRIMARY KEY(`kind`))"
+                )
+            }
+        }
+
         fun get(context: Context): JournalDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, JournalDatabase::class.java, "journal.db")
+                .addMigrations(MIGRATION_1_2)
                 .build()
                 .also { instance = it }
         }

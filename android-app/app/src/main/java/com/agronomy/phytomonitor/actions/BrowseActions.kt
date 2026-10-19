@@ -8,7 +8,8 @@ object BrowseActions {
     val actions = setOf(VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER,
         VoiceAction.EXPORT_JOURNAL, VoiceAction.IMPORT_JOURNAL)
     val settingNames = mapOf("voice_enabled" to "голосовое управление",
-        "spoken_follow_up" to "озвучку после фото", "free_speech" to "свободную речь")
+        "spoken_follow_up" to "озвучку после фото", "free_speech" to "свободную речь",
+        "achievements" to "достижения")
     val filterNames = mapOf("all" to "все осмотры", "correct" to "верные результаты",
         "incorrect" to "ошибки модели", "uncertain" to "неуверенные результаты", "unrated" to "осмотры без оценки")
 

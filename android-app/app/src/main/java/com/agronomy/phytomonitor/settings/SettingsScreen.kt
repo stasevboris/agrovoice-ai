@@ -41,6 +41,7 @@ fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (Str
             SettingToggle("Голосовое управление", "Команды через микрофон и гарнитуру", current.voiceEnabled) { onSetting("voice_enabled", it) }
             SettingToggle("Озвучка после фото", "Прочитать результат и спросить о сохранении после голосового снимка", current.spokenFollowUp) { onSetting("spoken_follow_up", it) }
             SettingToggle("Свободная речь (эксперимент)", "Обычные формулировки команд; на речи людей пока не проверено", current.freeSpeech) { onSetting("free_speech", it) }
+            SettingToggle("Достижения", "Локальные значки за законченные действия; основная работа от них не зависит", current.achievements) { onSetting("achievements", it) }
             Text("Выбор модели, культуры и порога — в настройках анализа на экране осмотра.")
             Text("Синхронизация", style = MaterialTheme.typography.titleMedium)
             var server by rememberSaveable(current.server) { mutableStateOf(current.server) }

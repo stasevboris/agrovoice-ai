@@ -1,8 +1,10 @@
 package com.agronomy.phytomonitor
 
 import android.content.Context
+import com.agronomy.phytomonitor.journal.AchievementEntity
 import com.agronomy.phytomonitor.journal.ArchiveContent
 import com.agronomy.phytomonitor.journal.GeoPoint
+import com.agronomy.phytomonitor.journal.JournalEventEntity
 import com.agronomy.phytomonitor.journal.InspectionEntity
 import com.agronomy.phytomonitor.journal.InspectionWithDetails
 import com.agronomy.phytomonitor.journal.JournalArchive
@@ -96,6 +98,9 @@ class InspectionJournal(
     private val availableSpace: (File) -> Long = File::getUsableSpace,
     private val clock: () -> Long = System::currentTimeMillis
 ) {
+    /** Off by user setting: no badge rows are written, the journal itself is unaffected. */
+    var achievementsEnabled: Boolean = true
+
     private val dao = database.journal()
     private val files = context.getExternalFilesDir(null) ?: context.filesDir
     private val legacyFolder = File(files, "inspections")
@@ -172,8 +177,18 @@ class InspectionJournal(
         }
         val journal = JournalRecords.document(records, containsPhotos = true, exportedAt = clock()).toString(2)
         JournalArchive.write(output, journal, photos)
+        database.runInTransaction(Callable {
+            dao.recordEvent(JournalEventEntity(JournalEventEntity.FULL_BACKUP, firstAt = clock()))
+            recomputeAchievements()
+        })
         return photos.size
     }
+
+    /** Badges earned by the current journal; recomputed where records or backup facts change. */
+    fun achievements(): List<AchievementEntity> = dao.achievements()
+
+    private fun recomputeAchievements(): List<AchievementEntity> =
+        if (achievementsEnabled) dao.recomputeAchievements({ File(it).isFile }, clock()) else emptyList()
 
     /** A journal JSON (v1 or v2) or a portable zip archive. Newer local versions are kept. */
     fun import(input: InputStream): JournalReport {
@@ -350,7 +365,10 @@ class InspectionJournal(
     private fun store(parsed: ParsedInspection, photoPath: String, operation: String) {
         val record = JournalRecords.toRecord(parsed, plotId(parsed.plot), photoPath)
         val change = SyncQueueEntity(entity = "inspection", entityId = parsed.id, operation = operation, createdAt = clock())
-        dao.saveRecord(record, change)
+        database.runInTransaction(Callable {
+            dao.saveRecord(record, change)
+            recomputeAchievements()
+        })
     }
 
     private fun plotId(name: String): String? {
