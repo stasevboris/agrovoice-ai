@@ -23,6 +23,7 @@ import com.agronomy.phytomonitor.location.LocationFixes
 import com.agronomy.phytomonitor.ml.PhotoFiles
 import java.io.File
 import java.util.concurrent.Executors
+import kotlinx.coroutines.CompletableDeferred
 
 class FieldDemoViewModel(application: Application) : AndroidViewModel(application) {
     val detector=FieldDetector(application)
@@ -39,19 +40,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     var plotsOpen by mutableStateOf(false)
     var plots by mutableStateOf<List<PlotSummary>>(emptyList()); private set
     var rowName by mutableStateOf(preferences.getString("row","") ?: ""); private set
-    /** A journal entry shown as saved: its own photo, frames and labels, without a new analysis. */
-    var openedInspection by mutableStateOf<SavedInspectionView?>(null); private set
     var noteDraft by mutableStateOf(""); private set
     var review by mutableStateOf("unrated"); private set
-    var journalOpen by mutableStateOf(false)
-    var journalEntries by mutableStateOf<List<InspectionEntry>>(emptyList()); private set
-    var journalQuery by mutableStateOf("")
-    var journalFilter by mutableStateOf("all")
     var plotName by mutableStateOf(preferences.getString("plot","") ?: ""); private set
-    val visibleInspections: List<InspectionEntry> get()=journalEntries.filter {
-        (journalFilter=="all" || it.review==journalFilter) &&
-            (journalQuery.isBlank() || listOf(it.plot,it.note,it.model).any {text->text.contains(journalQuery.trim(),ignoreCase=true)})
-    }
     var comparison by mutableStateOf<List<Pair<String,DetectionResult>>>(emptyList()); private set
     var showBoxes by mutableStateOf(true)
     var noteOpen by mutableStateOf(false)
@@ -76,8 +67,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     val inspectionSaved: Boolean
         get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName, rowName)
 
-    /** The last migration or import with its problems; shown in the journal until dismissed. */
-    var journalReport by mutableStateOf<JournalReport?>(null); private set
+    /** Journal screens await the one startup migration before reading or restoring records. */
+    val journalReady = CompletableDeferred<JournalReport?>()
 
     init {
         if(detector.models.none {it.id==selectedModel})selectedModel=detector.models.first().id
@@ -229,27 +220,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             val rows=fieldPlots.list()
             main.post {if(!cleared)plots=rows}
             if(unsavedReport?.name==report.name)unsavedReport=null
-            val entries=journal.list()
-            main.post {if(!cleared){journalEntries=entries;savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
+            main.post {if(!cleared){savedInspection=saved;busy=false;notify("Осмотр сохранён в журнале")}}
         }catch(error: Exception){postFailure(error)}}
     }
-    fun openInspection(id: String){
-        worker.execute {
-            val details=journal.details(id) ?: return@execute
-            val path=details.photos.firstOrNull()?.photo?.localPath
-            val photo=path?.let(::File)?.takeIf {it.isFile}?.let {runCatching {PhotoFiles.decode(it)}.getOrNull()}
-            main.post {if(!cleared)openedInspection=SavedInspectionView.of(details,photo)}
-        }
-    }
-    fun closeInspection(){openedInspection=null}
-    /** An explicit new analysis of a saved photo; the saved inspection itself stays as it was. */
-    fun reanalyseOpened(){
-        val path=openedInspection?.details?.photos?.firstOrNull()?.photo?.localPath ?: return
-        openedInspection=null
-        journalOpen=false
-        openFile(File(path))
-    }
-    fun openJournal(){journalOpen=true;worker.execute {val entries=journal.list();main.post {if(!cleared)journalEntries=entries}}}
     /** Runs on the worker before any journal read or write. Old JSON files are kept. */
     private fun migrateJournal() {
         val report = try {
@@ -257,48 +230,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         } catch (error: Exception) {
             JournalReport(InspectionJournal.SOURCE_LEGACY, issues = listOf(JournalIssue("журнал", error.message ?: "перенос не выполнен")))
         }
-        if (report != null && report.worthShowing) {
-            main.post { if (!cleared) journalReport = report }
-        }
-    }
-    fun dismissJournalReport() {
-        journalReport = null
-    }
-    fun exportJournal(uri: Uri, format: JournalExport = JournalExport.JSON) {
-        if(busy)return
-        busy=true
-        worker.execute {try {
-            val output=requireNotNull(getApplication<Application>().contentResolver.openOutputStream(uri,"wt")) {"Не удалось открыть файл"}
-            val done=output.use {stream ->
-                when(format) {
-                    JournalExport.JSON -> {
-                        stream.write(journal.export().toByteArray(Charsets.UTF_8))
-                        "Журнал сохранён в файл JSON. Фотографии в него не входят."
-                    }
-                    JournalExport.CSV -> {
-                        stream.write(journal.exportCsv().toByteArray(Charsets.UTF_8))
-                        "Таблица CSV сохранена. Фотографии в неё не входят."
-                    }
-                    JournalExport.ARCHIVE -> {
-                        val photos=journal.exportArchive(stream)
-                        "Архив журнала сохранён, фото в нём: $photos."
-                    }
-                }
-            }
-            main.post {if(!cleared){busy=false;notify(done)}}
-        }catch(error: Exception){postFailure(error)}}
-    }
-    /** A journal JSON or archive chosen by the user; the report lists what was taken and what was not. */
-    fun importJournal(uri: Uri) {
-        if(busy)return
-        busy=true
-        message=null
-        worker.execute {try {
-            val input=requireNotNull(getApplication<Application>().contentResolver.openInputStream(uri)) {"Не удалось открыть файл"}
-            val report=input.use {journal.import(it)}
-            val entries=journal.list()
-            main.post {if(!cleared){journalEntries=entries;journalReport=report;busy=false}}
-        }catch(error: Exception){postFailure(error)}}
+        journalReady.complete(report)
     }
     fun compareModels(){
         val source=bitmap ?: run {showError("Сначала выбери фото");return};val file=photo ?: return

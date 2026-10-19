@@ -1,0 +1,23 @@
+{
+  "jvm": {
+    "tests": 126,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "build": "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+  "build_status": "passed",
+  "phone": "Redmi Note 7; adb install -r + am instrument",
+  "phone_tests": {
+    "JournalNavigationTest": 1,
+    "NoteSpeechFlowTest": 2,
+    "InspectionToolsTest": 2
+  },
+  "phone_tests_status": "passed",
+  "preservation": {
+    "tables": true,
+    "files": true,
+    "settings_values": true
+  },
+  "scope": "Journal route and record survive Activity recreation; system/voice back return one screen; no new analysis on open. Camera/gallery/plots and old worker code remain for subsequent A-10 steps."
+}

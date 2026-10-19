@@ -43,7 +43,15 @@ import com.agronomy.phytomonitor.voice.OfflineResultSpeaker
 import com.agronomy.phytomonitor.voice.HeadsetButton
 import com.agronomy.phytomonitor.voice.HeadsetButtonPolicy
 import com.agronomy.phytomonitor.voice.HeadsetPress
+import com.agronomy.phytomonitor.voice.VoiceRouter
 import kotlinx.coroutines.delay
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.agronomy.phytomonitor.journal.JournalViewModel
+import java.io.File
 
 class FieldDemoActivity : ComponentActivity() {
     private lateinit var voice: OfflineVoiceController
@@ -54,6 +62,8 @@ class FieldDemoActivity : ComponentActivity() {
     internal val resultSpeaker: OfflineResultSpeaker get()=speaker
     internal lateinit var photoFlow: PhotoFlowViewModel; private set
     internal lateinit var fieldModel: FieldDemoViewModel; private set
+    internal lateinit var journalModel: JournalViewModel; private set
+    private var navigation: NavHostController? = null
     private var foreground by mutableStateOf(false)
     private var galleryWithVoice=false
     private var automaticCamera=false
@@ -95,27 +105,10 @@ class FieldDemoActivity : ComponentActivity() {
     }
     /** Microphone results and instrumentation-decoded phrases go through the same executor as buttons. */
     internal fun handleVoiceCommand(command: VoiceCommand) {
-        if (!foreground) {
-            return
-        }
-        val request = ActionRequest(command.action, command.value, ActionSource.VOICE)
-        val verdict = actions.dispatch(request)
-        afterVoiceCommand(request, verdict)
+        voiceRouter.command(command)
     }
 
     /** V-02: a photo or check asked by voice is answered aloud; the answer to the question is a command too. */
-    private fun afterVoiceCommand(request: ActionRequest, verdict: Verdict) {
-        if (followUp.phase == FollowUpDialog.Phase.FOLLOW_UP) {
-            followUp.commandHandled(request, verdict)?.let(::sayFollowUp)
-        } else if (request.action in setOf(VoiceAction.CANCEL, VoiceAction.BACK, VoiceAction.LISTEN_OFF, VoiceAction.EXIT)) {
-            followUp.stop()
-        } else if (verdict is Verdict.Run && verdict.operations.any { it in startsAnalysis || it is Operation.OpenCamera }) {
-            followUp.voiceAnalysisRequested()
-        }
-        followUpPhase = followUp.phase
-    }
-
-    private val startsAnalysis = setOf(Operation.TakeShot, Operation.ConfirmGallery, Operation.Analyze)
 
     private fun sayFollowUp(prompt: FollowUpDialog.Prompt) {
         val text = if (prompt == FollowUpDialog.Prompt.RESULT_AND_QUESTION) {
@@ -142,17 +135,14 @@ class FieldDemoActivity : ComponentActivity() {
      * ml-pipeline/assistant. No model produces it in the app yet.
      */
     internal fun handleAssistantAnswer(json: String, utterance: String): AssistantPlan? {
-        if (!foreground) {
-            return null
-        }
-        return actions.submit(json, utterance)
+        return voiceRouter.answer(json, utterance)
     }
 
     internal fun currentState(): AppState = AppState(
         screen = currentScreen(),
         hasPhoto = fieldModel.bitmap != null,
         hasResult = fieldModel.reportName != null,
-        busy = fieldModel.busy,
+        busy = fieldModel.busy || journalModel.state.value.busy,
         inspectionSaved = fieldModel.inspectionSaved,
         review = fieldModel.review,
         galleryCount = if (photoFlow.loading) 0 else photoFlow.photos.size,
@@ -168,7 +158,7 @@ class FieldDemoActivity : ComponentActivity() {
         plots = fieldModel.plots.map { it.plot.name },
         plot = fieldModel.plotName,
         row = fieldModel.rowName,
-        inspectionOpen = fieldModel.openedInspection != null,
+        inspectionOpen = navigation?.currentDestination?.route == "inspection/{id}",
         followUp = followUp.awaitingAnswer
     )
 
@@ -186,15 +176,25 @@ class FieldDemoActivity : ComponentActivity() {
                 is Operation.ShowHelp -> photoFlow.helpOpen = operation.visible
                 Operation.Exit -> finish()
                 Operation.CloseNote -> closeNote()
-                Operation.CloseJournal -> fieldModel.journalOpen = false
-                Operation.CloseInspection -> fieldModel.closeInspection()
+                Operation.CloseJournal -> navigation?.popBackStack("main", false)
+                Operation.CloseInspection -> {
+                    journalModel.closeInspection()
+                    navigation?.popBackStack()
+                }
                 // The dialog itself answers «Не сохраняю» after the verdict.
                 Operation.EndFollowUp -> Unit
                 Operation.ClosePhotoFlow -> closePhotoFlow()
                 Operation.StopSpeech -> speaker.stop()
-                is Operation.Scroll -> photoFlow.scroll(operation.direction)
+                is Operation.Scroll -> if (currentScreen() == Screen.JOURNAL) {
+                    journalModel.scroll(operation.direction)
+                } else {
+                    photoFlow.scroll(operation.direction)
+                }
                 is Operation.OpenNote -> openNote(operation.dictate)
-                Operation.OpenJournal -> fieldModel.openJournal()
+                Operation.OpenJournal -> {
+                    journalModel.refresh()
+                    navigation?.navigate("journal") { launchSingleTop = true }
+                }
                 Operation.OpenPlots -> fieldModel.openPlots()
                 Operation.ClosePlots -> fieldModel.plotsOpen = false
                 is Operation.SelectPlot -> fieldModel.editPlot(operation.name)
@@ -243,6 +243,11 @@ class FieldDemoActivity : ComponentActivity() {
     private val followUp = FollowUpDialog()
     /** Compose-visible copy of the dialog phase: it decides whether to listen after speech. */
     private var followUpPhase by mutableStateOf(FollowUpDialog.Phase.IDLE)
+    private val voiceRouter: VoiceRouter by lazy {
+        VoiceRouter(::screenFromNavigation, { foreground }, actions, followUp, ::sayFollowUp) {
+            followUpPhase = it
+        }
+    }
     /** V-01: one headset button for hands-free work; see HeadsetButtonPolicy. */
     internal fun headsetPress() {
         if (!foreground) {
@@ -281,11 +286,12 @@ class FieldDemoActivity : ComponentActivity() {
         photoFlow.galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
         else->VoiceCommands.mainGrammar(fieldModel.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
     }
-    private fun currentScreen(): Screen = when {
+    private fun currentScreen(): Screen = voiceRouter.screen
+    private fun screenFromNavigation(): Screen = when {
         fieldModel.noteOpen -> if (fieldModel.dictating) Screen.NOTE else Screen.NOTE_REVIEW
         photoFlow.cameraOpen -> Screen.CAMERA
         photoFlow.galleryOpen -> Screen.GALLERY
-        fieldModel.journalOpen -> Screen.JOURNAL
+        navigation?.currentDestination?.route in setOf("journal", "inspection/{id}") -> Screen.JOURNAL
         fieldModel.plotsOpen -> Screen.PLOTS
         else -> Screen.MAIN
     }
@@ -339,29 +345,29 @@ class FieldDemoActivity : ComponentActivity() {
         speaker=OfflineResultSpeaker(applicationContext)
         photoFlow=ViewModelProvider(this)[PhotoFlowViewModel::class.java]
         fieldModel=ViewModelProvider(this)[FieldDemoViewModel::class.java]
+        journalModel=ViewModelProvider(this)[JournalViewModel::class.java]
+        journalModel.connect(fieldModel.journalReady)
         voice.onCommand=::handleVoiceCommand
-        voice.onCommands={commands->
-            if(foreground){
-                followUp.stop()
-                followUpPhase=followUp.phase
-                actions.submitPlan(commands.map {ActionRequest(it.action,it.value,ActionSource.VOICE)})
-            }
-        }
+        voice.onCommands=voiceRouter::plan
         voice.onFailure={photoFlow.setContinuous(false);photoFlow.dialogVoice=false}
         voice.onDictation={text->fieldModel.editNote((fieldModel.noteDraft+" "+text).trim())}
         voice.onDictationFinished={fieldModel.dictating=false;fieldModel.noteReviewVoice=true}
         setContent {
             AgroVoiceAITheme {
                 val model=fieldModel
+                val navController = rememberNavController()
+                val backStackEntry by navController.currentBackStackEntryAsState()
+                val route = backStackEntry?.destination?.route ?: "main"
+                val journalState by journalModel.state.collectAsState()
+                SideEffect { navigation = navController }
                 val gallery=rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri -> if(uri!=null)model.importPhoto(uri) }
                 // One document type per format, so the file picker suggests the right extension.
                 val exports=JournalExport.entries.associateWith {format->
-                    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(format.mimeType)){uri->if(uri!=null)model.exportJournal(uri,format)}
+                    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(format.mimeType)){uri->if(uri!=null)journalModel.export(uri,format)}
                 }
-                val restore=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()){uri->if(uri!=null)model.importJournal(uri)}
+                val restore=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()){uri->if(uri!=null)journalModel.restore(uri)}
                 val systemPicker: ()->Unit={closePhotoFlow();gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))}
                 SideEffect {systemGallery=systemPicker}
-                BackHandler(model.noteOpen || model.journalOpen || model.plotsOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen){press(VoiceAction.BACK)}
                 val context=currentScreen().protocolName
                 val eligible=foreground && !speaker.active && !photoFlow.loading && !photoFlow.shotRequested && !photoFlow.cameraCapturing
                 LaunchedEffect(context,model.dictating,model.noteReviewVoice,photoFlow.continuousVoice,photoFlow.dialogVoice,eligible,voice.active,followUpPhase) {
@@ -418,12 +424,42 @@ class FieldDemoActivity : ComponentActivity() {
                                 VoiceStrip(voice,photoFlow,::voiceButton,::setContinuous,hint="Номер → просмотр → «подтвердить».")
                             }
                             model.plotsOpen->PlotsScreen(model,onBack={press(VoiceAction.BACK)},onSelect={name->press(VoiceAction.PLOT,name)})
-                            model.journalOpen && model.openedInspection!=null->SavedInspectionScreen(model.openedInspection!!,onBack={press(VoiceAction.BACK)},onReanalyse=model::reanalyseOpened)
-                            model.journalOpen->JournalScreen(model,onBack={press(VoiceAction.BACK)},onExport=exportJournal,onImport=importJournal)
-                            else->FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation)
+                            else -> NavHost(navController, startDestination = "main") {
+                                composable("main") {
+                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation)
+                                }
+                                composable("journal") {
+                                    JournalScreen(journalModel, model.detector.models.associate { it.id to it.name },
+                                        onOpen = { id -> navController.navigate("inspection/$id") },
+                                        onBack = { press(VoiceAction.BACK) }, onExport = exportJournal, onImport = importJournal)
+                                }
+                                composable("inspection/{id}") { entry ->
+                                    val id = requireNotNull(entry.arguments?.getString("id"))
+                                    LaunchedEffect(id) { journalModel.openInspection(id) }
+                                    val saved = journalState.opened
+                                    if (saved == null) {
+                                        Column {
+                                            Text(journalState.message ?: "Открываю сохранённый осмотр…")
+                                            TextButton(onClick = { press(VoiceAction.BACK) }) { Text("Назад в журнал") }
+                                        }
+                                    } else {
+                                        SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) }, onReanalyse = {
+                                            val path = saved.details.photos.firstOrNull()?.photo?.localPath
+                                            if (path != null) {
+                                                journalModel.closeInspection()
+                                                navController.popBackStack("main", false)
+                                                model.openFile(File(path))
+                                            }
+                                        })
+                                    }
+                                }
+                            }
                         }
                         InspectionDialogs(model,::dictateNote,onConfirm={press(VoiceAction.CONFIRM)},onCloseNote={press(VoiceAction.CANCEL)})
                     }
+                }
+                BackHandler(model.noteOpen || route != "main" || model.plotsOpen || photoFlow.galleryOpen || photoFlow.cameraOpen || photoFlow.helpOpen) {
+                    press(VoiceAction.BACK)
                 }
             }
         }

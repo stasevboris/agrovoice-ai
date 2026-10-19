@@ -37,6 +37,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.lazy.rememberLazyListState
+import com.agronomy.phytomonitor.journal.JournalViewModel
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenu
@@ -280,17 +284,32 @@ internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Uni
 
 /** Full-screen journal of saved inspections with search, filter, export and restore. */
 @Composable
-internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExport: (JournalExport) -> Unit, onImport: () -> Unit) {
+internal fun JournalScreen(model: JournalViewModel, modelNames: Map<String, String>, onOpen: (String) -> Unit,
+                           onBack: () -> Unit, onExport: (JournalExport) -> Unit, onImport: () -> Unit) {
+    val state by model.state.collectAsState()
+    val listState = rememberLazyListState()
+    LaunchedEffect(state.scrollSequence) {
+        if (state.scrollSequence > 0) {
+            val last = (listState.layoutInfo.totalItemsCount - 1).coerceAtLeast(0)
+            val target = when (state.scrollDirection) {
+                "top" -> 0
+                "bottom" -> last
+                "up" -> (listState.firstVisibleItemIndex - 3).coerceAtLeast(0)
+                else -> (listState.firstVisibleItemIndex + 3).coerceAtMost(last)
+            }
+            listState.animateScrollToItem(target)
+        }
+    }
     var exportMenu by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize()) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) { Icon(AgroIcons.Back, contentDescription = "Закрыть журнал") }
             Text("Журнал осмотров", style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-            IconButton(onClick = onImport, enabled = !model.busy) {
+            IconButton(onClick = onImport, enabled = !state.busy) {
                 Icon(AgroIcons.Upload, contentDescription = "Восстановить из архива или JSON")
             }
             Box {
-                IconButton(onClick = { exportMenu = true }, enabled = !model.busy && model.journalEntries.isNotEmpty()) {
+                IconButton(onClick = { exportMenu = true }, enabled = !state.busy && state.entries.isNotEmpty()) {
                     Icon(AgroIcons.Download, contentDescription = "Сохранить журнал в файл")
                 }
                 DropdownMenu(expanded = exportMenu, onDismissRequest = { exportMenu = false }) {
@@ -305,13 +324,14 @@ internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExpo
         }
         LazyColumn(
             Modifier.fillMaxSize(),
+            state = listState,
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
                 OutlinedTextField(
-                    value = model.journalQuery,
-                    onValueChange = { model.journalQuery = it },
+                    value = state.query,
+                    onValueChange = model::query,
                     label = { Text("Поиск: участок, заметка, модель") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
@@ -320,35 +340,36 @@ internal fun JournalScreen(model: FieldDemoViewModel, onBack: () -> Unit, onExpo
             item {
                 Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     listOf("all" to "Все", "correct" to "Верно", "incorrect" to "Неверно", "uncertain" to "Не уверен", "unrated" to "Без оценки").forEach { (id, label) ->
-                        FilterChip(selected = model.journalFilter == id, onClick = { model.journalFilter = id }, label = { Text(label) })
+                        FilterChip(selected = state.filter == id, onClick = { model.filter(id) }, label = { Text(label) })
                     }
                 }
             }
-            model.journalReport?.let { report ->
-                item { JournalReportCard(report, onDismiss = model::dismissJournalReport) }
+            state.report?.let { report ->
+                item { JournalReportCard(report, onDismiss = model::dismissReport) }
             }
             item {
                 Text(
-                    "Найдено: ${model.visibleInspections.size} / ${model.journalEntries.size}. Архив с фото переносит журнал на другой телефон; JSON и CSV — без фото.",
+                    "Найдено: ${state.visible.size} / ${state.entries.size}. Архив с фото переносит журнал на другой телефон; JSON и CSV — без фото.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            if (model.journalEntries.isEmpty()) {
+            state.message?.let { message -> item { Text(message) } }
+            if (state.entries.isEmpty()) {
                 item {
                     Text("Пока нет сохранённых осмотров. Дождись анализа и нажми «Сохранить осмотр».", style = MaterialTheme.typography.bodyLarge)
                 }
             }
-            items(model.visibleInspections, key = { it.id }) { entry ->
-                JournalEntryCard(model, entry, onOpen = { model.openInspection(entry.id) })
+            items(state.visible, key = { it.id }) { entry ->
+                JournalEntryCard(modelNames, entry, onOpen = { onOpen(entry.id) })
             }
         }
     }
 }
 
 @Composable
-private fun JournalEntryCard(model: FieldDemoViewModel, entry: InspectionEntry, onOpen: () -> Unit) {
-    val modelName = model.detector.models.firstOrNull { it.id == entry.model }?.name ?: entry.model
+private fun JournalEntryCard(modelNames: Map<String, String>, entry: InspectionEntry, onOpen: () -> Unit) {
+    val modelName = modelNames[entry.model] ?: entry.model
     val date = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(entry.created))
     val colors = MaterialTheme.colorScheme
     val (reviewContainer, reviewContent) = when (entry.review) {
