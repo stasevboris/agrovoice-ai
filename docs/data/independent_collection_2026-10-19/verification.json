@@ -1,0 +1,11 @@
+{
+  "command": "ml-pipeline/venv/Scripts/python.exe -X utf8 -m unittest discover -s ml-pipeline/tests",
+  "tests": 102,
+  "result": "OK",
+  "log": "artifacts\\verification\\offline_20261019\\python-tests.log",
+  "collection_command": "ml-pipeline/venv/Scripts/python.exe -X utf8 ml-pipeline/collection/validate_collection.py ml-pipeline/collection/manifest.template.csv --data-root artifacts/collection --out docs/data/independent_collection_2026-10-19/report.json",
+  "collection_status": "awaiting_data",
+  "evaluated_real_samples": 0,
+  "training": "Not launched: independent observations and complete class coverage are still missing; deadline is 2026-10-19T22:00:00+03:00",
+  "initial_test_issue": "JPEG fixtures with nearly identical solid colors encoded to identical bytes; duplicate rejection was correct. Made fixture colors distinct and reran all Python tests successfully."
+}

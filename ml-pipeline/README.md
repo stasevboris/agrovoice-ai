@@ -11,6 +11,7 @@
 |---|---|---|
 | Сборка allcrops | [build_allcrops_v1.py](build_allcrops_v1.py), [taxonomy_v1.json](allcrops/taxonomy_v1.json) | Набор, manifest и report; порядок классов не менять |
 | Источники и ext_v2 | [external/](external/), [источники](../docs/data/SOURCES.md) | Данные с происхождением и ограничениями геометрии |
+| Независимые фото и речь | [collection/](collection/) | Протокол реального сбора, проверка групп/согласий/медиа, оценка отказов и исполненных действий; пустой шаблон не считается test |
 | Строгий набор, unknown, негативы, веб-фото | [external/prepare_vision_alternatives.py](external/prepare_vision_alternatives.py), остальные `external/prepare_*` | Раздельные наборы по назначению, не новые диагнозы |
 | Русский помощник | [assistant/prepare_corpus.py](assistant/prepare_corpus.py), [scenarios.json](assistant/scenarios.json), [run_ollama_router.py](assistant/run_ollama_router.py) | Синтетические сценарии и целевые действия; Android проверяет тот же JSON-протокол. Сбор ответов локальной LLM для сравнения — [отчёт V-06](../docs/experiments/v06_intent_baseline/README.md) |
 | Baseline allcrops | [gpu_kit/README.md](gpu_kit/README.md), [train_queue.py](gpu_kit/train_queue.py) | Обучение, оценка, экспорт и пакет результатов |

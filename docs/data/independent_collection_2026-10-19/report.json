@@ -1,0 +1,13 @@
+{
+  "status": "awaiting_data",
+  "samples": 0,
+  "counts": {},
+  "has_val_and_test": false,
+  "errors": [],
+  "sha256": {},
+  "limitations": [
+    "Provenance, consent and expert labels still require human verification.",
+    "Exact hashes do not detect near-duplicates; review acquisition groups before freezing test.",
+    "Valid rows alone do not prove sufficient coverage or model quality."
+  ]
+}
