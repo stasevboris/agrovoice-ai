@@ -45,6 +45,7 @@ object AssistantProtocol {
         .put("pending", state.pending ?: JSONObject.NULL)
         .put("plots", JSONArray(state.plots))
         .put("pending_plot_name", state.pendingPlotDeletion?.name ?: JSONObject.NULL)
+        .put("settings", JSONObject(state.settings))
         .put("speaking", state.speaking)
         .put("help_open", state.helpOpen)
         .put("verified_kb", state.verifiedKnowledge)
@@ -128,7 +129,8 @@ object NegationGuard {
         VoiceAction.CAMERA, VoiceAction.OPEN_CAMERA, VoiceAction.CAMERA_NOW,
         VoiceAction.GALLERY, VoiceAction.SYSTEM_GALLERY, VoiceAction.ANALYZE, VoiceAction.COMPARE,
         VoiceAction.NOTE, VoiceAction.CLEAR_NOTE, VoiceAction.JOURNAL, VoiceAction.JOURNAL_NUMBER, VoiceAction.LISTEN_ON,
-        VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT
+        VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT,
+        VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL, VoiceAction.IMPORT_JOURNAL
     )
 
     fun blocks(utterance: String, step: ActionRequest): Boolean {

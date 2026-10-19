@@ -27,6 +27,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.agronomy.phytomonitor.actions.ActionDispatcher
 import com.agronomy.phytomonitor.actions.ActionPort
 import com.agronomy.phytomonitor.actions.ActionRequest
@@ -90,6 +92,8 @@ class FieldDemoActivity : ComponentActivity() {
     private var requestContinuous=false
     private var requestDictation=false
     private var systemGallery: ()->Unit={}
+    private var exportJournalFile: (JournalExport) -> Unit = {}
+    private var importJournalFile: () -> Unit = {}
     private val microphone=registerForActivityResult(ActivityResultContracts.RequestPermission()) {granted ->
         if(granted && foreground && settings.state.value?.voiceEnabled == true) {
             if(requestDictation && fieldModel.noteOpen){requestDictation=false;fieldModel.dictating=true}
@@ -208,6 +212,9 @@ class FieldDemoActivity : ComponentActivity() {
         row = fieldModel.rowName,
         inspectionOpen = navigation?.currentDestination?.route == "inspection/{id}",
         journalIds = journalModel.state.value.visible.map { it.id },
+        journalCount = journalModel.state.value.entries.size,
+        settings = settings.state.value?.let { mapOf("voice_enabled" to it.voiceEnabled,
+            "spoken_follow_up" to it.spokenFollowUp, "free_speech" to it.freeSpeech) }.orEmpty(),
         openedInspectionId = journalModel.state.value.opened?.details?.inspection?.id?.takeIf {
             it == navigation?.currentBackStackEntry?.arguments?.getString("id")
         },
@@ -291,6 +298,40 @@ class FieldDemoActivity : ComponentActivity() {
                     navigation?.popBackStack()
                 }
                 Operation.OpenSettings -> navigation?.navigate("settings") { launchSingleTop = true }
+                is Operation.SetSetting -> lifecycleScope.launch {
+                    when (operation.key) {
+                        "voice_enabled" -> settingsModel.voiceEnabled(operation.enabled)
+                        "spoken_follow_up" -> settingsModel.spokenFollowUp(operation.enabled)
+                        else -> settingsModel.freeSpeech(operation.enabled)
+                    }.join()
+                    val error = settingsModel.error.value
+                    if (error != null) speak(error)
+                    else speak(if (operation.key == "voice_enabled" && !operation.enabled)
+                        "Голосовое управление выключено. Включить его снова можно переключателем в настройках."
+                        else "Настройка сохранена.")
+                }
+                is Operation.Search -> {
+                    if (operation.screen == Screen.JOURNAL) {
+                        journalModel.query(operation.query)
+                        if (currentState().inspectionOpen) {
+                            journalModel.closeInspection()
+                            navigation?.popBackStack("journal", false)
+                        }
+                    } else {
+                        knowledgeModel.query(operation.query)
+                        knowledgeModel.select(null)
+                        navigation?.popBackStack("knowledge", false)
+                    }
+                }
+                is Operation.FilterJournal -> journalModel.filter(operation.filter)
+                is Operation.ExportJournal -> {
+                    speak("Выбери место сохранения в системном окне Android. Голос AgroVoice этим окном не управляет.")
+                    exportJournalFile(JournalExport.entries.first { it.name.equals(operation.format, ignoreCase = true) })
+                }
+                Operation.ImportJournal -> {
+                    speak("Выбери архив или JSON в системном окне Android. Голос AgroVoice этим окном не управляет.")
+                    importJournalFile()
+                }
                 Operation.CloseSettings -> navigation?.popBackStack()
                 is Operation.OpenKnowledge -> {
                     voice.stop()
@@ -420,9 +461,7 @@ class FieldDemoActivity : ComponentActivity() {
         photoFlow.freeSpeech->null
         cameraOpen->VoiceCommands.cameraGrammar
         galleryOpen->VoiceCommands.galleryGrammar(photoFlow.photos.size)
-        currentScreen() == Screen.KNOWLEDGE -> VoiceCommands.knowledgeGrammar(knowledgeModel.state.value.visible.size)
-        currentScreen() == Screen.JOURNAL -> VoiceCommands.journalGrammar(journalModel.state.value.visible.size)
-        currentScreen() == Screen.PLOTS -> null // New plot names require the unrestricted Russian vocabulary.
+        currentScreen() in setOf(Screen.KNOWLEDGE, Screen.JOURNAL, Screen.PLOTS, Screen.SETTINGS) -> null // Search and new names need unrestricted vocabulary.
         else->VoiceCommands.mainGrammar(plotsModel.state.value.plots.map {it.plot.name},followUp=followUp.awaitingAnswer)
     }
     private fun currentScreen(): Screen = voiceRouter.screen
@@ -610,6 +649,10 @@ class FieldDemoActivity : ComponentActivity() {
                     voice.stop()
                     restore.launch(arrayOf("application/zip","application/json","application/octet-stream"))
                 }
+                SideEffect {
+                    exportJournalFile = exportJournal
+                    importJournalFile = importJournal
+                }
                 // Confirmations of finished actions («сохранено», «снято») appear for a moment; errors stay as banners.
                 val snackbar=remember {SnackbarHostState()}
                 val notice=model.message?.takeIf {!model.messageIsError || route != "main"}
@@ -657,10 +700,14 @@ class FieldDemoActivity : ComponentActivity() {
                                 composable("journal") {
                                     JournalScreen(journalModel, model.detector.models.associate { it.id to it.name },
                                         onOpen = { id -> press(VoiceAction.JOURNAL_NUMBER, (journalModel.state.value.visible.indexOfFirst { it.id == id } + 1).toString()) },
-                                        onBack = { press(VoiceAction.BACK) }, onExport = exportJournal, onImport = importJournal)
+                                        onBack = { press(VoiceAction.BACK) },
+                                        onExport = { press(VoiceAction.EXPORT_JOURNAL, it.name.lowercase()) },
+                                        onImport = { press(VoiceAction.IMPORT_JOURNAL) },
+                                        onQuery = { press(VoiceAction.SEARCH, it) }, onFilter = { press(VoiceAction.JOURNAL_FILTER, it) })
                                 }
                                 composable("settings") {
-                                    SettingsScreen(settingsModel, onBack = { press(VoiceAction.BACK) })
+                                    SettingsScreen(settingsModel, onBack = { press(VoiceAction.BACK) },
+                                        onSetting = { key, enabled -> press(VoiceAction.SET_SETTING, "$key:$enabled") })
                                 }
                                 composable("plots") {
                                     PlotsScreen(plotsModel, model.plotName, model.rowName,
@@ -672,14 +719,14 @@ class FieldDemoActivity : ComponentActivity() {
                                     KnowledgeScreen(knowledgeModel, onBack = { press(VoiceAction.BACK) },
                                         onOpen = { code -> press(VoiceAction.KNOWLEDGE_NUMBER, (knowledgeModel.state.value.visible.indexOfFirst { it.code == code } + 1).toString()) },
                                         onRead = { press(VoiceAction.READ_KNOWLEDGE) },
-                                        onCrop = { press(VoiceAction.CROP, it) })
+                                        onCrop = { press(VoiceAction.CROP, it) }, onQuery = { press(VoiceAction.SEARCH, it) })
                                 }
                                 composable("knowledge/{code}") { entry ->
                                     LaunchedEffect(entry) { knowledgeModel.select(entry.arguments?.getString("code")) }
                                     KnowledgeScreen(knowledgeModel, onBack = { press(VoiceAction.BACK) },
                                         onOpen = { code -> press(VoiceAction.KNOWLEDGE_NUMBER, (knowledgeModel.state.value.visible.indexOfFirst { it.code == code } + 1).toString()) },
                                         onRead = { press(VoiceAction.READ_KNOWLEDGE) },
-                                        onCrop = { press(VoiceAction.CROP, it) })
+                                        onCrop = { press(VoiceAction.CROP, it) }, onQuery = { press(VoiceAction.SEARCH, it) })
                                 }
                                 composable("inspection/{id}") { entry ->
                                     val id = requireNotNull(entry.arguments?.getString("id"))

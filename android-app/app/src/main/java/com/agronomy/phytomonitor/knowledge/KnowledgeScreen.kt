@@ -29,7 +29,7 @@ import com.agronomy.phytomonitor.ml.CropVocabulary
 
 @Composable
 fun KnowledgeScreen(model: KnowledgeViewModel, onBack: () -> Unit, onOpen: (String) -> Unit, onRead: () -> Unit,
-                    onCrop: (String) -> Unit) {
+                    onCrop: (String) -> Unit, onQuery: (String) -> Unit) {
     val state by model.state.collectAsState()
     val links = LocalUriHandler.current
     var cropsOpen by remember { mutableStateOf(false) }
@@ -46,7 +46,7 @@ fun KnowledgeScreen(model: KnowledgeViewModel, onBack: () -> Unit, onOpen: (Stri
         state.error?.let { error -> item { Text(error, color = MaterialTheme.colorScheme.error) } }
         if (card == null && state.selectedCode == null) {
             item {
-                OutlinedTextField(state.query, model::query, label = { Text("Поиск по справочнику") },
+                OutlinedTextField(state.query, onQuery, label = { Text("Поиск по справочнику") },
                     modifier = Modifier.fillMaxWidth(), singleLine = true)
                 TextButton(onClick = { cropsOpen = true }) { Text(CropVocabulary.names[state.crop] ?: "Все культуры") }
                 DropdownMenu(cropsOpen, onDismissRequest = { cropsOpen = false }) {

@@ -292,7 +292,8 @@ internal fun InspectionDialogs(model: FieldDemoViewModel, onDictation: () -> Uni
 /** Full-screen journal of saved inspections with search, filter, export and restore. */
 @Composable
 internal fun JournalScreen(model: JournalViewModel, modelNames: Map<String, String>, onOpen: (String) -> Unit,
-                           onBack: () -> Unit, onExport: (JournalExport) -> Unit, onImport: () -> Unit) {
+                           onBack: () -> Unit, onExport: (JournalExport) -> Unit, onImport: () -> Unit,
+                           onQuery: (String) -> Unit, onFilter: (String) -> Unit) {
     val state by model.state.collectAsState()
     val listState = rememberLazyListState()
     LaunchedEffect(state.scrollSequence) {
@@ -338,7 +339,7 @@ internal fun JournalScreen(model: JournalViewModel, modelNames: Map<String, Stri
             item {
                 OutlinedTextField(
                     value = state.query,
-                    onValueChange = model::query,
+                    onValueChange = onQuery,
                     label = { Text("Поиск: участок, заметка, модель") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
@@ -347,7 +348,7 @@ internal fun JournalScreen(model: JournalViewModel, modelNames: Map<String, Stri
             item {
                 Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     listOf("all" to "Все", "correct" to "Верно", "incorrect" to "Неверно", "uncertain" to "Не уверен", "unrated" to "Без оценки").forEach { (id, label) ->
-                        FilterChip(selected = state.filter == id, onClick = { model.filter(id) }, label = { Text(label) })
+                        FilterChip(selected = state.filter == id, onClick = { onFilter(id) }, label = { Text(label) })
                     }
                 }
             }

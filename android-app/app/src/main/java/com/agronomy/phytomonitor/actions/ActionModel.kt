@@ -60,6 +60,8 @@ data class AppState(
     val row: String = "",
     val inspectionOpen: Boolean = false,
     val journalIds: List<String> = emptyList(),
+    val journalCount: Int = 0,
+    val settings: Map<String, Boolean> = emptyMap(),
     val openedInspectionId: String? = null,
     val editingInspectionId: String? = null,
     val resultOpen: Boolean = false,
@@ -107,6 +109,11 @@ sealed interface Operation {
     data object CancelPlotDeletion : Operation
     data object ClosePlots : Operation
     data object OpenSettings : Operation
+    data class SetSetting(val key: String, val enabled: Boolean) : Operation
+    data class Search(val screen: Screen, val query: String) : Operation
+    data class FilterJournal(val filter: String) : Operation
+    data class ExportJournal(val format: String) : Operation
+    data object ImportJournal : Operation
     data object CloseSettings : Operation
     data class OpenKnowledge(val withVoice: Boolean) : Operation
     data class OpenKnowledgeCard(val code: String, val withVoice: Boolean) : Operation

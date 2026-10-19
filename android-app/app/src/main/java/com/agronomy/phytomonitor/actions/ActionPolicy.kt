@@ -45,7 +45,8 @@ object ActionPolicy {
     private val actionsWithValue = setOf(
         VoiceAction.MODEL, VoiceAction.CROP, VoiceAction.THRESHOLD, VoiceAction.SCROLL,
         VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER,
-        VoiceAction.JOURNAL_NUMBER, VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT
+        VoiceAction.JOURNAL_NUMBER, VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT,
+        VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -72,6 +73,7 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            in BrowseActions.actions -> BrowseActions.resolve(request, state)
             in PlotActions.actions -> PlotActions.resolve(request, state)
             VoiceAction.JOURNAL_NUMBER -> openInspection(request, state)
             VoiceAction.NOTE -> if (state.screen == Screen.JOURNAL) {
@@ -137,6 +139,7 @@ object ActionPolicy {
             return if (value.isEmpty()) null else Verdict.Reject("У этого действия нет параметров.")
         }
         return when (request.action) {
+            in BrowseActions.actions -> null
             in PlotActions.actions -> null // PlotActions checks the names and structured rename argument.
             VoiceAction.MODEL -> if (value in state.availableModels) null else Verdict.Reject("Модель недоступна в текущем приложении.")
             VoiceAction.CROP -> when {

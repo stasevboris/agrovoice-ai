@@ -3,7 +3,15 @@ package com.agronomy.phytomonitor.voice
 import com.agronomy.phytomonitor.ml.CropVocabulary
 import java.util.Locale
 
-enum class VoiceAction { CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP, CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP, THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO, CONFIRM, NOTE, CLEAR_NOTE, JOURNAL, JOURNAL_NUMBER, SAVE_INSPECTION, ASSESS, COMPARE, SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, CREATE_PLOT, RENAME_PLOT, DELETE_PLOT, SETTINGS, KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS }
+enum class VoiceAction {
+    CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP,
+    CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP,
+    THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO,
+    CONFIRM, NOTE, CLEAR_NOTE, JOURNAL, JOURNAL_NUMBER, SAVE_INSPECTION, ASSESS, COMPARE,
+    SPEAK_RESULT, SILENCE, SHOW_BOXES, HIDE_BOXES, ROW, PLOT, PLOTS, CREATE_PLOT, RENAME_PLOT,
+    DELETE_PLOT, SETTINGS, SET_SETTING, SEARCH, JOURNAL_FILTER, EXPORT_JOURNAL, IMPORT_JOURNAL,
+    KNOWLEDGE, READ_KNOWLEDGE, KNOWLEDGE_NUMBER, KNOWLEDGE_NEXT, KNOWLEDGE_PREVIOUS
+}
 data class VoiceCommand(val action: VoiceAction, val label: String, val value: String = "")
 
 /** Exact fixed intents: no substring guessing and no action from partial speech. */
@@ -139,6 +147,7 @@ object VoiceCommands {
     }
     fun parseForScreen(text: String, screen: String, plots: Collection<String> = emptyList()): VoiceCommand? {
         if(screen=="note")return null
+        com.agronomy.phytomonitor.actions.BrowseActions.parse(text, screen)?.let { return it }
         if (screen == "plots") {
             com.agronomy.phytomonitor.actions.PlotActions.parse(text, plots)?.let { return it }
         }

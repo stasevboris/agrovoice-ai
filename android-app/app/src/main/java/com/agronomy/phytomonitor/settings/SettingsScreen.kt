@@ -27,7 +27,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit) {
+fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (String, Boolean) -> Unit) {
     val settings by model.state.collectAsState()
     val error by model.error.collectAsState()
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -38,9 +38,9 @@ fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit) {
         if (current == null) {
             Text(error ?: "Загрузка настроек…")
         } else {
-            SettingToggle("Голосовое управление", "Команды через микрофон и гарнитуру", current.voiceEnabled, model::voiceEnabled)
-            SettingToggle("Озвучка после фото", "Прочитать результат и спросить о сохранении после голосового снимка", current.spokenFollowUp, model::spokenFollowUp)
-            SettingToggle("Свободная речь (эксперимент)", "Обычные формулировки команд; на речи людей пока не проверено", current.freeSpeech, model::freeSpeech)
+            SettingToggle("Голосовое управление", "Команды через микрофон и гарнитуру", current.voiceEnabled) { onSetting("voice_enabled", it) }
+            SettingToggle("Озвучка после фото", "Прочитать результат и спросить о сохранении после голосового снимка", current.spokenFollowUp) { onSetting("spoken_follow_up", it) }
+            SettingToggle("Свободная речь (эксперимент)", "Обычные формулировки команд; на речи людей пока не проверено", current.freeSpeech) { onSetting("free_speech", it) }
             Text("Выбор модели, культуры и порога — в настройках анализа на экране осмотра.")
             Text("Синхронизация", style = MaterialTheme.typography.titleMedium)
             var server by rememberSaveable(current.server) { mutableStateOf(current.server) }
