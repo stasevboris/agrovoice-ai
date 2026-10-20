@@ -1,0 +1,69 @@
+{
+  "source_commit": "553a74b97ab4e703f49607fb3baeb0c6619664de",
+  "run_id": 39400142662,
+  "url": "https://github.com/stasevboris/agrovoice-ai/actions/runs/39400142662",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 118552517302,
+      "name": "android",
+      "conclusion": "success",
+      "html_url": "https://github.com/stasevboris/agrovoice-ai/actions/runs/39400142662/job/118552517302",
+      "started_at": "2026-10-20T09:22:05Z",
+      "completed_at": "2026-10-20T09:29:08Z"
+    },
+    {
+      "id": 118552517558,
+      "name": "python",
+      "conclusion": "success",
+      "html_url": "https://github.com/stasevboris/agrovoice-ai/actions/runs/39400142662/job/118552517558",
+      "started_at": "2026-10-20T09:22:05Z",
+      "completed_at": "2026-10-20T09:22:32Z"
+    }
+  ],
+  "jvm": {
+    "field": {
+      "report_files": 78,
+      "tests": 348,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lab": {
+      "report_files": 78,
+      "tests": 348,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "lint": {
+    "lint-results-fieldDebug.xml": {
+      "Warning": 65,
+      "Hint": 2,
+      "Error": 0,
+      "Fatal": 0
+    },
+    "lint-results-labDebug.xml": {
+      "Warning": 65,
+      "Hint": 2,
+      "Error": 0,
+      "Fatal": 0
+    }
+  },
+  "scope": "Ubuntu hosted runner: Python tests + KB validation, pinned runtime fetch, both Android flavor JVM tests and lint. No model weights, APK packaging, device tests, or model quality evaluation.",
+  "artifact": {
+    "id": 12254248549,
+    "name": "android-check-reports",
+    "size_in_bytes": 453274,
+    "digest": "sha256:befbcebd6b2bfff494caa9886f2783522b749ac7bf765cf69f3df5e8a3fcdd49",
+    "expires_at": "2026-10-27T09:29:03Z"
+  },
+  "python": {
+    "tests": 137,
+    "skipped": 11,
+    "result": "OK",
+    "kb_validation": "success",
+    "log": "artifacts/verification/reproducible_build_20261020/job118552517558.log"
+  }
+}
