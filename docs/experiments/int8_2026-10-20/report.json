@@ -1,0 +1,261 @@
+{
+  "date": "2026-10-20",
+  "scope": "M-11/R-05: experimental YOLO26n INT8 quality and Android CPU timing",
+  "quantization_full_head": {
+    "source": "/mnt/f/agrovoice-ai/runs/home_20261019_pilot/train/weights/best.onnx",
+    "source_sha256": "f61027340d4864b9b4e00ef1ed9ad6dbe09e673b42a05fc97623e6b14a36bf5d",
+    "source_bytes": 9689219,
+    "int8": "/mnt/f/agrovoice-ai/runs/home_20261020_int8_n2/best_int8_qdq.onnx",
+    "int8_sha256": "ca656dcd20ab7d9e9954b112c73f235365e81fce51234ec6c826e0a6a13ed2ea",
+    "int8_bytes": 3039008,
+    "method": "onnxruntime quantize_static QDQ, per-channel QInt8 weights, QUInt8 activations, MinMax",
+    "calibration": {
+      "split": "train",
+      "images": 200,
+      "seed": 20261020
+    },
+    "parity_on_calibration_sample": {
+      "images": 20,
+      "max_abs_best_score_diff": 1.8096611499786377,
+      "median_max_abs_best_score_diff": 0.8681480288505554
+    },
+    "test_evaluated": false,
+    "field_val": {
+      "fp32": {
+        "metrics/precision(B)": 0.5987424790284908,
+        "metrics/recall(B)": 0.3562764152644389,
+        "metrics/mAP50(B)": 0.4155891612071188,
+        "metrics/mAP50-95(B)": 0.28772511738157425,
+        "fitness": 0.28772511738157425
+      },
+      "int8": {
+        "metrics/precision(B)": 0.5049808429118774,
+        "metrics/recall(B)": 0.06919280011632575,
+        "metrics/mAP50(B)": 0.06602538314176246,
+        "metrics/mAP50-95(B)": 0.05382937876299945,
+        "fitness": 0.05382937876299945
+      }
+    }
+  },
+  "quantization_float_head": {
+    "source": "/mnt/f/agrovoice-ai/runs/home_20261019_pilot/train/weights/best.onnx",
+    "source_sha256": "f61027340d4864b9b4e00ef1ed9ad6dbe09e673b42a05fc97623e6b14a36bf5d",
+    "source_bytes": 9689219,
+    "int8": "/mnt/f/agrovoice-ai/runs/home_20261020_int8_n3/best_int8_qdq.onnx",
+    "int8_sha256": "2670a06598d6deec25eae9e4582b970ed7435bb423b06ed5150dcec08b6346c5",
+    "int8_bytes": 3025881,
+    "method": "onnxruntime quantize_static QDQ, per-channel QInt8 weights, QUInt8 activations, MinMax",
+    "calibration": {
+      "split": "train",
+      "images": 200,
+      "seed": 20261020
+    },
+    "float_head_nodes": 83,
+    "parity_on_calibration_sample": {
+      "images": 20,
+      "max_abs_best_score_diff": 0.9804091453552246,
+      "median_max_abs_best_score_diff": 0.2502758800983429
+    },
+    "test_evaluated": false,
+    "field_val": {
+      "fp32": {
+        "metrics/precision(B)": 0.5987424790284908,
+        "metrics/recall(B)": 0.3562764152644389,
+        "metrics/mAP50(B)": 0.4155891612071188,
+        "metrics/mAP50-95(B)": 0.28772511738157425,
+        "fitness": 0.28772511738157425
+      },
+      "int8": {
+        "metrics/precision(B)": 0.5018362066917484,
+        "metrics/recall(B)": 0.37785817370283814,
+        "metrics/mAP50(B)": 0.38059713236628606,
+        "metrics/mAP50-95(B)": 0.2615260576577292,
+        "fitness": 0.2615260576577292
+      }
+    }
+  },
+  "phone": {
+    "results": [
+      {
+        "model": "n_fp32.onnx",
+        "sha256": "f61027340d4864b9b4e00ef1ed9ad6dbe09e673b42a05fc97623e6b14a36bf5d",
+        "bytes": 9689219,
+        "session_load_ms": 164.746719,
+        "output_shape": "1x53x3549",
+        "runs": 30,
+        "times_ms": [
+          137.109948,
+          136.885729,
+          136.479271,
+          137.679323,
+          137.947916,
+          135.997239,
+          139.836146,
+          142.521406,
+          136.386719,
+          138.002917,
+          138.59526,
+          136.318958,
+          137.103594,
+          137.088125,
+          136.772708,
+          138.508229,
+          136.569063,
+          138.530729,
+          144.866354,
+          135.723177,
+          144.739115,
+          148.145885,
+          159.892188,
+          155.989167,
+          141.946666,
+          139.186198,
+          136.312969,
+          137.621614,
+          158.82974,
+          137.02901
+        ],
+        "median_ms": 137.81361950000002,
+        "p90_ms": 148.145885,
+        "min_ms": 135.723177,
+        "process_pss_kib": 181067
+      },
+      {
+        "model": "n_int8_floathead.onnx",
+        "sha256": "2670a06598d6deec25eae9e4582b970ed7435bb423b06ed5150dcec08b6346c5",
+        "bytes": 3025881,
+        "session_load_ms": 591.470416,
+        "output_shape": "1x53x3549",
+        "runs": 30,
+        "times_ms": [
+          79.002343,
+          78.674167,
+          78.360468,
+          78.922031,
+          80.147761,
+          80.688646,
+          78.670312,
+          79.104375,
+          80.541094,
+          78.599323,
+          77.92552,
+          79.507761,
+          79.680625,
+          78.689271,
+          80.142031,
+          79.815781,
+          78.882968,
+          79.240105,
+          79.002187,
+          79.172864,
+          78.366354,
+          78.994115,
+          78.588385,
+          78.545729,
+          79.1075,
+          79.389479,
+          78.519114,
+          81.238593,
+          78.727396,
+          78.740156
+        ],
+        "median_ms": 78.99815100000001,
+        "p90_ms": 80.147761,
+        "min_ms": 77.92552,
+        "process_pss_kib": 165834
+      },
+      {
+        "model": "app_yolo26s_fp32.onnx",
+        "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+        "bytes": 38104599,
+        "session_load_ms": 182.447656,
+        "output_shape": "1x34x3549",
+        "runs": 30,
+        "times_ms": [
+          428.677188,
+          431.568385,
+          427.073177,
+          428.754895,
+          428.507864,
+          428.730468,
+          428.501874,
+          427.545365,
+          428.831197,
+          429.755156,
+          428.461458,
+          429.599479,
+          443.202813,
+          449.907552,
+          426.933906,
+          432.603593,
+          426.682552,
+          476.963281,
+          464.67901,
+          463.369531,
+          458.621302,
+          460.143958,
+          433.630156,
+          427.370052,
+          443.925781,
+          443.392708,
+          428.406354,
+          425.775208,
+          428.011145,
+          428.809739
+        ],
+        "median_ms": 428.820468,
+        "p90_ms": 460.143958,
+        "min_ms": 425.775208,
+        "process_pss_kib": 244690
+      }
+    ],
+    "device": "Xiaomi Redmi Note 7",
+    "android_sdk": 33,
+    "package": "com.agronomy.phytomonitor.verification",
+    "ort_version": "1.30.0",
+    "created_epoch_ms": 1792486556197,
+    "percentile_method": "nearest rank; median averages the two middle values",
+    "memory_scope": "Whole test process PSS while the session is open; not model-only memory",
+    "method": "ORT Java CPU, 4 intra-op threads, 5 warm-up runs, random 1x3x416x416 input; preprocessing and decoding excluded"
+  },
+  "checks": {
+    "test_apk_build": {
+      "command": [
+        "gradlew.bat",
+        "assembleFieldDebugAndroidTest",
+        "-PisolateApp=true"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 6.297000000020489,
+      "jvm": {}
+    },
+    "instrumentation": "INSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.OnnxBenchmarkDeviceTest\nINSTRUMENTATION_STATUS: current=1\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\nINSTRUMENTATION_STATUS: numtests=1\nINSTRUMENTATION_STATUS: stream=\ncom.agronomy.phytomonitor.OnnxBenchmarkDeviceTest:\nINSTRUMENTATION_STATUS: test=timeCandidateModels\nINSTRUMENTATION_STATUS_CODE: 1\nINSTRUMENTATION_STATUS: class=com.agronomy.phytomonitor.OnnxBenchmarkDeviceTest\nINSTRUMENTATION_STATUS: current=1\nINSTRUMENTATION_STATUS: id=AndroidJUnitRunner\nINSTRUMENTATION_STATUS: numtests=1\nINSTRUMENTATION_STATUS: stream=.\nINSTRUMENTATION_STATUS: test=timeCandidateModels\nINSTRUMENTATION_STATUS_CODE: 0\nINSTRUMENTATION_RESULT: stream=\n\nTime: 30,3\n\nOK (1 test)\n\n\nINSTRUMENTATION_CODE: -1",
+    "model_hashes_match_quality_report": true,
+    "python_regressions": {
+      "command": "python -X utf8 -m unittest discover -s ml-pipeline/tests",
+      "tests": 120,
+      "result": "OK",
+      "exit_code": 0,
+      "log": "artifacts/verification/autonomous_20261020/int8_all_tests.log"
+    }
+  },
+  "thermal": {
+    "before": "IsStatusOverride: false\nThermalEventListeners:\n\tcallbacks: 4\n\tkilled: false\n\tbroadcasts count: -1\nThermalStatusListeners:\n\tcallbacks: 4\n\tkilled: false\n\tbroadcasts count: -1\nThermal Status: 0\nCached temperatures:\nHAL Ready: true\nHAL connection:\n\tThermalHAL 2.0 connected: yes\nCurrent temperatures from HAL:\nCurrent cooling devices from HAL:\n\tCoolingDevice{mValue=1843200, mType=2, mName=thermal-cpufreq-0}\n\tCoolingDevice{mValue=2208000, mType=2, mName=thermal-cpufreq-1}\nTemperature static thresholds from HAL:\n",
+    "after": "IsStatusOverride: false\nThermalEventListeners:\n\tcallbacks: 4\n\tkilled: false\n\tbroadcasts count: -1\nThermalStatusListeners:\n\tcallbacks: 4\n\tkilled: false\n\tbroadcasts count: -1\nThermal Status: 0\nCached temperatures:\nHAL Ready: true\nHAL connection:\n\tThermalHAL 2.0 connected: yes\nCurrent temperatures from HAL:\nCurrent cooling devices from HAL:\n\tCoolingDevice{mValue=1843200, mType=2, mName=thermal-cpufreq-0}\n\tCoolingDevice{mValue=2208000, mType=2, mName=thermal-cpufreq-1}\nTemperature static thresholds from HAL:\n"
+  },
+  "battery": {
+    "before": "Current Battery Service state:\n  AC powered: false\n  USB powered: true\n  Wireless powered: false\n  Max charging current: 400000\n  Max charging voltage: 5000000\n  Charge counter: 0\n  status: 5\n  health: 2\n  present: true\n  level: 100\n  scale: 100\n  voltage: 4349\n  temperature: 270\n  technology: Li-poly\n",
+    "after": "Current Battery Service state:\n  AC powered: false\n  USB powered: true\n  Wireless powered: false\n  Max charging current: 400000\n  Max charging voltage: 5000000\n  Charge counter: 0\n  status: 2\n  health: 2\n  present: true\n  level: 100\n  scale: 100\n  voltage: 4089\n  temperature: 270\n  technology: Li-poly\n",
+    "drain_measured": false,
+    "reason": "USB powered; charge counter reports zero"
+  },
+  "decision": "Do not replace APK weights: float-head INT8 is faster but loses field-val quality; full-head INT8 rejected.",
+  "limitations": [
+    "Validation only; test not evaluated. Existing pilot has missing training classes.",
+    "Timing uses random input; excludes camera, preprocessing, decoding and rendering.",
+    "Whole process PSS includes framework/test resources and is not model-only memory.",
+    "One USB-powered Redmi run in fixed model order; no sustained thermal or energy conclusion.",
+    "Application YOLO26s has a different class set; this timing comparison does not compare accuracy.",
+    "Calibration reports are prior-session evidence; quantization was not rerun in this continuation."
+  ]
+}

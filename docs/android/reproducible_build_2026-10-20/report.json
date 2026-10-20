@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-20",
+  "source_commit": "70a4a0ea0c9af9d027eed9e4f18e57ef836d039f",
+  "checkout": "artifacts/verification/reproducible_build_20261020/checkout",
+  "source_status_after_build": "",
+  "environment": "Windows; detached clean git worktree; existing JDK 25, Android SDK, Gradle dependency cache; local.properties copied from primary checkout",
+  "assets": [
+    {
+      "name": "before_import",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "android-app/fetch_assets.py",
+        "--check",
+        "--flavor",
+        "field"
+      ],
+      "exit_code": 1,
+      "log": "artifacts/verification/reproducible_build_20261020/before_import.log"
+    },
+    {
+      "name": "import_field",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "android-app/fetch_assets.py",
+        "--flavor",
+        "field",
+        "--offline",
+        "--local-dir",
+        "F:/agrovoice-ai/android-app"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/reproducible_build_20261020/import_field.log"
+    },
+    {
+      "name": "check_field",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "android-app/fetch_assets.py",
+        "--check",
+        "--flavor",
+        "field"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/reproducible_build_20261020/check_field.log"
+    },
+    {
+      "name": "import_lab",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "android-app/fetch_assets.py",
+        "--flavor",
+        "lab",
+        "--offline",
+        "--local-dir",
+        "F:/agrovoice-ai/android-app"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/reproducible_build_20261020/import_lab.log"
+    },
+    {
+      "name": "check_lab",
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "android-app/fetch_assets.py",
+        "--check",
+        "--flavor",
+        "lab"
+      ],
+      "exit_code": 0,
+      "log": "artifacts/verification/reproducible_build_20261020/check_lab.log"
+    }
+  ],
+  "build": {
+    "command": "gradlew.bat --no-daemon --max-workers=2 testFieldDebugUnitTest testLabDebugUnitTest assembleFieldDebug assembleLabDebug",
+    "exit_code": 0,
+    "log": "artifacts/verification/reproducible_build_20261020/gradle.log"
+  },
+  "flavors": {
+    "field": {
+      "jvm": {
+        "report_files": 78,
+        "tests": 348,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apk": {
+        "path": "android-app/app/build/outputs/apk/field/debug/app-field-debug.apk",
+        "bytes": 237756414,
+        "sha256": "2d6623ff115d04c4091edaf993bb2350fae6b5026c24a2d0a801794412a33a15",
+        "model_ids": [
+          "yolo26s"
+        ],
+        "verified_asset_count": 374,
+        "mismatched_assets": [],
+        "model_files_match_flavor": true
+      }
+    },
+    "lab": {
+      "jvm": {
+        "report_files": 78,
+        "tests": 348,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "apk": {
+        "path": "android-app/app/build/outputs/apk/lab/debug/app-lab-debug.apk",
+        "bytes": 399672303,
+        "sha256": "2dfd8e9abb897fb827ff340fcf1d1eb5f8bdf68af793f872ff36c27b3b9378d3",
+        "model_ids": [
+          "yolo11n",
+          "yolo26n",
+          "mobilenet_v3_large",
+          "efficientnet_b0",
+          "masked_mobilenet_v3_large",
+          "distilled_mobilenet_v3_large",
+          "yolo26s",
+          "deimv2_n",
+          "yolo26m"
+        ],
+        "verified_asset_count": 382,
+        "mismatched_assets": [],
+        "model_files_match_flavor": true
+      }
+    }
+  },
+  "remote": {
+    "repository": "stasevboris/agrovoice-ai",
+    "credential_environment_present": {
+      "GH_TOKEN": false,
+      "GITHUB_TOKEN": false
+    },
+    "requests": [
+      {
+        "url": "https://api.github.com/repos/stasevboris/agrovoice-ai",
+        "http_status": 200,
+        "visibility": "public"
+      },
+      {
+        "url": "https://api.github.com/repos/stasevboris/agrovoice-ai/actions/workflows",
+        "http_status": 200,
+        "workflows": []
+      },
+      {
+        "url": "https://api.github.com/repos/stasevboris/agrovoice-ai/actions/runs?per_page=3",
+        "http_status": 200,
+        "runs": []
+      },
+      {
+        "url": "https://api.github.com/repos/stasevboris/agrovoice-ai/releases/tags/models-allcrops-v1",
+        "http_status": 404
+      }
+    ]
+  },
+  "authentication": {
+    "interactive_auth_disabled": true,
+    "credential_helper_exit_code": 0,
+    "stored_credential_present": true,
+    "authenticated_repository_http_status": 200,
+    "repository_permissions": {
+      "admin": true,
+      "maintain": true,
+      "push": true,
+      "triage": true,
+      "pull": true
+    }
+  },
+  "push_dry_run": {
+    "command": "git push --dry-run origin HEAD",
+    "exit_code": 0,
+    "branch": "work/offline-local-sync-20261019",
+    "result": "new branch; no publication performed"
+  },
+  "limitations": [
+    "Local original assets supplied by existing checkout; published model allowlist is empty and models-allcrops-v1 release returns HTTP 404.",
+    "Clean source checkout verified; existing machine SDK/JDK/dependency caches reused, not a fresh-machine setup.",
+    "APK contents checked by SHA-256; no phone installation or inference validation performed in this check.",
+    "No claim of byte-identical APKs across machines or repeated builds.",
+    "GitHub Actions has no workflows or runs before publication; remote runner result pending root-reviewed commit and push."
+  ]
+}
