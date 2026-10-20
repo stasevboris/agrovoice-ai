@@ -2,7 +2,7 @@
 from datetime import timezone
 import hashlib
 import json
-from typing import Annotated
+from typing import Annotated, Literal
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response
@@ -32,6 +32,24 @@ class PhotoReference(StrictModel):
     bytes: int = Field(gt=0, le=MAX_PHOTO_BYTES)
 
 
+class FrameFeedback(StrictModel):
+    photo_sha256: Sha256
+    # Legacy archives may not retain the report hash. Empty means unknown.
+    report_sha256: str = Field(pattern=r"^(?:[0-9a-f]{64})?$")
+    analysis_version: int | None = Field(default=None, ge=1)
+    verdict: Literal["correct", "incorrect", "unknown"]
+    correction: str = Field(default="", max_length=500)
+    updated_at: int = Field(ge=0)
+    revision: int = Field(ge=1)
+    source: Literal["user"] = "user"
+
+    @model_validator(mode="after")
+    def correction_requires_incorrect(self):
+        if self.correction and self.verdict != "incorrect":
+            raise ValueError("Correction requires an incorrect verdict")
+        return self
+
+
 class InspectionData(StrictModel):
     # Preserve legacy Android IDs separately: they are not guaranteed UUIDs.
     legacy_id: str | None = Field(default=None, max_length=256)
@@ -47,11 +65,18 @@ class InspectionData(StrictModel):
     model_sha256: Sha256
     prediction: dict[str, JsonValue]
     photos: list[PhotoReference] = Field(default_factory=list, max_length=10)
+    frame_feedback: list[FrameFeedback] = Field(default_factory=list, max_length=10)
 
     @model_validator(mode="after")
     def bounded_payload(self):
         if len({photo.id for photo in self.photos}) != len(self.photos):
             raise ValueError("Duplicate photo UUID")
+        identities = {(item.photo_sha256, item.report_sha256) for item in self.frame_feedback}
+        if len(identities) != len(self.frame_feedback):
+            raise ValueError("Duplicate frame feedback")
+        photo_hashes = {photo.sha256 for photo in self.photos}
+        if any(item.photo_sha256 not in photo_hashes for item in self.frame_feedback):
+            raise ValueError("Feedback requires a declared photo")
         if (self.lat is None) != (self.lon is None):
             raise ValueError("Coordinates require both latitude and longitude")
         if len(json.dumps(self.prediction, allow_nan=False).encode()) > MAX_PREDICTION_BYTES:
@@ -91,6 +116,8 @@ def lock_owner(database: Session, owner_id: UUID):
 def apply_update(database: Session, owner: User, update: InspectionUpdate):
     record = database.get(Inspection, (owner.id, update.id))
     payload = update.data.model_dump(mode="json")
+    if not payload["frame_feedback"]:
+        payload.pop("frame_feedback")
     updated_at = update.updated_at.astimezone(timezone.utc)
     if record is not None:
         if record.payload == payload and record.updated_at == updated_at:

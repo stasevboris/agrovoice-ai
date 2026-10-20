@@ -1,7 +1,8 @@
 # Локальный сервер AgroVoice
 
 S-01/S-02/S-03: FastAPI, PostgreSQL, SQLAlchemy, Alembic, JWT и nginx. Реализованы
-`GET /health`, `POST /auth/token`, `GET /me`, пакетная синхронизация и загрузка фото.
+`GET /health`, `POST /auth/token`, `GET /me`, пакетная синхронизация, загрузка фото,
+локальные обновления `/updates` и проверяемое восстановление резервной копии.
 Телефон к серверу автоматически не подключается.
 
 Из каталога `server/`:
@@ -46,6 +47,94 @@ TLS и подключение мобильной синхронизации — 
 Android запрашивает по 10 осмотров на страницу, сохраняя предел ответа 16 МиБ.
 Метаданные кадров передаются внутри `prediction.agrovoice_frames`; список
 `data.photos` по-прежнему содержит до 10 UUID/SHA/размеров, байты передаются отдельно.
+
+Необязательный `data.frame_feedback` хранит пользовательскую оценку отдельно от
+`prediction`: до 10 объектов `photo_sha256`, `report_sha256`, `analysis_version`
+(целое от 1 либо null), `verdict` (`correct`/`incorrect`/`unknown`), `correction`
+(до 500 символов, только при `incorrect`), `updated_at` (миллисекунды Unix),
+`revision` (от 1), `source: "user"`. SHA фото должен присутствовать в `photos`;
+пара SHA фото/отчёта уникальна. Пустой SHA отчёта означает неизвестное происхождение
+старого архива, а не подтверждённый анализ. Оценка не является экспертным диагнозом
+и не изменяет исходный prediction. Пустой список не меняет старый payload при повторе.
+
+## Согласованная резервная копия и восстановление
+
+`app.backup` читает все таблицы приложения одной транзакцией `REPEATABLE READ READ ONLY`.
+Фото пока находятся в PostgreSQL BYTEA: они входят в тот же снимок, включая честное
+отсутствие ещё не загруженного оригинала. Копия содержит пользователей с хешами
+паролей, осмотры, версии, ссылки/байты фото и историю экспертных отметок.
+JSONL таблиц и отдельные оригиналы сопровождаются `manifest.json` с SHA-256,
+размерами, числом строк и ревизией схемы. Каталог без манифеста — незавершённая копия.
+Копии содержат личные данные; хранить их локально вне git и без общего сетевого доступа.
+
+Из `server/` (имена каталогов и новой БД выбираются один раз для каждого запуска):
+
+```powershell
+New-Item -ItemType Directory -Force ../artifacts/server-backups
+docker compose run --rm --no-deps -v "${PWD}/../artifacts/server-backups:/backups" api python -m app.backup create /backups/snapshot_01
+docker compose run --rm --no-deps -v "${PWD}/../artifacts/server-backups:/backups" api python -m app.backup verify /backups/snapshot_01
+docker compose run --rm --no-deps -v "${PWD}/../artifacts/server-backups:/backups" api python -m app.backup restore /backups/snapshot_01 --database agrovoice_restore_check01 --output /backups/restored_01
+docker compose run --rm --no-deps -v "${PWD}/../artifacts/server-backups:/backups" api python verify_restore.py --database agrovoice_restore_check01 --backup /backups/snapshot_01 --out /backups/check_01
+```
+
+Образ должен быть собран из текущего `server/`. Восстановление допускает только
+**новую** БД `agrovoice_restore_*` и новый выходной каталог: существующие данные не
+перезаписываются. Нужны права PostgreSQL `CREATEDB`. Сначала проверяются файлы,
+затем применяются миграции и одна транзакция вставки; после восстановления повторный
+снимок должен совпасть по содержимому всех таблиц и фото. `verify_restore.py`
+дополнительно проверяет авторизацию, чтение осмотров и скачивание оригиналов через
+API восстановленной БД. Невосстановленные/неполные выходы остаются для разбора;
+автоматического удаления БД и файлов нет. Поддерживается текущая ревизия схемы;
+для старой копии нужен соответствующий checkout. JWT-секрет и `.env` сохраняются
+администратором отдельно, в копию и отчёты они не входят. SHA проверяет целостность,
+но не подпись владельца копии.
+
+Дополнительный штатный формат PostgreSQL (BYTEA уже включён):
+
+```powershell
+docker compose exec db pg_dump -U agrovoice -d agrovoice -Fc -f /tmp/agrovoice_01.dump
+docker compose cp db:/tmp/agrovoice_01.dump ../artifacts/server-backups/agrovoice_01.dump
+docker compose exec db pg_restore --list /tmp/agrovoice_01.dump
+docker compose exec db createdb -U agrovoice agrovoice_restore_native01
+docker compose exec db pg_restore -U agrovoice -d agrovoice_restore_native01 --exit-on-error --single-transaction --no-owner /tmp/agrovoice_01.dump
+```
+
+`createdb` должен успешно завершиться перед `pg_restore`; существующую БД не
+использовать. Рабочие volumes и БД эти команды не очищают.
+
+## Локальный каталог обновлений моделей и справочника
+
+`GET /updates` и `GET /updates/{id}/download` требуют тот же Bearer JWT, что sync.
+Ответ списка: `{"schema_version":1,"releases":[...]}`. Запись содержит `id`, `kind`
+(`model`/`kb`), `version`, `file_name`, `bytes`, `sha256`, относительный `download_path`
+и `metadata`. Адрес скачивания строится на том же сервере. Неизвестный ID — `404`,
+ошибка каталога/файла — `503`; без настройки сервер отдаёт пустой список.
+
+Подготовить новый локальный каталог из корня репозитория:
+
+```powershell
+.\ml-pipeline\venv\Scripts\python.exe -X utf8 server/prepare_update_feed.py --kb kb/kb_v1.json --out artifacts/local-updates/kb_01
+# Необязательный источник моделей — только результат prepare_model_release.py:
+.\ml-pipeline\venv\Scripts\python.exe -X utf8 server/prepare_update_feed.py --models artifacts/release/models-allcrops-v1 --out artifacts/local-updates/models_01
+```
+
+Справочник проходит `kb/validate_kb.py`; статусы `draft` сохраняются в файле и
+`metadata.card_statuses`. Модели требуют комплект выпуска с SHA256SUMS, карточкой,
+лицензией, атрибуцией и совпадающими manifest-entry; допускаются только подготовленные
+YOLO allcrops_v1. Метаданные модели находятся в `metadata.manifest_entry`.
+Ни скачивания, ни публикации весов скрипт не выполняет. Перед подключением каталога
+модель по-прежнему требует решения по результатам испытаний; наличие в feed не
+подтверждает качество или совместимость с конкретным клиентом.
+
+Подключить каталог к API read-only volume и задать `RELEASES_DIR` его пути внутри
+контейнера через отдельный локальный Compose override. Размер индекса ограничен
+1 МиБ, модели — 512 МиБ, KB — 5 МиБ. Имена не содержат путей; symlink не выдаётся.
+Перед ответом файл копируется в временный spool с проверкой размера/SHA; подмена
+исходника во время выдачи не изменяет уже проверенные байты. Ответ содержит
+`Content-Length`, `X-Content-SHA256` и `Cache-Control: private, no-store`.
+Клиент обязан также проверить размер/SHA, совместимость схемы/таксономии и сохранить
+прежнюю рабочую версию до успешного атомарного переключения. На внешнем сервере
+нужен HTTPS: SHA сам по себе не подтверждает подлинность незашифрованного feed.
 
 `GET /sync/inspections?after=0&limit=50` возвращает записи владельца, `next_after`
 и `has_more`. Следующий запрос использует `next_after`. Серверная ревизия

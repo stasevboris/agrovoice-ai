@@ -17,6 +17,7 @@ from app.models import User
 from app.security import current_user, denied, dummy_hash, issue_token, passwords
 from app.sync import router as sync_router
 from app.web import router as web_router
+from app.updates import router as updates_router
 
 app = FastAPI(title="AgroVoice API", version="0.3.0")
 app.add_middleware(SessionMiddleware, secret_key=settings().jwt_secret,
@@ -24,6 +25,7 @@ app.add_middleware(SessionMiddleware, secret_key=settings().jwt_secret,
                    https_only=os.environ.get("COOKIE_SECURE") == "1")
 app.add_middleware(BodySizeLimitMiddleware)
 app.include_router(sync_router)
+app.include_router(updates_router)
 app.include_router(web_router)
 app.mount("/static", StaticFiles(directory=Path(__file__).resolve().parents[1] / "static"), name="static")
 

@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-20",
+  "scope": [
+    "S-04 server",
+    "S-05",
+    "frame_feedback sync DTO"
+  ],
+  "tests": {
+    "tests": "60",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "8.452"
+  },
+  "test_command": "docker compose --profile test run --rm -v F:/agrovoice-ai/server:/app -v F:/agrovoice-ai/artifacts/verification/autonomous_20261020/server:/verification tests python -m pytest -q --tb=line --junitxml=/verification/pytest.xml",
+  "backup": {
+    "source": "isolated verify database",
+    "database_revision": "0003_reviews",
+    "rows": {
+      "users": 2,
+      "inspections": 6,
+      "photos": 6,
+      "review_events": 0
+    },
+    "originals": 6,
+    "logical_restore": {
+      "database": "agrovoice_restore_verify_20261020",
+      "table_contents_match": true,
+      "photos_match": true,
+      "authenticated_owners": 2,
+      "downloaded_originals": 6,
+      "rows": {
+        "users": 2,
+        "inspections": 6,
+        "photos": 6,
+        "review_events": 0
+      }
+    },
+    "native_restore": {
+      "database": "agrovoice_restore_native_20261020",
+      "table_contents_match": true,
+      "photos_match": true,
+      "authenticated_owners": 2,
+      "downloaded_originals": 6,
+      "rows": {
+        "users": 2,
+        "inspections": 6,
+        "photos": 6,
+        "review_events": 0
+      }
+    },
+    "repeat_restore": "restore_repeat/verified_snapshot/manifest.json",
+    "final_restore": "restore_final/verified_snapshot/manifest.json",
+    "native_dump_sha256": "040447eb886c630871e97d98e47c8092aee1dd36d0c0e7833a48d612c3d598a3",
+    "corruption_traversal_existing_directory_rejected": true,
+    "primary_api_restarted": false,
+    "source_data_deleted": false,
+    "restores_only_new_databases": true
+  },
+  "updates": {
+    "actual_http": true,
+    "unauthenticated_status": 401,
+    "unknown_release_status": 404,
+    "releases": [
+      {
+        "id": "kb-b03f413a3f443d354c26e524",
+        "kind": "kb",
+        "version": "2026.10.19-potato-draft",
+        "bytes": 38323,
+        "sha256": "b03f413a3f443d354c26e5242ee14e4be9977cf49644a0181e4364740494761d",
+        "repeat_matches": true
+      }
+    ]
+  },
+  "verification_commands": [
+    "python -m app.backup create /verification/backup_verify",
+    "python -m app.backup restore /verification/backup_verify --database agrovoice_restore_final_20261020 --output /verification/restore_final",
+    "python verify_restore.py --database agrovoice_restore_verify_20261020 --backup /verification/backup_verify --out /verification/verify_logical",
+    "pg_dump -U agrovoice -d agrovoice_session_20261019 -Fc -f /tmp/agrovoice_verify_20261020.dump",
+    "createdb -U agrovoice agrovoice_restore_native_20261020",
+    "pg_restore -U agrovoice -d agrovoice_restore_native_20261020 --exit-on-error --single-transaction --no-owner /tmp/agrovoice_verify_20261020.dump",
+    "python verify_restore.py --database agrovoice_restore_native_20261020 --backup /verification/backup_verify --out /verification/verify_native",
+    "ml-pipeline/venv/Scripts/python.exe -X utf8 server/prepare_update_feed.py --kb kb/kb_v1.json --out artifacts/verification/autonomous_20261020/server/releases"
+  ],
+  "self_review": [
+    "Restore copies only manifested files and verifies before creating a database",
+    "Verified response spool prevents file replacement from changing streamed bytes",
+    "Empty feedback is omitted to preserve replay compatibility of old payloads",
+    "Model feed rejects absent prepared-release metadata"
+  ],
+  "limitations": [
+    "Knowledge cards remain draft",
+    "No real model release was installed or published",
+    "HTTP validation was on local Docker network; phone Wi-Fi is a separate check",
+    "Backup hashes are integrity checks, not signatures; JWT/env secrets require separate private backup",
+    "Portable snapshot restore requires the matching schema revision",
+    "Failed and completed isolated restore databases remain; none were deleted"
+  ]
+}
