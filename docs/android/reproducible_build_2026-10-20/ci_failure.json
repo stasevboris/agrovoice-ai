@@ -1,0 +1,18 @@
+{
+  "failed_commit": "e8616d1972054abd6eb1870757e150d973bd4da0",
+  "run_id": 39397810564,
+  "job_id": 118544783854,
+  "url": "https://github.com/stasevboris/agrovoice-ai/actions/runs/39397810564/job/118544783854",
+  "failed_step": "android-actions/setup-android@v3",
+  "evidence": [
+    "Action input default packages: tools platform-tools",
+    "sdkmanager tools",
+    "Warning: Failed to find package 'tools'",
+    "sdkmanager failed with exit code 1"
+  ],
+  "root_cause": "setup-android v3 defaults to installing obsolete SDK tools package, which is absent in current Google repository. JDK setup and SDK license acceptance succeeded.",
+  "change": "Override setup-android packages to platform-tools; preserve explicit Android 37 and build-tools 37.0.0 installation.",
+  "validation": "Awaiting remote rerun of corrected commit; git diff --check passed.",
+  "python_job": "success",
+  "log": "artifacts/verification/reproducible_build_20261020/android_job118544783854.log"
+}

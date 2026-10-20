@@ -37,6 +37,9 @@ jobs:
           distribution: temurin
           java-version: '25'
       - uses: android-actions/setup-android@v3
+        with:
+          # The retired SDK "tools" package is no longer in Google's repository.
+          packages: platform-tools
       - run: sdkmanager 'platforms;android-37' 'build-tools;37.0.0'
       - uses: gradle/actions/setup-gradle@v4
       - uses: actions/setup-python@v5
