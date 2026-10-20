@@ -65,6 +65,7 @@ data class AppState(
     val pendingSync: SyncConfirmation? = null,
     /** Version of a checked, not yet installed reference book from the server. */
     val knowledgeUpdate: String? = null,
+    val modelUpdate: String? = null,
     val plot: String = "",
     val row: String = "",
     val plant: String = "",
@@ -114,6 +115,7 @@ sealed interface Operation {
     data object AskSyncAll : Operation
     data object CheckUpdates : Operation
     data object InstallKnowledgeUpdate : Operation
+    data object InstallModelUpdate : Operation
     data class AskSyncConflict(val id: String) : Operation
     data class ConfirmSync(val confirmation: SyncConfirmation) : Operation
     data object CancelSyncConfirmation : Operation

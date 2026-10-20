@@ -46,11 +46,12 @@ class VerifiedUpdateStore(private val root: File) {
         } finally { part.delete() }
     }
 
-    @Synchronized fun activate(release: UpdateRelease) {
+    @Synchronized fun activate(release: UpdateRelease, previous: UpdateRelease? = available(release.kind).firstOrNull()) {
         require(valid(release)) { "Обновление ещё не проверено или повреждено" }
-        val previous = available(release.kind).firstOrNull()
-        if (previous?.sha256 == release.sha256) return
-        val value = JSONObject().put("current", release.toJson()).put("previous", previous?.toJson() ?: JSONObject.NULL)
+        require(previous == null || previous.kind == release.kind && valid(previous)) { "Прежняя версия повреждена" }
+        if (candidates(release.kind).firstOrNull()?.sha256 == release.sha256) return
+        val retained = previous?.takeIf { it.sha256 != release.sha256 }
+        val value = JSONObject().put("current", release.toJson()).put("previous", retained?.toJson() ?: JSONObject.NULL)
         val part = File(root, UUID.randomUUID().toString() + ".part")
         try {
             FileOutputStream(part).use { output ->
@@ -61,13 +62,16 @@ class VerifiedUpdateStore(private val root: File) {
         } finally { part.delete() }
     }
 
-    @Synchronized fun available(kind: String): List<UpdateRelease> = runCatching {
+    @Synchronized fun available(kind: String): List<UpdateRelease> = candidates(kind).filter { valid(it) }
+
+    /** Metadata candidates let model loading report a failed current version before trying previous. */
+    @Synchronized internal fun candidates(kind: String): List<UpdateRelease> = runCatching {
         val saved = pointer(kind)
         if (!saved.isFile || saved.length() > UpdateRelease.MAX_INDEX_BYTES) return emptyList()
         val value = JSONObject(saved.readText(Charsets.UTF_8))
         listOfNotNull(value.optJSONObject("current"), value.optJSONObject("previous"))
             .mapNotNull { runCatching { UpdateRelease.parse(it) }.getOrNull() }
-            .filter { it.kind == kind && valid(it) }.distinctBy { it.sha256 }
+            .filter { it.kind == kind }.distinctBy { it.sha256 }
     }.getOrDefault(emptyList())
 
     fun valid(release: UpdateRelease): Boolean = runCatching {

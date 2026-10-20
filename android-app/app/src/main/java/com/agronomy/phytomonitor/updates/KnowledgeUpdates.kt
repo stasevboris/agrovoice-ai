@@ -24,13 +24,9 @@ object KnowledgeUpdates {
 
     fun describe(releases: List<UpdateRelease>, active: UpdateRelease?): String {
         val knowledge = offered(releases, active)
-        val models = releases.filter { it.kind == "model" }
         val parts = mutableListOf<String>()
         parts += if (knowledge != null) "Доступен справочник версии ${knowledge.version}. Скажите «установи обновление справочника» или нажмите кнопку."
             else "Новых версий справочника нет."
-        if (models.isNotEmpty()) {
-            parts += "На сервере есть модели (${models.joinToString { it.version }}); установка моделей из обновлений в приложении пока не поддерживается."
-        }
         return parts.joinToString(" ")
     }
 }

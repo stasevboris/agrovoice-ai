@@ -16,12 +16,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import com.agronomy.phytomonitor.updates.KnowledgeUpdates
 import com.agronomy.phytomonitor.updates.UpdateRelease
+import com.agronomy.phytomonitor.updates.ModelUpdates
 
 data class SyncNotice(val text: String, val error: Boolean = false)
 data class SyncUiState(
@@ -37,10 +39,24 @@ data class SyncUiState(
     /** The last feed read from the server and the reference book that is active on this phone. */
     val updates: List<UpdateRelease> = emptyList(),
     val activeKnowledge: UpdateRelease? = null,
+    val offeredModel: UpdateRelease? = null,
+    val activeModel: UpdateRelease? = null,
+    val pendingModelRestart: Boolean = false,
+    val modelNotice: String? = null,
     /** Incremented after a new reference book is activated, so the open catalog is reloaded. */
     val knowledgeRevision: Int = 0
 ) {
     val offeredKnowledge: UpdateRelease? get() = KnowledgeUpdates.offered(updates, activeKnowledge)
+
+    fun forSession(session: SyncSession?): SyncUiState = copy(
+        generation = session?.generation, origin = session?.origin.orEmpty(), username = session?.username.orEmpty(),
+        pending = null, records = emptyList(),
+        updates = if (generation == session?.generation) updates else emptyList(),
+        offeredModel = offeredModel.takeIf { generation == session?.generation }
+    )
+
+    fun withFeed(sessionGeneration: String, releases: List<UpdateRelease>, model: UpdateRelease?): SyncUiState =
+        if (generation == sessionGeneration) copy(updates = releases, offeredModel = model) else this
 }
 
 /** Activity-scoped owner of sync operations; Compose never executes network or queue writes. */
@@ -60,13 +76,19 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         viewModelScope.launch {
-            val active = withContext(Dispatchers.IO) { updateStore.available("kb").firstOrNull() }
+            val (active, models) = withContext(Dispatchers.IO) {
+                updateStore.available("kb").firstOrNull() to ModelUpdates.get(context).also { it.load() }
+            }
             mutable.update { it.copy(activeKnowledge = active) }
+            models.state.filterNotNull().collect { selected ->
+                mutable.update { it.copy(activeModel = selected.release, modelNotice = selected.notice,
+                    pendingModelRestart = models.pending != null) }
+                selected.notice?.let { announce(it) }
+            }
         }
         viewModelScope.launch {
             store.session.collectLatest { session ->
-                mutable.update { it.copy(generation = session?.generation, origin = session?.origin.orEmpty(),
-                    username = session?.username.orEmpty(), pending = null, records = emptyList()) }
+                mutable.update { it.forSession(session) }
                 if (session != null) database.sync().observeAll(session.account).collect { records ->
                     mutable.update { it.copy(records = records) }
                 }
@@ -194,13 +216,34 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
 
     fun checkUpdates() = withSession("updates") { session, active ->
         val releases = SyncHttpClient(session.origin, session.token, active).updates()
+        val models = ModelUpdates.get(context)
+        val offered = models.offered(releases)
+        checkActive { active() && state.value.generation == session.generation }
+        mutable.update { if (active()) it.withFeed(session.generation, releases, offered) else it }
+        checkActive { active() && state.value.generation == session.generation }
+        KnowledgeUpdates.describe(releases, state.value.activeKnowledge) + " " + when {
+            offered != null -> "Доступна модель ${offered.version}. Скажите «установи обновление модели» или нажмите кнопку. Она начнёт работать после полного перезапуска приложения."
+            models.pending != null -> "Модель установлена и начнёт работать после полного перезапуска приложения."
+            else -> "Новых совместимых моделей нет."
+        }
+    }
+
+    fun installModel() = withSession("install-model") { session, active ->
+        checkActive { active() && state.value.generation == session.generation }
+        val release = state.value.offeredModel ?: return@withSession "Сначала проверьте обновления: совместимой новой модели нет."
+        val models = ModelUpdates.get(context)
+        models.compatible(release)
+        SyncHttpClient(session.origin, session.token, active).downloadUpdate(release, models.store)
         checkActive(active)
-        mutable.update { it.copy(updates = releases) }
-        KnowledgeUpdates.describe(releases, state.value.activeKnowledge)
+        models.install(release, active) { activate -> store.commitQueue(session.generation, active, activate) }
+        mutable.update { it.copy(offeredModel = null, activeModel = models.load().release,
+            pendingModelRestart = models.pending != null) }
+        "Модель ${release.version} установлена. Она начнёт работать после полного перезапуска приложения. Текущий анализ и сохранённые осмотры не изменены."
     }
 
     /** Download → SHA → format check → atomic switch; the previous book stays available for rollback. */
     fun installKnowledge() = withSession("install-kb") { session, active ->
+        checkActive { active() && state.value.generation == session.generation }
         val release = state.value.offeredKnowledge ?: return@withSession "Сначала проверьте обновления: новой версии справочника нет."
         val file = SyncHttpClient(session.origin, session.token, active).downloadUpdate(release, updateStore)
         checkActive(active)
@@ -241,7 +284,8 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
                 else current.records.groupingBy { syncStateText(if (it.state == "sending" && it.account !in SyncWork.running.value) "queued" else it.state) }
                     .eachCount().entries.joinToString("; ") { "${it.key}: ${it.value}" }
         }
-        announce(text)
+        announce(text + " " + if (current.pendingModelRestart) "Модель установлена; нужен полный перезапуск приложения."
+            else "Доступное обновление модели: ${current.activeModel?.version ?: "нет, доступен встроенный каталог"}.")
     }
 
     private fun withSession(kind: String, action: suspend (SyncSession, () -> Boolean) -> String) {

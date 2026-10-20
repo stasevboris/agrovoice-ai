@@ -57,7 +57,15 @@ fun SyncSettingsPanel(model: SyncViewModel, initialServer: String, onAction: (Vo
                     Text("Установить справочник ${release.version}")
                 }
             }
+            state.offeredModel?.let { release ->
+                Button(enabled = !state.busy, onClick = { onAction(VoiceAction.MODEL_UPDATE_INSTALL) }) {
+                    Text("Установить модель ${release.version}")
+                }
+            }
         } else Text("Синхронизация выключена. Осмотры доступны на устройстве.")
+        Text("Доступное обновление модели: " + (state.activeModel?.version ?: "нет, доступен встроенный каталог"))
+        state.modelNotice?.let { Text(it) }
+        if (state.pendingModelRestart) Text("Обновление модели установлено. Оно начнёт работать после полного перезапуска приложения.")
         TextButton(onClick = { onAction(VoiceAction.SYNC_STATUS) }) { Text("Прочитать состояние синхронизации") }
         if (state.generation != null || state.busy) TextButton(onClick = { onAction(VoiceAction.SYNC_LOGOUT) }) { Text("Выйти и остановить отправку") }
         state.message?.let { Text(it, color = if (state.messageIsError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface) }

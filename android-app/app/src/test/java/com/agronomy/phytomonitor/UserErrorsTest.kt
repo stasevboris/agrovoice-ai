@@ -11,6 +11,11 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [35])
 class UserErrorsTest {
+    @Test fun updateStorageFailureExplainsFreeSpaceInsteadOfNetworkRetry() {
+        val failure = IOException("write failed: ENOSPC (No space left on device)")
+        assertEquals(UserErrors.NO_SPACE, com.agronomy.phytomonitor.sync.syncError(failure))
+    }
+
     @Test fun fullStorageIsExplainedWhereverItIsWrapped() {
         val write = IOException("write failed: ENOSPC (No space left on device)")
         assertEquals(UserErrors.NO_SPACE, UserErrors.describe(write, "x"))

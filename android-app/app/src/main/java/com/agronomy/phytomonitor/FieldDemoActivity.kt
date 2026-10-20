@@ -212,6 +212,7 @@ class FieldDemoActivity : ComponentActivity() {
         syncGeneration = syncModel.state.value.generation,
         pendingSync = syncModel.state.value.pending,
         knowledgeUpdate = syncModel.state.value.offeredKnowledge?.version,
+        modelUpdate = syncModel.state.value.offeredModel?.version,
         inspectionSaved = fieldModel.inspectionSaved,
         review = fieldModel.review,
         galleryCount = if (photoFlow.loading) 0 else photoFlow.photos.size,
@@ -294,6 +295,7 @@ class FieldDemoActivity : ComponentActivity() {
                 Operation.AskSyncAll -> syncModel.askAll()
                 Operation.CheckUpdates -> syncModel.checkUpdates()
                 Operation.InstallKnowledgeUpdate -> syncModel.installKnowledge()
+                Operation.InstallModelUpdate -> syncModel.installModel()
                 is Operation.AskSyncConflict -> syncModel.askConflict(operation.id)
                 is Operation.ConfirmSync -> syncModel.confirm(operation.confirmation)
                 Operation.CancelSyncConfirmation -> syncModel.cancelConfirmation()

@@ -13,7 +13,7 @@ sealed interface SyncConfirmation {
 object SyncActions {
     val actions = setOf(VoiceAction.SYNC_SETTINGS, VoiceAction.SYNC_STATUS, VoiceAction.SYNC_CURRENT,
         VoiceAction.SYNC_RETRY, VoiceAction.SYNC_RECEIVE, VoiceAction.SYNC_LOGOUT, VoiceAction.SYNC_ALL, VoiceAction.SYNC_CONFLICT,
-        VoiceAction.UPDATES_CHECK, VoiceAction.UPDATES_INSTALL)
+        VoiceAction.UPDATES_CHECK, VoiceAction.UPDATES_INSTALL, VoiceAction.MODEL_UPDATE_INSTALL)
 
     fun resolve(request: ActionRequest, state: AppState): Verdict? {
         val pending = state.pendingSync
@@ -48,6 +48,8 @@ object SyncActions {
             VoiceAction.UPDATES_CHECK -> run(Operation.CheckUpdates)
             VoiceAction.UPDATES_INSTALL -> if (state.knowledgeUpdate == null) Verdict.Clarify("Сначала проверьте обновления: новой версии справочника нет.")
                 else run(Operation.InstallKnowledgeUpdate)
+            VoiceAction.MODEL_UPDATE_INSTALL -> if (state.modelUpdate == null) Verdict.Clarify("Сначала проверьте обновления: совместимой новой модели нет.")
+                else run(Operation.InstallModelUpdate)
             VoiceAction.SYNC_RECEIVE -> run(Operation.ReceiveSync)
             else -> null
         }

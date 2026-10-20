@@ -59,7 +59,7 @@ class KnowledgeUpdatesTest {
         val model = release("weights", kind = "model", version = "m1")
         assertEquals(next, KnowledgeUpdates.offered(listOf(old, next, model), old))
         assertNull(KnowledgeUpdates.offered(listOf(next, model), next))
-        assertTrue(KnowledgeUpdates.describe(listOf(model), null).contains("пока не поддерживается"))
+        assertEquals("Новых версий справочника нет.", KnowledgeUpdates.describe(listOf(model), null))
     }
 
     @Test fun installNeedsCheckedOfferAndSessionForButtonsAndVoice() {

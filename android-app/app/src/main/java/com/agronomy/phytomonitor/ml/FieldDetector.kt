@@ -13,6 +13,9 @@ import ai.onnxruntime.OrtSession
 import ai.onnxruntime.TensorInfo
 import org.json.JSONObject
 import com.agronomy.phytomonitor.PhotoQuality
+import com.agronomy.phytomonitor.BuildConfig
+import com.agronomy.phytomonitor.updates.ModelUpdates
+import org.json.JSONArray
 import java.io.Closeable
 import java.io.File
 import java.nio.ByteBuffer
@@ -43,9 +46,35 @@ data class DetectionResult(val model: DetectorModel, val boxes: List<LeafDetecti
 
 /** One background executor, at most one detector and one classifier session. */
 class FieldDetector(private val context: Context) : Closeable {
-    val manifest = JSONObject(context.assets.open("models/manifest.json").bufferedReader().use { it.readText() })
+    var manifest = JSONObject(context.assets.open("models/manifest.json").bufferedReader().use { it.readText() })
+        private set
     /** Each model carries its own classes and labels; old schema-2 models share the top-level list. */
-    val models = ModelCatalog.parse(manifest)
+    var models = ModelCatalog.parse(manifest)
+        private set
+    val defaultModelId: String get() = activeUpdate?.model?.id ?: models.first().id
+    val updateFallback: Boolean get() = activeUpdate?.notice != null
+    private var activeUpdate: ModelUpdates.Loaded? = null
+    private var updates: ModelUpdates? = null
+
+    /** Called by the serial I/O worker, never from Compose or the main thread. */
+    fun initialize() {
+        if (updates != null) return
+        val manager = ModelUpdates.get(context)
+        applyUpdate(manager.load())
+        updates = manager
+    }
+
+    private fun applyUpdate(loaded: ModelUpdates.Loaded) {
+        activeUpdate = loaded
+        manifest = JSONObject(loaded.manifest.toString())
+        if (!BuildConfig.IS_LAB && loaded.model != null) {
+            val entries = manifest.getJSONArray("models")
+            val selected = (0 until entries.length()).map { entries.getJSONObject(it) }
+                .single { it.getString("id") == loaded.model.id }
+            manifest.put("models", JSONArray().put(selected))
+        }
+        models = ModelCatalog.parse(manifest)
+    }
     private val environment=OrtEnvironment.getEnvironment()
     private val sessions=mutableMapOf<String,OrtSession>()
     private var currentModel: String? = null
@@ -54,6 +83,11 @@ class FieldDetector(private val context: Context) : Closeable {
 
     /** One copy per graph file: several modes share yolo26n.onnx, so the name is the asset digest, not the mode id. */
     private fun modelFile(asset: String, digest: String): File {
+        if (asset == "updates/$digest.onnx") {
+            val file = File(context.filesDir, asset)
+            require(file.isFile && sha256(file) == digest) { "Повреждён файл обновления модели" }
+            return file
+        }
         val file=File(modelFolder,"$digest.onnx")
         val verified=File(modelFolder,"$digest.verified")
         if(file.isFile && verified.isFile && verified.readText()==file.length().toString())return file
@@ -94,6 +128,22 @@ class FieldDetector(private val context: Context) : Closeable {
                trace: ((ByteBuffer, Array<FloatArray>) -> Unit)? = null,
                stageTrace: ((String, ByteBuffer, FloatArray, IntArray)->Unit)? = null): DetectionResult {
         require(threshold in 0f..1f)
+        initialize()
+        val selected = models.firstOrNull { it.id == model.id } ?: models.first { it.id == defaultModelId }
+        ModelCropPolicy.requireSupported(selected, crop)
+        return try {
+            detectLoaded(bitmap, selected, crop, threshold, trace, stageTrace)
+        } catch (error: Exception) {
+            if (error is java.util.concurrent.CancellationException || activeUpdate?.model?.sha256 != selected.sha256) throw error
+            close()
+            applyUpdate(requireNotNull(updates).reject(selected.sha256))
+            detect(bitmap, models.first { it.id == defaultModelId }, crop, threshold, trace, stageTrace)
+        }
+    }
+
+    private fun detectLoaded(bitmap: Bitmap, model: DetectorModel, crop: String, threshold: Float,
+                             trace: ((ByteBuffer, Array<FloatArray>) -> Unit)?,
+                             stageTrace: ((String, ByteBuffer, FloatArray, IntArray)->Unit)?): DetectionResult {
         val started=SystemClock.elapsedRealtimeNanos()
         if(currentModel!=model.id){close();currentModel=model.id}
         val detector=graph(model.id,model.asset,model.sha256,model.side){shape ->

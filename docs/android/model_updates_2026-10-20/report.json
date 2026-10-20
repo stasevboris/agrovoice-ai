@@ -1,0 +1,358 @@
+{
+  "date": "2026-10-20",
+  "version": "0.21",
+  "room_version": 6,
+  "scope": "S-04 verified model installation, next-process activation, provenance and rollback",
+  "build": {
+    "command": [
+      "gradlew.bat",
+      "testFieldDebugUnitTest",
+      "testLabDebugUnitTest",
+      "lintFieldDebug",
+      "lintLabDebug",
+      "assembleFieldDebug",
+      "assembleLabDebug",
+      "assembleFieldRelease",
+      "assembleLabRelease",
+      "-PreleaseSigningProperties=C:/Users/Boris/.agrovoice/signing/release.properties"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 191.65599999998813,
+    "jvm": {
+      "testFieldDebugUnitTest": {
+        "tests": 364,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "testLabDebugUnitTest": {
+        "tests": 364,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "native_flow_build": {
+    "command": [
+      "gradlew.bat",
+      "testFieldDebugUnitTest",
+      "testLabDebugUnitTest",
+      "lintFieldDebug",
+      "lintLabDebug",
+      "assembleFieldDebug",
+      "assembleFieldDebugAndroidTest",
+      "-PisolateApp=true"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 95.89100000000326,
+    "jvm": {
+      "testFieldDebugUnitTest": {
+        "tests": 363,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "testLabDebugUnitTest": {
+        "tests": 363,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "regression_proof": {
+    "command": [
+      "gradlew.bat",
+      "testFieldDebugUnitTest",
+      "--tests",
+      "*ModelUpdatesTest.installRequiresRestartAndPreservesCompleteMetadata",
+      "--tests",
+      "*ModelUpdatesTest.reinstallingProcessActiveVersionRestoresTheRequestedPointer",
+      "-PisolateApp=true"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 16.078000000008615,
+    "jvm": {
+      "testFieldDebugUnitTest": {
+        "tests": 2,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "regression_proof_scope": "Two assertions fail with the old taxonomy merge and pending-pointer check; fixed code passes the full suites.",
+  "storage_error_regression": {
+    "command": [
+      "gradlew.bat",
+      "testFieldDebugUnitTest",
+      "--tests",
+      "*UserErrorsTest.updateStorageFailureExplainsFreeSpaceInsteadOfNetworkRetry"
+    ],
+    "exit_code": 1,
+    "duration_seconds": 14.562000000005355,
+    "jvm": {
+      "testFieldDebugUnitTest": {
+        "tests": 1,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "storage_error_scope": "Controlled JVM ENOSPC injection; no phone storage was filled. The final shared error-mapper fix is covered by the full JVM suites.",
+  "device": {
+    "package": "com.agronomy.phytomonitor.verification",
+    "transport": "adb reverse to isolated local API8028",
+    "synthetic_model_fixtures": true,
+    "phases": [
+      {
+        "method": "rejectIncompatibleGraph",
+        "passed": true
+      },
+      {
+        "method": "installFirstVersion",
+        "passed": true
+      },
+      {
+        "method": "verifyFirstAndInstallSecondVersion",
+        "passed": true
+      },
+      {
+        "method": "verifySecondAndCorruptOwnBlob",
+        "passed": true
+      },
+      {
+        "method": "verifyFallbackAndCorruptFirstBlob",
+        "passed": true
+      },
+      {
+        "method": "verifyBundledAndRestoreState",
+        "passed": true
+      }
+    ],
+    "cleanup_passed": true,
+    "device_report_pulled": true,
+    "test_process_stopped": true,
+    "reverse_removed": true,
+    "server_feed_restored": true
+  },
+  "device_assertions": {
+    "scope": "Isolated package; zero-output compatibility fixtures, not trained models; injected voice commands",
+    "events": [
+      {
+        "pointer_unchanged": true,
+        "message": "Неподдерживаемый тип или форма ONNX",
+        "phase": "reject_incompatible_graph",
+        "status": "passed"
+      },
+      {
+        "process_keeps_old_model": true,
+        "phase": "install_v1",
+        "status": "passed"
+      },
+      {
+        "model": "verification_fixture",
+        "sha256": "ed1c17e5deb81bd751a78a5ef0bf30d44d5973b3f71b518c3505336ab04be856",
+        "classes": 49,
+        "detections": 0,
+        "saved_report_sha256": "89149012e1e9fb65fe29c8f7939921101cdca749280c8fef9228044ca972f640",
+        "phase": "verified_v1",
+        "status": "passed"
+      },
+      {
+        "process_keeps_v1": true,
+        "phase": "install_v2",
+        "status": "passed"
+      },
+      {
+        "model": "verification_fixture",
+        "sha256": "42af0388ba72e1e6344014eb7714bce7f9e42ea8b5e6eba487684f992ccab99e",
+        "classes": 49,
+        "detections": 0,
+        "saved_report_sha256": "9193c4cd9e768ef7fdb9d8bb3d579ff063abbb3bfbd2becad42784598772eb2e",
+        "phase": "verified_v2",
+        "status": "passed"
+      },
+      {
+        "only_fixture_blob_changed": true,
+        "phase": "corrupt_v2",
+        "status": "passed"
+      },
+      {
+        "model": "verification_fixture",
+        "sha256": "ed1c17e5deb81bd751a78a5ef0bf30d44d5973b3f71b518c3505336ab04be856",
+        "classes": 49,
+        "detections": 0,
+        "saved_report_sha256": "5d49062ede804ad3e15c86727e2fbf4b85f1e4126d53bffbcc27fc1952bff125",
+        "phase": "verified_v1",
+        "status": "passed"
+      },
+      {
+        "previous_valid_version_loaded": true,
+        "selected_crop": "orange",
+        "phase": "fallback_v1_and_corrupt",
+        "status": "passed"
+      },
+      {
+        "model": "yolo26s",
+        "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+        "selected_crop_preserved": "orange",
+        "unsupported_crop_rejected": true,
+        "phase": "bundled_fallback",
+        "status": "passed"
+      },
+      {
+        "original_pointer_restored": true,
+        "settings_restored": true,
+        "phase": "restored",
+        "status": "passed"
+      },
+      {
+        "original_pointer_restored": true,
+        "settings_restored": true,
+        "phase": "restored",
+        "status": "passed"
+      }
+    ]
+  },
+  "voice_input_method": "Injected recognized text through VoiceCommands/dispatcher; no live speech or microphone input.",
+  "tested_isolated_apk": {
+    "package": "com.agronomy.phytomonitor.verification",
+    "apk_sha256": "6ffbf6b10c3d6106c0e9f1d1cbeda9feb0caa629167aa33737479eada5c3b885"
+  },
+  "test_apk": {
+    "package": "com.agronomy.phytomonitor.verification.test",
+    "apk_sha256": "1f81d4ff1715a813d31ca0b93e838b748107588b3d76eca398c89e509c744b06"
+  },
+  "primary_apk": {
+    "package": "com.agronomy.phytomonitor",
+    "apk_sha256": "2e39269e562a0b2fcc97169ddebac069e5e2c3dd2fee4d6bebc32394a5904312"
+  },
+  "primary_update": "adb install -r, followed by actual Activity launch and backup comparison",
+  "primary_data_preservation": {
+    "database_rows_equal": true,
+    "photos_reports_settings_preserved": true,
+    "changed_files": [],
+    "explanation": "Immediate pre-update versus post-launch backup; only AndroidX profileInstalled may differ after APK replacement."
+  },
+  "isolated_data_preservation": {
+    "package": "com.agronomy.phytomonitor.verification",
+    "integrity_check": "ok",
+    "tables": {
+      "android_metadata": {
+        "rows": 1,
+        "sha256": "d8031e416b9d29f1ed6e1eea6bd7819114a96b12d7f974b5a081b4cc4218431d"
+      },
+      "plot": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "plant": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "inspection": {
+        "rows": 6,
+        "sha256": "0d14e58843fad38db377c75da318d8922547d6f216330b7c62a92f196eb0aa3c"
+      },
+      "photo": {
+        "rows": 6,
+        "sha256": "60f5bed67cc5038482433c38797621836d868d98a8585969a98cf42bd2547347"
+      },
+      "detection": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "disease": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "treatment": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "kb_version": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sync_queue": {
+        "rows": 6,
+        "sha256": "bd7c194bd547b55405d6f41b3699e69dc50e8abe8f3c1408ec14b796ec9f1d39"
+      },
+      "achievement": {
+        "rows": 2,
+        "sha256": "06428133186b76b52fff4890b9623650fb3379e7ee88df46da51c2f1541928ed"
+      },
+      "journal_event": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sync_record": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "room_master_table": {
+        "rows": 1,
+        "sha256": "69b5ff6e3ed250daa1fa4daf414b1ef13a93895b084d8a53d7e36e306dbcd86c"
+      },
+      "frame_feedback": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "readable_files": 469,
+    "private_bytes": 168678400,
+    "external_bytes": 114063360,
+    "original_tables_preserved": true,
+    "original_photos_reports_preserved": true,
+    "original_settings_preserved": true
+  },
+  "isolated_preferences_final_restoration": {
+    "package": "com.agronomy.phytomonitor.verification",
+    "files": [
+      {
+        "file": "shared_prefs/sync_session.xml",
+        "restored_exactly": true,
+        "sha256": "3325d2a819fdd8062c2cdc48a09b995c9b012915bcdf88b1cf9742a7f057c793"
+      },
+      {
+        "file": "files/datastore/agrovoice.preferences_pb",
+        "restored_exactly": true,
+        "sha256": "13c348fa0a31116d72a977d405705b62ca2ace776072572f4274fbdb77a17c6e"
+      }
+    ],
+    "restored_exactly": true,
+    "reason": "Restore original byte representation after temporary test login, voice and crop changes."
+  },
+  "signed_r8_builds": [
+    {
+      "flavor": "field",
+      "apk_sha256": "ffa8dbfb37d4546a538de5b29d777db20e8153b6a8835b0d0ff5fcad1dc6393e",
+      "bytes": 221169171,
+      "certificate_sha256": "4b3d9c18116c4391163af3fad542eef8384e07bc68279bd879a57ff5722097f5",
+      "apksigner_exit_code": 0,
+      "apksigner_version_path": "build-tools/36.0.0/apksigner.bat",
+      "installed_on_primary_phone": false
+    },
+    {
+      "flavor": "lab",
+      "apk_sha256": "075099e2dfe50ef0d02438d2504c328aa9ecbede1bdf3107f53e3d6ac4af0b58",
+      "bytes": 383467708,
+      "certificate_sha256": "4b3d9c18116c4391163af3fad542eef8384e07bc68279bd879a57ff5722097f5",
+      "apksigner_exit_code": 0,
+      "apksigner_version_path": "build-tools/36.0.0/apksigner.bat",
+      "installed_on_primary_phone": false
+    }
+  ],
+  "limitations": [
+    "Native integration uses explicitly synthetic zero-output fixtures, not trained diagnostic models.",
+    "The app still bundles the previous 30-class YOLO26s; no new trained allcrops model was activated.",
+    "Model update activates after a new Android process, not mere navigation or Activity recreation.",
+    "The signed release certificate differs from the installed debug app; no uninstall or data reset was performed.",
+    "Release builds were signed and verified, but this new release revision was not instrumented with R8 on the phone.",
+    "No live speech, physical headset, independent field quality or calibrated-rejection claim.",
+    "Lab contains license-restricted experimental weights and remains a local artifact, not a published APK."
+  ]
+}

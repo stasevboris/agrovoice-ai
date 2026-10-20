@@ -105,8 +105,11 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         work.submit {migrateJournal()}
         viewModelScope.launch {
             val saved = settings.state.filterNotNull().first()
-            selectedModel = saved.model.takeIf { id -> detector.models.any { it.id == id } } ?: detector.models.first().id
-            crop = saved.crop.takeIf { it == "all" || (currentModel().family != "detr" && it in currentModel().crops) } ?: "all"
+            withContext(Dispatchers.IO) { detector.initialize() }
+            selectedModel = if (BuildConfig.IS_LAB) saved.model.takeIf { id -> detector.models.any { it.id == id } }
+                ?: detector.defaultModelId else detector.defaultModelId
+            crop = com.agronomy.phytomonitor.ml.ModelCropPolicy.restore(saved.crop, currentModel(),
+                detector.updateFallback && (!BuildConfig.IS_LAB || detector.models.none { it.id == saved.model }))
             threshold = if (BuildConfig.IS_LAB) saved.threshold else 0.25f
             plotName = saved.plot
             rowName = saved.row
@@ -208,7 +211,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun cropName(id: String): String = if(id=="all") "Все культуры" else currentModel().cropNames[id] ?: CropVocabulary.names[id] ?: id
     /** The model shown in the top bar: «YOLO26n · 25 %». */
-    fun selectedModelName(): String = detector.models.firstOrNull {it.id==selectedModel}?.name ?: selectedModel
+    fun selectedModelName(): String = currentModel().name
     fun importPhoto(uri: Uri) {
         if(busy || hasDraft || draftError != null)return
         busy=true;message=null
@@ -256,7 +259,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             activeDraft = InspectionDraft(photo = file.absolutePath).let { it.copy(frames = it.allFrames()) }
             savedInspection = null
         }
-        val model=detector.models.firstOrNull {it.id==selectedModel} ?: return
+        val model=currentModel()
         val cropSnapshot=crop;val thresholdSnapshot=threshold
         busy=true;message=null;result=null;reportName=null
         work.submit {
@@ -268,6 +271,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
                 val report=PhotoFiles.saveResult(getApplication(),file,source,detection,detector,cropSnapshot,thresholdSnapshot)
                 val reportJson = report.readText()
                 val snapshot = withContext(Dispatchers.Main.immediate) {
+                    selectedModel = detection.model.id
                     result = detection
                     reportName = report.name
                     val draft = requireNotNull(snapshotDraft())
@@ -351,7 +355,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         busy=true;message=null;comparison=emptyList()
         work.submit {try {
             // Comparison results are shown on screen only; they are not journal records.
-            val rows=detector.models.map {m -> m.name to detector.detect(source,m,filter,score)}
+            val rows=detector.models.map {m ->
+                val detected = detector.detect(source,m,filter,score)
+                detected.model.name to detected
+            }
             publish {if(!cleared){comparison=rows;busy=false;notify("Модели проверены на одном фото при одинаковом пороге")}}
         }catch(error: Exception){postFailure(error)}}
     }

@@ -9,6 +9,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import com.agronomy.phytomonitor.updates.UpdateRelease
 import com.agronomy.phytomonitor.updates.VerifiedUpdateStore
+import com.agronomy.phytomonitor.UserErrors
 
 interface SyncApi {
     fun push(update: JSONObject): JSONObject
@@ -136,7 +137,7 @@ class SyncHttpClient(origin: String, private val token: String? = null,
     }
 }
 
-fun syncError(error: Exception): String = when (error) {
+fun syncError(error: Exception): String = if (UserErrors.noSpace(error)) UserErrors.NO_SPACE else when (error) {
     is SyncHttpException -> when (error.status) {
         401, 403 -> "Сеанс истёк или доступ запрещён. Нажмите «Войти» в настройках. Осмотр сохранён на устройстве."
         in 300..399 -> "Сервер перенаправляет запрос. Укажите конечный адрес сервера; токен не передан по перенаправлению."
