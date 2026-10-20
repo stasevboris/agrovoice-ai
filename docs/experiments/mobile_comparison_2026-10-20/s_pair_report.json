@@ -1,0 +1,647 @@
+{
+  "date": "2026-10-20",
+  "training": {
+    "smoke": false,
+    "runs": [
+      {
+        "variant": "train",
+        "seconds": 7513.730458656006,
+        "metrics": {
+          "metrics/precision(B)": 0.6002284148443716,
+          "metrics/recall(B)": 0.46329498119691565,
+          "metrics/mAP50(B)": 0.5116953411407291,
+          "metrics/mAP50-95(B)": 0.3542493134314195,
+          "fitness": 0.3542493134314195
+        },
+        "best": "/mnt/f/agrovoice-ai/runs/home_20261020_s_pair3/train/weights/best.pt",
+        "last": "/mnt/f/agrovoice-ai/runs/home_20261020_s_pair3/train/weights/last.pt",
+        "test_evaluated": false
+      },
+      {
+        "variant": "train_with_negatives",
+        "seconds": 7616.628850968002,
+        "metrics": {
+          "metrics/precision(B)": 0.5744557430778648,
+          "metrics/recall(B)": 0.503066531979752,
+          "metrics/mAP50(B)": 0.5288818881389218,
+          "metrics/mAP50-95(B)": 0.36589237913466566,
+          "fitness": 0.36589237913466566
+        },
+        "best": "/mnt/f/agrovoice-ai/runs/home_20261020_s_pair3/train_with_negatives/weights/best.pt",
+        "last": "/mnt/f/agrovoice-ai/runs/home_20261020_s_pair3/train_with_negatives/weights/last.pt",
+        "test_evaluated": false
+      }
+    ],
+    "deadline": "2026-10-20T23:00:00+03:00",
+    "limitations": [
+      "Strict dataset has missing train classes; not a full taxonomy release.",
+      "Only field validation; no test-based tuning or model release.",
+      "Negatives are a small assistant-screened pilot; no guarantee of unknown rejection."
+    ]
+  },
+  "training_preparation_report": "docs/data/TRAINING_PREPARATION_REPORT.json",
+  "missing_train_classes": [
+    "corn__healthy",
+    "cucumber__bacterial_wilt",
+    "cucumber__downy_mildew"
+  ],
+  "ordinary_head_evaluation": {
+    "runs": [
+      {
+        "variant": "train",
+        "ordinary_head_field_val": {
+          "metrics/precision(B)": 0.6014838731178366,
+          "metrics/recall(B)": 0.4621533096631285,
+          "metrics/mAP50(B)": 0.5007002897600873,
+          "metrics/mAP50-95(B)": 0.34524581099869683,
+          "fitness": 0.34524581099869683
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 5,
+            "accepted_at_threshold": {
+              "0.1": 4,
+              "0.25": 1,
+              "0.5": 1,
+              "0.75": 0
+            }
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 133,
+            "accepted_at_threshold": {
+              "0.1": 132,
+              "0.25": 113,
+              "0.5": 73,
+              "0.75": 37
+            }
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1581,
+            "accepted_at_threshold": {
+              "0.1": 646,
+              "0.25": 318,
+              "0.5": 43,
+              "0.75": 2
+            }
+          }
+        },
+        "onnx": {
+          "path": "/mnt/f/agrovoice-ai/runs/home_20261020_s_pair3/train/weights/best.onnx",
+          "bytes": 38088394,
+          "sha256": "4de2ee83a2ee5da501a3c59dc2e8bff6382c925bbbb5863e6400e70d357d0b50",
+          "output_shape": [
+            1,
+            53,
+            3549
+          ],
+          "parity_max_abs_diff": [
+            0.00018310546875,
+            0.000213623046875,
+            0.0001678466796875
+          ],
+          "rtol": 0.001,
+          "atol": 0.002
+        }
+      },
+      {
+        "variant": "train_with_negatives",
+        "ordinary_head_field_val": {
+          "metrics/precision(B)": 0.5464201565296445,
+          "metrics/recall(B)": 0.5050522617509519,
+          "metrics/mAP50(B)": 0.5248105562229076,
+          "metrics/mAP50-95(B)": 0.36315905612435584,
+          "fitness": 0.36315905612435584
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 5,
+            "accepted_at_threshold": {
+              "0.1": 2,
+              "0.25": 1,
+              "0.5": 0,
+              "0.75": 0
+            }
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 133,
+            "accepted_at_threshold": {
+              "0.1": 130,
+              "0.25": 114,
+              "0.5": 70,
+              "0.75": 31
+            }
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1581,
+            "accepted_at_threshold": {
+              "0.1": 628,
+              "0.25": 334,
+              "0.5": 100,
+              "0.75": 20
+            }
+          }
+        },
+        "onnx": {
+          "path": "/mnt/f/agrovoice-ai/runs/home_20261020_s_pair3/train_with_negatives/weights/best.onnx",
+          "bytes": 38088410,
+          "sha256": "1daa156c116488ffd6cb2dc80ec974ad05bdf9e31dbc99a26b1cdfc9b2e41eab",
+          "output_shape": [
+            1,
+            53,
+            3549
+          ],
+          "parity_max_abs_diff": [
+            0.000152587890625,
+            0.0002288818359375,
+            0.0001678466796875
+          ],
+          "rtol": 0.001,
+          "atol": 0.002
+        }
+      }
+    ],
+    "test_evaluated": false,
+    "execution_device": "CPU",
+    "ordinary_head": true,
+    "limitations": [
+      "Three train classes are absent; not a complete taxonomy release.",
+      "Unknown-source scenes may contain unannotated background plants; acceptance is a proxy, not expert-confirmed error.",
+      "Reviewed nonplant validation is tiny; no claim of field reliability.",
+      "PyTorch ordinary head and matching NMS settings; real phone performance not measured.",
+      "Private ONNX artifacts only; release still requires prepare_model_release.py and a model decision."
+    ]
+  },
+  "comparison": {
+    "status": "complete",
+    "test_evaluated": false,
+    "common_crops": [
+      "apple",
+      "blueberry",
+      "cherry",
+      "corn",
+      "cucumber",
+      "grape",
+      "peach",
+      "pepper",
+      "potato",
+      "raspberry",
+      "soybean",
+      "squash",
+      "strawberry",
+      "tomato"
+    ],
+    "models": [
+      {
+        "name": "yolo26s",
+        "onnx": "F:\\agrovoice-ai\\android-app\\app\\src\\main\\assets\\models\\yolo26s.onnx",
+        "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+        "class_crops": [
+          "apple",
+          "apple",
+          "apple",
+          "pepper",
+          "pepper",
+          "blueberry",
+          "cherry",
+          "corn",
+          "corn",
+          "corn",
+          "peach",
+          "potato",
+          "potato",
+          "potato",
+          "raspberry",
+          "soybean",
+          "squash",
+          "strawberry",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "grape",
+          "grape",
+          "cucumber"
+        ],
+        "model_name": "YOLO26s",
+        "family": "yolo",
+        "provisional": false,
+        "license": "not specified here",
+        "decode_policy": {
+          "native_class_nms": true,
+          "output": "cxcywh_class_scores",
+          "box_mapping": "letterbox_scale"
+        },
+        "field": {
+          "images": 349,
+          "gt": 1309,
+          "localized": 925,
+          "tp": 855,
+          "fp": 530,
+          "fn": 454,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "confusion": {
+            "tomato->tomato": 226,
+            "__background__->tomato": 141,
+            "tomato->__missed__": 115,
+            "potato->potato": 33,
+            "__background__->potato": 24,
+            "pepper->pepper": 52,
+            "corn->corn": 73,
+            "__background__->corn": 25,
+            "corn->__missed__": 14,
+            "apple->apple": 69,
+            "strawberry->strawberry": 60,
+            "__background__->squash": 23,
+            "squash->__missed__": 24,
+            "grape->__missed__": 22,
+            "__background__->apple": 22,
+            "apple->__missed__": 26,
+            "grape->grape": 34,
+            "__background__->grape": 10,
+            "potato->__missed__": 37,
+            "__background__->cherry": 14,
+            "apple->potato": 5,
+            "raspberry->raspberry": 59,
+            "__background__->raspberry": 39,
+            "peach->peach": 89,
+            "apple->grape": 3,
+            "potato->tomato": 11,
+            "blueberry->blueberry": 93,
+            "__background__->pepper": 66,
+            "pepper->potato": 1,
+            "soybean->soybean": 24,
+            "__background__->soybean": 24,
+            "squash->squash": 24,
+            "cherry->cherry": 19,
+            "__background__->blueberry": 47,
+            "blueberry->__missed__": 59,
+            "tomato->potato": 3,
+            "raspberry->__missed__": 11,
+            "__background__->strawberry": 4,
+            "strawberry->__missed__": 5,
+            "__background__->peach": 21,
+            "peach->__missed__": 34,
+            "apple->tomato": 3,
+            "blueberry->soybean": 2,
+            "tomato->pepper": 9,
+            "pepper->__missed__": 24,
+            "potato->blueberry": 1,
+            "soybean->potato": 1,
+            "soybean->__missed__": 4,
+            "apple->blueberry": 7,
+            "blueberry->tomato": 1,
+            "cherry->__missed__": 9,
+            "pepper->apple": 2,
+            "soybean->tomato": 1,
+            "raspberry->strawberry": 7,
+            "pepper->tomato": 1,
+            "apple->peach": 6,
+            "peach->apple": 2,
+            "peach->cherry": 1,
+            "cherry->apple": 1,
+            "tomato->apple": 1,
+            "potato->apple": 1
+          },
+          "precision": 0.6173285198555957,
+          "recall": 0.653170359052712,
+          "f1": 0.6347438752783965,
+          "localization_recall": 0.706646294881589
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 5,
+            "accepted": 1
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 133,
+            "accepted": 102
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1581,
+            "accepted": 604
+          }
+        },
+        "complete": true
+      },
+      {
+        "name": "pilot_s_negatives",
+        "onnx": "runs\\home_20261020_s_pair3\\train_with_negatives\\weights\\best.onnx",
+        "sha256": "1daa156c116488ffd6cb2dc80ec974ad05bdf9e31dbc99a26b1cdfc9b2e41eab",
+        "class_crops": [
+          "apple",
+          "apple",
+          "apple",
+          "apple",
+          "blueberry",
+          "cherry",
+          "cherry",
+          "corn",
+          "corn",
+          "corn",
+          "corn",
+          "cucumber",
+          "cucumber",
+          "cucumber",
+          "cucumber",
+          "cucumber",
+          "cucumber",
+          "cucumber",
+          "grape",
+          "grape",
+          "grape",
+          "grape",
+          "orange",
+          "peach",
+          "peach",
+          "pepper",
+          "pepper",
+          "potato",
+          "potato",
+          "potato",
+          "raspberry",
+          "soybean",
+          "squash",
+          "strawberry",
+          "strawberry",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato",
+          "tomato"
+        ],
+        "model_name": "pilot_s_negatives",
+        "family": "yolo",
+        "provisional": true,
+        "license": "not specified here",
+        "decode_policy": {
+          "native_class_nms": true,
+          "output": "cxcywh_class_scores",
+          "box_mapping": "letterbox_scale"
+        },
+        "field": {
+          "images": 349,
+          "gt": 1309,
+          "localized": 902,
+          "tp": 816,
+          "fp": 671,
+          "fn": 493,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "confusion": {
+            "tomato->__missed__": 123,
+            "tomato->tomato": 212,
+            "__background__->potato": 16,
+            "potato->potato": 26,
+            "potato->__missed__": 39,
+            "__background__->tomato": 148,
+            "pepper->pepper": 48,
+            "pepper->__missed__": 28,
+            "corn->corn": 71,
+            "__background__->corn": 24,
+            "__background__->cherry": 11,
+            "apple->apple": 52,
+            "strawberry->strawberry": 58,
+            "__background__->strawberry": 14,
+            "squash->squash": 27,
+            "__background__->squash": 23,
+            "grape->grape": 36,
+            "__background__->apple": 20,
+            "__background__->blueberry": 94,
+            "__background__->pepper": 67,
+            "__background__->grape": 13,
+            "apple->__missed__": 48,
+            "apple->blueberry": 3,
+            "grape->__missed__": 20,
+            "apple->potato": 2,
+            "raspberry->raspberry": 55,
+            "__background__->raspberry": 48,
+            "peach->peach": 92,
+            "apple->grape": 2,
+            "corn->__missed__": 16,
+            "strawberry->potato": 1,
+            "potato->tomato": 9,
+            "blueberry->blueberry": 102,
+            "soybean->soybean": 25,
+            "__background__->soybean": 51,
+            "squash->__missed__": 21,
+            "cherry->cherry": 12,
+            "cherry->__missed__": 11,
+            "blueberry->apple": 4,
+            "blueberry->__missed__": 48,
+            "raspberry->strawberry": 3,
+            "raspberry->__missed__": 16,
+            "__background__->peach": 56,
+            "strawberry->__missed__": 5,
+            "tomato->potato": 2,
+            "apple->cucumber": 1,
+            "tomato->pepper": 15,
+            "potato->blueberry": 9,
+            "soybean->__missed__": 3,
+            "pepper->tomato": 3,
+            "peach->__missed__": 29,
+            "apple->cherry": 4,
+            "raspberry->grape": 1,
+            "blueberry->soybean": 1,
+            "apple->raspberry": 2,
+            "tomato->blueberry": 1,
+            "soybean->blueberry": 1,
+            "strawberry->raspberry": 1,
+            "apple->tomato": 2,
+            "soybean->tomato": 1,
+            "apple->peach": 3,
+            "peach->apple": 4,
+            "peach->cherry": 1,
+            "raspberry->cucumber": 1,
+            "cherry->apple": 3,
+            "cherry->blueberry": 3,
+            "pepper->potato": 1,
+            "tomato->cucumber": 1,
+            "raspberry->blueberry": 1
+          },
+          "precision": 0.5487558843308675,
+          "recall": 0.6233766233766234,
+          "f1": 0.5836909871244635,
+          "localization_recall": 0.6890756302521008
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 5,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 133,
+            "accepted": 120
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1581,
+            "accepted": 332
+          }
+        },
+        "complete": true
+      }
+    ],
+    "field_annotations": "F:\\agrovoice-ai\\ml-pipeline\\dataset_vision_training_v1\\annotations\\val_field.json",
+    "field_annotations_sha256": "fbec9b9988b3e37d7ae408f58ebc3d86fd95d12e62cc02b5175164622c4354fc",
+    "manifest_sha256": "3d50e67704a834a4484a88626d32773308c362cfa05933bf4f48eac7186bf893",
+    "taxonomy_sha256": "754cfe0b09c391554b685c1abe0239e11ad21871d1d0253d28400550424c0286",
+    "planned_images": {
+      "field": 349,
+      "dataset_nonplant_openimages_v2": 5,
+      "dataset_unknown_beans_screened_v1": 133,
+      "dataset_unknown_deepweeds_v1": 1581
+    },
+    "protocol": {
+      "confidence": 0.25,
+      "nms_iou": 0.7,
+      "matching_iou": 0.5,
+      "nms_applies_to": "yolo only; DETR native rows have no NMS",
+      "matching": "Confidence-ordered class-agnostic IoU>=0.5 matching; wrong crop consumes GT",
+      "native_class_nms": "see each model decode_policy",
+      "crop_mapping_after_native_winner": true,
+      "device": "CPU",
+      "threads": 2,
+      "max_seconds": 600.0
+    },
+    "limitations": [
+      "Crop and localization only; generic leaf labels do not establish healthy diagnoses.",
+      "TP/FP/FN score the first localized crop response, not standard class-aware detection AP.",
+      "Historical source/split overlap limitations remain; not an independent external benchmark.",
+      "Unknown scenes can contain unannotated plants; acceptance is a source-level proxy.",
+      "PIL and Android share geometry/RGB normalization, not guaranteed identical resize pixels.",
+      "Budget checked between ONNX calls; an in-flight call cannot be interrupted here."
+    ],
+    "elapsed_seconds": 250.85899999999674
+  },
+  "training_status": {
+    "deadline": "2026-10-20T23:00:00+03:00",
+    "soft_stop_epoch_boundary": 1792524600.0,
+    "hard_stop_process_group": 1792526100.0,
+    "automatic_resume": false,
+    "status": "finished",
+    "returncode": 0
+  },
+  "evaluation_status": {
+    "deadline": "2026-10-20T23:00:00+03:00",
+    "soft_stop_epoch_boundary": 1792524600.0,
+    "hard_stop_process_group": 1792526100.0,
+    "automatic_resume": false,
+    "status": "finished",
+    "returncode": 0
+  },
+  "training_artifacts": [
+    {
+      "variant": "train",
+      "results_csv": "runs\\home_20261020_s_pair3\\train\\results.csv",
+      "results_sha256": "b9083041ab5944fc450b2e9a6cc4b8aa413591ce8ae7cd8c323823d79215a914",
+      "checkpoint_sha256": "00e7aada8c8bb7f0c9a92cf10ad85a3f5253f43e6ddd1529457a6a4d48826d88"
+    },
+    {
+      "variant": "train_with_negatives",
+      "results_csv": "runs\\home_20261020_s_pair3\\train_with_negatives\\results.csv",
+      "results_sha256": "010676f8929a2aa368e7e538a3b0ec024e73ca97ae75a80c47eef29010854abd",
+      "checkpoint_sha256": "10035c3679996a307b6526d5f852eae746069cb7cc5173d484f15cfd24689cd3"
+    }
+  ],
+  "predictions": "runs\\mobile_s_negative_comparison_20261020\\predictions.jsonl",
+  "predictions_sha256": "349ddc0a12473212f317c183f9aaf71a7712f3e324148cae3a555f60f81c0165",
+  "comparison_command": "python -X utf8 ml-pipeline/gpu_kit/alternatives/compare_mobile_detectors.py --candidate pilot_s_negatives=runs/home_20261020_s_pair3/train_with_negatives/weights/best.onnx --out runs/mobile_s_negative_comparison_20261020 --threads 2 --max-seconds 600 --deadline 2026-10-20T22:50:00+03:00",
+  "limitations": [
+    "Native training-head AP, ordinary-head AP, and custom crop/box F1 are different protocols.",
+    "Validation only; test was not used to select a model or threshold.",
+    "Unknown acceptance is a source-level proxy; nonplant validation has only five images.",
+    "Three training classes are missing; not a complete allcrops release.",
+    "Existing APK and pilots have different training histories. This is not an architecture ranking.",
+    "A single pilot pair is not a multi-seed estimate of the causal effect of the small negative set.",
+    "Models remain private artifacts. APK model and thresholds have not been replaced."
+  ],
+  "phone": {
+    "results": [
+      {
+        "model": "pilot_s_negatives_fp32.onnx",
+        "sha256": "1daa156c116488ffd6cb2dc80ec974ad05bdf9e31dbc99a26b1cdfc9b2e41eab",
+        "bytes": 38088410,
+        "session_load_ms": 215.771094,
+        "output_shape": "1x53x3549",
+        "runs": 30,
+        "times_ms": [
+          466.426458,
+          450.58776,
+          453.385989,
+          438.834636,
+          430.827864,
+          432.652291,
+          442.710521,
+          437.268958,
+          433.497292,
+          431.345416,
+          433.847917,
+          440.103021,
+          442.815469,
+          434.680729,
+          441.208334,
+          446.865625,
+          451.181563,
+          450.056615,
+          432.266302,
+          435.28276,
+          436.591615,
+          432.070729,
+          443.971667,
+          433.045521,
+          444.048281,
+          439.303385,
+          441.02375,
+          440.673958,
+          454.975989,
+          449.945677
+        ],
+        "median_ms": 440.3884895,
+        "p90_ms": 451.181563,
+        "min_ms": 430.827864,
+        "process_pss_kib": 238044
+      }
+    ],
+    "device": "Xiaomi Redmi Note 7",
+    "android_sdk": 33,
+    "package": "com.agronomy.phytomonitor.verification",
+    "ort_version": "1.30.0",
+    "created_epoch_ms": 1792496079547,
+    "percentile_method": "nearest rank; median averages the two middle values",
+    "memory_scope": "Whole test process PSS while the session is open; not model-only memory",
+    "method": "ORT Java CPU, 4 intra-op threads, 5 warm-up runs, random 1x3x416x416 input; preprocessing and decoding excluded"
+  },
+  "phone_verification": {
+    "command": "python -X utf8 artifacts/verification/autonomous_20261020/phone/run_s_negative_benchmark.py",
+    "instrumentation": "OnnxBenchmarkDeviceTest: OK (1 test)",
+    "package": "com.agronomy.phytomonitor.verification",
+    "main_application_modified": false,
+    "original_databases_photos_preferences_unchanged": true,
+    "changed_non_data_files": [
+      "files/profileInstalled"
+    ],
+    "raw_evidence": "artifacts\\verification\\autonomous_20261020\\phone\\s_negatives",
+    "scope": "Random tensor inference only; no camera/preprocessing/decoding; USB powered."
+  },
+  "terminal_process_check": {
+    "checked_at": "2026-10-20T14:42:46.659883+03:00",
+    "training_or_evaluation_processes": [],
+    "windows_comparison_exit_code": 0
+  },
+  "decision": "Keep current APK weights and cutoffs. The negative S pilot does not improve the common fixed-threshold crop/box score or all unknown-source proxies. No calibrated refusal or full taxonomy coverage established.",
+  "paired_baseline_comparison": "docs/experiments/mobile_comparison_2026-10-20/s_report.json"
+}

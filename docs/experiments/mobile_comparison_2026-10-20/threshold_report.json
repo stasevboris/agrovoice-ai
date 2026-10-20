@@ -1,0 +1,1414 @@
+{
+  "status": "complete",
+  "test_evaluated": false,
+  "threshold_selected": null,
+  "thresholds": [
+    0.25,
+    0.5,
+    0.75,
+    0.9,
+    0.95,
+    0.99
+  ],
+  "common_crops": [
+    "apple",
+    "blueberry",
+    "cherry",
+    "corn",
+    "cucumber",
+    "grape",
+    "peach",
+    "pepper",
+    "potato",
+    "raspberry",
+    "soybean",
+    "squash",
+    "strawberry",
+    "tomato"
+  ],
+  "planned_images": {
+    "field": 349,
+    "dataset_nonplant_openimages_v2": 5,
+    "dataset_unknown_beans_screened_v1": 133,
+    "dataset_unknown_deepweeds_v1": 1581
+  },
+  "field_annotations_sha256": "fbec9b9988b3e37d7ae408f58ebc3d86fd95d12e62cc02b5175164622c4354fc",
+  "taxonomy_sha256": "754cfe0b09c391554b685c1abe0239e11ad21871d1d0253d28400550424c0286",
+  "validation_image_index_sha256": "667db95fc253efe35b28ed35c663ddca1d371b3706b50c09dc200050c2a092ee",
+  "inputs": [
+    {
+      "directory": "runs\\mobile_comparison_20261020",
+      "report_sha256": "f7af439c2f5cdd57e529f4e766f1043617190c7a2b5fcc66db528ec8d046afd9",
+      "predictions_sha256": "390751696033d13cba05886d27544cff536d9fcbdd61d1a853991434f6bff585"
+    },
+    {
+      "directory": "runs\\mobile_s_comparison_20261020",
+      "report_sha256": "8d7c1ae366c0028c6f97007eef1308a265ca904fdfa8dab7fdfaced74533a0ee",
+      "predictions_sha256": "24fbda6756f9572aeae6abe5c63c2039e7936b9dbc226e982e59ee9cb7d061ad"
+    },
+    {
+      "directory": "runs\\mobile_comparison_deim_20261020",
+      "report_sha256": "5b3b0bceab4ee298a15526b627ca050f4b235b8220537110dd3ee677e7b96e91",
+      "predictions_sha256": "b8e758564b2ad90f66aad5b8f1d0ff9ecabbb64c32d678b4d022f9fe0279afa4"
+    },
+    {
+      "directory": "runs\\mobile_s_negative_comparison_20261020",
+      "report_sha256": "96f788fb184bc682a6b647bff931622e4c04ba8cc5370be5b6cd65204b0045e0",
+      "predictions_sha256": "349ddc0a12473212f317c183f9aaf71a7712f3e324148cae3a555f60f81c0165"
+    }
+  ],
+  "models": [
+    {
+      "name": "yolo26s",
+      "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "onnx": "F:\\agrovoice-ai\\android-app\\app\\src\\main\\assets\\models\\yolo26s.onnx",
+      "decode_policy": {
+        "native_class_nms": true,
+        "output": "cxcywh_class_scores",
+        "box_mapping": "letterbox_scale"
+      },
+      "source_runs": [
+        "runs\\mobile_comparison_20261020",
+        "runs\\mobile_s_comparison_20261020",
+        "runs\\mobile_comparison_deim_20261020",
+        "runs\\mobile_s_negative_comparison_20261020"
+      ],
+      "predictions_sha256": "14c35cafc5e599a53873975a2800109344d5166c389216915d700bc27670de64",
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 925,
+            "tp": 855,
+            "fp": 530,
+            "fn": 454,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6173285198555957,
+            "recall": 0.653170359052712,
+            "f1": 0.6347438752783965,
+            "localization_recall": 0.706646294881589
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 1,
+              "rate": 0.2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 102,
+              "rate": 0.7669172932330827
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 604,
+              "rate": 0.3820366856419987
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 724,
+            "tp": 691,
+            "fp": 180,
+            "fn": 618,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.7933409873708381,
+            "recall": 0.5278838808250573,
+            "f1": 0.6339449541284403,
+            "localization_recall": 0.5530939648586708
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 54,
+              "rate": 0.40601503759398494
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 246,
+              "rate": 0.1555977229601518
+            }
+          }
+        },
+        {
+          "threshold": 0.75,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 439,
+            "tp": 428,
+            "fp": 58,
+            "fn": 881,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.8806584362139918,
+            "recall": 0.3269671504965623,
+            "f1": 0.4768802228412256,
+            "localization_recall": 0.33537051184110006
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 15,
+              "rate": 0.11278195488721804
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 65,
+              "rate": 0.041113219481340925
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 99,
+            "tp": 94,
+            "fp": 9,
+            "fn": 1215,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.912621359223301,
+            "recall": 0.0718105423987777,
+            "f1": 0.13314447592067988,
+            "localization_recall": 0.07563025210084033
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 1,
+              "rate": 0.007518796992481203
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 1,
+              "rate": 0.0006325110689437065
+            }
+          }
+        },
+        {
+          "threshold": 0.95,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 4,
+            "tp": 4,
+            "fp": 0,
+            "fn": 1305,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 1.0,
+            "recall": 0.0030557677616501145,
+            "f1": 0.006092916984006093,
+            "localization_recall": 0.0030557677616501145
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        },
+        {
+          "threshold": 0.99,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1309,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "localization_recall": 0.0
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pilot_n",
+      "sha256": "f61027340d4864b9b4e00ef1ed9ad6dbe09e673b42a05fc97623e6b14a36bf5d",
+      "onnx": "runs\\home_20261019_pilot\\train\\weights\\best.onnx",
+      "decode_policy": {
+        "native_class_nms": true,
+        "output": "cxcywh_class_scores",
+        "box_mapping": "letterbox_scale"
+      },
+      "source_runs": [
+        "runs\\mobile_comparison_20261020"
+      ],
+      "predictions_sha256": "e3942ad273c4c4103418fbd8849302c884fb0e5b854a568525f4ced2fab1dc93",
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 856,
+            "tp": 721,
+            "fp": 829,
+            "fn": 588,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.46516129032258063,
+            "recall": 0.5508021390374331,
+            "f1": 0.5043721580972368,
+            "localization_recall": 0.6539343009931246
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 2,
+              "rate": 0.4
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 115,
+              "rate": 0.8646616541353384
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 1184,
+              "rate": 0.7488931056293485
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 504,
+            "tp": 458,
+            "fp": 193,
+            "fn": 851,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.7035330261136713,
+            "recall": 0.34988540870893814,
+            "f1": 0.4673469387755102,
+            "localization_recall": 0.3850267379679144
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 1,
+              "rate": 0.2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 74,
+              "rate": 0.556390977443609
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 407,
+              "rate": 0.25743200506008856
+            }
+          }
+        },
+        {
+          "threshold": 0.75,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 235,
+            "tp": 224,
+            "fp": 34,
+            "fn": 1085,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.8682170542635659,
+            "recall": 0.1711229946524064,
+            "f1": 0.2858966177409062,
+            "localization_recall": 0.17952635599694422
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 34,
+              "rate": 0.2556390977443609
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 148,
+              "rate": 0.09361163820366857
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 90,
+            "tp": 87,
+            "fp": 10,
+            "fn": 1222,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.8969072164948454,
+            "recall": 0.06646294881588999,
+            "f1": 0.12375533428165007,
+            "localization_recall": 0.06875477463712758
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 10,
+              "rate": 0.07518796992481203
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 48,
+              "rate": 0.030360531309297913
+            }
+          }
+        },
+        {
+          "threshold": 0.95,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 29,
+            "tp": 27,
+            "fp": 3,
+            "fn": 1282,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.9,
+            "recall": 0.020626432391138275,
+            "f1": 0.040328603435399554,
+            "localization_recall": 0.02215431627196333
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 2,
+              "rate": 0.015037593984962405
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 12,
+              "rate": 0.007590132827324478
+            }
+          }
+        },
+        {
+          "threshold": 0.99,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1309,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "localization_recall": 0.0
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pilot_n_negatives",
+      "sha256": "c576d28d5bdd4e569819dd513654cc9728fa3516a4503e5d316289fd0ff8af9e",
+      "onnx": "runs\\home_20261019_pilot\\train_with_negatives\\weights\\best.onnx",
+      "decode_policy": {
+        "native_class_nms": true,
+        "output": "cxcywh_class_scores",
+        "box_mapping": "letterbox_scale"
+      },
+      "source_runs": [
+        "runs\\mobile_comparison_20261020"
+      ],
+      "predictions_sha256": "41b9e21db9481fe4650ffbf05cd6529ba6d0e5e342bf4d0b12ec500ee4ef476c",
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 828,
+            "tp": 710,
+            "fp": 914,
+            "fn": 599,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.437192118226601,
+            "recall": 0.5423987776928954,
+            "f1": 0.484145925673372,
+            "localization_recall": 0.6325439266615738
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 2,
+              "rate": 0.4
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 115,
+              "rate": 0.8646616541353384
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 427,
+              "rate": 0.2700822264389627
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 517,
+            "tp": 464,
+            "fp": 238,
+            "fn": 845,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6609686609686609,
+            "recall": 0.3544690603514133,
+            "f1": 0.4614619592242665,
+            "localization_recall": 0.3949579831932773
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 74,
+              "rate": 0.556390977443609
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 156,
+              "rate": 0.09867172675521822
+            }
+          }
+        },
+        {
+          "threshold": 0.75,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 249,
+            "tp": 236,
+            "fp": 36,
+            "fn": 1073,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.8676470588235294,
+            "recall": 0.18029029793735676,
+            "f1": 0.29854522454142945,
+            "localization_recall": 0.19022154316271964
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 23,
+              "rate": 0.17293233082706766
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 48,
+              "rate": 0.030360531309297913
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 63,
+            "tp": 62,
+            "fp": 4,
+            "fn": 1247,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.9393939393939394,
+            "recall": 0.04736440030557677,
+            "f1": 0.09018181818181818,
+            "localization_recall": 0.0481283422459893
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 1,
+              "rate": 0.007518796992481203
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 3,
+              "rate": 0.0018975332068311196
+            }
+          }
+        },
+        {
+          "threshold": 0.95,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 24,
+            "tp": 24,
+            "fp": 0,
+            "fn": 1285,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 1.0,
+            "recall": 0.01833460656990069,
+            "f1": 0.03600900225056264,
+            "localization_recall": 0.01833460656990069
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        },
+        {
+          "threshold": 0.99,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 1,
+            "tp": 1,
+            "fp": 0,
+            "fn": 1308,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 1.0,
+            "recall": 0.0007639419404125286,
+            "f1": 0.0015267175572519084,
+            "localization_recall": 0.0007639419404125286
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pilot_s",
+      "sha256": "f1459832678bc112ccd4411143d15a64a9246b5e1dfc6e746072103874812ab7",
+      "onnx": "runs\\mobile_s_probe_20261020\\best.onnx",
+      "decode_policy": {
+        "native_class_nms": true,
+        "output": "cxcywh_class_scores",
+        "box_mapping": "letterbox_scale"
+      },
+      "source_runs": [
+        "runs\\mobile_s_comparison_20261020"
+      ],
+      "predictions_sha256": "1f42896d3a7fcf6c51bfec04d8597d47e68a1874e4e182d24be6f668dbb544d6",
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 890,
+            "tp": 810,
+            "fp": 625,
+            "fn": 499,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5644599303135889,
+            "recall": 0.6187929717341482,
+            "f1": 0.5903790087463557,
+            "localization_recall": 0.6799083269671505
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 1,
+              "rate": 0.2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 113,
+              "rate": 0.849624060150376
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 321,
+              "rate": 0.2030360531309298
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 604,
+            "tp": 566,
+            "fp": 185,
+            "fn": 743,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.7536617842876165,
+            "recall": 0.43239113827349124,
+            "f1": 0.5495145631067961,
+            "localization_recall": 0.4614209320091673
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 1,
+              "rate": 0.2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 79,
+              "rate": 0.5939849624060151
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 43,
+              "rate": 0.02719797596457938
+            }
+          }
+        },
+        {
+          "threshold": 0.75,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 256,
+            "tp": 243,
+            "fp": 38,
+            "fn": 1066,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.8647686832740213,
+            "recall": 0.18563789152024446,
+            "f1": 0.30566037735849055,
+            "localization_recall": 0.19556913674560733
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 42,
+              "rate": 0.3157894736842105
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 3,
+              "rate": 0.0018975332068311196
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 79,
+            "tp": 78,
+            "fp": 2,
+            "fn": 1231,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.975,
+            "recall": 0.059587471352177235,
+            "f1": 0.11231101511879049,
+            "localization_recall": 0.060351413292589765
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 14,
+              "rate": 0.10526315789473684
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 2,
+              "rate": 0.001265022137887413
+            }
+          }
+        },
+        {
+          "threshold": 0.95,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 17,
+            "tp": 17,
+            "fp": 0,
+            "fn": 1292,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 1.0,
+            "recall": 0.012987012987012988,
+            "f1": 0.02564102564102564,
+            "localization_recall": 0.012987012987012988
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 6,
+              "rate": 0.045112781954887216
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        },
+        {
+          "threshold": 0.99,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1309,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "localization_recall": 0.0
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "deimv2_n",
+      "sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0",
+      "onnx": "F:\\agrovoice-ai\\android-app\\app\\src\\main\\assets\\models\\deimv2_n.onnx",
+      "decode_policy": {
+        "native_class_nms": false,
+        "output": "xyxy_score_class",
+        "box_mapping": "rounded_axis_scales"
+      },
+      "source_runs": [
+        "runs\\mobile_comparison_deim_20261020"
+      ],
+      "predictions_sha256": "488ffeb396c0f22fdf0dee02e23f077a6438b17d72a7dad7ca3ec735358fed0c",
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 925,
+            "tp": 773,
+            "fp": 999,
+            "fn": 536,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.43623024830699775,
+            "recall": 0.5905271199388846,
+            "f1": 0.5017851346965271,
+            "localization_recall": 0.706646294881589
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 4,
+              "rate": 0.8
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 132,
+              "rate": 0.9924812030075187
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 1329,
+              "rate": 0.8406072106261859
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 728,
+            "tp": 626,
+            "fp": 365,
+            "fn": 683,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6316851664984864,
+            "recall": 0.4782276546982429,
+            "f1": 0.5443478260869565,
+            "localization_recall": 0.5561497326203209
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 4,
+              "rate": 0.8
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 96,
+              "rate": 0.7218045112781954
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 738,
+              "rate": 0.4667931688804554
+            }
+          }
+        },
+        {
+          "threshold": 0.75,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 424,
+            "tp": 395,
+            "fp": 79,
+            "fn": 914,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.8333333333333334,
+            "recall": 0.3017570664629488,
+            "f1": 0.44307347167694894,
+            "localization_recall": 0.32391138273491216
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 2,
+              "rate": 0.4
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 45,
+              "rate": 0.3383458646616541
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 194,
+              "rate": 0.12270714737507907
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 96,
+            "tp": 91,
+            "fp": 8,
+            "fn": 1218,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.9191919191919192,
+            "recall": 0.06951871657754011,
+            "f1": 0.12926136363636365,
+            "localization_recall": 0.07333842627960276
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 6,
+              "rate": 0.045112781954887216
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 16,
+              "rate": 0.010120177103099304
+            }
+          }
+        },
+        {
+          "threshold": 0.95,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 4,
+            "tp": 4,
+            "fp": 0,
+            "fn": 1305,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 1.0,
+            "recall": 0.0030557677616501145,
+            "f1": 0.006092916984006093,
+            "localization_recall": 0.0030557677616501145
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 2,
+              "rate": 0.001265022137887413
+            }
+          }
+        },
+        {
+          "threshold": 0.99,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1309,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "localization_recall": 0.0
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pilot_s_negatives",
+      "sha256": "1daa156c116488ffd6cb2dc80ec974ad05bdf9e31dbc99a26b1cdfc9b2e41eab",
+      "onnx": "runs\\home_20261020_s_pair3\\train_with_negatives\\weights\\best.onnx",
+      "decode_policy": {
+        "native_class_nms": true,
+        "output": "cxcywh_class_scores",
+        "box_mapping": "letterbox_scale"
+      },
+      "source_runs": [
+        "runs\\mobile_s_negative_comparison_20261020"
+      ],
+      "predictions_sha256": "9c2ad348494d1cae75ffbe6bbc0a525b03e798efa75619dafaee9038d2315e00",
+      "thresholds": [
+        {
+          "threshold": 0.25,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 902,
+            "tp": 816,
+            "fp": 671,
+            "fn": 493,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5487558843308675,
+            "recall": 0.6233766233766234,
+            "f1": 0.5836909871244635,
+            "localization_recall": 0.6890756302521008
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 2,
+              "rate": 0.4
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 120,
+              "rate": 0.9022556390977443
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 332,
+              "rate": 0.20999367488931056
+            }
+          }
+        },
+        {
+          "threshold": 0.5,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 641,
+            "tp": 606,
+            "fp": 219,
+            "fn": 703,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.7345454545454545,
+            "recall": 0.46294881588999237,
+            "f1": 0.5679475164011246,
+            "localization_recall": 0.48968678380443087
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 78,
+              "rate": 0.5864661654135338
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 98,
+              "rate": 0.06198608475648324
+            }
+          }
+        },
+        {
+          "threshold": 0.75,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 315,
+            "tp": 309,
+            "fp": 42,
+            "fn": 1000,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.8803418803418803,
+            "recall": 0.23605805958747136,
+            "f1": 0.372289156626506,
+            "localization_recall": 0.24064171122994651
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 36,
+              "rate": 0.2706766917293233
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 21,
+              "rate": 0.013282732447817837
+            }
+          }
+        },
+        {
+          "threshold": 0.9,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 85,
+            "tp": 84,
+            "fp": 3,
+            "fn": 1225,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.9655172413793104,
+            "recall": 0.06417112299465241,
+            "f1": 0.12034383954154727,
+            "localization_recall": 0.06493506493506493
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 10,
+              "rate": 0.07518796992481203
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 1,
+              "rate": 0.0006325110689437065
+            }
+          }
+        },
+        {
+          "threshold": 0.95,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 18,
+            "tp": 18,
+            "fp": 1,
+            "fn": 1291,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.9473684210526315,
+            "recall": 0.013750954927425516,
+            "f1": 0.02710843373493976,
+            "localization_recall": 0.013750954927425516
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 1,
+              "rate": 0.007518796992481203
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        },
+        {
+          "threshold": 0.99,
+          "field": {
+            "images": 349,
+            "gt": 1309,
+            "localized": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1309,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "localization_recall": 0.0
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 5,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 133,
+              "accepted": 0,
+              "rate": 0.0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1581,
+              "accepted": 0,
+              "rate": 0.0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "protocol": {
+    "matching": "compare_mobile_detectors.score_frame; IoU>=0.5, common-crop GT only",
+    "precision": "TP/(TP+FP); null when there are no scored predictions",
+    "acceptance": "At least one retained prediction per image, reported separately by source",
+    "filter": "Inclusive cutoff on saved post-NMS YOLO / native DETR predictions; no new NMS"
+  },
+  "limitations": [
+    "Same validation images, not independent test; no automatic cutoff selection or deployment.",
+    "Unknown acceptance is a source-level proxy, not calibrated refusal or a disease diagnosis.",
+    "Training budgets and data differ; threshold curves do not isolate their effects.",
+    "Unknown image bytes were not rehashed; index SHA pins identities, raw SHA pins saved predictions."
+  ],
+  "verification": {
+    "command": [
+      "ml-pipeline/venv/Scripts/python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "ml-pipeline/tests"
+    ],
+    "tests": 155,
+    "exit_code": 0,
+    "raw_report": "artifacts\\verification\\autonomous_20261020\\threshold_tests_report.json",
+    "raw_report_sha256": "f691f71b9274eb489e8702a7b244613ddccaa9f2b251842bb9c74e560176a02e",
+    "review": "Independent review; per-model decode metadata compatibility fixed and regression tested."
+  }
+}

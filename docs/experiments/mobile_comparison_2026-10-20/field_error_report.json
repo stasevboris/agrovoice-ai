@@ -1,0 +1,2321 @@
+{
+  "status": "complete",
+  "threshold": 0.25,
+  "test_evaluated": false,
+  "inputs": [
+    {
+      "path": "runs\\mobile_comparison_20261020\\report.json",
+      "sha256": "f7af439c2f5cdd57e529f4e766f1043617190c7a2b5fcc66db528ec8d046afd9"
+    },
+    {
+      "path": "runs\\mobile_s_comparison_20261020\\report.json",
+      "sha256": "8d7c1ae366c0028c6f97007eef1308a265ca904fdfa8dab7fdfaced74533a0ee"
+    },
+    {
+      "path": "runs\\mobile_comparison_deim_20261020\\report.json",
+      "sha256": "5b3b0bceab4ee298a15526b627ca050f4b235b8220537110dd3ee677e7b96e91"
+    },
+    {
+      "path": "runs\\mobile_s_negative_comparison_20261020\\report.json",
+      "sha256": "96f788fb184bc682a6b647bff931622e4c04ba8cc5370be5b6cd65204b0045e0"
+    }
+  ],
+  "models": [
+    {
+      "name": "yolo26s",
+      "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "confusion": {
+        "tomato->tomato": 226,
+        "__background__->tomato": 141,
+        "tomato->__missed__": 115,
+        "potato->potato": 33,
+        "__background__->potato": 24,
+        "pepper->pepper": 52,
+        "corn->corn": 73,
+        "__background__->corn": 25,
+        "corn->__missed__": 14,
+        "apple->apple": 69,
+        "strawberry->strawberry": 60,
+        "__background__->squash": 23,
+        "squash->__missed__": 24,
+        "grape->__missed__": 22,
+        "__background__->apple": 22,
+        "apple->__missed__": 26,
+        "grape->grape": 34,
+        "__background__->grape": 10,
+        "potato->__missed__": 37,
+        "__background__->cherry": 14,
+        "apple->potato": 5,
+        "raspberry->raspberry": 59,
+        "__background__->raspberry": 39,
+        "peach->peach": 89,
+        "apple->grape": 3,
+        "potato->tomato": 11,
+        "blueberry->blueberry": 93,
+        "__background__->pepper": 66,
+        "pepper->potato": 1,
+        "soybean->soybean": 24,
+        "__background__->soybean": 24,
+        "squash->squash": 24,
+        "cherry->cherry": 19,
+        "__background__->blueberry": 47,
+        "blueberry->__missed__": 59,
+        "tomato->potato": 3,
+        "raspberry->__missed__": 11,
+        "__background__->strawberry": 4,
+        "strawberry->__missed__": 5,
+        "__background__->peach": 21,
+        "peach->__missed__": 34,
+        "apple->tomato": 3,
+        "blueberry->soybean": 2,
+        "tomato->pepper": 9,
+        "pepper->__missed__": 24,
+        "potato->blueberry": 1,
+        "soybean->potato": 1,
+        "soybean->__missed__": 4,
+        "apple->blueberry": 7,
+        "blueberry->tomato": 1,
+        "cherry->__missed__": 9,
+        "pepper->apple": 2,
+        "soybean->tomato": 1,
+        "raspberry->strawberry": 7,
+        "pepper->tomato": 1,
+        "apple->peach": 6,
+        "peach->apple": 2,
+        "peach->cherry": 1,
+        "cherry->apple": 1,
+        "tomato->apple": 1,
+        "potato->apple": 1
+      },
+      "per_crop": [
+        {
+          "crop": "apple",
+          "gt": 119,
+          "scored_predictions": 98,
+          "correct": 69,
+          "missed": 26,
+          "wrong_crop_on_gt": 24,
+          "unmatched_predictions": 22,
+          "recall": 0.5798319327731093,
+          "precision": 0.7040816326530612
+        },
+        {
+          "crop": "blueberry",
+          "gt": 155,
+          "scored_predictions": 148,
+          "correct": 93,
+          "missed": 59,
+          "wrong_crop_on_gt": 3,
+          "unmatched_predictions": 47,
+          "recall": 0.6,
+          "precision": 0.6283783783783784
+        },
+        {
+          "crop": "cherry",
+          "gt": 29,
+          "scored_predictions": 34,
+          "correct": 19,
+          "missed": 9,
+          "wrong_crop_on_gt": 1,
+          "unmatched_predictions": 14,
+          "recall": 0.6551724137931034,
+          "precision": 0.5588235294117647
+        },
+        {
+          "crop": "corn",
+          "gt": 87,
+          "scored_predictions": 98,
+          "correct": 73,
+          "missed": 14,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 25,
+          "recall": 0.8390804597701149,
+          "precision": 0.7448979591836735
+        },
+        {
+          "crop": "cucumber",
+          "gt": 0,
+          "scored_predictions": 0,
+          "correct": 0,
+          "missed": 0,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 0,
+          "recall": null,
+          "precision": null
+        },
+        {
+          "crop": "grape",
+          "gt": 56,
+          "scored_predictions": 47,
+          "correct": 34,
+          "missed": 22,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 10,
+          "recall": 0.6071428571428571,
+          "precision": 0.723404255319149
+        },
+        {
+          "crop": "peach",
+          "gt": 126,
+          "scored_predictions": 116,
+          "correct": 89,
+          "missed": 34,
+          "wrong_crop_on_gt": 3,
+          "unmatched_predictions": 21,
+          "recall": 0.7063492063492064,
+          "precision": 0.7672413793103449
+        },
+        {
+          "crop": "pepper",
+          "gt": 80,
+          "scored_predictions": 127,
+          "correct": 52,
+          "missed": 24,
+          "wrong_crop_on_gt": 4,
+          "unmatched_predictions": 66,
+          "recall": 0.65,
+          "precision": 0.4094488188976378
+        },
+        {
+          "crop": "potato",
+          "gt": 83,
+          "scored_predictions": 67,
+          "correct": 33,
+          "missed": 37,
+          "wrong_crop_on_gt": 13,
+          "unmatched_predictions": 24,
+          "recall": 0.39759036144578314,
+          "precision": 0.4925373134328358
+        },
+        {
+          "crop": "raspberry",
+          "gt": 77,
+          "scored_predictions": 98,
+          "correct": 59,
+          "missed": 11,
+          "wrong_crop_on_gt": 7,
+          "unmatched_predictions": 39,
+          "recall": 0.7662337662337663,
+          "precision": 0.6020408163265306
+        },
+        {
+          "crop": "soybean",
+          "gt": 30,
+          "scored_predictions": 50,
+          "correct": 24,
+          "missed": 4,
+          "wrong_crop_on_gt": 2,
+          "unmatched_predictions": 24,
+          "recall": 0.8,
+          "precision": 0.48
+        },
+        {
+          "crop": "squash",
+          "gt": 48,
+          "scored_predictions": 47,
+          "correct": 24,
+          "missed": 24,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 23,
+          "recall": 0.5,
+          "precision": 0.5106382978723404
+        },
+        {
+          "crop": "strawberry",
+          "gt": 65,
+          "scored_predictions": 71,
+          "correct": 60,
+          "missed": 5,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 4,
+          "recall": 0.9230769230769231,
+          "precision": 0.8450704225352113
+        },
+        {
+          "crop": "tomato",
+          "gt": 354,
+          "scored_predictions": 384,
+          "correct": 226,
+          "missed": 115,
+          "wrong_crop_on_gt": 13,
+          "unmatched_predictions": 141,
+          "recall": 0.6384180790960452,
+          "precision": 0.5885416666666666
+        }
+      ],
+      "cross_crop_confusions": [
+        {
+          "true_crop": "potato",
+          "predicted_crop": "tomato",
+          "count": 11
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "pepper",
+          "count": 9
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "blueberry",
+          "count": 7
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "strawberry",
+          "count": 7
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "peach",
+          "count": 6
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "potato",
+          "count": 5
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "grape",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "tomato",
+          "count": 3
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "potato",
+          "count": 3
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "soybean",
+          "count": 2
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "apple",
+          "count": 2
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "apple",
+          "count": 2
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "cherry",
+          "count": 1
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "potato",
+          "count": 1
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "potato",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "apple",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "pilot_n",
+      "sha256": "f61027340d4864b9b4e00ef1ed9ad6dbe09e673b42a05fc97623e6b14a36bf5d",
+      "confusion": {
+        "tomato->potato": 9,
+        "__background__->potato": 25,
+        "tomato->__missed__": 137,
+        "tomato->tomato": 191,
+        "__background__->tomato": 188,
+        "potato->potato": 21,
+        "potato->__missed__": 46,
+        "__background__->apple": 16,
+        "pepper->pepper": 29,
+        "pepper->apple": 1,
+        "__background__->pepper": 24,
+        "__background__->corn": 27,
+        "corn->corn": 65,
+        "corn->__missed__": 22,
+        "apple->__missed__": 50,
+        "strawberry->strawberry": 55,
+        "__background__->strawberry": 43,
+        "__background__->squash": 42,
+        "__background__->grape": 32,
+        "squash->squash": 26,
+        "squash->__missed__": 18,
+        "grape->__missed__": 25,
+        "apple->apple": 31,
+        "grape->grape": 30,
+        "potato->tomato": 11,
+        "tomato->apple": 3,
+        "apple->soybean": 1,
+        "apple->blueberry": 7,
+        "apple->cherry": 9,
+        "grape->tomato": 1,
+        "apple->potato": 3,
+        "raspberry->raspberry": 61,
+        "__background__->raspberry": 78,
+        "peach->peach": 89,
+        "__background__->peach": 56,
+        "apple->tomato": 3,
+        "strawberry->raspberry": 7,
+        "blueberry->blueberry": 97,
+        "apple->peach": 11,
+        "__background__->cherry": 20,
+        "pepper->potato": 3,
+        "__background__->blueberry": 118,
+        "soybean->tomato": 7,
+        "__background__->soybean": 23,
+        "soybean->__missed__": 6,
+        "squash->grape": 3,
+        "cherry->cherry": 10,
+        "__background__->cucumber": 2,
+        "blueberry->apple": 1,
+        "blueberry->__missed__": 49,
+        "raspberry->__missed__": 11,
+        "peach->__missed__": 35,
+        "tomato->pepper": 13,
+        "pepper->__missed__": 34,
+        "potato->blueberry": 3,
+        "potato->peach": 1,
+        "raspberry->strawberry": 2,
+        "squash->tomato": 1,
+        "soybean->soybean": 16,
+        "apple->raspberry": 4,
+        "raspberry->grape": 3,
+        "cherry->__missed__": 17,
+        "pepper->blueberry": 12,
+        "blueberry->tomato": 2,
+        "blueberry->cherry": 6,
+        "strawberry->__missed__": 3,
+        "pepper->peach": 1,
+        "peach->cherry": 2,
+        "cherry->apple": 2,
+        "tomato->cucumber": 1,
+        "potato->pepper": 1,
+        "soybean->pepper": 1
+      },
+      "per_crop": [
+        {
+          "crop": "apple",
+          "gt": 119,
+          "scored_predictions": 54,
+          "correct": 31,
+          "missed": 50,
+          "wrong_crop_on_gt": 38,
+          "unmatched_predictions": 16,
+          "recall": 0.2605042016806723,
+          "precision": 0.5740740740740741
+        },
+        {
+          "crop": "blueberry",
+          "gt": 155,
+          "scored_predictions": 237,
+          "correct": 97,
+          "missed": 49,
+          "wrong_crop_on_gt": 9,
+          "unmatched_predictions": 118,
+          "recall": 0.6258064516129033,
+          "precision": 0.4092827004219409
+        },
+        {
+          "crop": "cherry",
+          "gt": 29,
+          "scored_predictions": 47,
+          "correct": 10,
+          "missed": 17,
+          "wrong_crop_on_gt": 2,
+          "unmatched_predictions": 20,
+          "recall": 0.3448275862068966,
+          "precision": 0.2127659574468085
+        },
+        {
+          "crop": "corn",
+          "gt": 87,
+          "scored_predictions": 92,
+          "correct": 65,
+          "missed": 22,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 27,
+          "recall": 0.7471264367816092,
+          "precision": 0.7065217391304348
+        },
+        {
+          "crop": "cucumber",
+          "gt": 0,
+          "scored_predictions": 3,
+          "correct": 0,
+          "missed": 0,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 2,
+          "recall": null,
+          "precision": 0.0
+        },
+        {
+          "crop": "grape",
+          "gt": 56,
+          "scored_predictions": 68,
+          "correct": 30,
+          "missed": 25,
+          "wrong_crop_on_gt": 1,
+          "unmatched_predictions": 32,
+          "recall": 0.5357142857142857,
+          "precision": 0.4411764705882353
+        },
+        {
+          "crop": "peach",
+          "gt": 126,
+          "scored_predictions": 158,
+          "correct": 89,
+          "missed": 35,
+          "wrong_crop_on_gt": 2,
+          "unmatched_predictions": 56,
+          "recall": 0.7063492063492064,
+          "precision": 0.5632911392405063
+        },
+        {
+          "crop": "pepper",
+          "gt": 80,
+          "scored_predictions": 68,
+          "correct": 29,
+          "missed": 34,
+          "wrong_crop_on_gt": 17,
+          "unmatched_predictions": 24,
+          "recall": 0.3625,
+          "precision": 0.4264705882352941
+        },
+        {
+          "crop": "potato",
+          "gt": 83,
+          "scored_predictions": 61,
+          "correct": 21,
+          "missed": 46,
+          "wrong_crop_on_gt": 16,
+          "unmatched_predictions": 25,
+          "recall": 0.25301204819277107,
+          "precision": 0.3442622950819672
+        },
+        {
+          "crop": "raspberry",
+          "gt": 77,
+          "scored_predictions": 150,
+          "correct": 61,
+          "missed": 11,
+          "wrong_crop_on_gt": 5,
+          "unmatched_predictions": 78,
+          "recall": 0.7922077922077922,
+          "precision": 0.4066666666666667
+        },
+        {
+          "crop": "soybean",
+          "gt": 30,
+          "scored_predictions": 40,
+          "correct": 16,
+          "missed": 6,
+          "wrong_crop_on_gt": 8,
+          "unmatched_predictions": 23,
+          "recall": 0.5333333333333333,
+          "precision": 0.4
+        },
+        {
+          "crop": "squash",
+          "gt": 48,
+          "scored_predictions": 68,
+          "correct": 26,
+          "missed": 18,
+          "wrong_crop_on_gt": 4,
+          "unmatched_predictions": 42,
+          "recall": 0.5416666666666666,
+          "precision": 0.38235294117647056
+        },
+        {
+          "crop": "strawberry",
+          "gt": 65,
+          "scored_predictions": 100,
+          "correct": 55,
+          "missed": 3,
+          "wrong_crop_on_gt": 7,
+          "unmatched_predictions": 43,
+          "recall": 0.8461538461538461,
+          "precision": 0.55
+        },
+        {
+          "crop": "tomato",
+          "gt": 354,
+          "scored_predictions": 404,
+          "correct": 191,
+          "missed": 137,
+          "wrong_crop_on_gt": 26,
+          "unmatched_predictions": 188,
+          "recall": 0.53954802259887,
+          "precision": 0.47277227722772275
+        }
+      ],
+      "cross_crop_confusions": [
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "pepper",
+          "count": 13
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "blueberry",
+          "count": 12
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "peach",
+          "count": 11
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "tomato",
+          "count": 11
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "cherry",
+          "count": 9
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "potato",
+          "count": 9
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "blueberry",
+          "count": 7
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "tomato",
+          "count": 7
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "raspberry",
+          "count": 7
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "cherry",
+          "count": 6
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "raspberry",
+          "count": 4
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "potato",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "tomato",
+          "count": 3
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "potato",
+          "count": 3
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "blueberry",
+          "count": 3
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "grape",
+          "count": 3
+        },
+        {
+          "true_crop": "squash",
+          "predicted_crop": "grape",
+          "count": 3
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "apple",
+          "count": 3
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "tomato",
+          "count": 2
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "apple",
+          "count": 2
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "cherry",
+          "count": 2
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "strawberry",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "soybean",
+          "count": 1
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "grape",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "peach",
+          "count": 1
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "peach",
+          "count": 1
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "pepper",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "pepper",
+          "count": 1
+        },
+        {
+          "true_crop": "squash",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "cucumber",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "pilot_n_negatives",
+      "sha256": "c576d28d5bdd4e569819dd513654cc9728fa3516a4503e5d316289fd0ff8af9e",
+      "confusion": {
+        "tomato->__missed__": 148,
+        "tomato->tomato": 190,
+        "__background__->tomato": 250,
+        "potato->potato": 21,
+        "__background__->potato": 12,
+        "pepper->tomato": 5,
+        "pepper->pepper": 12,
+        "corn->corn": 68,
+        "__background__->corn": 19,
+        "corn->__missed__": 19,
+        "apple->__missed__": 47,
+        "strawberry->strawberry": 59,
+        "__background__->squash": 33,
+        "squash->squash": 23,
+        "squash->__missed__": 21,
+        "grape->__missed__": 26,
+        "apple->apple": 45,
+        "tomato->potato": 4,
+        "__background__->apple": 13,
+        "potato->__missed__": 50,
+        "__background__->pepper": 10,
+        "grape->grape": 29,
+        "__background__->grape": 30,
+        "apple->cherry": 1,
+        "apple->potato": 3,
+        "grape->strawberry": 1,
+        "raspberry->raspberry": 44,
+        "raspberry->strawberry": 14,
+        "__background__->raspberry": 63,
+        "peach->peach": 90,
+        "__background__->peach": 123,
+        "__background__->strawberry": 41,
+        "blueberry->blueberry": 108,
+        "__background__->blueberry": 165,
+        "apple->peach": 6,
+        "pepper->__missed__": 50,
+        "soybean->soybean": 19,
+        "__background__->soybean": 33,
+        "soybean->__missed__": 7,
+        "squash->grape": 4,
+        "cherry->peach": 5,
+        "__background__->cherry": 3,
+        "cherry->__missed__": 12,
+        "blueberry->soybean": 1,
+        "blueberry->__missed__": 46,
+        "raspberry->__missed__": 16,
+        "strawberry->__missed__": 3,
+        "peach->__missed__": 36,
+        "__background__->cucumber": 1,
+        "tomato->pepper": 8,
+        "potato->blueberry": 3,
+        "apple->pepper": 4,
+        "soybean->pepper": 2,
+        "apple->grape": 1,
+        "potato->tomato": 9,
+        "apple->blueberry": 3,
+        "apple->soybean": 2,
+        "raspberry->grape": 3,
+        "cherry->cherry": 2,
+        "pepper->blueberry": 12,
+        "apple->raspberry": 3,
+        "tomato->blueberry": 2,
+        "soybean->peach": 1,
+        "cherry->raspberry": 2,
+        "strawberry->raspberry": 3,
+        "soybean->blueberry": 1,
+        "pepper->peach": 1,
+        "cherry->apple": 8,
+        "tomato->peach": 1,
+        "tomato->squash": 1,
+        "apple->strawberry": 4
+      },
+      "per_crop": [
+        {
+          "crop": "apple",
+          "gt": 119,
+          "scored_predictions": 66,
+          "correct": 45,
+          "missed": 47,
+          "wrong_crop_on_gt": 27,
+          "unmatched_predictions": 13,
+          "recall": 0.37815126050420167,
+          "precision": 0.6818181818181818
+        },
+        {
+          "crop": "blueberry",
+          "gt": 155,
+          "scored_predictions": 294,
+          "correct": 108,
+          "missed": 46,
+          "wrong_crop_on_gt": 1,
+          "unmatched_predictions": 165,
+          "recall": 0.6967741935483871,
+          "precision": 0.3673469387755102
+        },
+        {
+          "crop": "cherry",
+          "gt": 29,
+          "scored_predictions": 6,
+          "correct": 2,
+          "missed": 12,
+          "wrong_crop_on_gt": 15,
+          "unmatched_predictions": 3,
+          "recall": 0.06896551724137931,
+          "precision": 0.3333333333333333
+        },
+        {
+          "crop": "corn",
+          "gt": 87,
+          "scored_predictions": 87,
+          "correct": 68,
+          "missed": 19,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 19,
+          "recall": 0.7816091954022989,
+          "precision": 0.7816091954022989
+        },
+        {
+          "crop": "cucumber",
+          "gt": 0,
+          "scored_predictions": 1,
+          "correct": 0,
+          "missed": 0,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 1,
+          "recall": null,
+          "precision": 0.0
+        },
+        {
+          "crop": "grape",
+          "gt": 56,
+          "scored_predictions": 67,
+          "correct": 29,
+          "missed": 26,
+          "wrong_crop_on_gt": 1,
+          "unmatched_predictions": 30,
+          "recall": 0.5178571428571429,
+          "precision": 0.43283582089552236
+        },
+        {
+          "crop": "peach",
+          "gt": 126,
+          "scored_predictions": 227,
+          "correct": 90,
+          "missed": 36,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 123,
+          "recall": 0.7142857142857143,
+          "precision": 0.3964757709251101
+        },
+        {
+          "crop": "pepper",
+          "gt": 80,
+          "scored_predictions": 36,
+          "correct": 12,
+          "missed": 50,
+          "wrong_crop_on_gt": 18,
+          "unmatched_predictions": 10,
+          "recall": 0.15,
+          "precision": 0.3333333333333333
+        },
+        {
+          "crop": "potato",
+          "gt": 83,
+          "scored_predictions": 40,
+          "correct": 21,
+          "missed": 50,
+          "wrong_crop_on_gt": 12,
+          "unmatched_predictions": 12,
+          "recall": 0.25301204819277107,
+          "precision": 0.525
+        },
+        {
+          "crop": "raspberry",
+          "gt": 77,
+          "scored_predictions": 115,
+          "correct": 44,
+          "missed": 16,
+          "wrong_crop_on_gt": 17,
+          "unmatched_predictions": 63,
+          "recall": 0.5714285714285714,
+          "precision": 0.3826086956521739
+        },
+        {
+          "crop": "soybean",
+          "gt": 30,
+          "scored_predictions": 55,
+          "correct": 19,
+          "missed": 7,
+          "wrong_crop_on_gt": 4,
+          "unmatched_predictions": 33,
+          "recall": 0.6333333333333333,
+          "precision": 0.34545454545454546
+        },
+        {
+          "crop": "squash",
+          "gt": 48,
+          "scored_predictions": 57,
+          "correct": 23,
+          "missed": 21,
+          "wrong_crop_on_gt": 4,
+          "unmatched_predictions": 33,
+          "recall": 0.4791666666666667,
+          "precision": 0.40350877192982454
+        },
+        {
+          "crop": "strawberry",
+          "gt": 65,
+          "scored_predictions": 119,
+          "correct": 59,
+          "missed": 3,
+          "wrong_crop_on_gt": 3,
+          "unmatched_predictions": 41,
+          "recall": 0.9076923076923077,
+          "precision": 0.4957983193277311
+        },
+        {
+          "crop": "tomato",
+          "gt": 354,
+          "scored_predictions": 454,
+          "correct": 190,
+          "missed": 148,
+          "wrong_crop_on_gt": 16,
+          "unmatched_predictions": 250,
+          "recall": 0.536723163841808,
+          "precision": 0.4185022026431718
+        }
+      ],
+      "cross_crop_confusions": [
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "strawberry",
+          "count": 14
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "blueberry",
+          "count": 12
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "tomato",
+          "count": 9
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "apple",
+          "count": 8
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "pepper",
+          "count": 8
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "peach",
+          "count": 6
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "peach",
+          "count": 5
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "tomato",
+          "count": 5
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "pepper",
+          "count": 4
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "strawberry",
+          "count": 4
+        },
+        {
+          "true_crop": "squash",
+          "predicted_crop": "grape",
+          "count": 4
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "potato",
+          "count": 4
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "blueberry",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "potato",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "raspberry",
+          "count": 3
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "blueberry",
+          "count": 3
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "grape",
+          "count": 3
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "raspberry",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "soybean",
+          "count": 2
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "raspberry",
+          "count": 2
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "pepper",
+          "count": 2
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "blueberry",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "cherry",
+          "count": 1
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "grape",
+          "count": 1
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "soybean",
+          "count": 1
+        },
+        {
+          "true_crop": "grape",
+          "predicted_crop": "strawberry",
+          "count": 1
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "peach",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "peach",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "peach",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "squash",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "pilot_s",
+      "sha256": "f1459832678bc112ccd4411143d15a64a9246b5e1dfc6e746072103874812ab7",
+      "confusion": {
+        "tomato->potato": 5,
+        "tomato->__missed__": 131,
+        "tomato->tomato": 206,
+        "__background__->tomato": 148,
+        "potato->potato": 24,
+        "__background__->potato": 17,
+        "potato->__missed__": 42,
+        "__background__->apple": 12,
+        "pepper->pepper": 43,
+        "corn->corn": 66,
+        "corn->__missed__": 21,
+        "apple->__missed__": 48,
+        "strawberry->strawberry": 53,
+        "squash->squash": 29,
+        "__background__->squash": 26,
+        "grape->__missed__": 24,
+        "apple->apple": 54,
+        "apple->blueberry": 3,
+        "tomato->pepper": 10,
+        "grape->grape": 32,
+        "__background__->grape": 15,
+        "potato->tomato": 8,
+        "apple->cherry": 2,
+        "__background__->cherry": 29,
+        "apple->potato": 2,
+        "raspberry->raspberry": 58,
+        "__background__->raspberry": 45,
+        "peach->peach": 101,
+        "apple->grape": 2,
+        "__background__->corn": 20,
+        "strawberry->grape": 1,
+        "blueberry->blueberry": 109,
+        "blueberry->soybean": 1,
+        "__background__->soybean": 29,
+        "peach->__missed__": 23,
+        "__background__->pepper": 35,
+        "pepper->__missed__": 27,
+        "soybean->soybean": 23,
+        "squash->__missed__": 19,
+        "cherry->cherry": 12,
+        "cherry->__missed__": 13,
+        "__background__->blueberry": 113,
+        "raspberry->__missed__": 15,
+        "__background__->peach": 45,
+        "__background__->strawberry": 8,
+        "strawberry->raspberry": 4,
+        "strawberry->__missed__": 7,
+        "blueberry->__missed__": 43,
+        "potato->blueberry": 9,
+        "soybean->__missed__": 6,
+        "apple->peach": 4,
+        "raspberry->grape": 1,
+        "cherry->raspberry": 3,
+        "pepper->apple": 5,
+        "pepper->blueberry": 3,
+        "apple->raspberry": 2,
+        "blueberry->cherry": 2,
+        "tomato->blueberry": 1,
+        "soybean->tomato": 1,
+        "pepper->tomato": 2,
+        "apple->tomato": 1,
+        "__background__->cucumber": 3,
+        "peach->apple": 1,
+        "raspberry->strawberry": 2,
+        "peach->cherry": 1,
+        "cherry->apple": 1,
+        "tomato->cucumber": 1,
+        "apple->strawberry": 1,
+        "raspberry->tomato": 1
+      },
+      "per_crop": [
+        {
+          "crop": "apple",
+          "gt": 119,
+          "scored_predictions": 73,
+          "correct": 54,
+          "missed": 48,
+          "wrong_crop_on_gt": 17,
+          "unmatched_predictions": 12,
+          "recall": 0.453781512605042,
+          "precision": 0.7397260273972602
+        },
+        {
+          "crop": "blueberry",
+          "gt": 155,
+          "scored_predictions": 238,
+          "correct": 109,
+          "missed": 43,
+          "wrong_crop_on_gt": 3,
+          "unmatched_predictions": 113,
+          "recall": 0.7032258064516129,
+          "precision": 0.4579831932773109
+        },
+        {
+          "crop": "cherry",
+          "gt": 29,
+          "scored_predictions": 46,
+          "correct": 12,
+          "missed": 13,
+          "wrong_crop_on_gt": 4,
+          "unmatched_predictions": 29,
+          "recall": 0.41379310344827586,
+          "precision": 0.2608695652173913
+        },
+        {
+          "crop": "corn",
+          "gt": 87,
+          "scored_predictions": 86,
+          "correct": 66,
+          "missed": 21,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 20,
+          "recall": 0.7586206896551724,
+          "precision": 0.7674418604651163
+        },
+        {
+          "crop": "cucumber",
+          "gt": 0,
+          "scored_predictions": 4,
+          "correct": 0,
+          "missed": 0,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 3,
+          "recall": null,
+          "precision": 0.0
+        },
+        {
+          "crop": "grape",
+          "gt": 56,
+          "scored_predictions": 51,
+          "correct": 32,
+          "missed": 24,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 15,
+          "recall": 0.5714285714285714,
+          "precision": 0.6274509803921569
+        },
+        {
+          "crop": "peach",
+          "gt": 126,
+          "scored_predictions": 150,
+          "correct": 101,
+          "missed": 23,
+          "wrong_crop_on_gt": 2,
+          "unmatched_predictions": 45,
+          "recall": 0.8015873015873016,
+          "precision": 0.6733333333333333
+        },
+        {
+          "crop": "pepper",
+          "gt": 80,
+          "scored_predictions": 88,
+          "correct": 43,
+          "missed": 27,
+          "wrong_crop_on_gt": 10,
+          "unmatched_predictions": 35,
+          "recall": 0.5375,
+          "precision": 0.48863636363636365
+        },
+        {
+          "crop": "potato",
+          "gt": 83,
+          "scored_predictions": 48,
+          "correct": 24,
+          "missed": 42,
+          "wrong_crop_on_gt": 17,
+          "unmatched_predictions": 17,
+          "recall": 0.2891566265060241,
+          "precision": 0.5
+        },
+        {
+          "crop": "raspberry",
+          "gt": 77,
+          "scored_predictions": 112,
+          "correct": 58,
+          "missed": 15,
+          "wrong_crop_on_gt": 4,
+          "unmatched_predictions": 45,
+          "recall": 0.7532467532467533,
+          "precision": 0.5178571428571429
+        },
+        {
+          "crop": "soybean",
+          "gt": 30,
+          "scored_predictions": 53,
+          "correct": 23,
+          "missed": 6,
+          "wrong_crop_on_gt": 1,
+          "unmatched_predictions": 29,
+          "recall": 0.7666666666666667,
+          "precision": 0.4339622641509434
+        },
+        {
+          "crop": "squash",
+          "gt": 48,
+          "scored_predictions": 55,
+          "correct": 29,
+          "missed": 19,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 26,
+          "recall": 0.6041666666666666,
+          "precision": 0.5272727272727272
+        },
+        {
+          "crop": "strawberry",
+          "gt": 65,
+          "scored_predictions": 64,
+          "correct": 53,
+          "missed": 7,
+          "wrong_crop_on_gt": 5,
+          "unmatched_predictions": 8,
+          "recall": 0.8153846153846154,
+          "precision": 0.828125
+        },
+        {
+          "crop": "tomato",
+          "gt": 354,
+          "scored_predictions": 367,
+          "correct": 206,
+          "missed": 131,
+          "wrong_crop_on_gt": 17,
+          "unmatched_predictions": 148,
+          "recall": 0.5819209039548022,
+          "precision": 0.5613079019073569
+        }
+      ],
+      "cross_crop_confusions": [
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "pepper",
+          "count": 10
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "blueberry",
+          "count": 9
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "tomato",
+          "count": 8
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "apple",
+          "count": 5
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "potato",
+          "count": 5
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "peach",
+          "count": 4
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "raspberry",
+          "count": 4
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "blueberry",
+          "count": 3
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "raspberry",
+          "count": 3
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "blueberry",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "cherry",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "grape",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "potato",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "raspberry",
+          "count": 2
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "cherry",
+          "count": 2
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "tomato",
+          "count": 2
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "strawberry",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "strawberry",
+          "count": 1
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "soybean",
+          "count": 1
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "cherry",
+          "count": 1
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "grape",
+          "count": 1
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "grape",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "cucumber",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "deimv2_n",
+      "sha256": "8ee5f13afa3e89e34e770fdb84de61ebcc5805ccaffc352d7351ee91b4a805f0",
+      "confusion": {
+        "tomato->tomato": 215,
+        "__background__->tomato": 377,
+        "tomato->__missed__": 114,
+        "__background__->pepper": 81,
+        "tomato->pepper": 11,
+        "potato->potato": 26,
+        "__background__->potato": 38,
+        "potato->__missed__": 27,
+        "__background__->apple": 47,
+        "__background__->grape": 23,
+        "pepper->pepper": 53,
+        "corn->corn": 70,
+        "__background__->corn": 49,
+        "corn->__missed__": 17,
+        "apple->__missed__": 31,
+        "strawberry->strawberry": 47,
+        "__background__->strawberry": 10,
+        "__background__->squash": 36,
+        "squash->__missed__": 17,
+        "grape->grape": 34,
+        "apple->tomato": 20,
+        "apple->apple": 53,
+        "potato->tomato": 21,
+        "apple->cherry": 3,
+        "grape->__missed__": 15,
+        "raspberry->raspberry": 48,
+        "peach->peach": 83,
+        "strawberry->squash": 1,
+        "blueberry->blueberry": 87,
+        "peach->__missed__": 40,
+        "pepper->tomato": 2,
+        "soybean->blueberry": 6,
+        "__background__->blueberry": 79,
+        "__background__->soybean": 18,
+        "squash->tomato": 2,
+        "squash->squash": 29,
+        "cherry->peach": 6,
+        "__background__->peach": 44,
+        "apple->potato": 4,
+        "__background__->raspberry": 41,
+        "raspberry->__missed__": 17,
+        "strawberry->__missed__": 6,
+        "apple->corn": 1,
+        "blueberry->__missed__": 65,
+        "potato->apple": 1,
+        "potato->pepper": 7,
+        "__background__->cherry": 4,
+        "raspberry->pepper": 1,
+        "soybean->soybean": 16,
+        "soybean->__missed__": 7,
+        "raspberry->tomato": 8,
+        "tomato->grape": 1,
+        "blueberry->peach": 2,
+        "apple->pepper": 1,
+        "tomato->potato": 9,
+        "cherry->cherry": 12,
+        "apple->blueberry": 1,
+        "grape->tomato": 7,
+        "pepper->__missed__": 24,
+        "apple->soybean": 2,
+        "tomato->blueberry": 4,
+        "blueberry->tomato": 1,
+        "cherry->__missed__": 4,
+        "strawberry->soybean": 3,
+        "raspberry->strawberry": 3,
+        "potato->blueberry": 1,
+        "pepper->potato": 1,
+        "strawberry->raspberry": 6,
+        "peach->corn": 3,
+        "soybean->apple": 1,
+        "apple->peach": 3,
+        "cherry->blueberry": 7,
+        "strawberry->cherry": 2
+      },
+      "per_crop": [
+        {
+          "crop": "apple",
+          "gt": 119,
+          "scored_predictions": 102,
+          "correct": 53,
+          "missed": 31,
+          "wrong_crop_on_gt": 35,
+          "unmatched_predictions": 47,
+          "recall": 0.44537815126050423,
+          "precision": 0.5196078431372549
+        },
+        {
+          "crop": "blueberry",
+          "gt": 155,
+          "scored_predictions": 185,
+          "correct": 87,
+          "missed": 65,
+          "wrong_crop_on_gt": 3,
+          "unmatched_predictions": 79,
+          "recall": 0.5612903225806452,
+          "precision": 0.4702702702702703
+        },
+        {
+          "crop": "cherry",
+          "gt": 29,
+          "scored_predictions": 21,
+          "correct": 12,
+          "missed": 4,
+          "wrong_crop_on_gt": 13,
+          "unmatched_predictions": 4,
+          "recall": 0.41379310344827586,
+          "precision": 0.5714285714285714
+        },
+        {
+          "crop": "corn",
+          "gt": 87,
+          "scored_predictions": 123,
+          "correct": 70,
+          "missed": 17,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 49,
+          "recall": 0.8045977011494253,
+          "precision": 0.5691056910569106
+        },
+        {
+          "crop": "cucumber",
+          "gt": 0,
+          "scored_predictions": 0,
+          "correct": 0,
+          "missed": 0,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 0,
+          "recall": null,
+          "precision": null
+        },
+        {
+          "crop": "grape",
+          "gt": 56,
+          "scored_predictions": 58,
+          "correct": 34,
+          "missed": 15,
+          "wrong_crop_on_gt": 7,
+          "unmatched_predictions": 23,
+          "recall": 0.6071428571428571,
+          "precision": 0.5862068965517241
+        },
+        {
+          "crop": "peach",
+          "gt": 126,
+          "scored_predictions": 138,
+          "correct": 83,
+          "missed": 40,
+          "wrong_crop_on_gt": 3,
+          "unmatched_predictions": 44,
+          "recall": 0.6587301587301587,
+          "precision": 0.6014492753623188
+        },
+        {
+          "crop": "pepper",
+          "gt": 80,
+          "scored_predictions": 154,
+          "correct": 53,
+          "missed": 24,
+          "wrong_crop_on_gt": 3,
+          "unmatched_predictions": 81,
+          "recall": 0.6625,
+          "precision": 0.34415584415584416
+        },
+        {
+          "crop": "potato",
+          "gt": 83,
+          "scored_predictions": 78,
+          "correct": 26,
+          "missed": 27,
+          "wrong_crop_on_gt": 30,
+          "unmatched_predictions": 38,
+          "recall": 0.3132530120481928,
+          "precision": 0.3333333333333333
+        },
+        {
+          "crop": "raspberry",
+          "gt": 77,
+          "scored_predictions": 95,
+          "correct": 48,
+          "missed": 17,
+          "wrong_crop_on_gt": 12,
+          "unmatched_predictions": 41,
+          "recall": 0.6233766233766234,
+          "precision": 0.5052631578947369
+        },
+        {
+          "crop": "soybean",
+          "gt": 30,
+          "scored_predictions": 39,
+          "correct": 16,
+          "missed": 7,
+          "wrong_crop_on_gt": 7,
+          "unmatched_predictions": 18,
+          "recall": 0.5333333333333333,
+          "precision": 0.41025641025641024
+        },
+        {
+          "crop": "squash",
+          "gt": 48,
+          "scored_predictions": 66,
+          "correct": 29,
+          "missed": 17,
+          "wrong_crop_on_gt": 2,
+          "unmatched_predictions": 36,
+          "recall": 0.6041666666666666,
+          "precision": 0.4393939393939394
+        },
+        {
+          "crop": "strawberry",
+          "gt": 65,
+          "scored_predictions": 60,
+          "correct": 47,
+          "missed": 6,
+          "wrong_crop_on_gt": 12,
+          "unmatched_predictions": 10,
+          "recall": 0.7230769230769231,
+          "precision": 0.7833333333333333
+        },
+        {
+          "crop": "tomato",
+          "gt": 354,
+          "scored_predictions": 653,
+          "correct": 215,
+          "missed": 114,
+          "wrong_crop_on_gt": 25,
+          "unmatched_predictions": 377,
+          "recall": 0.6073446327683616,
+          "precision": 0.32924961715160794
+        }
+      ],
+      "cross_crop_confusions": [
+        {
+          "true_crop": "potato",
+          "predicted_crop": "tomato",
+          "count": 21
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "tomato",
+          "count": 20
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "pepper",
+          "count": 11
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "potato",
+          "count": 9
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "tomato",
+          "count": 8
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "blueberry",
+          "count": 7
+        },
+        {
+          "true_crop": "grape",
+          "predicted_crop": "tomato",
+          "count": 7
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "pepper",
+          "count": 7
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "peach",
+          "count": 6
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "blueberry",
+          "count": 6
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "raspberry",
+          "count": 6
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "potato",
+          "count": 4
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "blueberry",
+          "count": 4
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "cherry",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "peach",
+          "count": 3
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "corn",
+          "count": 3
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "strawberry",
+          "count": 3
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "soybean",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "soybean",
+          "count": 2
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "peach",
+          "count": 2
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "tomato",
+          "count": 2
+        },
+        {
+          "true_crop": "squash",
+          "predicted_crop": "tomato",
+          "count": 2
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "cherry",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "corn",
+          "count": 1
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "pepper",
+          "count": 1
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "potato",
+          "count": 1
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "pepper",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "apple",
+          "count": 1
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "squash",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "grape",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "pilot_s_negatives",
+      "sha256": "1daa156c116488ffd6cb2dc80ec974ad05bdf9e31dbc99a26b1cdfc9b2e41eab",
+      "confusion": {
+        "tomato->__missed__": 123,
+        "tomato->tomato": 212,
+        "__background__->potato": 16,
+        "potato->potato": 26,
+        "potato->__missed__": 39,
+        "__background__->tomato": 148,
+        "pepper->pepper": 48,
+        "pepper->__missed__": 28,
+        "corn->corn": 71,
+        "__background__->corn": 24,
+        "__background__->cherry": 11,
+        "apple->apple": 52,
+        "strawberry->strawberry": 58,
+        "__background__->strawberry": 14,
+        "squash->squash": 27,
+        "__background__->squash": 23,
+        "grape->grape": 36,
+        "__background__->apple": 20,
+        "__background__->blueberry": 94,
+        "__background__->pepper": 67,
+        "__background__->grape": 13,
+        "apple->__missed__": 48,
+        "apple->blueberry": 3,
+        "grape->__missed__": 20,
+        "apple->potato": 2,
+        "raspberry->raspberry": 55,
+        "__background__->raspberry": 48,
+        "peach->peach": 92,
+        "apple->grape": 2,
+        "corn->__missed__": 16,
+        "strawberry->potato": 1,
+        "potato->tomato": 9,
+        "blueberry->blueberry": 102,
+        "soybean->soybean": 25,
+        "__background__->soybean": 51,
+        "squash->__missed__": 21,
+        "cherry->cherry": 12,
+        "cherry->__missed__": 11,
+        "blueberry->apple": 4,
+        "blueberry->__missed__": 48,
+        "raspberry->strawberry": 3,
+        "raspberry->__missed__": 16,
+        "__background__->peach": 56,
+        "strawberry->__missed__": 5,
+        "tomato->potato": 2,
+        "apple->cucumber": 1,
+        "tomato->pepper": 15,
+        "potato->blueberry": 9,
+        "soybean->__missed__": 3,
+        "pepper->tomato": 3,
+        "peach->__missed__": 29,
+        "apple->cherry": 4,
+        "raspberry->grape": 1,
+        "blueberry->soybean": 1,
+        "apple->raspberry": 2,
+        "tomato->blueberry": 1,
+        "soybean->blueberry": 1,
+        "strawberry->raspberry": 1,
+        "apple->tomato": 2,
+        "soybean->tomato": 1,
+        "apple->peach": 3,
+        "peach->apple": 4,
+        "peach->cherry": 1,
+        "raspberry->cucumber": 1,
+        "cherry->apple": 3,
+        "cherry->blueberry": 3,
+        "pepper->potato": 1,
+        "tomato->cucumber": 1,
+        "raspberry->blueberry": 1
+      },
+      "per_crop": [
+        {
+          "crop": "apple",
+          "gt": 119,
+          "scored_predictions": 83,
+          "correct": 52,
+          "missed": 48,
+          "wrong_crop_on_gt": 19,
+          "unmatched_predictions": 20,
+          "recall": 0.4369747899159664,
+          "precision": 0.6265060240963856
+        },
+        {
+          "crop": "blueberry",
+          "gt": 155,
+          "scored_predictions": 214,
+          "correct": 102,
+          "missed": 48,
+          "wrong_crop_on_gt": 5,
+          "unmatched_predictions": 94,
+          "recall": 0.6580645161290323,
+          "precision": 0.4766355140186916
+        },
+        {
+          "crop": "cherry",
+          "gt": 29,
+          "scored_predictions": 28,
+          "correct": 12,
+          "missed": 11,
+          "wrong_crop_on_gt": 6,
+          "unmatched_predictions": 11,
+          "recall": 0.41379310344827586,
+          "precision": 0.42857142857142855
+        },
+        {
+          "crop": "corn",
+          "gt": 87,
+          "scored_predictions": 95,
+          "correct": 71,
+          "missed": 16,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 24,
+          "recall": 0.8160919540229885,
+          "precision": 0.7473684210526316
+        },
+        {
+          "crop": "cucumber",
+          "gt": 0,
+          "scored_predictions": 3,
+          "correct": 0,
+          "missed": 0,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 0,
+          "recall": null,
+          "precision": 0.0
+        },
+        {
+          "crop": "grape",
+          "gt": 56,
+          "scored_predictions": 52,
+          "correct": 36,
+          "missed": 20,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 13,
+          "recall": 0.6428571428571429,
+          "precision": 0.6923076923076923
+        },
+        {
+          "crop": "peach",
+          "gt": 126,
+          "scored_predictions": 151,
+          "correct": 92,
+          "missed": 29,
+          "wrong_crop_on_gt": 5,
+          "unmatched_predictions": 56,
+          "recall": 0.7301587301587301,
+          "precision": 0.609271523178808
+        },
+        {
+          "crop": "pepper",
+          "gt": 80,
+          "scored_predictions": 130,
+          "correct": 48,
+          "missed": 28,
+          "wrong_crop_on_gt": 4,
+          "unmatched_predictions": 67,
+          "recall": 0.6,
+          "precision": 0.36923076923076925
+        },
+        {
+          "crop": "potato",
+          "gt": 83,
+          "scored_predictions": 48,
+          "correct": 26,
+          "missed": 39,
+          "wrong_crop_on_gt": 18,
+          "unmatched_predictions": 16,
+          "recall": 0.3132530120481928,
+          "precision": 0.5416666666666666
+        },
+        {
+          "crop": "raspberry",
+          "gt": 77,
+          "scored_predictions": 106,
+          "correct": 55,
+          "missed": 16,
+          "wrong_crop_on_gt": 6,
+          "unmatched_predictions": 48,
+          "recall": 0.7142857142857143,
+          "precision": 0.5188679245283019
+        },
+        {
+          "crop": "soybean",
+          "gt": 30,
+          "scored_predictions": 77,
+          "correct": 25,
+          "missed": 3,
+          "wrong_crop_on_gt": 2,
+          "unmatched_predictions": 51,
+          "recall": 0.8333333333333334,
+          "precision": 0.3246753246753247
+        },
+        {
+          "crop": "squash",
+          "gt": 48,
+          "scored_predictions": 50,
+          "correct": 27,
+          "missed": 21,
+          "wrong_crop_on_gt": 0,
+          "unmatched_predictions": 23,
+          "recall": 0.5625,
+          "precision": 0.54
+        },
+        {
+          "crop": "strawberry",
+          "gt": 65,
+          "scored_predictions": 75,
+          "correct": 58,
+          "missed": 5,
+          "wrong_crop_on_gt": 2,
+          "unmatched_predictions": 14,
+          "recall": 0.8923076923076924,
+          "precision": 0.7733333333333333
+        },
+        {
+          "crop": "tomato",
+          "gt": 354,
+          "scored_predictions": 375,
+          "correct": 212,
+          "missed": 123,
+          "wrong_crop_on_gt": 19,
+          "unmatched_predictions": 148,
+          "recall": 0.5988700564971752,
+          "precision": 0.5653333333333334
+        }
+      ],
+      "cross_crop_confusions": [
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "pepper",
+          "count": 15
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "blueberry",
+          "count": 9
+        },
+        {
+          "true_crop": "potato",
+          "predicted_crop": "tomato",
+          "count": 9
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "cherry",
+          "count": 4
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "apple",
+          "count": 4
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "apple",
+          "count": 4
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "blueberry",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "peach",
+          "count": 3
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "apple",
+          "count": 3
+        },
+        {
+          "true_crop": "cherry",
+          "predicted_crop": "blueberry",
+          "count": 3
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "tomato",
+          "count": 3
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "strawberry",
+          "count": 3
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "grape",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "potato",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "raspberry",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "tomato",
+          "count": 2
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "potato",
+          "count": 2
+        },
+        {
+          "true_crop": "apple",
+          "predicted_crop": "cucumber",
+          "count": 1
+        },
+        {
+          "true_crop": "blueberry",
+          "predicted_crop": "soybean",
+          "count": 1
+        },
+        {
+          "true_crop": "peach",
+          "predicted_crop": "cherry",
+          "count": 1
+        },
+        {
+          "true_crop": "pepper",
+          "predicted_crop": "potato",
+          "count": 1
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "cucumber",
+          "count": 1
+        },
+        {
+          "true_crop": "raspberry",
+          "predicted_crop": "grape",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "soybean",
+          "predicted_crop": "tomato",
+          "count": 1
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "potato",
+          "count": 1
+        },
+        {
+          "true_crop": "strawberry",
+          "predicted_crop": "raspberry",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "blueberry",
+          "count": 1
+        },
+        {
+          "true_crop": "tomato",
+          "predicted_crop": "cucumber",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "protocol": "Same custom confidence-ordered IoU>=0.5 crop matching as source reports.",
+  "limitations": [
+    "A missed GT includes insufficient localization/score, not just absent detection.",
+    "Unmatched predictions may be duplicates or unannotated plants, not confirmed nonplant diagnoses.",
+    "Generic leaf labels do not establish healthy states. No disease accuracy is measured.",
+    "Class-specific values with small GT denominators are descriptive, not stable field estimates."
+  ]
+}
