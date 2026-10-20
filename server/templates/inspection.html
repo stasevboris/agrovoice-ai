@@ -5,10 +5,14 @@
 <div class="page-heading"><div><p class="eyebrow">{{ row.date }} UTC · {{ row.plot }}</p><h1>{{ row.label }}</h1><p class="muted">Культура: {{ row.crop }} · версия осмотра {{ record.version }}</p></div>
 <span class="badge {{ row.status }}">{{ {'confirmed':'Подтверждено','error':'Ошибка','unreviewed':'Не проверено'}.get(row.status, 'Не проверено') }}</span></div>
 <div class="detail-layout"><section class="card photos">
-{% for photo in record.payload.photos %}<figure class="photo-frame"><img src="/preview/{{ row.owner }}/{{ photo.id }}" alt="Фото осмотра {{ loop.index }}" loading="lazy">
+{% for photo in record.payload.photos %}
+{% if photo.id in uploaded_photos %}<figure class="photo-frame"><img src="/preview/{{ row.owner }}/{{ photo.id }}" alt="Фото осмотра {{ loop.index }}" loading="lazy">
 {% if loop.first and boxes %}<svg viewBox="0 0 {{ width }} {{ height }}" role="img" aria-label="Рамки модели">
 {% for box in boxes %}<rect x="{{ box.left }}" y="{{ box.top }}" width="{{ box.width }}" height="{{ box.height }}"><title>{{ box.label }}</title></rect>{% endfor %}</svg>{% endif %}
 <figcaption>Снимок {{ loop.index }} · рамки относятся к первому фото результата</figcaption></figure>
+<p class="small muted"><a href="/original/{{ row.owner }}/{{ photo.id }}">Скачать исходное фото</a><br>
+Исходное фото сохранено на сервере. Если предпросмотр недоступен, скачайте исходник.</p>
+{% else %}<p class="empty">Снимок {{ loop.index }}: Фото ещё не загружено на сервер. Повторите синхронизацию с устройства.</p>{% endif %}
 {% else %}<p class="empty">Фото ещё не добавлено к этому осмотру.</p>{% endfor %}
 {% if not boxes %}<p class="muted">Нет рамок с подходящими координатами. Оценка модели остаётся предварительной.</p>{% endif %}
 </section><aside class="card detail-meta"><h2>Заметка</h2><p class="note">{{ row.note or 'Без заметки' }}</p>

@@ -18,6 +18,7 @@ from app.security import current_user
 
 router = APIRouter()
 MAX_PHOTO_BYTES = 10 * 1024 * 1024
+MAX_PREDICTION_BYTES = 1024 * 1024
 Sha256 = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 
 
@@ -53,8 +54,8 @@ class InspectionData(StrictModel):
             raise ValueError("Duplicate photo UUID")
         if (self.lat is None) != (self.lon is None):
             raise ValueError("Coordinates require both latitude and longitude")
-        if len(json.dumps(self.prediction, allow_nan=False).encode()) > 128 * 1024:
-            raise ValueError("Prediction exceeds 128 KiB")
+        if len(json.dumps(self.prediction, allow_nan=False).encode()) > MAX_PREDICTION_BYTES:
+            raise ValueError("Prediction exceeds 1 MiB")
         self.created_at = self.created_at.astimezone(timezone.utc)
         return self
 

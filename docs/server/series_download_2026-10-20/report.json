@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-20",
+  "command": "docker compose --profile test run --rm -v F:/agrovoice-ai/server:/app:ro -v F:/agrovoice-ai/artifacts/verification/continuation_20261020:/results tests python -m pytest -q -p no:cacheprovider --junitxml=/results/server.xml",
+  "exit_code": 0,
+  "tests": {
+    "tests": 44,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "database": "agrovoice_test isolated PostgreSQL",
+  "artifacts": "artifacts\\verification\\continuation_20261020",
+  "browser": {
+    "tool": "Velly browser_open + browser_read",
+    "fixture": "artifacts/verification/autonomous_20261019/inspection-preview.html",
+    "verified": [
+      "original download link",
+      "pending upload message"
+    ],
+    "scope": "static synthetic Jinja render, not authenticated live navigation"
+  },
+  "review": "local independent review; no additional server P1/P2 found; Android import issues tracked separately",
+  "limitations": [
+    "no external publication",
+    "no Wi-Fi or second physical phone check",
+    "Starlette TestClient deprecation warning"
+  ]
+}

@@ -16,7 +16,7 @@ from openpyxl.cell.cell import ILLEGAL_CHARACTERS_RE
 from PIL import Image, ImageOps, UnidentifiedImageError
 from pydantic import BaseModel, Field, model_validator
 from sqlalchemy import DateTime, cast, func, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, defer
 
 from app.db import session
 from app.models import Inspection, Photo, ReviewEvent, User
@@ -188,17 +188,45 @@ def inspection(request: Request, owner_id: UUID, inspection_id: UUID,
                               .order_by(ReviewEvent.created_at.desc()).limit(10)).all()
     reviews = [{"status": event.status, "evidence_version": event.evidence_version,
                 "created_at": event.created_at, "reviewer": username} for event, username in events]
+    uploaded_photos = {str(photo_id) for photo_id in database.scalars(select(Photo.client_id).where(
+        Photo.owner_id == owner_id, Photo.inspection_id == inspection_id, Photo.content.is_not(None)
+    ))}
     return templates.TemplateResponse(request=request, name="inspection.html", context={
         "user": user, "csrf": csrf(request), "record": record, "row": display(record),
-        "width": width, "height": height, "boxes": annotations, "reviews": reviews})
+        "width": width, "height": height, "boxes": annotations, "reviews": reviews,
+        "uploaded_photos": uploaded_photos})
+
+
+def owned_photo(database: Session, user: User, owner_id: UUID, photo_id: UUID):
+    if not user.is_expert and user.id != owner_id:
+        raise HTTPException(404, "Photo not found")
+    # Inspect only metadata until both the account and inspection access are checked.
+    photo = database.get(Photo, (owner_id, photo_id), options=[defer(Photo.content)])
+    if photo is None:
+        raise HTTPException(404, "Photo not found")
+    owned_inspection(database, user, owner_id, photo.inspection_id)
+    return photo
+
+
+@router.get("/original/{owner_id}/{photo_id}")
+def original_photo(owner_id: UUID, photo_id: UUID, user: User = Depends(web_user),
+                   database: Session = Depends(session)):
+    photo = owned_photo(database, user, owner_id, photo_id)
+    if photo.content is None:
+        raise HTTPException(404, "Photo upload is incomplete")
+    return Response(photo.content, media_type="application/octet-stream", headers={
+        "Content-Disposition": f'attachment; filename="{photo.client_id}.bin"',
+        "X-Content-SHA256": photo.sha256,
+        "X-Content-Type-Options": "nosniff",
+        "Cache-Control": "private, no-store",
+    })
 
 
 @router.get("/preview/{owner_id}/{photo_id}")
 def preview(owner_id: UUID, photo_id: UUID, user: User = Depends(web_user), database: Session = Depends(session)):
-    photo = database.get(Photo, (owner_id, photo_id))
-    if photo is None or photo.content is None:
+    photo = owned_photo(database, user, owner_id, photo_id)
+    if photo.content is None:
         raise HTTPException(404, "Photo not uploaded")
-    owned_inspection(database, user, owner_id, photo.inspection_id)
     try:
         with Image.open(io.BytesIO(photo.content)) as source:
             if source.width * source.height > MAX_PREVIEW_PIXELS:
