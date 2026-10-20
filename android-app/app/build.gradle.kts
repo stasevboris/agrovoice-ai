@@ -25,6 +25,11 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            if (providers.gradleProperty("isolateApp").orNull == "true") {
+                applicationIdSuffix = ".verification"
+            }
+        }
         release {
             optimization {
                 enable = false
@@ -40,6 +45,13 @@ android {
     }
     testOptions {
         unitTests.isIncludeAndroidResources = true
+    }
+    packaging {
+        jniLibs {
+            // Merge runs before abiFilters: sherpa's x86 fallback bundles a second ORT.
+            // This app supports ARM only; exclude unsupported ABIs instead of choosing an ORT.
+            excludes += setOf("lib/x86/**", "lib/x86_64/**")
+        }
     }
 }
 
@@ -78,6 +90,7 @@ dependencies {
     implementation("com.alphacephei:vosk-android:0.3.75@aar")
     implementation("net.java.dev.jna:jna:5.18.1@aar")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.30.0")
+    implementation(files("libs/sherpa-onnx-static-link-onnxruntime-1.13.8.aar"))
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)

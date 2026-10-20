@@ -4,6 +4,8 @@ import com.agronomy.phytomonitor.ml.CropVocabulary
 import java.util.Locale
 
 enum class VoiceAction {
+    ADD_FRAME, ADD_FRAME_GALLERY, SELECT_FRAME, FRAME_ROLE,
+    SYNC_SETTINGS, SYNC_STATUS, SYNC_CURRENT, SYNC_RETRY, SYNC_RECEIVE, SYNC_LOGOUT, SYNC_ALL, SYNC_CONFLICT,
     CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP,
     CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP,
     THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO,
@@ -23,6 +25,25 @@ object VoiceCommands {
         phrases.forEach { aliases[it] = command }
     }
     init {
+        add(VoiceCommand(VoiceAction.ADD_FRAME, "Добавляю кадр"), "добавь кадр", "еще один кадр", "сними еще один ракурс")
+        add(VoiceCommand(VoiceAction.ADD_FRAME_GALLERY, "Добавляю кадр из галереи"), "добавь кадр из галереи")
+        add(VoiceCommand(VoiceAction.FRAME_ROLE, "Общий вид", "overview"), "это общий вид", "общий вид")
+        add(VoiceCommand(VoiceAction.FRAME_ROLE, "Лицевая сторона", "front"), "это лицевая сторона", "лицевая сторона")
+        add(VoiceCommand(VoiceAction.FRAME_ROLE, "Оборот листа", "back"), "это оборот листа", "оборот листа")
+        add(VoiceCommand(VoiceAction.FRAME_ROLE, "Ракурс не указан", "unspecified"), "убери ракурс", "ракурс не указан")
+        (1..10).forEach { number ->
+            val word = RussianPhotoNumber.words(number)
+            add(VoiceCommand(VoiceAction.SELECT_FRAME, "Кадр $number", number.toString()), "кадр $word", "выбери кадр $word", "покажи кадр $word")
+        }
+        add(VoiceCommand(VoiceAction.SYNC_SETTINGS, "Настройки синхронизации"), "открой синхронизацию", "настройки синхронизации", "подключись к серверу")
+        add(VoiceCommand(VoiceAction.SYNC_STATUS, "Состояние синхронизации"), "статус синхронизации", "что с отправкой", "осмотры отправлены")
+        add(VoiceCommand(VoiceAction.SYNC_CURRENT, "Передача осмотра"), "отправь этот осмотр", "отправь осмотр", "синхронизируй этот осмотр", "передай осмотр на сервер")
+        add(VoiceCommand(VoiceAction.SYNC_RETRY, "Повтор очереди"), "повтори отправку", "повтори синхронизацию", "отправь очередь")
+        add(VoiceCommand(VoiceAction.SYNC_RECEIVE, "Получение осмотров"), "получи осмотры с сервера", "загрузи осмотры с сервера")
+        add(VoiceCommand(VoiceAction.SYNC_LOGOUT, "Выход из аккаунта"), "выйди из аккаунта", "отключи синхронизацию")
+        add(VoiceCommand(VoiceAction.SYNC_ALL, "Передача журнала"), "отправь все осмотры", "синхронизируй весь журнал")
+        add(VoiceCommand(VoiceAction.SYNC_CONFLICT, "Конфликт синхронизации"), "разбери конфликт", "отправь локальный вариант")
+        add(VoiceCommand(VoiceAction.CANCEL, "Передача не подтверждена"), "не отправляй", "не передавай осмотры", "отмени отправку")
         add(VoiceCommand(VoiceAction.RESUME_DRAFT, "Продолжаю осмотр"), "продолжить осмотр", "продолжи осмотр", "восстанови черновик")
         add(VoiceCommand(VoiceAction.DISCARD_DRAFT, "Отменяю черновик"), "отменить черновик", "отмени черновик", "начать новый осмотр", "начни новый осмотр")
         add(VoiceCommand(VoiceAction.CAMERA_GUIDANCE, "Подсказки кадра включены", "true"), "включи подсказки кадра")
@@ -109,7 +130,7 @@ object VoiceCommands {
     val noteReviewGrammar=listOf("подтвердить","да","отмена","нет","добавь заметку","очисти текст заметки","очисти заметку","стоп","не подтверждать","[unk]")
     fun journalGrammar(count: Int): List<String>? {
         if (count > 10000) return null
-        return (phrasesFor(globalActions + setOf(VoiceAction.SPEAK_RESULT, VoiceAction.SILENCE, VoiceAction.NOTE)) +
+        return (phrasesFor(globalActions + setOf(VoiceAction.SPEAK_RESULT, VoiceAction.SILENCE, VoiceAction.NOTE, VoiceAction.SELECT_FRAME)) +
             listOf("осмотр", "открой осмотр", "запись", "открой запись", "номер",
                 "не открывай осмотр", "не читай результат", "[unk]") +
             (1..count.coerceAtLeast(1)).map(RussianPhotoNumber::words)).distinct()
@@ -120,7 +141,7 @@ object VoiceCommands {
         listOf("карточка", "карточка номер", "открой карточку", "открой карточку номер",
             "не открывай карточку", "не читай справку", "[unk]") +
         (1..count.coerceIn(1, 1000)).map(RussianPhotoNumber::words)).distinct()
-    val grammar: List<String> get() = phrasesFor(globalActions + labActions + setOf(VoiceAction.CAMERA,VoiceAction.CAMERA_NOW,VoiceAction.OPEN_CAMERA,VoiceAction.GALLERY,VoiceAction.SYSTEM_GALLERY,VoiceAction.ANALYZE)) +
+    val grammar: List<String> get() = phrasesFor(globalActions + labActions + com.agronomy.phytomonitor.actions.SeriesActions.actions + com.agronomy.phytomonitor.actions.SyncActions.actions + setOf(VoiceAction.CAMERA,VoiceAction.CAMERA_NOW,VoiceAction.OPEN_CAMERA,VoiceAction.GALLERY,VoiceAction.SYSTEM_GALLERY,VoiceAction.ANALYZE)) +
         listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не делай фото","не открывай галерею","не проверяй фото","не выключай голос","сегодня хорошая погода","[unk]")
     val cameraGrammar: List<String> get()=(phrasesFor(globalActions+setOf(VoiceAction.CONFIRM,VoiceAction.CAMERA_NOW,VoiceAction.CAMERA,VoiceAction.GALLERY,VoiceAction.CAMERA_GUIDANCE))+listOf("порог процентов")+(10..80).map(RussianPhotoNumber::words)+listOf("не подтверждать","не делай фото","не выключай голос","[unk]")).distinct()
     fun galleryGrammar(count: Int): List<String>? {
@@ -136,6 +157,11 @@ object VoiceCommands {
         val normalized = text.lowercase(Locale.ROOT).replace('ё','е')
             .replace(Regex("[.,!?;:]")," ").trim().replace(Regex("\\s+")," ")
         aliases.entries.firstOrNull { it.key.replace('ё','е') == normalized }?.value?.let {return it}
+        val framePrefix = listOf("выбери кадр ", "покажи кадр ", "кадр ").firstOrNull { normalized.startsWith(it) }
+        if (framePrefix != null) {
+            val number = RussianPhotoNumber.parse(normalized.removePrefix(framePrefix)) ?: return null
+            return number.takeIf { it in 1..10 }?.let { VoiceCommand(VoiceAction.SELECT_FRAME, "Кадр $it", it.toString()) }
+        }
         val plantPrefix = listOf("растение ", "выбери растение ", "это растение ").firstOrNull { normalized.startsWith(it) }
         if (plantPrefix != null) {
             val name = normalized.removePrefix(plantPrefix).trim()
@@ -196,6 +222,9 @@ object VoiceCommands {
             if (number != null) return VoiceCommand(VoiceAction.KNOWLEDGE_NUMBER, "Карточка №$number", number.toString())
         }
         val command=parse(text,plots) ?: return null
+        if (command.action in com.agronomy.phytomonitor.actions.SeriesActions.actions) {
+            return command.takeIf { screen == "main" || screen == "journal" && it.action == VoiceAction.SELECT_FRAME }
+        }
         if (screen == "journal" && command.action in setOf(VoiceAction.SPEAK_RESULT, VoiceAction.NOTE, VoiceAction.SILENCE, VoiceAction.READ_KNOWLEDGE)) return command
         if (screen == "knowledge" && command.action in knowledgeActions) return command
         if(screen=="note_review")return command.takeIf {it.action in setOf(VoiceAction.CONFIRM,VoiceAction.CANCEL,VoiceAction.NOTE,VoiceAction.CLEAR_NOTE,VoiceAction.LISTEN_OFF)}

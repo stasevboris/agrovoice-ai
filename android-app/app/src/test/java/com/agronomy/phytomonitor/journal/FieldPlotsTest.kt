@@ -39,7 +39,11 @@ class FieldPlotsTest {
 
     private fun report(name: String): File = File(files, "results/$name").apply {
         parentFile!!.mkdirs()
-        writeText(JournalFixtures.prediction("/p.jpg").toString())
+        val photo = File(files, "photos/${name.substringBeforeLast('.')}.jpg").apply {
+            parentFile!!.mkdirs()
+            writeText("synthetic photo $name")
+        }
+        writeText(JournalFixtures.prediction(photo.path, InspectionJournal.sha256(photo)).toString())
     }
 
     @Test

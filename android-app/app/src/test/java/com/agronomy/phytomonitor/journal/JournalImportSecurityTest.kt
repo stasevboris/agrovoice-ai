@@ -18,6 +18,7 @@ import org.robolectric.annotation.Config
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
 import java.util.zip.ZipInputStream
 
 @RunWith(RobolectricTestRunner::class)
@@ -77,12 +78,11 @@ class JournalImportSecurityTest {
         val journal = journal()
         val result = journal.import(document(JournalFixtures.legacyRecord("foreign", privateFile.path)))
         val output = ByteArrayOutputStream()
-        val exportedPhotos = journal.exportArchive(output)
+        assertTrue(runCatching { journal.exportArchive(output) }.exceptionOrNull() is IOException)
         assertEquals(1, result.added)
         assertEquals(1, result.withoutPhoto)
         assertFalse(journal.list().single().photoAvailable)
-        assertEquals(0, exportedPhotos)
-        assertEquals(listOf("journal.json"), entries(output.toByteArray()))
+        assertEquals(0, output.size())
         assertEquals("synthetic credential fixture", privateFile.readText())
     }
 
@@ -97,8 +97,8 @@ class JournalImportSecurityTest {
         db.journal().saveRecord(JournalRecords.toRecord(parsed, null, null, privateFile.path),
             SyncQueueEntity(entity = "inspection", entityId = parsed.id, operation = "import", createdAt = 1L))
         val output = ByteArrayOutputStream()
-        assertEquals(0, journal(db).exportArchive(output))
-        assertEquals(listOf("journal.json"), entries(output.toByteArray()))
+        assertTrue(runCatching { journal(db).exportArchive(output) }.exceptionOrNull() is IOException)
+        assertEquals(0, output.size())
         assertTrue(privateFile.readBytes().contentEquals(byteArrayOf(11, 12, 13)))
     }
 
@@ -135,7 +135,7 @@ class JournalImportSecurityTest {
         val result = journal.import(document(JournalFixtures.legacyRecord("traversal", path)))
         assertEquals(1, result.withoutPhoto)
         assertFalse(journal.list().single().photoAvailable)
-        assertEquals(0, journal.exportArchive(ByteArrayOutputStream()))
+        assertTrue(runCatching { journal.exportArchive(ByteArrayOutputStream()) }.exceptionOrNull() is IOException)
         assertTrue(sibling.readBytes().contentEquals(byteArrayOf(99)))
     }
 

@@ -6,8 +6,25 @@ import org.junit.Assert.*
 import org.junit.Test
 import java.net.InetSocketAddress
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicReference
 
 class SyncHttpClientTest {
+    @Test fun pullPageFitsBoundedSeriesResponses() {
+        val query = AtomicReference<String>()
+        val source = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
+        source.createContext("/sync/inspections") { exchange ->
+            query.set(exchange.requestURI.query)
+            val bytes = "{\"inspections\":[],\"next_after\":7,\"has_more\":false}".toByteArray()
+            exchange.sendResponseHeaders(200, bytes.size.toLong())
+            exchange.responseBody.use { it.write(bytes) }
+        }
+        source.start()
+        try {
+            assertFalse(SyncHttpClient("http://127.0.0.1:${source.address.port}", "fixture").pull(7).getBoolean("has_more"))
+            assertEquals("after=7&limit=10", query.get())
+        } finally { source.stop(0) }
+    }
+
     @Test fun endedSessionDoesNotOpenAnotherHttpRequest() {
         val received = AtomicInteger()
         val source = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)

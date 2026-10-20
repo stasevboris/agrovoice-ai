@@ -5,7 +5,8 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.security.MessageDigest
 
-const val JOURNAL_SCHEMA = "agrovoice-inspections-v2"
+const val JOURNAL_SCHEMA = "agrovoice-inspections-v3"
+const val PREVIOUS_JOURNAL_SCHEMA = "agrovoice-inspections-v2"
 const val LEGACY_JOURNAL_SCHEMA = "agrovoice-inspections-v1"
 const val REVIEW_SCOPE = "User assessment of this entire photo/result, not verified leaf labels or training ground truth"
 val REVIEWS = setOf("unrated", "correct", "incorrect", "uncertain")
@@ -22,7 +23,7 @@ data class GeoPoint(val lat: Double, val lon: Double, val accuracyM: Double)
 class JournalFormatException(val reason: String, val source: String = "") :
     Exception(if (source.isEmpty()) reason else "$source: $reason")
 
-/** One inspection as it is stored in inspections/ (v1) and in exports (v2). */
+/** One inspection from legacy records or the frame-preserving v3 archive. */
 data class ParsedInspection(
     val id: String,
     val createdAt: Long,
@@ -38,16 +39,35 @@ data class ParsedInspection(
     val archivePhoto: String?,
     val plant: String = "",
     val location: GeoPoint? = null,
-    val plantId: String? = null
+    val plantId: String? = null,
+    val frames: List<ParsedFrame> = emptyList()
 ) {
     val photoPath: String get() = prediction.getString("photo")
     val photoSha256: String get() = prediction.optString("photo_sha256")
     val modelId: String get() = prediction.getString("model")
     val detectionCount: Int get() = prediction.getJSONArray("detections").length()
+
+    fun allFrames(): List<ParsedFrame> = frames.ifEmpty { listOf(ParsedFrame(
+        id, 0, FrameRole.UNSPECIFIED, photoPath, photoSha256,
+        prediction.optInt("decoded_width"), prediction.optInt("decoded_height"), reportName,
+        reportSha256, prediction.toString(), plant, plantId, archivePhoto
+    )) }
 }
 
 /** Converts between the JSON record and Room entities. Pure Kotlin + org.json, tested on the JVM. */
 object JournalRecords {
+    /** Member order and the JSON representation of a number do not change saved evidence. */
+    internal fun sameJson(first: Any?, second: Any?): Boolean = when {
+        first is JSONObject && second is JSONObject -> {
+            val keys = first.keys().asSequence().toSet()
+            keys == second.keys().asSequence().toSet() && keys.all { sameJson(first.opt(it), second.opt(it)) }
+        }
+        first is JSONArray && second is JSONArray -> first.length() == second.length() &&
+            (0 until first.length()).all { sameJson(first.opt(it), second.opt(it)) }
+        first is Number && second is Number -> first.toString().toBigDecimal().compareTo(second.toString().toBigDecimal()) == 0
+        else -> first == second
+    }
+
     /** The logical legacy ID is preserved in Room/JSON, never interpreted as a filesystem path. */
     fun photoFileId(id: String): String = MessageDigest.getInstance("SHA-256")
         .digest(id.toByteArray(Charsets.UTF_8)).joinToString("") { "%02x".format(it) }
@@ -90,8 +110,57 @@ object JournalRecords {
             plantId = data.optString("plant_id").takeIf { it.isNotBlank() && it != "null" }?.also {
                 if (it.length > 120 || data.optString("plant").isBlank()) throw JournalFormatException("неверная ссылка на растение")
             },
-            location = location(data.optJSONObject("location"))
+            location = location(data.optJSONObject("location")),
+            frames = parseFrames(data)
         )
+    }
+
+    private fun parseFrames(data: JSONObject): List<ParsedFrame> {
+        if (!data.has("frames")) return emptyList()
+        val values = data.optJSONArray("frames") ?: throw JournalFormatException("неверный список кадров")
+        if (values.length() !in 1..MAX_INSPECTION_FRAMES) throw JournalFormatException("нужно от 1 до $MAX_INSPECTION_FRAMES кадров")
+        val frames = (0 until values.length()).map { index ->
+            val frame = values.getJSONObject(index)
+            val id = requiredString(frame, "id")
+            val numericOrder = (frame.opt("order") as? Number)?.toDouble()
+            if (numericOrder == null || !numericOrder.isFinite() || numericOrder % 1.0 != 0.0 || numericOrder !in 0.0..<MAX_INSPECTION_FRAMES.toDouble()) {
+                throw JournalFormatException("неверный порядок кадров")
+            }
+            val order = numericOrder.toInt()
+            val role = FrameRole.from(requiredString(frame, "role"))
+            val sha = frame.optString("photo_sha256")
+            if (sha.isNotBlank() && !Regex("[0-9a-f]{64}").matches(sha)) throw JournalFormatException("неверный SHA-256 кадра")
+            val raw = if (frame.isNull("prediction_json")) null else frame.getString("prediction_json")
+            if (raw != null) {
+                val prediction = JSONObject(raw)
+                requiredString(prediction, "model")
+                if (prediction.optJSONArray("detections") == null) throw JournalFormatException("нет списка рамок кадра")
+                val savedSha = prediction.optString("photo_sha256")
+                if (savedSha.isNotBlank()) {
+                    if (!Regex("[0-9a-f]{64}").matches(savedSha) || sha != savedSha) {
+                        throw JournalFormatException("SHA-256 кадра не соответствует исходному анализу")
+                    }
+                }
+            }
+            val stored = frame.optJSONArray("stored_detections")
+            if (frame.has("stored_detections") && stored == null || raw != null && stored != null) {
+                throw JournalFormatException("неверные сохранённые рамки кадра")
+            }
+            if (stored != null) detections(JSONObject().put("detections", stored), id)
+            val plant = frame.optString("plant").trim()
+            val plantId = frame.optString("plant_id").takeIf { it.isNotBlank() && it != "null" }
+            if (plant.length > MAX_PLOT || plantId != null && (plantId.length > 120 || plant.isBlank())) {
+                throw JournalFormatException("неверная ссылка кадра на растение")
+            }
+            ParsedFrame(id, order, role, frame.optString("photo_path"), sha,
+                frame.optInt("width"), frame.optInt("height"), frame.optString("report_name"),
+                frame.optString("report_sha256"), raw, plant, plantId,
+                frame.optString("archive_photo").takeIf { it.isNotBlank() && it != "null" }, stored?.toString())
+        }
+        if (frames.map { it.id }.distinct().size != frames.size || frames.map { it.order }.sorted() != frames.indices.toList()) {
+            throw JournalFormatException("повторяющиеся ID или неверный порядок кадров")
+        }
+        return frames.sortedBy { it.order }
     }
 
     private fun location(data: JSONObject?): GeoPoint? {
@@ -143,16 +212,29 @@ object JournalRecords {
             predictionJson = parsed.prediction.toString(),
             updatedAt = parsed.updatedAt
         )
+        val frame = frameRecord(parsed.id, parsed.allFrames().first(), plantId, photoPath)
+        return InspectionRecord(inspection, frame.photo, frame.detections)
+    }
+
+    fun frameRecord(inspectionId: String, frame: ParsedFrame, plantId: String?, path: String): FrameRecord {
         val photo = PhotoEntity(
-            id = parsed.id,
-            inspectionId = parsed.id,
+            id = frame.id,
+            inspectionId = inspectionId,
             plantId = plantId,
-            localPath = photoPath,
-            sha256 = parsed.photoSha256,
-            width = parsed.prediction.optInt("decoded_width"),
-            height = parsed.prediction.optInt("decoded_height")
+            localPath = path,
+            sha256 = frame.photoSha256,
+            width = frame.width,
+            height = frame.height,
+            frameOrder = frame.order,
+            frameRole = frame.role.value,
+            reportName = frame.reportName,
+            reportSha256 = frame.reportSha256,
+            predictionJson = frame.predictionJson
         )
-        return InspectionRecord(inspection, photo, detections(parsed.prediction, photo.id))
+        val prediction = frame.prediction ?: frame.storedDetectionsJson?.let {
+            JSONObject().put("detections", JSONArray(it))
+        }
+        return FrameRecord(photo, prediction?.let { detections(it, photo.id) }.orEmpty())
     }
 
     /** Boxes are in the coordinate space of the decoded photo, as written by PhotoFiles.saveResult. */
@@ -175,9 +257,11 @@ object JournalRecords {
     }
 
     /** The exported record keeps the v1 fields, so an old reader still finds them. */
-    fun toJson(details: InspectionWithDetails, archivePhoto: String? = null): JSONObject {
+    fun toJson(details: InspectionWithDetails, archivePhoto: String? = null,
+               archivePhotos: Map<String, String> = emptyMap(), photoHashes: Map<String, String> = emptyMap()): JSONObject {
         val inspection = details.inspection
-        val photo = details.photos.firstOrNull()?.photo
+        val ordered = details.orderedPhotos()
+        val photo = ordered.firstOrNull()?.photo
         val record = JSONObject()
             .put("id", inspection.id)
             .put("created_epoch_ms", inspection.createdAt)
@@ -189,8 +273,8 @@ object JournalRecords {
             .put("review", inspection.userReview)
             .put("plot", details.plot?.name ?: "")
             .put("row", inspection.row ?: "")
-            .put("plant", details.photos.firstOrNull()?.plantName ?: "")
-            .put("plant_id", details.photos.firstOrNull()?.photo?.plantId ?: "")
+            .put("plant", ordered.firstOrNull()?.plantName ?: "")
+            .put("plant_id", photo?.plantId ?: "")
             .put("expert_status", inspection.expertStatus)
             .put("review_scope", REVIEW_SCOPE)
             .put("photo_path", photo?.localPath ?: "")
@@ -203,6 +287,30 @@ object JournalRecords {
         if (archivePhoto != null) {
             record.put("archive_photo", archivePhoto)
         }
+        val frames = JSONArray()
+        ordered.forEachIndexed { index, detail ->
+            val item = detail.photo
+            val primary = item.id == inspection.id || ordered.size == 1
+            val raw = item.predictionJson ?: inspection.predictionJson.takeIf { primary }
+            val name = archivePhotos[item.id] ?: archivePhoto.takeIf { index == 0 }
+            val frame = JSONObject().put("id", item.id).put("order", index).put("role", item.frameRole)
+                .put("photo_path", item.localPath).put("photo_sha256", photoHashes[item.id] ?: item.sha256)
+                .put("width", item.width).put("height", item.height)
+                .put("report_name", item.reportName.ifBlank { if (primary) inspection.reportName else "" })
+                .put("report_sha256", item.reportSha256.ifBlank { if (primary) inspection.reportSha256 else "" })
+                .put("prediction_json", raw ?: JSONObject.NULL)
+                .put("plant", detail.plantName ?: "").put("plant_id", item.plantId ?: "")
+            if (name != null) frame.put("archive_photo", name)
+            if (raw == null && detail.detections.isNotEmpty()) {
+                frame.put("stored_detections", JSONArray(detail.detections.map { detection ->
+                    JSONObject().put("class_name", detection.classCode).put("label_ru", detection.labelRu)
+                        .put("confidence", detection.confidence)
+                        .put("xyxy_pixels", JSONArray(listOf(detection.x1, detection.y1, detection.x2, detection.y2)))
+                }))
+            }
+            frames.put(frame)
+        }
+        record.put("frames", frames)
         return record
     }
 
@@ -212,7 +320,7 @@ object JournalRecords {
         .put("contains_photo_bytes", containsPhotos)
         .put("records", records)
 
-    /** Records of an exported document; v1 and v2 share the record shape. */
+    /** Legacy v1/v2 records become one frame; v3 can carry every frame independently. */
     fun records(document: String): Pair<List<Result<ParsedInspection>>, JournalIssue?> {
         val data = try {
             JSONObject(document.removePrefix("\uFEFF"))
@@ -220,7 +328,7 @@ object JournalRecords {
             return emptyList<Result<ParsedInspection>>() to JournalIssue("journal.json", "файл повреждён или не является JSON")
         }
         val schema = data.optString("schema")
-        if (schema != JOURNAL_SCHEMA && schema != LEGACY_JOURNAL_SCHEMA) {
+        if (schema !in setOf(JOURNAL_SCHEMA, PREVIOUS_JOURNAL_SCHEMA, LEGACY_JOURNAL_SCHEMA)) {
             return emptyList<Result<ParsedInspection>>() to JournalIssue("journal.json", "неизвестный формат «$schema»")
         }
         val items = data.optJSONArray("records") ?: JSONArray()
@@ -233,11 +341,17 @@ object JournalRecords {
                 parseObject(item, source)
             }
         }
+        val ids = parsed.mapNotNull { it.getOrNull()?.id }
+        if (ids.distinct().size != ids.size) return emptyList<Result<ParsedInspection>>() to
+            JournalIssue("journal.json", "повторяющиеся ID осмотров")
         return parsed to null
     }
 
     private fun requiredString(data: JSONObject, key: String, reason: String = "нет поля $key"): String {
-        val value = data.optString(key)
+        val raw = data.opt(key)
+        val value = raw as? String ?: throw JournalFormatException(
+            if (raw == null || raw == JSONObject.NULL) reason else "неверный тип поля $key"
+        )
         if (value.isBlank()) {
             throw JournalFormatException(reason)
         }

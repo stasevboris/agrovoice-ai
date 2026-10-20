@@ -116,6 +116,8 @@ class VoiceControlsTest {
         Thread.sleep(13500)
         assertTrue(compose.activity.voiceListening)
         assertTrue(compose.activity.photoFlow.continuousVoice)
+        say("замолчи")
+        assertTrue("Stopping speech must not stop an independently running microphone", compose.activity.voiceListening)
         compose.onNodeWithText("Сделать фото").assertIsEnabled()
         say("помощь");compose.onNodeWithText("Голосовые команды").assertIsDisplayed()
         say("понятно");compose.onNodeWithText("Голосовые команды").assertDoesNotExist()

@@ -126,6 +126,9 @@ object NegationGuard {
     private val negations = setOf("не", "нельзя")
     private val stopVerbs = listOf("выключ", "отключ", "перестав", "прекращ", "останавлив")
     private val guarded = setOf(
+        VoiceAction.ADD_FRAME, VoiceAction.ADD_FRAME_GALLERY, VoiceAction.SELECT_FRAME, VoiceAction.FRAME_ROLE,
+        VoiceAction.SYNC_CURRENT, VoiceAction.SYNC_RETRY, VoiceAction.SYNC_RECEIVE, VoiceAction.SYNC_LOGOUT,
+        VoiceAction.SYNC_ALL, VoiceAction.SYNC_CONFLICT,
         VoiceAction.SAVE_INSPECTION, VoiceAction.CONFIRM, VoiceAction.EXIT,
         VoiceAction.CAMERA, VoiceAction.OPEN_CAMERA, VoiceAction.CAMERA_NOW,
         VoiceAction.GALLERY, VoiceAction.SYSTEM_GALLERY, VoiceAction.ANALYZE, VoiceAction.COMPARE,

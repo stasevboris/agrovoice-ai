@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import org.json.JSONObject
 import java.security.KeyStore
 import java.util.UUID
+import java.util.concurrent.CancellationException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -26,10 +27,18 @@ class SyncSessionStore private constructor(context: Context) {
     private val mutable = MutableStateFlow(read())
     private val loginGate = SyncLoginGate()
     val session: StateFlow<SyncSession?> = mutable
+    private val mutableAuthRequired = MutableStateFlow(preferences.getBoolean("auth_required", false))
+    val authenticationRequired: StateFlow<Boolean> = mutableAuthRequired
 
     fun beginLogin(): Long = loginGate.begin()
 
     fun loginIsCurrent(attempt: Long): Boolean = loginGate.isCurrent(attempt)
+
+    /** Called with the engine lock held; the callback only writes Room and must not acquire it again. */
+    fun commitQueue(generation: String, active: () -> Boolean, write: () -> Unit) = loginGate.serialized {
+        if (mutable.value?.generation != generation || !active()) throw CancellationException("Sync session ended")
+        write()
+    }
 
     fun completeLogin(attempt: Long, value: SyncSession, active: () -> Boolean, schedule: () -> Unit): Boolean {
         require(value.origin == SyncEndpoint.normalize(value.origin))
@@ -41,10 +50,11 @@ class SyncSessionStore private constructor(context: Context) {
         val encrypted = cipher.doFinal(json.toString().toByteArray(Charsets.UTF_8))
         // Encryption can be slow. Check the attempt again after it, immediately before publication.
         return loginGate.commit(attempt, active) {
-            check(preferences.edit().putString("iv", encode(cipher.iv)).putString("session", encode(encrypted)).commit()) {
+            check(preferences.edit().putString("iv", encode(cipher.iv)).putString("session", encode(encrypted)).remove("auth_required").commit()) {
                 "Не удалось сохранить защищённый сеанс. Освободите место и повторите вход."
             }
             mutable.value = value
+            mutableAuthRequired.value = false
             schedule()
         }
     }
@@ -53,8 +63,19 @@ class SyncSessionStore private constructor(context: Context) {
         loginGate.invalidate {
             check(preferences.edit().clear().commit()) { "Не удалось завершить сеанс. Повторите выход." }
             mutable.value = null
+            mutableAuthRequired.value = false
             stopWork()
         }
+    }
+
+    /** An expired worker must never clear a newer login or invalidate its pending attempt. */
+    fun expire(generation: String, stopWork: () -> Unit): Boolean = loginGate.serialized {
+        if (mutable.value?.generation != generation) return@serialized false
+        check(preferences.edit().clear().putBoolean("auth_required", true).commit()) { "Не удалось сохранить остановку сеанса." }
+        mutable.value = null
+        mutableAuthRequired.value = true
+        stopWork()
+        true
     }
 
     private fun read(): SyncSession? = runCatching {

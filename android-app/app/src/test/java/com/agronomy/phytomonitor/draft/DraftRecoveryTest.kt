@@ -28,7 +28,8 @@ class DraftRecoveryTest {
         val database = Room.inMemoryDatabaseBuilder(context, JournalDatabase::class.java).allowMainThreadQueries().build()
         try {
             val journal = InspectionJournal(context, database, clock = { 1000L })
-            val photo = temporary.newFile("photo.jpg").apply { writeBytes(byteArrayOf(1, 2, 3)) }
+            val photo = File(com.agronomy.phytomonitor.ml.PhotoFiles.folder(context), "draft-recovery.jpg")
+                .apply { writeBytes(byteArrayOf(1, 2, 3)) }
             val report = temporary.newFile("report.json").apply {
                 writeText(JournalFixtures.prediction(photo.path, InspectionJournal.sha256(photo)).toString())
             }

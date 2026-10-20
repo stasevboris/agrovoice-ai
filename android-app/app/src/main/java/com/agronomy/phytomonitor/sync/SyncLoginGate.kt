@@ -8,6 +8,8 @@ internal class SyncLoginGate {
 
     @Synchronized fun isCurrent(attempt: Long): Boolean = attempt == revision
 
+    @Synchronized fun <T> serialized(action: () -> T): T = action()
+
     @Synchronized fun commit(attempt: Long, active: () -> Boolean, publish: () -> Unit): Boolean {
         if (attempt != revision || !active()) return false
         try {

@@ -70,6 +70,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.agronomy.phytomonitor.ml.DetectionResult
+import com.agronomy.phytomonitor.journal.FrameRole
 import com.agronomy.phytomonitor.photos.PhotoFlowViewModel
 import com.agronomy.phytomonitor.ui.AgroIcons
 import com.agronomy.phytomonitor.ui.ComparisonRow
@@ -261,6 +262,7 @@ private fun PhotoZone(model: FieldDemoViewModel, onAction: ActionButtons, maxHei
         Spacer(Modifier.height(4.dp))
         EmptyPhoto()
     } else {
+        SeriesControls(model, onAction)
         PhotoWithDetections(image, model.result?.boxes.orEmpty(), model.showBoxes, busy = model.busy, maxHeight = maxHeight)
         model.photoQuality?.advice?.let { MessageBanner(it, isError = false) }
         if (model.result == null && !model.busy) {
@@ -271,6 +273,35 @@ private fun PhotoZone(model: FieldDemoViewModel, onAction: ActionButtons, maxHei
                 Text("Проверить фото")
             }
         }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun SeriesControls(model: FieldDemoViewModel, onAction: ActionButtons) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("Кадр ${model.selectedFrame} из ${model.frames.size}", style = MaterialTheme.typography.titleSmall)
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            model.frames.forEachIndexed { index, frame ->
+                FilterChip(selected = model.selectedFrame == index + 1,
+                    enabled = !model.busy,
+                    onClick = { onAction(VoiceAction.SELECT_FRAME, (index + 1).toString()) },
+                    label = { Text("${index + 1}. ${frame.role.label}") })
+            }
+        }
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FrameRole.entries.forEach { role ->
+                FilterChip(selected = model.frameRole == role, enabled = !model.busy,
+                    onClick = { onAction(VoiceAction.FRAME_ROLE, role.value) }, label = { Text(role.label) })
+            }
+        }
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            OutlinedButton(enabled = !model.busy && model.result != null && model.frames.size < 10,
+                onClick = { onAction(VoiceAction.ADD_FRAME, "") }) { Text("Добавить кадр") }
+            OutlinedButton(enabled = !model.busy && model.result != null && model.frames.size < 10,
+                onClick = { onAction(VoiceAction.ADD_FRAME_GALLERY, "") }) { Text("Добавить из галереи") }
+        }
+        model.seriesWarning?.let { MessageBanner(it, isError = false) }
     }
 }
 
@@ -520,17 +551,20 @@ private fun BottomArea(
 /** One line of context for the microphone: status while idle, «Услышал» while listening. */
 @Composable
 private fun VoiceStatusLine(voice: OfflineVoiceController, flow: PhotoFlowViewModel, listening: Boolean) {
-    val text = when {
-        voice.heard.isNotBlank() -> "Услышал: ${voice.heard}"
-        listening -> voice.status
-        else -> "Голос работает без интернета"
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            voice.status,
+            style = MaterialTheme.typography.bodySmall,
+            color = if (voice.active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 3
+        )
+        if (voice.heard.isNotBlank()) {
+            Text("Услышал: ${voice.heard}", style = MaterialTheme.typography.bodySmall, maxLines = 2)
+        }
+        if (voice.active && voice.inputRouteStatus.isNotBlank()) {
+            Text(voice.inputRouteStatus, style = MaterialTheme.typography.bodySmall, maxLines = 3)
+        }
     }
-    Text(
-        text,
-        style = MaterialTheme.typography.bodySmall,
-        color = if (listening) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-        maxLines = 1
-    )
 }
 
 @Composable

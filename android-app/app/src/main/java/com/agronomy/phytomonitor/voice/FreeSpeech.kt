@@ -36,6 +36,11 @@ object FreeSpeech {
                 return Understanding.Commands(listOf(it))
             }
         }
+        // Explicit in-app sync intents are allowed; arbitrary "send ..." remains out of scope.
+        VoiceCommands.parseForScreen(phrase, screen, plots)?.takeIf {
+            it.action in com.agronomy.phytomonitor.actions.SyncActions.actions ||
+                it.action == VoiceAction.CANCEL && phrase in setOf("не отправляй", "не передавай осмотры", "отмени отправку")
+        }?.let { return Understanding.Commands(listOf(it)) }
         refusal(phrase)?.let { return Understanding.Refusal(it) }
         val parts = phrase.split(connectors).map { it.trim(' ', ',') }.filter { it.isNotEmpty() }
         if (parts.size > 1) {

@@ -39,7 +39,7 @@ class SyncHttpClient(origin: String, private val token: String? = null,
 
     override fun pull(after: Long): JSONObject {
         require(after >= 0)
-        return json("GET", "/sync/inspections?after=$after&limit=50")
+        return json("GET", "/sync/inspections?after=$after&limit=10")
     }
 
     override fun download(id: String, target: File, bytes: Long) {

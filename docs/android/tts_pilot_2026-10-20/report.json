@@ -1,0 +1,89 @@
+{
+  "status": "isolated_native_pilot_passed_not_integrated",
+  "phone": {
+    "device": "Redmi Note 7",
+    "sdk": 33,
+    "scope": "Pretrained Russian TTS pilot; synthetic speech generation only, no listening quality assessment or training",
+    "runtime": "sherpa-onnx static ORT 1.13.8 alongside onnxruntime-android 1.30.0",
+    "model": "vits-piper-ru_RU-denis-medium-int8",
+    "threads": 2,
+    "pss_before_kib": 107830,
+    "initialization_ms": 5959,
+    "runs": [
+      {
+        "run": 0,
+        "text": "Осмотр сохранён на устройстве. Для нового снимка скажите: открой камеру.",
+        "first_chunk_ms": 1905,
+        "generation_ms": 4243,
+        "samples": 102286,
+        "sample_rate": 22050,
+        "audio_seconds": 4.6388208616780044,
+        "peak_absolute": 0.6536783576011658,
+        "pss_kib": 232530
+      },
+      {
+        "run": 1,
+        "text": "Осмотр сохранён на устройстве. Для нового снимка скажите: открой камеру.",
+        "first_chunk_ms": 1779,
+        "generation_ms": 4226,
+        "samples": 102845,
+        "sample_rate": 22050,
+        "audio_seconds": 4.664172335600907,
+        "peak_absolute": 0.6883078217506409,
+        "pss_kib": 238511
+      }
+    ],
+    "cancellation_after_first_callback_ms": 1177,
+    "cancellation_callbacks": 1,
+    "ort_identity_before_and_after": true,
+    "pss_after_release_kib": 176239,
+    "battery_temperature_tenths_c": 260,
+    "thermal_status": 0,
+    "audio_played": false,
+    "human_listening": false
+  },
+  "test_apk_sha256": "6a8b60450f0b99b3a266f169777543b68b4ef925933c723ece083d7af2c3bd62",
+  "artifacts": "artifacts/verification/autonomous_20261019/tts_phone",
+  "model_assets": [
+    {
+      "name": "sherpa-onnx-static-link-onnxruntime-1.13.8.aar",
+      "size": 38691998,
+      "digest": "sha256:b22c3fc1b6a45666d28892bb2f7694beeb77a8362d7ebd77c1a5431ec9435471",
+      "browser_download_url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-static-link-onnxruntime-1.13.8.aar",
+      "local": "F:\\agrovoice-ai\\artifacts\\verification\\autonomous_20261019\\tts_sources\\sherpa-onnx-static-link-onnxruntime-1.13.8.aar",
+      "status": "downloaded_and_verified"
+    },
+    {
+      "name": "vits-piper-ru_RU-denis-medium-int8.tar.bz2",
+      "size": 21058905,
+      "digest": "sha256:d710e29eb7854c42461d16d65d3cef753cc559639ca75806edc75ba71f23af66",
+      "browser_download_url": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/vits-piper-ru_RU-denis-medium-int8.tar.bz2",
+      "local": "F:\\agrovoice-ai\\artifacts\\verification\\autonomous_20261019\\tts_sources\\vits-piper-ru_RU-denis-medium-int8.tar.bz2",
+      "status": "downloaded_and_verified"
+    }
+  ],
+  "licenses": {
+    "runtime": "Apache-2.0; k2-fsa/sherpa-onnx v1.13.8 LICENSE",
+    "phonemizer": "GPL-3.0; csukuangfj/espeak-ng ed530aa113046142eb5115cf2fc9157854d0ffe1 COPYING",
+    "voices_repository": "MIT declared in rhasspy/piper-voices README at e9ef9dd26adb6a40a9b47198817cd8e96d01e7cb",
+    "denis_source_recordings": "CC0 stated by MODEL_CARD and OHF-Voice/voice-datasets README",
+    "excluded": {
+      "irina": "Dataset license Unknown in its MODEL_CARD",
+      "ruslan": "Dataset BY-NC-SA-4.0; more restrictive than the available CC0 candidate"
+    }
+  },
+  "confirmed_issue_and_fix": {
+    "initial_failure": "JNI GetMethodID expected invoke(float[]):Integer; Kotlin indy lambda exposes erased invoke(Object), causing ART abort",
+    "evidence": "tts_pilot_initial_failure.log and tts_pilot_logcat.txt",
+    "fix": "Concrete @Keep callback class implementing (FloatArray)->Int; typed descriptor confirmed with javap",
+    "verification": "tts_pilot_callback_device.log: OK (1 test), finite nonzero PCM, cancellation callback, ORT identity before/after"
+  },
+  "limitations": [
+    "No audio playback or human intelligibility assessment",
+    "Not integrated into normal app yet",
+    "Two generation runs on one synthetic phrase; no p50/p95 or winner claim",
+    "Wi-Fi remained connected; runtime uses local files and CPU, no network dependency in the tested path",
+    "PSS snapshots are not a retained-memory/leak analysis",
+    "No training or model publication"
+  ]
+}

@@ -35,6 +35,8 @@ data class AppState(
     val hasPhoto: Boolean = false,
     val hasResult: Boolean = false,
     val hasDraft: Boolean = false,
+    val frameCount: Int = 0,
+    val selectedFrame: Int = 0,
     val busy: Boolean = false,
     val inspectionSaved: Boolean = false,
     val review: String = "unrated",
@@ -58,6 +60,8 @@ data class AppState(
     val plots: List<String> = emptyList(),
     val plotTargets: List<PlotTarget> = emptyList(),
     val pendingPlotDeletion: PlotTarget? = null,
+    val syncGeneration: String? = null,
+    val pendingSync: SyncConfirmation? = null,
     val plot: String = "",
     val row: String = "",
     val plant: String = "",
@@ -75,6 +79,7 @@ data class AppState(
     /** The object «да / подтвердить» would refer to, as `pending` in the corpus. */
     val pending: String?
         get() = when {
+            pendingSync != null -> "sync"
             pendingPlotDeletion != null && screen == Screen.PLOTS -> "delete_plot"
             followUp && screen == Screen.MAIN -> "save"
             else -> when (screen) {
@@ -87,6 +92,19 @@ data class AppState(
 
 /** A concrete change of the app. The Activity performs it without further decisions. */
 sealed interface Operation {
+    data class AddFrame(val gallery: Boolean, val withVoice: Boolean) : Operation
+    data class SelectFrame(val number: Int, val saved: Boolean) : Operation
+    data class SetFrameRole(val role: String) : Operation
+    data object OpenSyncSettings : Operation
+    data object SpeakSyncStatus : Operation
+    data class SendInspection(val id: String) : Operation
+    data object RetrySync : Operation
+    data object ReceiveSync : Operation
+    data object LogoutSync : Operation
+    data object AskSyncAll : Operation
+    data class AskSyncConflict(val id: String) : Operation
+    data class ConfirmSync(val confirmation: SyncConfirmation) : Operation
+    data object CancelSyncConfirmation : Operation
     data object ResumeDraft : Operation
     data object DiscardDraft : Operation
     data class SetContinuousListening(val enabled: Boolean) : Operation

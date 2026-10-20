@@ -1,0 +1,353 @@
+{
+  "scope": [
+    "A-20 UI/voice actions and real WorkManager",
+    "X-05 separate frame results and portable archive",
+    "V-01 audio input lifecycle",
+    "V-04 built-in Russian TTS"
+  ],
+  "baseline_commit": "7842ac9",
+  "verification": {
+    "production": {
+      "command": [
+        "gradlew.bat",
+        "testDebugUnitTest",
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "lintDebug"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 44.657,
+      "jvm": {
+        "tests": 325,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "isolated": {
+      "command": [
+        "gradlew.bat",
+        "-PisolateApp=true",
+        "testDebugUnitTest",
+        "assembleDebug",
+        "assembleDebugAndroidTest",
+        "lintDebug"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 54.206,
+      "jvm": {
+        "tests": 325,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "asset_fetcher": {
+      "command": "python -X utf8 -m unittest discover -s ml-pipeline/tests -p test_fetch*.py",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "success": true
+    },
+    "lint": {
+      "Warning": 63,
+      "Hint": 2
+    },
+    "review": "Three local subagent reviews and scoped cross-review; Qodo unavailable, not run"
+  },
+  "device": {
+    "model": "Redmi Note 7",
+    "android_api": 33,
+    "test_package": "com.agronomy.phytomonitor.verification",
+    "installed_package": "com.agronomy.phytomonitor",
+    "production_apks": {
+      "application_id": "com.agronomy.phytomonitor",
+      "version": "0.19-field",
+      "apks": {
+        "app-debug.apk": {
+          "sha256": "d5f6ab57039f741867fa291d83d2ee904b02244eb30a8f2e39330d3d7b98e4ec",
+          "bytes": 399602932
+        },
+        "app-debug-androidTest.apk": {
+          "sha256": "e66b7ee4829c39ce805cfc16782b47d5eef97bd035dad8a382b81e6a9355858e",
+          "bytes": 1239929
+        }
+      }
+    },
+    "ui_series_audio_apks": {
+      "app-debug.apk": "c48962aeef9892faa991de5373088cd3c81fc5151d5a9606e518b636796773b6",
+      "app-debug-androidTest.apk": "a9497796055d8bcca7c55dcb1a5ed101677ba777ed83d2bdcc5d098da1eca1e7"
+    },
+    "tts_test_apks": {
+      "app-debug.apk": "00a28d549444656a3f3630042caf864035f213d3c4c3bd97c6c04d55fc7f0ee0",
+      "app-debug-androidTest.apk": "f17e254f7578ce7492afe8c4bdf8354a750041891db2a66caf692e602adcff8c"
+    },
+    "tests": [
+      {
+        "test": "SyncUiWorkerDeviceTest#loginAndSendThroughRealWorker",
+        "passed": true,
+        "exit_code": 0,
+        "tests": 1,
+        "log": "artifacts\\verification\\autonomous_20261019\\continuation_device\\SyncUiWorkerDeviceTest-loginAndSendThroughRealWorker-final.log"
+      },
+      {
+        "test": "SyncUiWorkerDeviceTest#restoreKeystoreRejectExpiredWorkerAndLogout",
+        "passed": true,
+        "exit_code": 0,
+        "tests": 1,
+        "log": "artifacts\\verification\\autonomous_20261019\\continuation_device\\SyncUiWorkerDeviceTest-restoreKeystoreRejectExpiredWorkerAndLogout-final.log"
+      },
+      {
+        "test": "SyncUiWorkerDeviceTest#loggedOutProcessDoesNotSendStaleQueue",
+        "passed": true,
+        "exit_code": 0,
+        "tests": 1,
+        "log": "artifacts\\verification\\autonomous_20261019\\continuation_device\\SyncUiWorkerDeviceTest-loggedOutProcessDoesNotSendStaleQueue-final.log"
+      },
+      {
+        "test": "SeriesDeviceTest",
+        "passed": true,
+        "exit_code": 0,
+        "tests": 1,
+        "log": "artifacts\\verification\\autonomous_20261019\\continuation_device\\SeriesDeviceTest-navigation-fixed.log"
+      },
+      {
+        "test": "BuiltInSpeechDeviceTest",
+        "passed": true,
+        "exit_code": 0,
+        "tests": 1,
+        "log": "artifacts\\verification\\autonomous_20261019\\continuation_device\\BuiltInSpeechDeviceTest.log"
+      },
+      {
+        "test": "AudioInputRouteDeviceTest",
+        "passed": true,
+        "exit_code": 0,
+        "tests": 3,
+        "log": "artifacts\\verification\\autonomous_20261019\\continuation_device\\AudioInputRouteDeviceTest-final.log"
+      }
+    ],
+    "sync": {
+      "before_existing_click": {
+        "screen": "JOURNAL",
+        "busy": false,
+        "inspection_open": true,
+        "opened_id": "c571c987-b5c8-4cba-8ff6-f4c3ebdf34c9",
+        "authenticated": true,
+        "sync_busy": false,
+        "sync_error": false,
+        "field_error": true,
+        "lifecycle": "RESUMED",
+        "verdict_now": "Run(operations=[SendInspection(id=c571c987-b5c8-4cba-8ff6-f4c3ebdf34c9)], notice=null, noticeIsError=false)"
+      },
+      "after_existing_click": {
+        "screen": "JOURNAL",
+        "busy": true,
+        "inspection_open": true,
+        "opened_id": "c571c987-b5c8-4cba-8ff6-f4c3ebdf34c9",
+        "authenticated": true,
+        "sync_busy": true,
+        "sync_error": false,
+        "field_error": true,
+        "lifecycle": "RESUMED",
+        "verdict_now": "Clarify(text=Подождите завершения текущего действия синхронизации.)",
+        "outbox_present": true
+      },
+      "queue_action": {
+        "screen": "JOURNAL",
+        "busy": true,
+        "activity_identity": 160564893,
+        "inspection_open": true,
+        "opened_id": "f8613f52-e5f0-4a7c-9d76-199480b1e1a6",
+        "authenticated": true,
+        "sync_busy": true,
+        "sync_message": "Вход выполнен. Выберите осмотр для передачи.",
+        "sync_error": false,
+        "field_error": true,
+        "lifecycle": "RESUMED",
+        "verdict_now": "Clarify(text=Подождите завершения текущего действия синхронизации.)"
+      },
+      "before_queue_action": {
+        "screen": "JOURNAL",
+        "busy": false,
+        "activity_identity": 160564893,
+        "inspection_open": true,
+        "opened_id": "f8613f52-e5f0-4a7c-9d76-199480b1e1a6",
+        "authenticated": true,
+        "sync_busy": false,
+        "sync_message": "Вход выполнен. Выберите осмотр для передачи.",
+        "sync_error": false,
+        "field_error": true,
+        "lifecycle": "RESUMED",
+        "verdict_now": "Run(operations=[SendInspection(id=f8613f52-e5f0-4a7c-9d76-199480b1e1a6)], notice=null, noticeIsError=false)"
+      },
+      "phase1": {
+        "ui_login": true,
+        "activity_recreated": true,
+        "real_worker": true,
+        "queue_to_synced_ms": 540,
+        "photo_sha_matches": true,
+        "repeat_server_version": 1,
+        "encrypted_preferences_no_plaintext": true,
+        "work": [
+          {
+            "id": "486950d3-14bb-4e49-8857-777dd755f3b6",
+            "state": "SUCCEEDED",
+            "attempts": 1
+          },
+          {
+            "id": "971b34c8-fa76-4eed-8545-c99480a0fb47",
+            "state": "SUCCEEDED",
+            "attempts": 1
+          }
+        ],
+        "package": "com.agronomy.phytomonitor.verification"
+      },
+      "phase2": {
+        "keystore_process_restore": true,
+        "old_generation_cannot_expire_new_session": true,
+        "real_http401_stops_session": true,
+        "logout_clears_session": true,
+        "logged_out_worker_did_not_send": true,
+        "work": [
+          {
+            "id": "ac807457-0b33-49bb-bd2f-109969427c9b",
+            "state": "SUCCEEDED",
+            "attempts": 1
+          },
+          {
+            "id": "cca63af6-deb0-4017-8b49-ce87bf41da77",
+            "state": "SUCCEEDED",
+            "attempts": 1
+          }
+        ]
+      },
+      "phase3": {
+        "logout_survives_process_restart": true,
+        "stale_queue_not_sent": true,
+        "server_version_unchanged": true,
+        "work": [
+          {
+            "id": "3d36c357-ebe2-465c-b492-2558dbff32e6",
+            "state": "SUCCEEDED",
+            "attempts": 1
+          },
+          {
+            "id": "ac807457-0b33-49bb-bd2f-109969427c9b",
+            "state": "SUCCEEDED",
+            "attempts": 1
+          },
+          {
+            "id": "cca63af6-deb0-4017-8b49-ce87bf41da77",
+            "state": "SUCCEEDED",
+            "attempts": 1
+          }
+        ]
+      }
+    },
+    "series": {
+      "status": "passed",
+      "fixture_id": "03a940e7-8f89-471d-84e2-852d900b72b8",
+      "scope": "Isolated Android; synthetic reports with no inference; injected dispatcher requests, not live speech",
+      "frames": 2,
+      "selection_and_role": true,
+      "activity_recreation": true,
+      "repeat_save": true,
+      "archive_roundtrip_and_repeat": true
+    },
+    "tts": {
+      "model": "vits-piper-ru_RU-denis-medium-int8",
+      "voice": "Denis",
+      "generated_samples": 46336,
+      "played_samples": 46336,
+      "sample_rate": 22050,
+      "peak": 0.48950374126434326,
+      "system_voice_available": false,
+      "cancellation": "passed",
+      "samples_before_cancel": 30720,
+      "audio_track_drain": "passed",
+      "human_listening": false
+    },
+    "audio_route": {
+      "status": "passed",
+      "before": {
+        "mode": 0,
+        "sco_on": false,
+        "communication_device": 2
+      },
+      "after": {
+        "mode": 0,
+        "sco_on": false,
+        "communication_device": 2
+      },
+      "observed_inputs": [
+        {
+          "input_id": 16,
+          "kind": "PHONE"
+        },
+        {
+          "input_id": 16,
+          "kind": "PHONE"
+        }
+      ],
+      "audio_saved": false,
+      "scope": "Actual recorder route and discarded PCM on phone without headset; not live command accuracy, headset audibility, Bluetooth or USB validation"
+    },
+    "permission_restore": "Temporary RECORD_AUDIO grant in isolated package revoked to its original denied state",
+    "main_install": "adb install -r; am start -W returned Status: ok; main data checked after launch"
+  },
+  "data_preservation": {
+    "reference": "before_final_upgrade",
+    "after": "after_final_upgrade",
+    "database_integrity": "ok",
+    "room_version": 5,
+    "changed_existing_rows": [],
+    "changed_existing_photos_reports_settings": [],
+    "original_baseline": {
+      "stage": "after_final_upgrade",
+      "files_hashed": 1426,
+      "records": 4,
+      "detections": 5,
+      "original_external_changed": [],
+      "original_rows_changed": [],
+      "original_data_preserved": true,
+      "settings_hashes_changed": [
+        "private/files/datastore/agrovoice.preferences_pb"
+      ]
+    },
+    "private_backups": "artifacts\\verification\\autonomous_20261019"
+  },
+  "fixes": [
+    "Reject mismatched frame/photo SHA and incompatible primary/top-level model evidence before import",
+    "Reject replacement/erasure of existing report hashes and invented analysis on legacy stored detections",
+    "Serialize final queue/conflict writes with session logout/expiry; cancel stale confirmation work",
+    "Finish superseded Worker normally so its APPEND successor for the new session can run",
+    "Do not let an old sync error abort later offline action plans",
+    "Preserve listening mode across Bluetooth permission result; recheck microphone permission before AudioRecord",
+    "Keep missing saved threshold unknown and wait for navigation graph during result restoration",
+    "Exclude unsupported x86 native libraries without replacing ARM ONNX Runtime"
+  ],
+  "test_harness_corrections": [
+    "Wait for transient Snackbar to disappear before tapping login/logout/send; do not substitute direct engine calls",
+    "Old synthetic model-SHA fixtures made internally consistent; legacy absent model metadata still tested"
+  ],
+  "commands": [
+    "gradlew.bat testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+    "gradlew.bat -PisolateApp=true testDebugUnitTest assembleDebug assembleDebugAndroidTest lintDebug",
+    "python -X utf8 -m unittest discover -s ml-pipeline/tests -p test_fetch*.py",
+    "python -X utf8 android-app/fetch_assets.py --tts-only --check",
+    "adb -s b861c4e0 install -r <app APK>; adb -s b861c4e0 install -r <test APK>",
+    "adb -s b861c4e0 reverse tcp:8028 tcp:8028",
+    "adb -s b861c4e0 shell am instrument -w -r -e class com.agronomy.phytomonitor.<test> com.agronomy.phytomonitor.verification.test/androidx.test.runner.AndroidJUnitRunner",
+    "SyncUiWorkerDeviceTest phases run separately with force-stop between them and isolated API fixture arguments; see test source/runbook"
+  ],
+  "limitations": [
+    "Synthetic reports/PNGs and injected actions are not live speech, agronomic ground truth or field usability",
+    "TTS AudioTrack completion does not establish intelligibility or headset audibility",
+    "No physical Bluetooth/USB headset, TalkBack user study, independent field photos or second-phone test",
+    "Server accessed over USB reverse on localhost; physical Wi-Fi connection not tested",
+    "No new full camera-to-save latency benchmark; queue latency covers only the test-defined send-to-synced interval",
+    "No new training, calibration of unknown objects, model publication or push",
+    "Per-frame correction and export of selected feedback examples remain implementation work"
+  ]
+}

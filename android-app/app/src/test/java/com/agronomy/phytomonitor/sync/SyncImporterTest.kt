@@ -32,9 +32,11 @@ class SyncImporterTest {
         db = Room.inMemoryDatabaseBuilder(context, JournalDatabase::class.java).allowMainThreadQueries().build()
         folder = File(context.cacheDir, UUID.randomUUID().toString()).apply { mkdirs() }
         source = File(folder, "source.jpg").apply { writeBytes(byteArrayOf(1, 2, 3)) }
-        val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("old-remote", source.path, InspectionJournal.sha256(source)))
+        val original = JournalFixtures.legacyRecord("old-remote", source.path, InspectionJournal.sha256(source))
+        original.getJSONObject("prediction").put("model_sha256", "a".repeat(64))
+        val parsed = JournalRecords.parse(original)
         val record = JournalRecords.toRecord(parsed, "plot-original", "plant-original", source.path)
-        val details = InspectionWithDetails(record.inspection.copy(modelSha256 = "a".repeat(64)),
+        val details = InspectionWithDetails(record.inspection,
             PlotEntity("plot-original", "Поле", updatedAt = 1), listOf(PhotoWithDetections(record.photo, record.detections, "Куст")))
         val snapshot = SyncPayload.snapshot(account, details, 0, record.inspection.updatedAt, { true })
         remote = JSONObject(snapshot.request).put("version", 1).put("revision", 1).put("expert_status", "confirmed")
@@ -71,6 +73,23 @@ class SyncImporterTest {
         assertEquals(0, db.journal().inspectionCount())
         assertTrue(db.sync().records(account).isEmpty())
         assertTrue(importer.importRecord(account, remote, downloadApi()))
+    }
+
+    @Test fun legacyRemoteWithoutEmbeddedModelUsesDeclaredServerModel() {
+        val prediction = remote.getJSONObject("data").getJSONObject("prediction")
+        prediction.remove("model")
+        prediction.remove("model_sha256")
+        prediction.remove("agrovoice_frames")
+        val importer = SyncImporter(db, File(folder, "photos"), File(folder, "stage"))
+
+        assertTrue(importer.importRecord(account, remote, downloadApi()))
+
+        val saved = db.journal().inspections().single()
+        val report = JSONObject(requireNotNull(saved.photos.single().photo.predictionJson))
+        assertEquals("yolo26n", saved.inspection.modelVersion)
+        assertEquals("a".repeat(64), saved.inspection.modelSha256)
+        assertEquals(saved.inspection.modelVersion, report.getString("model"))
+        assertEquals(saved.inspection.modelSha256, report.getString("model_sha256"))
     }
 
     @Test fun sameServerIdInDifferentAccountCreatesDifferentLocalIdentity() {

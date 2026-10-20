@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.concurrent.CancellationException
 import java.util.concurrent.TimeUnit
 
 class SyncWorker(context: Context, parameters: WorkerParameters) : CoroutineWorker(context, parameters) {
@@ -31,8 +32,16 @@ class SyncWorker(context: Context, parameters: WorkerParameters) : CoroutineWork
             val active = {
                 coroutine.isActive && !isStopped && store.session.value?.generation == session.generation
             }
-            val retry = SyncWork.engine(applicationContext).synchronize(session.account, SyncHttpClient(session.origin, session.token, active), active)
+            val engine = SyncWork.engine(applicationContext)
+            val retry = engine.synchronize(session.account, SyncHttpClient(session.origin, session.token, active), active)
+            if (engine.authenticationRequired) store.expire(session.generation) { SyncWork.cancel(applicationContext) }
             if (retry) Result.retry() else Result.success()
+        } catch (cancelled: CancellationException) {
+            if (!coroutine.isActive || isStopped || Thread.currentThread().isInterrupted ||
+                store.session.value?.generation == session.generation) throw cancelled
+            // Session turnover ends this run, not the WorkManager chain. Cancelling this
+            // predecessor would also cancel the already appended work for the new login.
+            Result.success()
         } finally {
             SyncWork.finished(session.account)
         }
@@ -58,10 +67,10 @@ object SyncWork {
     fun request(context: Context) {
         WorkManager.getInstance(context).enqueueUniqueWork(WORK, ExistingWorkPolicy.APPEND_OR_REPLACE,
             OneTimeWorkRequestBuilder<SyncWorker>().setConstraints(constraints)
-                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build())
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build()).result.get()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(PERIODIC, ExistingPeriodicWorkPolicy.KEEP,
             PeriodicWorkRequestBuilder<SyncWorker>(15, TimeUnit.MINUTES).setConstraints(constraints)
-                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build())
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS).build()).result.get()
     }
 
     fun cancel(context: Context) {

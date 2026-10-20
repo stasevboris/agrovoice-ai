@@ -23,8 +23,11 @@ data class PlotSummary(
 data class InspectionRecord(
     val inspection: InspectionEntity,
     val photo: PhotoEntity,
-    val detections: List<DetectionEntity>
+    val detections: List<DetectionEntity>,
+    val additionalFrames: List<FrameRecord> = emptyList()
 )
+
+data class FrameRecord(val photo: PhotoEntity, val detections: List<DetectionEntity>)
 
 @Dao
 interface JournalDao {
@@ -93,14 +96,23 @@ interface JournalDao {
     @Upsert
     fun upsertPhoto(photo: PhotoEntity)
 
+    @Query("SELECT * FROM photo WHERE id = :id")
+    fun photo(id: String): PhotoEntity?
+
     @Query("DELETE FROM detection WHERE photo_id = :photoId")
     fun deleteDetections(photoId: String)
+
+    @Query("SELECT COUNT(*) FROM detection WHERE photo_id = :photoId")
+    fun detectionCount(photoId: String): Int
 
     @Insert
     fun insertDetections(detections: List<DetectionEntity>)
 
     @Query("UPDATE photo SET local_path = :path WHERE inspection_id = :inspectionId")
     fun updatePhotoPath(inspectionId: String, path: String)
+
+    @Query("UPDATE photo SET local_path = :path WHERE id = :photoId")
+    fun updateFramePhotoPath(photoId: String, path: String)
 
     @Query("DELETE FROM inspection WHERE id = :id")
     fun deleteInspection(id: String)
@@ -141,13 +153,25 @@ interface JournalDao {
         return updated
     }
 
-    /** Inspection, photo and detections replace the previous version of the same inspection. */
+    /** One atomic inspection snapshot; existing observation rows survive metadata edits. */
     @Transaction
     fun saveRecord(record: InspectionRecord, change: SyncQueueEntity) {
+        val frames = listOf(FrameRecord(record.photo, record.detections)) + record.additionalFrames
+        require(frames.size in 1..MAX_INSPECTION_FRAMES && frames.map { it.photo.id }.distinct().size == frames.size)
+        for (frame in frames) {
+            require(frame.photo.inspectionId == record.inspection.id)
+            val previous = photo(frame.photo.id)
+            require(previous == null || previous.inspectionId == record.inspection.id) { "ID кадра уже принадлежит другому осмотру." }
+        }
         upsertInspection(record.inspection)
-        upsertPhoto(record.photo)
-        deleteDetections(record.photo.id)
-        insertDetections(record.detections)
+        for (frame in frames) {
+            val previous = photo(frame.photo.id)
+            upsertPhoto(frame.photo)
+            // Metadata edits/additional views must not replace the existing observation rows.
+            if (previous == null || previous.predictionJson == null && detectionCount(frame.photo.id) == 0) {
+                insertDetections(frame.detections)
+            }
+        }
         enqueueSync(change)
     }
 
@@ -212,7 +236,7 @@ interface JournalDao {
         JournalEventEntity::class,
         com.agronomy.phytomonitor.sync.SyncRecord::class
     ],
-    version = 4,
+    version = 5,
     exportSchema = true
 )
 abstract class JournalDatabase : RoomDatabase() {
@@ -221,6 +245,25 @@ abstract class JournalDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var instance: JournalDatabase? = null
+
+        /** ALTER preserves existing photo IDs, detections, plant links and sync records. */
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE photo ADD COLUMN frame_order INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE photo ADD COLUMN frame_role TEXT NOT NULL DEFAULT 'unspecified'")
+                db.execSQL("ALTER TABLE photo ADD COLUMN report_name TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE photo ADD COLUMN report_sha256 TEXT NOT NULL DEFAULT ''")
+                db.execSQL("ALTER TABLE photo ADD COLUMN prediction_json TEXT DEFAULT NULL")
+                db.execSQL("UPDATE photo SET report_name = (SELECT report_name FROM inspection WHERE inspection.id = photo.inspection_id), " +
+                    "report_sha256 = (SELECT report_sha256 FROM inspection WHERE inspection.id = photo.inspection_id), " +
+                    "prediction_json = (SELECT prediction_json FROM inspection WHERE inspection.id = photo.inspection_id) " +
+                    "WHERE id = inspection_id OR (SELECT COUNT(*) FROM photo AS sibling WHERE sibling.inspection_id = photo.inspection_id) = 1")
+                db.execSQL("UPDATE photo SET frame_order = (SELECT COUNT(*) FROM photo AS sibling " +
+                    "WHERE sibling.inspection_id = photo.inspection_id AND (" +
+                    "(sibling.id = sibling.inspection_id AND photo.id != photo.inspection_id) OR " +
+                    "((sibling.id = sibling.inspection_id) = (photo.id = photo.inspection_id) AND sibling.id < photo.id)))")
+            }
+        }
 
         /** Sync is opt-in: migration creates no outbox entries for the existing journal. */
         val MIGRATION_3_4 = object : Migration(3, 4) {
@@ -268,7 +311,7 @@ abstract class JournalDatabase : RoomDatabase() {
 
         fun get(context: Context): JournalDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, JournalDatabase::class.java, "journal.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
                 .build()
                 .also { instance = it }
         }

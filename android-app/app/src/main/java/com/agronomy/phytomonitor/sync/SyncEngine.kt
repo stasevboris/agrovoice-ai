@@ -17,21 +17,25 @@ class SyncEngine(
     private val now: () -> Long = System::currentTimeMillis
 ) {
     private val dao = database.sync()
+    var authenticationRequired: Boolean = false
+        private set
 
-    fun enqueue(account: String, id: String) = synchronized(lock) {
+    fun enqueue(account: String, id: String, expectedUpdatedAt: Long? = null,
+                commit: (() -> Unit) -> Unit = { it() }) = synchronized(lock) {
         val old = dao.record(account, id) ?: recoverArchiveBinding(account, id)
         if (old?.state == "conflict") return@synchronized
         if (old != null && old.state != "synced") {
             // Even after an error the server may have committed this exact snapshot.
-            dao.save(old.copy(state = "queued", error = null))
+            saveConfirmed(old.copy(state = "queued", error = null), expectedUpdatedAt, commit)
         } else {
             val candidate = snapshot(account, id, old)
-            dao.save(if (old != null && !changed(old, candidate)) old.copy(state = "queued", error = null) else candidate)
+            saveConfirmed(if (old != null && !changed(old, candidate)) old.copy(state = "queued", error = null) else candidate, expectedUpdatedAt, commit)
         }
     }
 
     /** Uses exactly the server version shown in the confirmation dialog, never a newer unseen one. */
-    fun resolveConflict(account: String, id: String, seenConflict: String) = synchronized(lock) {
+    fun resolveConflict(account: String, id: String, seenConflict: String, expectedUpdatedAt: Long? = null,
+                        commit: (() -> Unit) -> Unit = { it() }) = synchronized(lock) {
         val old = requireNotNull(dao.record(account, id))
         check(old.state == "conflict" && old.conflictJson == seenConflict) { "Конфликт изменился. Откройте его заново." }
         val remote = JSONObject(seenConflict).optJSONObject("inspection")
@@ -39,11 +43,12 @@ class SyncEngine(
         val remoteTime = SyncPayload.parseTime(remote.getString("updated_at")).toEpochMilli()
         val resolved = old.copy(serverVersion = remote.getLong("version"),
             request = JSONObject(old.request).put("updated_at", SyncPayload.iso(remoteTime)).toString())
-        dao.save(snapshot(account, id, resolved, minimumTime = maxOf(now(), remoteTime + 1)))
+        saveConfirmed(snapshot(account, id, resolved, minimumTime = maxOf(now(), remoteTime + 1)), expectedUpdatedAt, commit)
     }
 
     /** Returns true only for retryable work. No session means the caller never invokes this method. */
     fun synchronize(account: String, api: SyncApi, active: () -> Boolean = { true }): Boolean = synchronized(lock) {
+        authenticationRequired = false
         var retry = false
         for (initial in dao.records(account)) {
             ensureActive(active)
@@ -97,7 +102,10 @@ class SyncEngine(
             } catch (error: Exception) {
                 val latest = dao.record(account, current.localId) ?: current
                 dao.save(latest.copy(state = "error", error = syncError(error)))
-                if (error is SyncHttpException && error.status in setOf(401, 403)) return@synchronized false
+                if (error is SyncHttpException && error.status in setOf(401, 403)) {
+                    authenticationRequired = true
+                    return@synchronized false
+                }
                 retry = retry || (error is IOException && (error !is SyncHttpException || error.status >= 500 || error.status == 429))
             }
         }
@@ -106,9 +114,10 @@ class SyncEngine(
             refreshExpertStatus(account, api, active)
         } catch (cancelled: CancellationException) {
             throw cancelled
-        } catch (_: Exception) {
+        } catch (error: Exception) {
             // A failed status poll must never revoke a completed record+photo acknowledgement.
-            retry = true
+            authenticationRequired = error is SyncHttpException && error.status in setOf(401, 403)
+            retry = !authenticationRequired
         }
         retry
     }
@@ -166,6 +175,18 @@ class SyncEngine(
             "Серверная запись уже связана с другим локальным осмотром. Откройте его; восстановленная копия сохранена отдельно."
         }
         return restored
+    }
+
+    private fun saveConfirmed(record: SyncRecord, expectedUpdatedAt: Long?, commit: (() -> Unit) -> Unit) {
+        // Snapshot preparation and hashing are finished before the session publication lock.
+        commit {
+            database.runInTransaction {
+                check(expectedUpdatedAt == null || database.journal().inspection(record.localId)?.updatedAt == expectedUpdatedAt) {
+                    "Осмотр изменился после вопроса. Запросите подтверждение заново."
+                }
+                dao.save(record)
+            }
+        }
     }
 
     private fun ensureActive(active: () -> Boolean) {

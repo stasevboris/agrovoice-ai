@@ -122,6 +122,17 @@ class SyncEngineTest {
         assertTrue(state().error!!.contains("Войти"))
         assertNotNull(db.journal().inspection("old-id"))
         assertEquals(0, api.uploads)
+        assertTrue(engine.authenticationRequired)
+    }
+
+    @Test fun expiredTokenDuringStatusPollDoesNotRetryForeverOrLoseAcknowledgement() {
+        val api = FakeApi()
+        engine.enqueue(account, "old-id")
+        engine.synchronize(account, api)
+        api.pullUnauthorized = true
+        assertFalse(engine.synchronize(account, api))
+        assertTrue(engine.authenticationRequired)
+        assertEquals("synced", state().state)
     }
 
     @Test fun idsAreStableAndPhotoIdentityIncludesContent() {
@@ -185,6 +196,60 @@ class SyncEngineTest {
         assertEquals(0, api.uploads)
     }
 
+    @Test fun confirmedVersionCannotQueueAPreviouslyUnseenEdit() {
+        val before = db.journal().inspection("old-id")!!
+        db.journal().editNote(before.id, before.updatedAt, "Изменено после вопроса", before.updatedAt + 1)
+        assertTrue(runCatching { engine.enqueue(account, before.id, before.updatedAt) }.isFailure)
+        assertNull(db.sync().record(account, before.id))
+    }
+
+    @Test fun logoutDuringEnqueuePreparationCannotEnrollForTheNextSession() {
+        var active = true
+        engine = SyncEngine(db, { active = false; true })
+        val result = runCatching {
+            engine.enqueue(account, "old-id") { write ->
+                if (!active) throw CancellationException("Logged out")
+                write()
+            }
+        }
+        assertTrue(result.exceptionOrNull() is CancellationException)
+        assertNull(db.sync().record(account, "old-id"))
+        val nextSession = FakeApi()
+        engine.synchronize(account, nextSession)
+        assertTrue(nextSession.pushes.isEmpty())
+    }
+
+    @Test fun logoutDuringConflictPreparationKeepsTheConflictForTheNextSession() {
+        val api = FakeApi().apply { conflict = true }
+        engine.enqueue(account, "old-id")
+        engine.synchronize(account, api)
+        val before = state()
+        var active = true
+        engine = SyncEngine(db, { active = false; true })
+        val result = runCatching {
+            engine.resolveConflict(account, "old-id", before.conflictJson!!) { write ->
+                if (!active) throw CancellationException("Logged out")
+                write()
+            }
+        }
+        assertTrue(result.exceptionOrNull() is CancellationException)
+        assertEquals(before, state())
+        val nextSession = FakeApi()
+        engine.synchronize(account, nextSession)
+        assertTrue(nextSession.pushes.isEmpty())
+    }
+
+    @Test fun expiredSessionCannotResetAnExistingErrorToQueued() {
+        engine.enqueue(account, "old-id")
+        engine.synchronize(account, FakeApi().apply { unauthorized = true })
+        val before = state()
+        val result = runCatching {
+            engine.enqueue(account, "old-id") { throw CancellationException("Session expired") }
+        }
+        assertTrue(result.exceptionOrNull() is CancellationException)
+        assertEquals(before, state())
+    }
+
     @Test fun responseObjectOrderingDoesNotChangeEvidence() {
         assertTrue(SyncPayload.sameJson(JSONObject("{\"a\":1,\"b\":[2,3]}"), JSONObject("{\"b\":[2.0,3],\"a\":1.0}")))
     }
@@ -199,6 +264,7 @@ class SyncEngineTest {
         var failPhoto = false
         var conflict = false
         var unauthorized = false
+        var pullUnauthorized = false
         var duringPush: (() -> Unit)? = null
         var latest: JSONObject? = null
         var pulled: JSONObject? = null
@@ -217,7 +283,10 @@ class SyncEngineTest {
             if (failPhoto) throw IOException("connection lost")
             uploads++
         }
-        override fun pull(after: Long) = JSONObject().put("inspections", JSONArray().apply { pulled?.let { put(it) } })
-            .put("has_more", false).put("next_after", after)
+        override fun pull(after: Long): JSONObject {
+            if (pullUnauthorized) throw SyncHttpException(401)
+            return JSONObject().put("inspections", JSONArray().apply { pulled?.let { put(it) } })
+                .put("has_more", false).put("next_after", after)
+        }
     }
 }

@@ -46,6 +46,8 @@ PlantSeg в новый обучающий пакет не включены: ус
 | [Leaflet 1.9.4](https://leafletjs.com) | BSD-2-Clause | карта осмотров; лицензия и исходные URL/SHA в `server/static/vendor/` |
 | [OpenStreetMap](https://www.openstreetmap.org/copyright) | ODbL, © OpenStreetMap contributors | необязательная интернет-подложка карты, атрибуция показывается на карте |
 | JNA | Apache-2.0 / LGPL-2.1 | зависимость Vosk |
+| [sherpa-onnx 1.13.8](https://github.com/k2-fsa/sherpa-onnx/tree/v1.13.8) | Apache-2.0; встроенный eSpeak NG — GPL-3.0 | локальный синтез речи; точные исходники и лицензии: `android-app/app/src/main/assets/licenses/TTS-NOTICE.md` |
+| Piper Denis medium INT8 | репозиторий голосов декларирует MIT; исходные записи Denis — CC0 по MODEL_CARD | встроенный русский голос; оригинальный архив upstream с SHA в `assets/tts/manifest.json`, без публикации весов проектом; происхождение и оговорки в TTS-NOTICE |
 | DEIMv2 | собственная лицензия правообладателя (all rights reserved), см. `android-app/app/src/main/assets/licenses/DEIMv2-LICENSE.md` | только экспериментальный режим lab-сборки; **веса DEIMv2 проектом не публикуются** |
 # Дополнительные источники: обычные фото и OPTIMA (19.10.2026)
 

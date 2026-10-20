@@ -40,9 +40,11 @@ class SyncArchiveBindingTest {
         restored = db()
         val image = File(directory, "source.jpg").apply { writeBytes(byteArrayOf(4, 5, 6)) }
         bytes = image.readBytes()
-        val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("original-server-local", image.path, InspectionJournal.sha256(image)))
+        val original = JournalFixtures.legacyRecord("original-server-local", image.path, InspectionJournal.sha256(image))
+        original.getJSONObject("prediction").put("model_sha256", "a".repeat(64))
+        val parsed = JournalRecords.parse(original)
         val record = JournalRecords.toRecord(parsed, null, null, image.path)
-        val details = InspectionWithDetails(record.inspection.copy(modelSha256 = "a".repeat(64)), null,
+        val details = InspectionWithDetails(record.inspection, null,
             listOf(PhotoWithDetections(record.photo, record.detections)))
         remote = JSONObject(SyncPayload.snapshot(account, details, 0, record.inspection.updatedAt, { true }).request)
             .put("version", 1).put("revision", 1).put("expert_status", "unreviewed")

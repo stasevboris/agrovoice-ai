@@ -225,11 +225,11 @@ class InspectionJournalTest {
     @Test
     fun photoWithAnotherHashIsNotRestored() {
         val picture = photo("import_3.jpg")
-        legacy("t.json", JournalFixtures.legacyRecord("t", picture.path, "0".repeat(64)).toString())
-        val source = journal()
-        source.migrateLegacy()
+        val corrupted = JournalFixtures.legacyRecord("t", "/missing.jpg", "0".repeat(64))
+            .put("archive_photo", "photos/t.jpg")
         val archive = ByteArrayOutputStream()
-        source.exportArchive(archive)
+        JournalArchive.write(archive, JournalRecords.document(org.json.JSONArray().put(corrupted), true, now).toString(),
+            mapOf("photos/t.jpg" to picture))
 
         files.deleteRecursively()
         val target = journal()

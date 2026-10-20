@@ -14,6 +14,10 @@ import com.agronomy.phytomonitor.ml.FieldDetector
 import com.agronomy.phytomonitor.journal.JournalIssue
 import com.agronomy.phytomonitor.journal.JournalDatabase
 import com.agronomy.phytomonitor.draft.InspectionDraft
+import com.agronomy.phytomonitor.draft.DraftFrame
+import com.agronomy.phytomonitor.journal.FrameRole
+import com.agronomy.phytomonitor.journal.InspectionFrame
+import com.agronomy.phytomonitor.journal.MAX_INSPECTION_FRAMES
 import com.agronomy.phytomonitor.draft.InspectionDraftStore
 import com.agronomy.phytomonitor.draft.StaleDraftWriterException
 import com.agronomy.phytomonitor.location.FieldLocation
@@ -41,13 +45,19 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     private var cleared=false
     private val journal=InspectionJournal(application)
     private val draftStore = InspectionDraftStore(File(application.filesDir, "inspection-draft.json")).writer()
-    private var activeDraft: InspectionDraft? = null
+    private var activeDraft by mutableStateOf<InspectionDraft?>(null)
+    val frames: List<DraftFrame> get() = activeDraft?.allFrames().orEmpty()
+    val selectedFrame: Int get() = frames.indexOfFirst { it.id == activeDraft?.activeFrameId } + 1
+    val frameRole: FrameRole get() = frames.getOrNull(selectedFrame - 1)?.role ?: FrameRole.UNSPECIFIED
+    val seriesWarning: String? get() = seriesClarification(frames.map { it.reportJson })
     private var draftRevision = 0L
     private var pendingDraft by mutableStateOf<InspectionDraft?>(null)
     var damagedDraft by mutableStateOf(false); private set
     val hasDraft: Boolean get() = pendingDraft != null || damagedDraft
     val resultCrop: String get() = activeDraft?.reportJson?.let { org.json.JSONObject(it).optString("crop_filter", "all") } ?: "all"
-    val resultThreshold: Float? get() = activeDraft?.reportJson?.let { org.json.JSONObject(it).optDouble("confidence_threshold").toFloat() }
+    val resultThreshold: Float? get() = activeDraft?.reportJson?.let {
+        org.json.JSONObject(it).optDouble("confidence_threshold").toFloat().takeIf { value -> value.isFinite() && value in 0f..1f }
+    }
     var draftSaving by mutableStateOf(false); private set
     var draftError by mutableStateOf<String?>(null); private set
     /** Receiver readings while the screen is open; a fresh fix is attached to the next saved inspection. */
@@ -80,7 +90,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     /** What the journal holds for the current result; a repeated «сохрани осмотр» compares against it. */
     private var savedInspection by mutableStateOf<SavedInspection?>(null)
     val inspectionSaved: Boolean
-        get() = reportName != null && savedInspection == SavedInspection(reportName, noteDraft, review, plotName, rowName, plantName)
+        get() = reportName != null && savedInspection == savedState()
+
+    private fun savedState() = SavedInspection(frames, noteDraft, review, plotName, rowName, plantName)
 
     /** Journal screens await the one startup migration before reading or restoring records. */
     val journalReady = CompletableDeferred<JournalReport?>()
@@ -103,7 +115,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             work.submit {
                 try {
                     val draft = draftStore.read()
-                    val existing = draft?.reportName?.let { JournalDatabase.get(application).journal().inspectionByReport(it) }
+                    val existing = draft?.primaryReportName?.let { JournalDatabase.get(application).journal().inspectionByReport(it) }
                     val committed = draft?.saveCompleted(existing?.updatedAt) == true
                     if (committed) draftStore.clear(requireNotNull(draft).id)
                     publish {
@@ -135,7 +147,8 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun setModel(id: String, analyzePhoto: Boolean=true) {
         if(busy || id==selectedModel || detector.models.none {it.id==id})return
-        selectedModel=id; result=null; reportName=null;review="unrated";comparison=emptyList()
+        if (immutableSeriesResult()) return
+        selectedModel=id;review="unrated";comparison=emptyList()
         settings.set(Keys.model, id)
         // A crop the new model does not know would hide every class.
         if(crop!="all" && (crop !in currentModel().crops || currentModel().family=="detr")){crop="all";settings.set(Keys.crop, crop)}
@@ -144,11 +157,12 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun selectCrop(value: String, analyzePhoto: Boolean=true) {
         if(busy || value==crop)return
+        if (immutableSeriesResult()) return
         if (value != "all" && currentModel().family == "detr") {
             showError("Выбор культуры недоступен для этой демонстрационной модели.")
             return
         }
-        crop=value; result=null;reportName=null;review="unrated";comparison=emptyList()
+        crop=value;review="unrated";comparison=emptyList()
         settings.set(Keys.crop, value)
         persistDraft()
         if(bitmap!=null && analyzePhoto) analyze()
@@ -156,6 +170,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     /** Keeps the current result on screen while the slider moves; analyze() replaces it when the drag ends. */
     fun changeThreshold(value: Float) {
         if(busy)return
+        if (immutableSeriesResult()) return
         threshold=value
         comparison=emptyList()
         settings.set(Keys.threshold, value)
@@ -208,14 +223,18 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
     private fun replacePhoto(file: File,decoded: Bitmap){
+        val previous = snapshotDraft()
+        val append = previous?.addingFrame == true
         // Old images are left to GC after Compose has stopped drawing them.
         bitmap=decoded;photo=file
         result = null
         reportName = null
         photoQuality = null
-        noteDraft="";review="unrated";comparison=emptyList()
+        if (!append) noteDraft=""
+        review="unrated";comparison=emptyList()
         savedInspection = null
-        activeDraft = InspectionDraft(photo = file.absolutePath)
+        activeDraft = if (append) requireNotNull(previous).appendFrame(file.absolutePath)
+            else InspectionDraft(photo = file.absolutePath).let { it.copy(frames = it.allFrames()) }
         persistDraft()
         settings.set(Keys.lastPhoto, file.absolutePath)
     }
@@ -223,6 +242,12 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         val source=bitmap ?: return
         val file=photo ?: return
         if(busy)return
+        if (immutableSeriesResult()) return
+        if (reportName != null) {
+            // An explicit new analysis of a single photo is a new inspection, preserving the old one.
+            activeDraft = InspectionDraft(photo = file.absolutePath).let { it.copy(frames = it.allFrames()) }
+            savedInspection = null
+        }
         val model=detector.models.firstOrNull {it.id==selectedModel} ?: return
         val cropSnapshot=crop;val thresholdSnapshot=threshold
         busy=true;message=null;result=null;reportName=null
@@ -237,8 +262,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
                 val snapshot = withContext(Dispatchers.Main.immediate) {
                     result = detection
                     reportName = report.name
-                    activeDraft = requireNotNull(snapshotDraft()).copy(
-                        reportJson = reportJson, catalogJson = detector.manifest.toString())
+                    val draft = requireNotNull(snapshotDraft())
+                    val frame = draft.allFrames().first { it.id == draft.activeFrameId }
+                    activeDraft = draft.updateFrame(frame.copy(reportName = report.name,
+                        reportJson = reportJson, catalogJson = detector.manifest.toString()))
                     requireNotNull(activeDraft)
                 }
                 writeDraft(snapshot)
@@ -248,7 +275,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     fun editNote(text: String){noteDraft=text.take(4000);persistDraft()}
     fun savedNoteChanged(name: String, before: String, after: String) {
-        if (reportName != name) return
+        if (activeDraft?.primaryReportName != name) return
         if (noteDraft == before) noteDraft = after
         savedInspection = savedInspection?.copy(note = after)
         persistDraft()
@@ -266,15 +293,20 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     fun switchLocation(enabled: Boolean){locationEnabled=enabled;settings.set(Keys.location, enabled);if(!enabled)location.stop()}
     fun assess(value: String){if(value in setOf("unrated","correct","incorrect","uncertain")){review=value;saveInspection()}}
     fun saveInspection(){
-        val name=reportName ?: run {showError("Сначала дождись результата анализа");return}
+        val snapshot = snapshotDraft() ?: return
+        val series = snapshot.allFrames()
+        val name = snapshot.primaryReportName
+        if (name == null || series.any { it.reportName == null || it.reportJson == null }) {
+            showError("Дождись анализа каждого кадра серии перед сохранением")
+            return
+        }
         if(busy)return
-        val report=File(getApplication<Application>().getExternalFilesDir(null) ?: getApplication<Application>().filesDir,"results/$name")
+        val reports = File(getApplication<Application>().getExternalFilesDir(null) ?: getApplication<Application>().filesDir,"results")
         val note=noteDraft;val rating=review;val plot=plotName;val row=rowName
         val place=if(locationEnabled)LocationFixes.forInspection(location.latest,System.currentTimeMillis()) else null
         val plant = plantName
         val achievementsEnabled = settings.state.value?.achievements != false
-        val saved=SavedInspection(name,note,rating,plot,row,plant)
-        val snapshot = snapshotDraft() ?: return
+        val saved=savedState()
         busy=true
         message=null
         work.submit {try {
@@ -283,7 +315,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             val saving = snapshot.copy(saveRequested = true, savedBeforeVersion = previous?.updatedAt)
             writeDraft(saving)
             draftStore.withOwnership {
-                journal.save(report,note,rating,plot,row,place,plant)
+                journal.saveSeries(snapshot.id, series.map {
+                    InspectionFrame(it.id, File(reports, requireNotNull(it.reportName)), it.role)
+                }, note, rating, plot, row, place, plant)
                 draftStore.clear(snapshot.id)
             }
             publish {if(!cleared){savedInspection=saved;busy=false;draftError=null;notify("Осмотр сохранён в журнале")}}
@@ -309,15 +343,80 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             publish {if(!cleared){comparison=rows;busy=false;notify("Модели проверены на одном фото при одинаковом пороге")}}
         }catch(error: Exception){postFailure(error)}}
     }
+
+    fun prepareAddFrame(): Boolean {
+        if (busy || hasDraft || draftError != null) return false
+        val draft = snapshotDraft() ?: return false
+        if (draft.allFrames().size >= MAX_INSPECTION_FRAMES || draft.allFrames().any { it.reportName == null }) {
+            showError("Сначала дождись анализа кадров. В одном осмотре — до $MAX_INSPECTION_FRAMES кадров.")
+            return false
+        }
+        activeDraft = draft.copy(addingFrame = true)
+        persistDraft()
+        return true
+    }
+
+    fun cancelAddFrame() {
+        activeDraft = activeDraft?.copy(addingFrame = false)
+        persistDraft()
+    }
+
+    fun setFrameRole(value: String) {
+        if (busy) return
+        val draft = snapshotDraft() ?: return
+        val role = FrameRole.entries.firstOrNull { it.value == value } ?: return
+        val frame = draft.allFrames().first { it.id == draft.activeFrameId }
+        activeDraft = draft.updateFrame(frame.copy(role = role))
+        persistDraft()
+    }
+
+    fun selectFrame(number: Int) {
+        if (busy || hasDraft) return
+        val current = snapshotDraft() ?: return
+        val frame = current.allFrames().getOrNull(number - 1) ?: return
+        val selected = current.selectFrame(frame.id)
+        busy = true
+        work.submit {
+            try {
+                val decoded = PhotoFiles.decode(File(frame.photo))
+                val restored = selected.result()
+                publish {
+                    if (cleared) decoded.recycle()
+                    else {
+                        activeDraft = selected
+                        bitmap = decoded
+                        photo = File(frame.photo)
+                        reportName = frame.reportName
+                        result = restored
+                        photoQuality = restored?.photoQuality
+                        comparison = emptyList()
+                        busy = false
+                        persistDraft()
+                    }
+                }
+            } catch (error: Exception) { postFailure(error) }
+        }
+    }
+
+    private fun immutableSeriesResult(): Boolean {
+        if (frames.size <= 1 || reportName == null) return false
+        showError("Исходный анализ кадра серии сохранён. Для новой проверки открой снимок как новый осмотр.")
+        return true
+    }
+
     fun spokenResult(): String {
         val found=result ?: return "Сначала сделай фото и дождись анализа."
-        return spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality)
+        val prefix = if (frames.size > 1) "Кадр $selectedFrame из ${frames.size}. ${frameRole.label}. " else ""
+        return prefix + spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality) +
+            (seriesWarning?.let { " $it" } ?: "")
     }
     private fun snapshotDraft(): InspectionDraft? {
         val current = activeDraft ?: return null
-        return current.copy(photo = photo?.absolutePath ?: current.photo, reportName = reportName,
+        val frame = current.allFrames().first { it.id == current.activeFrameId }.copy(
+            photo = photo?.absolutePath ?: current.photo, reportName = reportName,
             reportJson = current.reportJson.takeIf { current.reportName == reportName },
-            catalogJson = current.catalogJson.takeIf { current.reportName == reportName },
+            catalogJson = current.catalogJson.takeIf { current.reportName == reportName })
+        return current.updateFrame(frame).copy(
             note = noteDraft, review = review, plot = plotName, row = rowName, plant = plantName,
             model = selectedModel, crop = crop, threshold = threshold, saveRequested = false,
             savedBeforeVersion = null)
@@ -332,7 +431,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             // Read the latest state when the serial worker reaches the request: edits made during
             // inference must not overwrite the analysis completed ahead of them with an old result.
             val latest = withContext(Dispatchers.Main.immediate) {
-                snapshotDraft()?.takeIf { it.id == snapshot.id && revision == draftRevision && !inspectionSaved }
+                snapshotDraft()?.takeIf { it.id == snapshot.id && revision == draftRevision && (!inspectionSaved || it.addingFrame) }
             }
             if (latest != null) {
                 // A background autosave failure must not mark an inference queued after it as idle.
@@ -484,7 +583,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
 }
 
-private data class SavedInspection(val reportName: String?, val note: String, val review: String, val plot: String, val row: String, val plant: String)
+private data class SavedInspection(val frames: List<DraftFrame>, val note: String, val review: String, val plot: String, val row: String, val plant: String)
 
 enum class JournalExport(val mimeType: String, val extension: String) {
     JSON("application/json", "json"),

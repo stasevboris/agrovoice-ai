@@ -169,6 +169,32 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
         mutableState.update { it.copy(opened = null, openingId = null) }
     }
 
+    fun selectFrame(number: Int) {
+        val opened = state.value.opened ?: return
+        if (state.value.busy || number !in 1..opened.details.photos.size) return
+        opening?.cancel()
+        val id = opened.details.inspection.id
+        mutableState.update { it.copy(openingId = id) }
+        opening = viewModelScope.launch {
+            try {
+                val selected = withContext(Dispatchers.IO) {
+                    val path = opened.details.photos[number - 1].photo.localPath
+                    val bitmap = File(path).takeIf { it.isFile }
+                        ?.let { runCatching { PhotoFiles.decode(it) }.getOrNull() }
+                    SavedInspectionView.of(opened.details, bitmap, number)
+                }
+                mutableState.update { state ->
+                    if (state.opened?.details?.inspection?.id == id) state.copy(opened = selected, openingId = null)
+                    else state.copy(openingId = null)
+                }
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                mutableState.update { it.copy(openingId = null, message = error.message, messageIsError = true) }
+            }
+        }
+    }
+
     fun beginNote(id: String): Boolean {
         val inspection = state.value.opened?.details?.inspection?.takeIf { it.id == id } ?: return false
         if (state.value.noteDraft?.id != id) {

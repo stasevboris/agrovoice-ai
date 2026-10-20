@@ -21,6 +21,12 @@ import com.agronomy.phytomonitor.journal.PlantEntity
 import com.agronomy.phytomonitor.journal.PlotEntity
 import com.agronomy.phytomonitor.journal.REVIEWS
 import com.agronomy.phytomonitor.journal.SyncQueueEntity
+import com.agronomy.phytomonitor.journal.InspectionFrame
+import com.agronomy.phytomonitor.journal.FrameRole
+import com.agronomy.phytomonitor.journal.ParsedFrame
+import com.agronomy.phytomonitor.journal.PhotoEntity
+import com.agronomy.phytomonitor.journal.MAX_INSPECTION_FRAMES
+import com.agronomy.phytomonitor.journal.orderedPhotos
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedInputStream
@@ -124,36 +130,79 @@ class InspectionJournal(
         location: GeoPoint? = null,
         plant: String = ""
     ): InspectionEntry {
+        val previous = dao.inspectionByReport(report.name)
+        val id = previous?.id ?: UUID.randomUUID().toString()
+        return saveSeries(id, listOf(InspectionFrame(id, report)), note, review, plot, row, location, plant)
+    }
+
+    /** Append analysed frames atomically; the first report remains the inspection identity. */
+    fun saveSeries(
+        inspectionId: String,
+        frames: List<InspectionFrame>,
+        note: String,
+        review: String,
+        plot: String = "",
+        row: String? = null,
+        location: GeoPoint? = null,
+        plant: String = ""
+    ): InspectionEntry {
+        require(inspectionId.isNotBlank())
+        require(frames.size in 1..MAX_INSPECTION_FRAMES) { "В осмотре нужно от 1 до $MAX_INSPECTION_FRAMES кадров." }
+        require(frames.all { it.id.isNotBlank() } && frames.map { it.id }.distinct().size == frames.size) { "ID кадров должны быть непустыми и разными." }
+        require(frames.map { it.report.name }.distinct().size == frames.size) { "Один результат анализа нельзя добавить в серию дважды." }
         require(review in REVIEWS)
         require(note.length <= MAX_NOTE)
         require(plot.length <= MAX_PLOT)
         require(plant.length <= MAX_PLOT)
-        val prediction = JSONObject(report.readText())
-        val previous = dao.inspectionByReport(report.name)
-        val now = clock()
-        val parsed = ParsedInspection(
-            id = previous?.id ?: UUID.randomUUID().toString(),
-            createdAt = previous?.createdAt ?: now,
-            updatedAt = maxOf(now, (previous?.updatedAt ?: 0L) + 1),
-            reportName = report.name,
-            reportSha256 = sha256(report),
-            prediction = prediction,
-            note = note,
-            review = review,
-            plot = plot,
-            row = row?.trim()?.ifEmpty { null },
-            expertStatus = previous?.expertStatus ?: "none",
-            archivePhoto = null,
-            plant = plant.trim(),
-            location = previous?.let(::storedLocation) ?: location
-        )
-        store(parsed, parsed.photoPath, operation = "upsert")
-        return entry(requireNotNull(dao.inspectionDetails(parsed.id)))
+        val analysed = frames.mapIndexed { index, frame ->
+            val raw = frame.report.readText()
+            val prediction = JSONObject(raw)
+            require(prediction.optJSONArray("detections") != null && prediction.optString("model").isNotBlank()) { "Нет корректного результата анализа кадра." }
+            val photo = ownedPhoto(prediction.getString("photo")) ?: throw IOException("Фото кадра недоступно. Восстановите его перед сохранением серии.")
+            val digest = sha256(photo)
+            require(prediction.optString("photo_sha256").let { it.isBlank() || it == digest }) { "Фото кадра изменилось после анализа." }
+            ParsedFrame(frame.id, index, frame.role, photo.path, digest,
+                prediction.optInt("decoded_width"), prediction.optInt("decoded_height"), frame.report.name,
+                sha256(frame.report), raw, plant.trim())
+        }
+        return database.runInTransaction(Callable {
+            val previous = dao.inspectionByReport(analysed.first().reportName) ?: dao.inspection(inspectionId)
+            val id = previous?.id ?: inspectionId
+            val old = previous?.let { dao.inspectionDetails(it.id) }
+            require(previous == null || previous.reportName == analysed.first().reportName) { "Первый результат осмотра нельзя заменить. Сохраните новый осмотр." }
+            val firstId = old?.orderedPhotos()?.firstOrNull()?.photo?.id ?: analysed.first().id
+            val adjusted = analysed.mapIndexed { index, frame -> if (index == 0) frame.copy(id = firstId) else frame }
+            require(adjusted.map { it.id }.distinct().size == adjusted.size) { "Повторяющийся ID кадра." }
+            require(old == null || old.photos.all { photo -> adjusted.any { it.id == photo.photo.id } }) { "Существующие кадры нельзя удалить сохранением неполной серии." }
+            for (frame in adjusted) checkFrameIdentity(id, frame)
+            val plotRef = plotId(plot)
+            val plantRef = plantId(plotRef, plant)
+            val canonicalPlant = plantRef?.let { dao.plant(it)?.name }.orEmpty()
+            val resolved = adjusted.map { it.copy(plantId = plantRef, plant = canonicalPlant) }
+            val sameFrames = old != null && old.photos.size == resolved.size && resolved.all { frame ->
+                old.photos.firstOrNull { it.photo.id == frame.id }?.photo?.let { photo ->
+                    photo.frameOrder == frame.order && photo.frameRole == frame.role.value && photo.plantId == plantRef &&
+                        photo.localPath == frame.photoPath && photo.sha256 == frame.photoSha256 && photo.reportSha256 == frame.reportSha256
+                } == true
+            }
+            val normalizedRow = row?.trim()?.ifEmpty { null }
+            if (previous != null && sameFrames && previous.note == note && previous.userReview == review &&
+                previous.plotId == plotRef && previous.row == normalizedRow) return@Callable entry(requireNotNull(old))
+            val now = clock()
+            val primary = resolved.first()
+            val expertStatus = if (previous != null && !sameFrames) "unreviewed" else previous?.expertStatus ?: "none"
+            val parsed = ParsedInspection(id, previous?.createdAt ?: now, maxOf(now, (previous?.updatedAt ?: 0L) + 1),
+                primary.reportName, primary.reportSha256, JSONObject(requireNotNull(primary.predictionJson)), note, review,
+                plot, normalizedRow, expertStatus, null, plant.trim(),
+                previous?.let(::storedLocation) ?: location, plantRef, resolved)
+            store(parsed, resolved.associate { it.id to it.photoPath }, "upsert")
+            entry(requireNotNull(dao.inspectionDetails(id)))
+        })
     }
 
     fun list(): List<InspectionEntry> = dao.inspections().map(::entry)
 
-    fun details(id: String): InspectionWithDetails? = dao.inspectionDetails(id)
+    fun details(id: String): InspectionWithDetails? = dao.inspectionDetails(id)?.let { it.copy(photos = it.orderedPhotos()) }
 
     fun editNote(id: String, expectedUpdatedAt: Long, note: String): InspectionEntity =
         dao.editNote(id, expectedUpdatedAt, note, clock())
@@ -174,12 +223,21 @@ class InspectionJournal(
         val records = JSONArray()
         val photos = linkedMapOf<String, File>()
         dao.inspections().forEach { details ->
-            val photo = details.photos.firstOrNull()?.photo?.localPath?.let(::ownedPhoto)
-            val name = photo?.let { JournalArchive.photoEntry(JournalRecords.photoFileId(details.inspection.id), it) }
-            if (name != null) {
+            if (details.photos.isEmpty()) throw IOException("У осмотра ${details.inspection.id} нет кадров. Полный архив не создан.")
+            val names = mutableMapOf<String, String>()
+            val hashes = mutableMapOf<String, String>()
+            for (frame in details.orderedPhotos()) {
+                val photo = ownedPhoto(frame.photo.localPath)
+                    ?: throw IOException("Фото кадра ${frame.photo.id} недоступно. Полный архив не создан; восстановите фото или экспортируйте JSON.")
+                val digest = sha256(photo)
+                if (frame.photo.sha256.isNotBlank() && frame.photo.sha256 != digest) throw IOException("Фото кадра ${frame.photo.id} изменилось (SHA-256). Полный архив не создан.")
+                val name = JournalArchive.photoEntry(JournalRecords.photoFileId(frame.photo.id), photo)
+                if (!JournalArchive.isPhotoEntry(name)) throw IOException("Неподдерживаемый формат фото кадра ${frame.photo.id}. Полный архив не создан.")
+                names[frame.photo.id] = name
+                hashes[frame.photo.id] = digest
                 photos[name] = photo
             }
-            records.put(JournalRecords.toJson(details, archivePhoto = name))
+            records.put(JournalRecords.toJson(details, archivePhotos = names, photoHashes = hashes))
         }
         val journal = JournalRecords.document(records, containsPhotos = true, exportedAt = clock()).toString(2)
         JournalArchive.write(output, journal, photos)
@@ -196,7 +254,7 @@ class InspectionJournal(
     private fun recomputeAchievements(): List<AchievementEntity> =
         if (achievementsEnabled) dao.recomputeAchievements({ File(it).isFile }, clock()) else emptyList()
 
-    /** A journal JSON (v1 or v2) or a portable zip archive. Newer local versions are kept. */
+    /** A journal JSON (v1/v2/v3) or portable archive. Newer local versions are kept. */
     fun import(input: InputStream): JournalReport {
         val stream = BufferedInputStream(input)
         stream.mark(4)
@@ -300,34 +358,42 @@ class InspectionJournal(
                 issues += JournalIssue(parsed.id, "отчёт ${parsed.reportName} уже принадлежит другому осмотру")
                 continue
             }
-            val localPhoto = existing?.let { dao.inspectionDetails(it.id)?.photos?.firstOrNull()?.photo?.localPath }
-                ?.takeIf { File(it).isFile }
+            val local = existing?.let { dao.inspectionDetails(it.id) }
+            val frames = parsed.allFrames()
             val newer = existing == null || parsed.updatedAt > existing.updatedAt
-            if (!newer) {
-                // The local record is as new or newer: keep it, only bring back a missing photo.
-                if (localPhoto != null || parsed.archivePhoto == null) {
-                    unchanged += 1
-                    continue
+            try {
+                checkPrimaryEvidence(parsed)
+                if (existing != null) checkInspectionIdentity(existing, parsed)
+                for (frame in frames) checkFrameIdentity(parsed.id, frame)
+                if (newer && local != null) require(local.photos.all { old -> frames.any { it.id == old.photo.id } }) {
+                    "Импорт не содержит всех существующих кадров осмотра; локальная серия сохранена."
                 }
-                val restored = restorePhoto(parsed, photos, null, issues)
-                if (File(restored).isFile) {
-                    dao.updatePhotoPath(parsed.id, restored)
-                    updated += 1
-                } else {
-                    unchanged += 1
-                    withoutPhoto += 1
-                }
+            } catch (error: IllegalArgumentException) {
+                issues += JournalIssue(parsed.id, error.message ?: "кадры не совпадают с существующим осмотром")
                 continue
             }
-            val photoPath = restorePhoto(parsed, photos, localPhoto, issues)
-            if (!File(photoPath).isFile) {
-                withoutPhoto += 1
-            }
-            store(parsed, photoPath, operation = "import")
-            if (existing == null) {
-                added += 1
+            if (!newer) {
+                var restoredAny = false
+                var missing = false
+                for (frame in frames) {
+                    val old = local?.photos?.firstOrNull { it.photo.id == frame.id }?.photo ?: continue
+                    if (ownedPhoto(old.localPath) != null) continue
+                    val restored = restorePhoto(frame, photos, null, issues)
+                    if (restored.isNotBlank() && File(restored).isFile) {
+                        dao.updateFramePhotoPath(frame.id, restored)
+                        restoredAny = true
+                    } else missing = true
+                }
+                if (restoredAny) updated += 1 else unchanged += 1
+                if (missing) withoutPhoto += 1
             } else {
-                updated += 1
+                val paths = frames.associate { frame ->
+                    val oldPath = local?.photos?.firstOrNull { it.photo.id == frame.id }?.photo?.localPath
+                    frame.id to restorePhoto(frame, photos, oldPath, issues)
+                }
+                if (paths.values.any { it.isBlank() || !File(it).isFile }) withoutPhoto += 1
+                store(parsed, paths, operation = "import")
+                if (existing == null) added += 1 else updated += 1
             }
         }
         return JournalReport(source, added, updated, unchanged, withoutPhoto, issues)
@@ -335,13 +401,19 @@ class InspectionJournal(
 
     /** Uses the archive photo only if its SHA-256 matches the analysed photo; never overwrites files. */
     private fun restorePhoto(
-        parsed: ParsedInspection,
+        parsed: ParsedFrame,
         photos: Map<String, File>,
         localPhoto: String?,
         issues: MutableList<JournalIssue>
     ): String {
-        val original = ownedPhoto(parsed.photoPath)
-        val local = localPhoto?.let(::ownedPhoto)
+        fun matching(path: String): File? {
+            val file = ownedPhoto(path) ?: return null
+            if (parsed.photoSha256.isBlank() || sha256(file) == parsed.photoSha256) return file
+            issues += JournalIssue(parsed.id, "локальное фото не совпадает с отчётом (SHA-256)")
+            return null
+        }
+        val original = matching(parsed.photoPath)
+        val local = localPhoto?.let(::matching)
         val fallback = local?.path ?: original?.path.orEmpty()
         val name = parsed.archivePhoto ?: return fallback
         val staged = photos[name]
@@ -380,13 +452,57 @@ class InspectionJournal(
         }.getOrNull()
     }
 
-    private fun store(parsed: ParsedInspection, photoPath: String, operation: String) {
+    private fun checkFrameIdentity(inspectionId: String, frame: ParsedFrame) {
+        val previous = dao.photo(frame.id) ?: return
+        require(previous.inspectionId == inspectionId) { "ID кадра уже принадлежит другому осмотру." }
+        require(previous.sha256.isBlank() || previous.sha256 == frame.photoSha256) {
+            "Содержимое существующего кадра нельзя заменить. Сохраните новый результат отдельно."
+        }
+        require(previous.reportName.isBlank() || previous.reportName == frame.reportName) { "Исходный отчёт кадра нельзя заменить." }
+        require(previous.reportSha256.isBlank() || previous.reportSha256 == frame.reportSha256) {
+            "SHA исходного отчёта кадра изменился."
+        }
+        if (previous.predictionJson != null) require(frame.predictionJson != null &&
+            JournalRecords.sameJson(JSONObject(previous.predictionJson), JSONObject(frame.predictionJson))) {
+            "Исходный анализ кадра нельзя изменить; повторный анализ сохраняется отдельно."
+        }
+        require(previous.predictionJson != null || frame.predictionJson == null || dao.detectionCount(frame.id) == 0) {
+            "У кадра уже есть сохранённые рамки без исходного отчёта. Новый анализ сохраните отдельным кадром."
+        }
+    }
+
+    private fun checkInspectionIdentity(previous: InspectionEntity, incoming: ParsedInspection) {
+        require(previous.reportName == incoming.reportName &&
+            (previous.reportSha256.isBlank() || previous.reportSha256 == incoming.reportSha256) &&
+            JournalRecords.sameJson(JSONObject(previous.predictionJson), incoming.prediction)) {
+            "Исходный отчёт осмотра нельзя заменить импортом. Повторный анализ сохраните отдельно."
+        }
+    }
+
+    private fun checkPrimaryEvidence(parsed: ParsedInspection) {
+        val primary = parsed.frames.firstOrNull()?.prediction ?: return
+        fun analysis(prediction: JSONObject): JSONObject = JSONObject(prediction.toString()).apply {
+            // Downloaded primary reports retain their analysis but use local paths and sync provenance.
+            listOf("photo", "photo_path", "photo_sha256", "agrovoice_frames", "agrovoice_origin", "agrovoice_sync_source")
+                .forEach(::remove)
+        }
+        require(JournalRecords.sameJson(analysis(parsed.prediction), analysis(primary))) {
+            "Исходный анализ осмотра не совпадает с анализом первого кадра. Запись не импортирована."
+        }
+    }
+
+    private fun store(parsed: ParsedInspection, paths: Map<String, String>, operation: String) {
         val change = SyncQueueEntity(entity = "inspection", entityId = parsed.id, operation = operation, createdAt = clock())
         database.runInTransaction(Callable {
             val plotRef = plotId(parsed.plot)
-            val plantRef = plantId(plotRef, parsed.plant, parsed.plantId)
-            val record = JournalRecords.toRecord(parsed, plotRef, plantRef, photoPath)
-            dao.saveRecord(record, change)
+            val frames = parsed.allFrames()
+            val plants = frames.associate { it.id to plantId(plotRef, it.plant, it.plantId) }
+            val first = frames.first()
+            val record = JournalRecords.toRecord(parsed, plotRef, plants[first.id], paths[first.id].orEmpty())
+            val additional = frames.drop(1).map { frame ->
+                JournalRecords.frameRecord(parsed.id, frame, plants[frame.id], paths[frame.id].orEmpty())
+            }
+            dao.saveRecord(record.copy(additionalFrames = additional), change)
             recomputeAchievements()
         })
     }
@@ -433,7 +549,7 @@ class InspectionJournal(
 
     private fun entry(details: InspectionWithDetails): InspectionEntry {
         val inspection = details.inspection
-        val photo = details.photos.firstOrNull()
+        val photo = details.orderedPhotos().firstOrNull()
         val path = photo?.photo?.localPath.orEmpty()
         return InspectionEntry(
             id = inspection.id,

@@ -47,7 +47,8 @@ object ActionPolicy {
         VoiceAction.PHOTO_NUMBER, VoiceAction.ASSESS, VoiceAction.ROW, VoiceAction.PLOT, VoiceAction.KNOWLEDGE_NUMBER,
         VoiceAction.JOURNAL_NUMBER, VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT,
         VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL, VoiceAction.LEAF_KNOWLEDGE,
-        VoiceAction.PLANT, VoiceAction.COMPARE_INSPECTIONS, VoiceAction.CAMERA_GUIDANCE
+        VoiceAction.PLANT, VoiceAction.COMPARE_INSPECTIONS, VoiceAction.CAMERA_GUIDANCE,
+        VoiceAction.SELECT_FRAME, VoiceAction.FRAME_ROLE
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
@@ -58,6 +59,7 @@ object ActionPolicy {
         if (state.screen == Screen.NOTE_REVIEW) {
             return resolveNoteReview(request, state)
         }
+        SyncActions.resolve(request, state)?.let { return it }
         if (request.action in controlActions) {
             return control(request, state)
         }
@@ -74,6 +76,7 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            in SeriesActions.actions -> SeriesActions.resolve(request, state)
             VoiceAction.RESUME_DRAFT, VoiceAction.DISCARD_DRAFT -> when {
                 state.screen != Screen.MAIN -> Verdict.Clarify("Черновик доступен на главном экране.")
                 !state.hasDraft -> Verdict.Skip("Нет черновика для восстановления.")
@@ -166,6 +169,7 @@ object ActionPolicy {
             return if (value.isEmpty()) null else Verdict.Reject("У этого действия нет параметров.")
         }
         return when (request.action) {
+            VoiceAction.SELECT_FRAME, VoiceAction.FRAME_ROLE -> null // SeriesActions validates range and role.
             VoiceAction.PLANT -> if (value.length <= 120 && value.none { it.isISOControl() }) null else Verdict.Reject("Название растения — до 120 символов.")
             VoiceAction.CAMERA_GUIDANCE -> if (value in setOf("true", "false")) null else Verdict.Reject("Укажи, включить или выключить подсказки.")
             VoiceAction.COMPARE_INSPECTIONS -> if (value.split(":").let { it.size == 2 && it.all { part -> (part.toIntOrNull() ?: 0) > 0 } }) null

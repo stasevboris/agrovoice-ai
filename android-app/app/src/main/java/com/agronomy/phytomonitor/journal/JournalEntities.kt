@@ -80,7 +80,13 @@ data class PhotoEntity(
     val sha256: String,
     val width: Int,
     val height: Int,
-    val uploaded: Boolean = false
+    val uploaded: Boolean = false,
+    @ColumnInfo(name = "frame_order", defaultValue = "0") val frameOrder: Int = 0,
+    @ColumnInfo(name = "frame_role", defaultValue = "'unspecified'") val frameRole: String = "unspecified",
+    @ColumnInfo(name = "report_name", defaultValue = "''") val reportName: String = "",
+    @ColumnInfo(name = "report_sha256", defaultValue = "''") val reportSha256: String = "",
+    /** Null means no independent analysis was supplied for this frame. */
+    @ColumnInfo(name = "prediction_json", defaultValue = "NULL") val predictionJson: String? = null
 )
 
 @Entity(

@@ -6,6 +6,7 @@
 
 | Материалы | Что подтверждают |
 |---|---|
+| [Серии, встроенный голос и WorkManager](series_voice_sync_2026-10-20/report.json) | Room v5, перенос кадров, UI/Worker/Keystore на Redmi, встроенный Denis и маршрутизация микрофона; границы указаны в отчёте |
 | [FIELD_DEMO](FIELD_DEMO_2026-10-03.md), [MODEL_LAB](MODEL_LAB.md) | Устройство раннего демо/лабораторной сборки |
 | [VOICE_COMMANDS](VOICE_COMMANDS_2026-10-04.md), [VOICE_GALLERY](VOICE_GALLERY_2026-10-04.md), [VOICE_CONTROLS](VOICE_CONTROLS_2026-10-04.md) | Эволюцию команд, съёмки и галереи; не свободный LLM-диалог |
 | [FIELD_TOOLS 04.10](FIELD_TOOLS_2026-10-04.md), [FIELD_TOOLS 05.10](FIELD_TOOLS_2026-10-05.md) | Журнал, заметки, пользовательские оценки и ранние проверки |

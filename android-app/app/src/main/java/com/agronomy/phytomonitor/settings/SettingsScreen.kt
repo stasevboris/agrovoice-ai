@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (String, Boolean) -> Unit,
+                   syncModel: com.agronomy.phytomonitor.sync.SyncViewModel,
+                   onSync: (com.agronomy.phytomonitor.voice.VoiceAction) -> Unit,
                    earned: List<com.agronomy.phytomonitor.journal.AchievementEntity> = emptyList()) {
     val settings by model.state.collectAsState()
     val error by model.error.collectAsState()
@@ -63,7 +65,7 @@ fun SettingsScreen(model: SettingsViewModel, onBack: () -> Unit, onSetting: (Str
                 }
             }
             Text("Выбор модели, культуры и порога — в настройках анализа на экране осмотра.")
-            com.agronomy.phytomonitor.sync.SyncSettingsPanel(current.server)
+            com.agronomy.phytomonitor.sync.SyncSettingsPanel(syncModel, current.server, onSync)
             error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         }
     }

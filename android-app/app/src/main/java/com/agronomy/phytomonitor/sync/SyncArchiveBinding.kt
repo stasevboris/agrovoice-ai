@@ -1,6 +1,7 @@
 package com.agronomy.phytomonitor.sync
 
 import com.agronomy.phytomonitor.journal.InspectionWithDetails
+import com.agronomy.phytomonitor.journal.MAX_INSPECTION_FRAMES
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -29,18 +30,29 @@ internal object SyncArchiveBinding {
         require(remote.getLong("version") > 0) { "В архиве нет корректной исходной серверной версии." }
         val data = remote.getJSONObject("data")
         val references = data.getJSONArray("photos")
-        require(references.length() == 1 && details.photos.size == 1) { "Серверная привязка серии требует резервной копии всех кадров." }
-        val reference = references.getJSONObject(0)
-        val photo = details.photos.single().photo
-        val sha = reference.getString("sha256")
-        require(Regex("[0-9a-f]{64}").matches(sha) && photo.sha256 == sha) {
-            "Фото архива отличается от исходной серверной ссылки. Отправка остановлена; осмотр сохранён."
+        require(references.length() in 1..MAX_INSPECTION_FRAMES && details.photos.size == references.length()) {
+            "Серверная привязка серии требует резервной копии всех кадров."
         }
-        val bytes = reference.getLong("bytes")
-        require(bytes in 1..SyncPayload.MAX_PHOTO_BYTES) { "Неверный размер фото в серверной привязке архива." }
-        val photoId = UUID.fromString(reference.getString("id")).toString()
-        val files = JSONArray().put(JSONObject().put("id", photoId).put("path", File(photo.localPath).canonicalPath)
-            .put("sha256", sha).put("bytes", bytes))
+        val files = JSONArray()
+        val ids = mutableSetOf<String>()
+        for (index in 0 until references.length()) {
+            val reference = references.getJSONObject(index)
+            val photoId = UUID.fromString(reference.getString("id")).toString()
+            require(ids.add(photoId)) { "Повторяющиеся серверные ID кадров в архиве." }
+            val expected = SyncIds.importedPhoto(account, serverId, photoId)
+            // Compatibility with the single-frame importer shipped before archive v3.
+            val photo = details.photos.firstOrNull { it.photo.id == expected }?.photo
+                ?: details.photos.singleOrNull()?.photo?.takeIf { it.id in setOf(details.inspection.id, "${details.inspection.id}-00") }
+                ?: error("ID кадра архива не соответствует его серверному происхождению.")
+            val sha = reference.getString("sha256")
+            require(Regex("[0-9a-f]{64}").matches(sha) && photo.sha256 == sha) {
+                "Фото архива отличается от исходной серверной ссылки. Отправка остановлена; осмотр сохранён."
+            }
+            val bytes = reference.getLong("bytes")
+            require(bytes in 1..SyncPayload.MAX_PHOTO_BYTES) { "Неверный размер фото в серверной привязке архива." }
+            files.put(JSONObject().put("id", photoId).put("frame_id", photo.id).put("path", File(photo.localPath).canonicalPath)
+                .put("sha256", sha).put("bytes", bytes))
+        }
         val time = remote.getString("updated_at")
         val request = JSONObject().put("id", serverId).put("base_version", 0).put("updated_at", time)
             .put("data", JSONObject(data.toString()))

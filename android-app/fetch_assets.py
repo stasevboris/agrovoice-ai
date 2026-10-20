@@ -1,14 +1,17 @@
-"""Fetch the files the APK needs but git does not store: ONNX models and the Vosk Russian speech model.
+"""Fetch the files the APK needs but git does not store: vision, Vosk and built-in Russian TTS.
 
 Standard library only, so it works in a fresh clone:
   python android-app/fetch_assets.py              # check and fetch everything that is missing or corrupted
   python android-app/fetch_assets.py --check      # only report
   python android-app/fetch_assets.py --local-dir E:\\models   # copy models from a local folder instead of GitHub
+  python android-app/fetch_assets.py --tts-only    # Denis voice and pinned sherpa Android runtime
 
 Models: every file listed in app/src/main/assets/models/manifest.json is verified by SHA-256.
 Missing ones are downloaded from the GitHub Release named in model_release.json (only models published
 there; experimental models stay local). Voice: the official archive from alphacephei.com, verified by the
 archive SHA-256 and by every file in app/src/main/assets/voice/manifest.json.
+TTS uses original upstream archives from app/src/main/assets/tts/manifest.json,
+also verified by SHA-256. --local-dir may contain the .aar and .tar.bz2 originals.
 """
 from __future__ import annotations
 
@@ -18,6 +21,7 @@ import json
 from pathlib import Path, PurePosixPath
 import shutil
 import sys
+import tarfile
 import tempfile
 import urllib.request
 import zipfile
@@ -28,6 +32,76 @@ MODEL_MANIFEST = ASSETS/"models/manifest.json"
 VOICE_MANIFEST = ASSETS/"voice/manifest.json"
 RELEASE_CONFIG = APP/"model_release.json"
 CACHE = APP/"build/asset_cache"
+TTS_MANIFEST = ASSETS/"tts/manifest.json"
+
+
+def fetch_tts(check_only: bool, local_dir: Path | None) -> list[str]:
+    """Install upstream Denis and sherpa files; never publish/repackage model weights."""
+    manifest = json.loads(TTS_MANIFEST.read_text(encoding="utf-8"))
+    root = ASSETS / "tts" / manifest["model"]
+    runtime = manifest["runtime"]
+    runtime_target = APP / "app/libs" / runtime["file"]
+
+    def valid(path, expected):
+        return path.is_file() and sha256(path) == expected
+
+    missing = [item for item in manifest["files"]
+               if not valid(root / item["path"], item["sha256"])]
+    runtime_missing = not valid(runtime_target, runtime["sha256"])
+    if not missing and not runtime_missing:
+        print(f"ok      TTS {manifest['model']} + {runtime['file']}")
+        return []
+    if check_only:
+        return ["tts: missing or corrupt voice/runtime files"]
+
+    def source_file(specification):
+        source = local_dir / specification["file"] if local_dir else None
+        if source is None or not source.is_file():
+            source = CACHE / specification["file"]
+            if not valid(source, specification["sha256"]):
+                download(specification["source"], source)
+        if not valid(source, specification["sha256"]):
+            raise ValueError(f"SHA-256 mismatch: {source.name}")
+        return source
+
+    try:
+        if runtime_missing:
+            source = source_file(runtime)
+            runtime_target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, runtime_target)
+        if missing:
+            archive = source_file(manifest["archive"])
+            # Read only manifest-listed regular files. No extractall or archive links.
+            pending = {}
+            for item in missing:
+                relative = PurePosixPath(item["path"])
+                if relative.is_absolute() or ".." in relative.parts:
+                    raise ValueError("invalid TTS manifest path")
+                pending[f"{manifest['model']}/{relative}"] = item
+            with tarfile.open(archive, "r|bz2") as bundle:
+                for member in bundle:
+                    item = pending.get(member.name)
+                    if item is None:
+                        continue
+                    relative = PurePosixPath(item["path"])
+                    if not member.isfile():
+                        raise ValueError(f"not a regular TTS file: {relative}")
+                    with bundle.extractfile(member) as stream:
+                        data = stream.read()
+                    if hashlib.sha256(data).hexdigest() != item["sha256"]:
+                        raise ValueError(f"SHA-256 mismatch: {relative}")
+                    target = root / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    temporary = target.with_suffix(target.suffix + ".part")
+                    temporary.write_bytes(data)
+                    temporary.replace(target)
+                    del pending[member.name]
+            if pending:
+                raise ValueError("TTS archive is missing manifest-listed files")
+    except (OSError, ValueError, KeyError, tarfile.TarError) as error:
+        return [f"tts: {error}"]
+    print(f"ready   TTS {manifest['model']}")
+    return []
 
 
 def sha256(path: Path) -> str:
@@ -148,12 +222,15 @@ def main(argv=None):
     parser.add_argument("--local-dir", type=Path, help="folder with .onnx files to copy instead of downloading")
     parser.add_argument("--models-only", action="store_true")
     parser.add_argument("--voice-only", action="store_true")
+    parser.add_argument("--tts-only", action="store_true", help="only built-in Russian TTS and its runtime")
     args = parser.parse_args(argv)
     problems = []
-    if not args.voice_only:
+    if not args.voice_only and not args.tts_only:
         problems += fetch_models(args.check, args.local_dir)
-    if not args.models_only:
+    if not args.models_only and not args.tts_only:
         problems += fetch_voice(args.check)
+    if not args.models_only and not args.voice_only:
+        problems += fetch_tts(args.check, args.local_dir)
     if problems:
         print("\nНе готово:\n- "+"\n- ".join(problems))
         return 1

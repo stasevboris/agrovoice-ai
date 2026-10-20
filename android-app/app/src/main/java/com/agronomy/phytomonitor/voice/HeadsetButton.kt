@@ -31,7 +31,8 @@ object HeadsetButtonPolicy {
 
 /**
  * V-01: receives the headset button while the app is in the foreground. Platform MediaSession, no extra
- * library. The microphone stays the phone default; Bluetooth SCO routing is not set up yet.
+ * library. The button does not select a microphone; AudioInputRoute separately requests and checks
+ * the actual AudioRecord input for each listening session.
  */
 class HeadsetButton(context: Context, private val onPress: () -> Unit) {
     private val session = MediaSession(context.applicationContext, "AgroVoice")

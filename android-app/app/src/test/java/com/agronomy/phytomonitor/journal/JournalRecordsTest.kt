@@ -55,7 +55,7 @@ class JournalRecordsTest {
 
     @Test
     fun exportedRecordReadsBackWithTheSameFields() {
-        val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("b2", "/p.jpg", "aa"))
+        val parsed = JournalRecords.parse(JournalFixtures.legacyRecord("b2", "/p.jpg", "a".repeat(64)))
         val record = JournalRecords.toRecord(parsed, "plot-1", null, "/restored.jpg")
         val details = InspectionWithDetails(
             record.inspection,

@@ -50,6 +50,8 @@ runs/
 
 # Reproducible official offline speech model; manifests and licenses stay versioned.
 /android-app/app/src/main/assets/voice/ru/
+/android-app/app/src/main/assets/tts/vits-piper-ru_RU-denis-medium-int8/
+/android-app/app/libs/*.aar
 /ml-pipeline/downloads/voice/
 
 # Added to ignore nested builds

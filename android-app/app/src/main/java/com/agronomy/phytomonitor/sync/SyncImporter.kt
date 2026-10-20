@@ -49,9 +49,7 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
         val localId = SyncIds.importedInspection(account, serverId)
         val data = remote.getJSONObject("data")
         val references = data.getJSONArray("photos")
-        // Archive v2 currently exports one photo. Do not expose an apparently complete backup
-        // for a downloaded series until the archive migration supports every frame.
-        require(references.length() == 1) { "Осмотр с серией фото оставлен на сервере: сначала нужна поддержка резервной копии всех кадров." }
+        require(references.length() in 1..MAX_INSPECTION_FRAMES) { "Серверный осмотр должен содержать от 1 до $MAX_INSPECTION_FRAMES кадров." }
         require(data.getString("note").length <= MAX_NOTE && data.optString("plot").length <= MAX_PLOT) {
             "Осмотр оставлен на сервере: заметка или название участка длиннее поддерживаемого приложением."
         }
@@ -59,6 +57,8 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
         require(Regex("[0-9a-f]{64}").matches(data.getString("model_sha256"))) { "Неверная версия модели в серверном осмотре." }
         val prediction = data.getJSONObject("prediction")
         require(prediction.optJSONArray("detections") != null) { "Формат результата сервера не поддерживается: осмотр оставлен на сервере." }
+        val frameMetadata = frameMetadata(prediction, references)
+        validateEvidence(data, prediction, references, frameMetadata)
         val files = JSONArray()
         check(staging.isDirectory || staging.mkdirs()) { "Не удалось подготовить загрузку фото." }
         for (index in 0 until references.length()) {
@@ -86,18 +86,20 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
                     JournalStorage.copyPhoto(temporary, target)
                 } finally { temporary.delete() }
             }
-            files.put(JSONObject().put("id", photoId).put("path", target.canonicalPath).put("sha256", sha).put("bytes", bytes))
+            files.put(JSONObject().put("id", photoId).put("frame_id", SyncIds.importedPhoto(account, serverId, photoId))
+                .put("path", target.canonicalPath).put("sha256", sha).put("bytes", bytes))
         }
         ensureActive(active)
         return database.runInTransaction(Callable {
             if (database.sync().records(account).any { it.serverId == serverId }) return@Callable false
             check(database.journal().inspection(localId) == null) { "Локальный ID уже занят. Существующий осмотр сохранён." }
-            insert(account, localId, serverId, remote, files)
+            insert(account, localId, serverId, remote, files, frameMetadata)
             true
         })
     }
 
-    private fun insert(account: String, localId: String, serverId: String, remote: JSONObject, files: JSONArray) {
+    private fun insert(account: String, localId: String, serverId: String, remote: JSONObject, files: JSONArray,
+                       frameMetadata: Map<String, JSONObject>) {
         val dao = database.journal()
         val data = remote.getJSONObject("data")
         val originalPrediction = data.getJSONObject("prediction")
@@ -120,17 +122,92 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
         dao.upsertInspection(inspection)
         for (index in 0 until files.length()) {
             val file = files.getJSONObject(index)
-            val photoId = "$localId-${index.toString().padStart(2, '0')}"
-            val plant = createPlant(account, plot?.id, origin, file, created, updated)
+            val photoId = file.getString("frame_id")
+            val metadata = frameMetadata[file.getString("id")]
+            val framePrediction = if (metadata != null) metadata.optJSONObject("prediction") else if (index == 0) {
+                JSONObject(originalPrediction.toString()).put("model", data.getString("model_version"))
+                    .put("model_sha256", data.getString("model_sha256"))
+            } else null
+            val plant = createPlant(account, plot?.id, origin, file, created, updated, metadata)
+            val reportName = metadata?.optString("report_name") ?: if (index == 0) inspection.reportName else ""
+            val reportSha = metadata?.optString("report_sha256") ?: if (index == 0) inspection.reportSha256 else ""
             dao.upsertPhoto(PhotoEntity(photoId, localId, plant?.id, file.getString("path"), file.getString("sha256"),
-                originalPrediction.optInt("decoded_width"), originalPrediction.optInt("decoded_height"), uploaded = true))
-            // Current Android reports describe the primary frame; never invent labels for other frames.
-            if (index == 0) dao.insertDetections(JournalRecords.detections(prediction, photoId))
+                metadata?.optInt("width") ?: framePrediction?.optInt("decoded_width") ?: 0,
+                metadata?.optInt("height") ?: framePrediction?.optInt("decoded_height") ?: 0, uploaded = true,
+                frameOrder = index, frameRole = metadata?.getString("role") ?: "unspecified",
+                reportName = reportName, reportSha256 = reportSha, predictionJson = framePrediction?.toString()))
+            val evidence = framePrediction ?: metadata?.optJSONArray("stored_detections")?.let {
+                JSONObject().put("detections", it)
+            }
+            if (evidence != null) dao.insertDetections(JournalRecords.detections(evidence, photoId))
         }
         val request = JSONObject().put("id", serverId).put("base_version", remote.getLong("version"))
             .put("updated_at", remote.getString("updated_at")).put("data", JSONObject(data.toString()))
         database.sync().save(SyncRecord(account, localId, serverId, remote.getLong("version"), updated,
             request.toString(), files.toString(), state = "synced", expertStatus = remote.getString("expert_status")))
+    }
+
+    private fun frameMetadata(prediction: JSONObject, references: JSONArray): Map<String, JSONObject> {
+        val ids = (0 until references.length()).map { UUID.fromString(references.getJSONObject(it).getString("id")).toString() }
+        require(ids.distinct().size == ids.size) { "Повторяющиеся серверные ID кадров." }
+        if (!prediction.has("agrovoice_frames")) return emptyMap()
+        val frames = prediction.optJSONArray("agrovoice_frames") ?: error("Неверные метаданные серии на сервере.")
+        require(frames.length() == ids.size) { "Метаданные серии не содержат все кадры." }
+        return (0 until frames.length()).associate { index ->
+            val frame = frames.getJSONObject(index)
+            val id = UUID.fromString(frame.getString("photo_id")).toString()
+            require(id == ids[index] && frame.opt("order") is Number && frame.getDouble("order") == index.toDouble()) {
+                "Порядок или ID кадров серверной серии не совпадают."
+            }
+            FrameRole.from(frame.getString("role"))
+            if (!frame.isNull("prediction")) {
+                val raw = frame.optJSONObject("prediction") ?: error("Неверный анализ кадра серии.")
+                require(raw.optString("model").isNotBlank() && raw.optJSONArray("detections") != null) { "Неполный анализ кадра серии." }
+            }
+            require(frame.isNull("prediction") || !frame.has("stored_detections")) { "Неоднозначные рамки кадра серии." }
+            if (frame.has("stored_detections")) {
+                val stored = frame.optJSONArray("stored_detections") ?: error("Неверные сохранённые рамки кадра серии.")
+                JournalRecords.detections(JSONObject().put("detections", stored), id)
+            }
+            id to frame
+        }
+    }
+
+    private fun validateEvidence(data: JSONObject, prediction: JSONObject, references: JSONArray,
+                                 frames: Map<String, JSONObject>) {
+        for ((reportField, dataField) in listOf("model" to "model_version", "model_sha256" to "model_sha256")) {
+            val original = prediction.optString(reportField)
+            require(original.isBlank() || original == data.getString(dataField)) {
+                "Модель исходного анализа не совпадает с серверными метаданными. Осмотр не добавлен."
+            }
+        }
+        checkPhotoHash(prediction, references.getJSONObject(0))
+        for (index in 0 until references.length()) {
+            val reference = references.getJSONObject(index)
+            val id = UUID.fromString(reference.getString("id")).toString()
+            val report = frames[id]?.optJSONObject("prediction") ?: continue
+            checkPhotoHash(report, reference)
+            if (index == 0) {
+                val primary = JSONObject(prediction.toString())
+                    .put("model", data.getString("model_version"))
+                    .put("model_sha256", data.getString("model_sha256"))
+                require(JournalRecords.sameJson(analysis(primary), analysis(report))) {
+                    "Исходный анализ осмотра не совпадает с анализом первого кадра. Осмотр не добавлен."
+                }
+            }
+        }
+    }
+
+    private fun checkPhotoHash(prediction: JSONObject, reference: JSONObject) {
+        val sha = prediction.optString("photo_sha256")
+        require(sha.isBlank() || sha == reference.getString("sha256")) {
+            "Фото серверного кадра не соответствует SHA исходного анализа. Осмотр не добавлен."
+        }
+    }
+
+    private fun analysis(prediction: JSONObject): JSONObject = JSONObject(prediction.toString()).apply {
+        listOf("photo", "photo_path", "photo_sha256", "agrovoice_frames", "agrovoice_origin", "agrovoice_sync_source")
+            .forEach(::remove)
     }
 
     private fun createPlot(account: String, data: JSONObject, origin: JSONObject?, time: Long): PlotEntity? {
@@ -144,15 +221,17 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
         return plot
     }
 
-    private fun createPlant(account: String, plotId: String?, origin: JSONObject?, file: JSONObject, created: Long, updated: Long): PlantEntity? {
-        val plants = origin?.optJSONArray("plants") ?: return null
-        val metadata = (0 until plants.length()).map { plants.getJSONObject(it) }.firstOrNull {
-            SyncIds.photo(it.optString("photo_local_id"), file.getString("sha256")) == file.getString("id")
+    private fun createPlant(account: String, plotId: String?, origin: JSONObject?, file: JSONObject, created: Long, updated: Long,
+                            frame: JSONObject?): PlantEntity? {
+        val metadata = frame ?: origin?.optJSONArray("plants")?.let { plants ->
+            (0 until plants.length()).map { plants.getJSONObject(it) }.firstOrNull {
+                SyncIds.photo(it.optString("photo_local_id"), file.getString("sha256")) == file.getString("id")
+            }
         } ?: return null
         val sourceId = nullableString(metadata, "plant_id") ?: return null
         val name = nullableString(metadata, "plant_name")?.takeIf { it.isNotBlank() } ?: return null
         require(name.length <= MAX_PLOT) { "Слишком длинное имя растения в серверном осмотре." }
-        val id = identity(account, "plant:$sourceId")
+        val id = SyncIds.importedPlant(account, sourceId)
         val existing = database.journal().plant(id)
         check(existing == null || existing.plotId == plotId && existing.name == name) { "Серверная ссылка на растение изменилась. Локальная история сохранена." }
         if (existing != null) return existing

@@ -51,6 +51,10 @@ import com.agronomy.phytomonitor.voice.HeadsetButton
 import com.agronomy.phytomonitor.voice.HeadsetButtonPolicy
 import com.agronomy.phytomonitor.voice.HeadsetPress
 import com.agronomy.phytomonitor.voice.VoiceRouter
+import com.agronomy.phytomonitor.voice.ListeningMode
+import com.agronomy.phytomonitor.voice.ListeningPermissionGate
+import com.agronomy.phytomonitor.voice.ListeningRequest
+import com.agronomy.phytomonitor.voice.PermissionDecision
 import kotlinx.coroutines.delay
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -80,6 +84,7 @@ class FieldDemoActivity : ComponentActivity() {
     internal lateinit var journalModel: JournalViewModel; private set
     internal lateinit var plotsModel: PlotsViewModel; private set
     internal lateinit var settingsModel: SettingsViewModel; private set
+    internal lateinit var syncModel: com.agronomy.phytomonitor.sync.SyncViewModel; private set
     internal lateinit var knowledgeModel: KnowledgeViewModel; private set
     private val settings by lazy { SettingsStore.get(application) }
     private var navigation: NavHostController? = null
@@ -94,6 +99,14 @@ class FieldDemoActivity : ComponentActivity() {
     private var systemGallery: ()->Unit={}
     private var exportJournalFile: (JournalExport) -> Unit = {}
     private var importJournalFile: () -> Unit = {}
+    private val listeningPermission = ListeningPermissionGate()
+    private var listeningPermissionRevision by mutableIntStateOf(0)
+    private val bluetoothPermission=registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        val pending = listeningPermission.complete(listeningOrigin(),
+            listeningAllowed = foreground && settings.state.value?.voiceEnabled == true)
+        listeningPermissionRevision++
+        pending?.let(::startApprovedListening)
+    }
     private val microphone=registerForActivityResult(ActivityResultContracts.RequestPermission()) {granted ->
         if(granted && foreground && settings.state.value?.voiceEnabled == true) {
             if(requestDictation && fieldModel.noteOpen){requestDictation=false;fieldModel.dictating=true}
@@ -188,13 +201,17 @@ class FieldDemoActivity : ComponentActivity() {
         hasPhoto = fieldModel.bitmap != null,
         hasResult = fieldModel.reportName != null,
         hasDraft = fieldModel.hasDraft,
-        busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null || plotsModel.state.value.busy,
+        frameCount = if (currentScreen() == Screen.JOURNAL) journalModel.state.value.opened?.details?.photos?.size ?: 0 else fieldModel.frames.size,
+        selectedFrame = if (currentScreen() == Screen.JOURNAL) journalModel.state.value.opened?.selectedFrame ?: 0 else fieldModel.selectedFrame,
+        busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null || plotsModel.state.value.busy || syncModel.state.value.busy,
+        syncGeneration = syncModel.state.value.generation,
+        pendingSync = syncModel.state.value.pending,
         inspectionSaved = fieldModel.inspectionSaved,
         review = fieldModel.review,
         galleryCount = if (photoFlow.loading) 0 else photoFlow.photos.size,
         selectedPhoto = photoFlow.selectedNumber,
         cameraCapturing = cameraModel.state.value.shotRequested || cameraModel.state.value.capturing,
-        speaking = speaker.active,
+        speaking = speaker.active || voice.hasPendingStoppedAction,
         helpOpen = photoFlow.helpOpen,
         threshold = fieldModel.threshold,
         selectedModel = fieldModel.selectedModel,
@@ -234,7 +251,7 @@ class FieldDemoActivity : ComponentActivity() {
             val saved = journalModel.state.value.opened?.takeIf {
                 it.details.inspection.id == navigation?.currentBackStackEntry?.arguments?.getString("id")
             }
-            saved?.details?.photos?.firstOrNull()?.detections.orEmpty()
+            saved?.activePhoto?.detections.orEmpty()
                 .sortedByDescending { it.confidence }.map { it.classCode }
         } else {
             fieldModel.result?.let { result -> result.boxes.map { result.model.classes[it.classId] } }.orEmpty()
@@ -247,6 +264,26 @@ class FieldDemoActivity : ComponentActivity() {
 
         override fun perform(operation: Operation) {
             when (operation) {
+                is Operation.AddFrame -> if (fieldModel.prepareAddFrame()) {
+                    if (operation.gallery) openGallery(operation.withVoice)
+                    else openCamera(false, operation.withVoice)
+                }
+                is Operation.SelectFrame -> {
+                    stopSpeech()
+                    if (operation.saved) journalModel.selectFrame(operation.number)
+                    else fieldModel.selectFrame(operation.number)
+                }
+                is Operation.SetFrameRole -> fieldModel.setFrameRole(operation.role)
+                Operation.OpenSyncSettings -> navigation?.navigate("settings") { launchSingleTop = true }
+                Operation.SpeakSyncStatus -> syncModel.status()
+                is Operation.SendInspection -> syncModel.send(operation.id)
+                Operation.RetrySync -> syncModel.retry()
+                Operation.ReceiveSync -> syncModel.receive()
+                Operation.LogoutSync -> syncModel.logout()
+                Operation.AskSyncAll -> syncModel.askAll()
+                is Operation.AskSyncConflict -> syncModel.askConflict(operation.id)
+                is Operation.ConfirmSync -> syncModel.confirm(operation.confirmation)
+                Operation.CancelSyncConfirmation -> syncModel.cancelConfirmation()
                 Operation.ResumeDraft -> fieldModel.resumeDraft()
                 Operation.DiscardDraft -> fieldModel.discardDraft()
                 is Operation.SetContinuousListening -> {
@@ -270,8 +307,11 @@ class FieldDemoActivity : ComponentActivity() {
                 }
                 // The dialog itself answers «Не сохраняю» after the verdict.
                 Operation.EndFollowUp -> Unit
-                Operation.ClosePhotoFlow -> closePhotoFlow()
-                Operation.StopSpeech -> speaker.stop()
+                Operation.ClosePhotoFlow -> {
+                    fieldModel.cancelAddFrame()
+                    closePhotoFlow()
+                }
+                Operation.StopSpeech -> stopSpeech()
                 is Operation.Scroll -> if (currentScreen() == Screen.JOURNAL) {
                     journalModel.scroll(operation.direction)
                 } else {
@@ -284,7 +324,7 @@ class FieldDemoActivity : ComponentActivity() {
                 }
                 is Operation.OpenInspection -> {
                     voice.stop()
-                    speaker.stop()
+                    stopSpeech()
                     journalModel.openInspection(operation.id)
                     navigation?.navigate("inspection/${Uri.encode(operation.id)}") {
                         popUpTo(if (journalModel.state.value.historyPlantId != null) "plant/{id}" else "journal")
@@ -294,7 +334,7 @@ class FieldDemoActivity : ComponentActivity() {
                 is Operation.SpeakInspection -> {
                     val saved = journalModel.state.value.opened
                     if (saved?.details?.inspection?.id == operation.id) {
-                        speak(com.agronomy.phytomonitor.journal.SavedInspectionSpeech.text(saved.details))
+                        speak(com.agronomy.phytomonitor.journal.SavedInspectionSpeech.text(saved.details, saved.selectedFrame))
                     }
                 }
                 is Operation.OpenInspectionNote -> {
@@ -428,9 +468,18 @@ class FieldDemoActivity : ComponentActivity() {
                         fieldModel.analyze()
                     }
                 }
-                Operation.SystemGallery -> systemGallery()
-                is Operation.OpenGallery -> openGallery(operation.withVoice)
-                is Operation.OpenCamera -> openCamera(operation.immediate, operation.withVoice)
+                Operation.SystemGallery -> {
+                    fieldModel.cancelAddFrame()
+                    systemGallery()
+                }
+                is Operation.OpenGallery -> {
+                    fieldModel.cancelAddFrame()
+                    openGallery(operation.withVoice)
+                }
+                is Operation.OpenCamera -> {
+                    fieldModel.cancelAddFrame()
+                    openCamera(operation.immediate, operation.withVoice)
+                }
                 Operation.TakeShot -> {
                     voice.stop()
                     cameraModel.requestShot()
@@ -473,10 +522,10 @@ class FieldDemoActivity : ComponentActivity() {
         if (!foreground) {
             return
         }
-        val listening = voice.active || photoFlow.dialogVoice || photoFlow.continuousVoice
-        when (HeadsetButtonPolicy.press(currentScreen(), speaker.active, listening, followUp.awaitingAnswer)) {
+        val listening = voice.active || voice.preparing || photoFlow.dialogVoice || photoFlow.continuousVoice
+        when (HeadsetButtonPolicy.press(currentScreen(), speaker.active || voice.hasPendingStoppedAction, listening, followUp.awaitingAnswer)) {
             HeadsetPress.TAKE_SHOT, HeadsetPress.ANSWER_YES -> handleVoiceCommand(VoiceCommand(VoiceAction.CONFIRM, "Кнопка гарнитуры"))
-            HeadsetPress.STOP_SPEECH -> speaker.stop()
+            HeadsetPress.STOP_SPEECH -> stopSpeech()
             HeadsetPress.STOP_LISTENING, HeadsetPress.START_LISTENING -> voiceButton()
             HeadsetPress.NONE -> Unit
         }
@@ -497,7 +546,7 @@ class FieldDemoActivity : ComponentActivity() {
             fieldModel.showError("Включи голосовое управление в настройках приложения.")
             return
         }
-        if(voice.active || photoFlow.dialogVoice || photoFlow.continuousVoice){setContinuous(false);return}
+        if(voice.active || voice.preparing || photoFlow.dialogVoice || photoFlow.continuousVoice){setContinuous(false);return}
         requestContinuous=false
         if(!hasMicrophone())microphone.launch(Manifest.permission.RECORD_AUDIO) else startOneShot()
     }
@@ -522,8 +571,9 @@ class FieldDemoActivity : ComponentActivity() {
         navigation?.currentDestination?.route == "plots" -> Screen.PLOTS
         else -> Screen.MAIN
     }
-    private fun openNote(dictate: Boolean=false){voice.stop();speaker.stop();fieldModel.noteOpen=true;fieldModel.noteReviewVoice=false;fieldModel.dictating=dictate && hasMicrophone();if(dictate && !hasMicrophone()){requestDictation=true;microphone.launch(Manifest.permission.RECORD_AUDIO)}}
+    private fun openNote(dictate: Boolean=false){listeningPermission.cancel();voice.stop();stopSpeech();fieldModel.noteOpen=true;fieldModel.noteReviewVoice=false;fieldModel.dictating=dictate && hasMicrophone();if(dictate && !hasMicrophone()){requestDictation=true;microphone.launch(Manifest.permission.RECORD_AUDIO)}}
     private fun closeNote() {
+        listeningPermission.cancel()
         voice.stop()
         fieldModel.dictating = false
         fieldModel.noteReviewVoice = false
@@ -538,6 +588,7 @@ class FieldDemoActivity : ComponentActivity() {
             fieldModel.showError("Включи голосовое управление в настройках приложения.")
             return
         }
+        listeningPermission.cancel()
         voice.stop()
         if(fieldModel.dictating){fieldModel.dictating=false;fieldModel.noteReviewVoice=true;return}
         fieldModel.noteReviewVoice=false
@@ -547,15 +598,57 @@ class FieldDemoActivity : ComponentActivity() {
         speak(fieldModel.spokenResult(),volume)
     }
     private fun speak(text: String, volume: Float=1f){
-        voice.stop()
-        if(!speaker.speak(text,volume))fieldModel.showError(speaker.status)
+        voice.stop {
+            if (foreground && !speaker.speak(text,volume)) fieldModel.showError(speaker.status)
+        }
+    }
+    private fun stopSpeech() {
+        voice.cancelStoppedAction()
+        speaker.stop()
     }
     private fun startOneShot(){
         if (settings.state.value?.voiceEnabled != true) return
         if(galleryOpen){photoFlow.dialogVoice=true;return}
+        startListening(ListeningMode.ONE_SHOT)
+    }
+
+    private fun listeningOrigin(): String =
+        "${navigation?.currentBackStackEntry?.id}:${currentScreen().protocolName}"
+
+    private fun startListening(mode: ListeningMode) {
+        if (!foreground || settings.state.value?.voiceEnabled != true || !voice.readyToStart) return
+        val request = ListeningRequest(mode, listeningOrigin())
+        val needsPermission = Build.VERSION.SDK_INT >= 31 &&
+            com.agronomy.phytomonitor.voice.AudioInputRoute.needsBluetoothPermission(this)
+        when (listeningPermission.begin(request, needsPermission)) {
+            PermissionDecision.REQUEST -> {
+                if (Build.VERSION.SDK_INT >= 31) bluetoothPermission.launch(Manifest.permission.BLUETOOTH_CONNECT)
+            }
+            PermissionDecision.START -> startApprovedListening(request)
+            PermissionDecision.WAIT -> Unit
+        }
+    }
+
+    private fun startApprovedListening(request: ListeningRequest) {
+        if (!foreground || settings.state.value?.voiceEnabled != true ||
+            request.origin != listeningOrigin() || !voice.readyToStart || !hasMicrophone() ||
+            speaker.active || photoFlow.loading || cameraModel.state.value.shotRequested ||
+            cameraModel.state.value.capturing) return
+        val stillRequested = when (request.mode) {
+            ListeningMode.ONE_SHOT -> true
+            ListeningMode.CONTINUOUS -> !fieldModel.noteOpen && photoFlow.continuousVoice
+            ListeningMode.DICTATION -> fieldModel.noteOpen && fieldModel.dictating
+            ListeningMode.NOTE_REVIEW -> fieldModel.noteOpen && fieldModel.noteReviewVoice
+            ListeningMode.DIALOG -> !fieldModel.noteOpen && photoFlow.dialogVoice
+            ListeningMode.FOLLOW_UP -> !fieldModel.noteOpen && followUp.shouldListenAgain()
+        }
+        if (!stillRequested) return
         voice.plotNames=plotsModel.state.value.plots.map {it.plot.name}
         voice.freeSpeech=photoFlow.freeSpeech
-        voice.start(currentGrammar(),screen=currentScreen().protocolName)
+        if (followUp.awaitingAnswer) followUp.listeningStarted()
+        voice.start(currentGrammar(),
+            continuous = request.mode in setOf(ListeningMode.CONTINUOUS, ListeningMode.DICTATION),
+            screen = currentScreen().protocolName)
     }
     private val locationPermission=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
         if(fieldModel.location.hasPermission()){fieldModel.switchLocation(true);startLocation()}
@@ -576,6 +669,7 @@ class FieldDemoActivity : ComponentActivity() {
             fieldModel.showError("Включи голосовое управление в настройках приложения.")
             return
         }
+        listeningPermission.cancel()
         requestContinuous=enabled
         photoFlow.dialogVoice=false;voice.stop()
         if(enabled && !hasMicrophone())microphone.launch(Manifest.permission.RECORD_AUDIO)
@@ -596,10 +690,18 @@ class FieldDemoActivity : ComponentActivity() {
         plotsModel=ViewModelProvider(this)[PlotsViewModel::class.java]
         plotsModel.connect(fieldModel.journalReady)
         settingsModel=ViewModelProvider(this)[SettingsViewModel::class.java]
+        syncModel=ViewModelProvider(this)[com.agronomy.phytomonitor.sync.SyncViewModel::class.java]
         knowledgeModel=ViewModelProvider(this)[KnowledgeViewModel::class.java]
         voice.onCommand=::handleVoiceCommand
         voice.onCommands=voiceRouter::plan
-        voice.onFailure={photoFlow.setContinuous(false);photoFlow.dialogVoice=false}
+        voice.onFailure={
+            photoFlow.setContinuous(false)
+            photoFlow.dialogVoice=false
+            fieldModel.dictating=false
+            fieldModel.noteReviewVoice=false
+            followUp.stop()
+            followUpPhase=FollowUpDialog.Phase.IDLE
+        }
         voice.onDictation = { text ->
             val draft = journalModel.state.value.noteDraft?.text ?: fieldModel.noteDraft
             editNote((draft + " " + text).trim())
@@ -617,9 +719,21 @@ class FieldDemoActivity : ComponentActivity() {
                 val cameraState by cameraModel.state.collectAsState()
                 val galleryState by photoFlow.state.collectAsState()
                 val currentSettings by settingsModel.state.collectAsState()
+                val syncState by syncModel.state.collectAsState()
+                val syncRoute = route + backStackEntry?.arguments?.getString("id")?.let { "/$it" }.orEmpty()
+                LaunchedEffect(syncRoute) { syncModel.screenChanged(syncRoute) }
+                LaunchedEffect(Unit) {
+                    syncModel.events.collect { notice ->
+                        if (notice.error) model.showError(notice.text) else model.notify(notice.text)
+                        if (foreground && settings.state.value?.voiceEnabled == true) speak(notice.text)
+                    }
+                }
+                com.agronomy.phytomonitor.sync.SyncConfirmationDialog(syncState.pending,
+                    onConfirm = { press(VoiceAction.CONFIRM) }, onCancel = { press(VoiceAction.CANCEL) }, busy = syncState.busy, origin = syncState.origin)
                 SideEffect { navigation = navController }
                 SideEffect { voice.plotNames = plotsState.plots.map { it.plot.name } }
-                LaunchedEffect(model.busy, model.reportName, route) {
+                LaunchedEffect(model.busy, model.reportName, backStackEntry) {
+                    if (backStackEntry == null) return@LaunchedEffect
                     if (!model.busy && model.result != null && route == "main" && shownReport != model.reportName) {
                         shownReport = model.reportName
                         navController.navigate("result") { launchSingleTop = true }
@@ -653,15 +767,19 @@ class FieldDemoActivity : ComponentActivity() {
                 SideEffect {systemGallery=systemPicker}
                 val context=currentScreen().protocolName
                 val eligible=foreground && currentSettings?.voiceEnabled == true && !speaker.active && !galleryState.loading && !cameraState.shotRequested && !cameraState.capturing
-                LaunchedEffect(context,model.dictating,model.noteReviewVoice,photoFlow.continuousVoice,photoFlow.dialogVoice,eligible,voice.active,followUpPhase) {
+                LaunchedEffect(context,model.dictating,model.noteReviewVoice,photoFlow.continuousVoice,photoFlow.dialogVoice,eligible,voice.active,voice.readyToStart,followUpPhase,listeningPermissionRevision) {
                     val answering=!voice.active && followUp.shouldListenAgain()
                     followUpPhase=followUp.phase
-                    if(eligible && !voice.active && hasMicrophone() && (if(model.noteOpen)model.dictating || model.noteReviewVoice else photoFlow.continuousVoice || photoFlow.dialogVoice || answering)) {
+                    if(eligible && voice.readyToStart && hasMicrophone() && (if(model.noteOpen)model.dictating || model.noteReviewVoice else photoFlow.continuousVoice || photoFlow.dialogVoice || answering)) {
                         delay(400)
-                        voice.plotNames=plotsModel.state.value.plots.map {it.plot.name}
-                        voice.freeSpeech=photoFlow.freeSpeech
-                        if(answering)followUp.listeningStarted()
-                        voice.start(currentGrammar(),continuous=model.dictating || photoFlow.continuousVoice,screen=context)
+                        val mode = when {
+                            model.dictating -> ListeningMode.DICTATION
+                            model.noteOpen -> ListeningMode.NOTE_REVIEW
+                            photoFlow.continuousVoice -> ListeningMode.CONTINUOUS
+                            photoFlow.dialogVoice -> ListeningMode.DIALOG
+                            else -> ListeningMode.FOLLOW_UP
+                        }
+                        startListening(mode)
                     }
                 }
                 LaunchedEffect(model.noteOpen,model.noteReviewVoice){
@@ -674,7 +792,7 @@ class FieldDemoActivity : ComponentActivity() {
                     }
                 }
                 // A plan of several steps continues only after background work finished without an error.
-                LaunchedEffect(model.busy, journalState.busy, journalState.openingId, plotsState.busy) {
+                LaunchedEffect(model.busy, journalState.busy, journalState.openingId, plotsState.busy, syncState.busy) {
                     if (!currentState().busy) {
                         actions.settled(failed = (model.message != null && model.messageIsError) ||
                             (currentScreen() == Screen.JOURNAL && journalState.messageIsError) ||
@@ -726,11 +844,11 @@ class FieldDemoActivity : ComponentActivity() {
                             enterTransition = { EnterTransition.None }, exitTransition = { ExitTransition.None },
                             popEnterTransition = { EnterTransition.None }, popExitTransition = { ExitTransition.None }) {
                                 composable("main") {
-                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation,
+                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active || voice.hasPendingStoppedAction,speakerStatus=speaker.status,onLocation=::toggleLocation,
                                         showResult = false, onOpenResult = { navController.navigate("result") { launchSingleTop = true } })
                                 }
                                 composable("result") {
-                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active,speakerStatus=speaker.status,onLocation=::toggleLocation,
+                                    FieldDemoScreen(model,Modifier,onAction=::press,voice=voice,flow=photoFlow,onVoice=::voiceButton,onContinuous=::setContinuous,speaking=speaker.active || voice.hasPendingStoppedAction,speakerStatus=speaker.status,onLocation=::toggleLocation,
                                         onBackToPhoto = { press(VoiceAction.BACK) })
                                 }
                                 composable("camera") {
@@ -743,7 +861,7 @@ class FieldDemoActivity : ComponentActivity() {
                                     }, onCancel = { press(VoiceAction.CANCEL) }, onShoot = { press(VoiceAction.CONFIRM) },
                                         onGuidance = { press(VoiceAction.CAMERA_GUIDANCE, it.toString()) },
                                         onAdvice = { advice ->
-                                            if (foreground && cameraOpen && !speaker.active && !voice.active && settings.state.value?.voiceEnabled == true) {
+                                            if (foreground && cameraOpen && !speaker.active && voice.readyToStart && settings.state.value?.voiceEnabled == true) {
                                                 speak(advice)
                                                 true
                                             } else false
@@ -771,6 +889,7 @@ class FieldDemoActivity : ComponentActivity() {
                                 }
                                 composable("settings") {
                                     SettingsScreen(settingsModel, onBack = { press(VoiceAction.BACK) },
+                                        syncModel = syncModel, onSync = { press(it) },
                                         onSetting = { key, enabled -> press(VoiceAction.SET_SETTING, "$key:$enabled") },
                                         earned = journalState.earned)
                                 }
@@ -804,11 +923,13 @@ class FieldDemoActivity : ComponentActivity() {
                                         }
                                     } else {
                                         SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) },
+                                            onSelectFrame = { press(VoiceAction.SELECT_FRAME, it.toString()) },
+                                            syncModel = syncModel, onSync = { press(it) },
                                             onPlantHistory = { press(VoiceAction.PLANT_HISTORY) },
                                             onRead = { press(VoiceAction.SPEAK_RESULT) },
                                             onKnowledge = { press(VoiceAction.LEAF_KNOWLEDGE, it.toString()) },
                                             onEditNote = { press(VoiceAction.NOTE) }, onReanalyse = {
-                                            val path = saved.details.photos.firstOrNull()?.photo?.localPath
+                                            val path = saved.activePhoto?.photo?.localPath
                                             if (path != null) {
                                                 journalModel.closeInspection()
                                                 navController.popBackStack("main", false)
@@ -843,6 +964,7 @@ class FieldDemoActivity : ComponentActivity() {
     override fun onResume(){super.onResume();foreground=true;headset.setActive(true);if(fieldModel.locationEnabled && fieldModel.location.hasPermission())startLocation()}
     override fun onStop() {
         foreground = false
+        listeningPermission.cancel()
         plotsModel.cancelDelete()
         headset.setActive(false)
         actions.cancelPlan()
@@ -850,7 +972,7 @@ class FieldDemoActivity : ComponentActivity() {
         followUpPhase = followUp.phase
         fieldModel.location.stop()
         voice.stop()
-        speaker.stop()
+        stopSpeech()
         if (!isChangingConfigurations) {
             fieldModel.dictating = false
             fieldModel.noteReviewVoice = false
