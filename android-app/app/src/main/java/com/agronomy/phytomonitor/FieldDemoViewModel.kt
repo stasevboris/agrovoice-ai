@@ -583,7 +583,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         publish {
             if (!cleared) {
                 busy = false
-                showError(draftError ?: error.message ?: "Не удалось обработать фото")
+                showError(draftError ?: UserErrors.describe(error, "Не удалось обработать фото"))
             }
         }
     }

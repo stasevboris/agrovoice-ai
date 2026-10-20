@@ -58,6 +58,11 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
     var qualityMessage by remember { mutableStateOf("Оцениваю освещение и детализацию…") }
     fun takePhoto() {
         if(!ready || shooting)return
+        val free = context.getExternalFilesDir(null)?.usableSpace ?: Long.MAX_VALUE
+        if (free < com.agronomy.phytomonitor.UserErrors.CAPTURE_RESERVE_BYTES) {
+            flow.error(com.agronomy.phytomonitor.UserErrors.NO_SPACE)
+            return
+        }
         shooting=true;flow.capturing(true)
         capture.targetRotation=previewView.display?.rotation ?: android.view.Surface.ROTATION_0
         val now=System.currentTimeMillis()
@@ -77,7 +82,9 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
                 shooting=false;flow.capturing(false)
                 result.savedUri?.let {saveCallback(it)} ?: flow.error("Камера не вернула сохранённый снимок")
             }
-            override fun onError(error: ImageCaptureException){shooting=false;flow.capturing(false);flow.error("Не удалось сделать фото: ${error.message}")}
+            override fun onError(error: ImageCaptureException){shooting=false;flow.capturing(false)
+                flow.error(if (com.agronomy.phytomonitor.UserErrors.noSpace(error)) com.agronomy.phytomonitor.UserErrors.NO_SPACE
+                    else "Не удалось сделать фото: ${error.message}. Прежние осмотры не изменены; повторите снимок.")}
         })
     }
     DisposableEffect(owner,previewView) {

@@ -309,7 +309,7 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Exception) {
-                mutableState.update { it.copy(message = error.message ?: "Операция с журналом не выполнена", messageIsError = true) }
+                mutableState.update { it.copy(message = com.agronomy.phytomonitor.UserErrors.describe(error, "Операция с журналом не выполнена"), messageIsError = true) }
             } finally {
                 mutableState.update { it.copy(busy = false) }
             }
