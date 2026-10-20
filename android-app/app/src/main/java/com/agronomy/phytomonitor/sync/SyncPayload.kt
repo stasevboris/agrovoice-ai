@@ -4,6 +4,7 @@ import com.agronomy.phytomonitor.InspectionJournal
 import com.agronomy.phytomonitor.journal.InspectionWithDetails
 import com.agronomy.phytomonitor.journal.PhotoWithDetections
 import com.agronomy.phytomonitor.journal.orderedPhotos
+import com.agronomy.phytomonitor.journal.FrameFeedback
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -92,6 +93,10 @@ internal object SyncPayload {
             .put("accuracy_m", inspection.accuracyM ?: JSONObject.NULL).put("note", inspection.note)
             .put("user_review", inspection.userReview).put("model_version", inspection.modelVersion)
             .put("model_sha256", inspection.modelSha256).put("prediction", prediction).put("photos", photos)
+        val feedback = ordered.mapNotNull { it.feedback }
+        if (feedback.isNotEmpty() || data.has("frame_feedback")) {
+            data.put("frame_feedback", JSONArray(feedback.map(FrameFeedback::toJson)))
+        }
         val id = previous?.serverId ?: SyncIds.inspection(inspection.id)
         val request = JSONObject().put("id", id).put("base_version", version).put("updated_at", iso(updatedAt)).put("data", data)
         return SyncRecord(account, inspection.id, id, version, inspection.updatedAt, request.toString(), files.toString())

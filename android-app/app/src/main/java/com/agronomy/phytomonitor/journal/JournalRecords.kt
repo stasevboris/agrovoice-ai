@@ -155,7 +155,13 @@ object JournalRecords {
             ParsedFrame(id, order, role, frame.optString("photo_path"), sha,
                 frame.optInt("width"), frame.optInt("height"), frame.optString("report_name"),
                 frame.optString("report_sha256"), raw, plant, plantId,
-                frame.optString("archive_photo").takeIf { it.isNotBlank() && it != "null" }, stored?.toString())
+                frame.optString("archive_photo").takeIf { it.isNotBlank() && it != "null" }, stored?.toString(),
+                frame.optJSONObject("feedback")?.let { FrameFeedback.fromJson(id, it) }?.also {
+                    if (it.photoSha256 != sha || it.reportSha256 != FrameFeedback.evidenceSha(frame.optString("report_sha256")) ||
+                        !it.matchesAnalysis(raw?.let(::JSONObject))) {
+                        throw JournalFormatException("Оценка относится к другому анализу кадра.")
+                    }
+                })
         }
         if (frames.map { it.id }.distinct().size != frames.size || frames.map { it.order }.sorted() != frames.indices.toList()) {
             throw JournalFormatException("повторяющиеся ID или неверный порядок кадров")
@@ -301,6 +307,7 @@ object JournalRecords {
                 .put("prediction_json", raw ?: JSONObject.NULL)
                 .put("plant", detail.plantName ?: "").put("plant_id", item.plantId ?: "")
             if (name != null) frame.put("archive_photo", name)
+            detail.feedback?.let { frame.put("feedback", it.toJson()) }
             if (raw == null && detail.detections.isNotEmpty()) {
                 frame.put("stored_detections", JSONArray(detail.detections.map { detection ->
                     JSONObject().put("class_name", detection.classCode).put("label_ru", detection.labelRu)

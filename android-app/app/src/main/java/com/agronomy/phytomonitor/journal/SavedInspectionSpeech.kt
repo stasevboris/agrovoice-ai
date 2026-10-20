@@ -23,6 +23,11 @@ object SavedInspectionSpeech {
             if (labels.isEmpty()) add("В сохранённом результате листьев выше порога не найдено.")
             labels.forEachIndexed { index, detection -> add("Лист ${index + 1}: ${detection.labelRu}.") }
             add("Результат модели не подтверждает диагноз.")
+            frame?.feedback?.let {
+                val opinion = when (it.verdict) { "correct" -> "верно"; "incorrect" -> "неверно"; else -> "не знаю" }
+                add("Ваша оценка кадра: $opinion. Это мнение пользователя, без проверки специалистом.")
+                if (it.correction.isNotBlank()) add("Ваше исправление: ${it.correction}.")
+            }
             details.plot?.name?.let { add("Участок: $it.") }
             inspection.row?.let { add("Ряд: $it.") }
             frame?.plantName?.let { add("Растение: $it.") }

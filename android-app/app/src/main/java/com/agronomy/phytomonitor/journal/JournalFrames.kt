@@ -32,7 +32,8 @@ data class ParsedFrame(
     val plant: String = "",
     val plantId: String? = null,
     val archivePhoto: String? = null,
-    val storedDetectionsJson: String? = null
+    val storedDetectionsJson: String? = null,
+    val feedback: FrameFeedback? = null
 ) {
     val prediction: JSONObject? get() = predictionJson?.let(::JSONObject)
 }

@@ -98,6 +98,7 @@ class FieldDemoActivity : ComponentActivity() {
     private var requestDictation=false
     private var systemGallery: ()->Unit={}
     private var exportJournalFile: (JournalExport) -> Unit = {}
+    private var exportFeedbackFile: () -> Unit = {}
     private var importJournalFile: () -> Unit = {}
     private val listeningPermission = ListeningPermissionGate()
     private var listeningPermissionRevision by mutableIntStateOf(0)
@@ -197,12 +198,16 @@ class FieldDemoActivity : ComponentActivity() {
     }
 
     internal fun currentState(): AppState = AppState(
+        experimentalControls = BuildConfig.IS_LAB,
         screen = currentScreen(),
         hasPhoto = fieldModel.bitmap != null,
         hasResult = fieldModel.reportName != null,
         hasDraft = fieldModel.hasDraft,
         frameCount = if (currentScreen() == Screen.JOURNAL) journalModel.state.value.opened?.details?.photos?.size ?: 0 else fieldModel.frames.size,
         selectedFrame = if (currentScreen() == Screen.JOURNAL) journalModel.state.value.opened?.selectedFrame ?: 0 else fieldModel.selectedFrame,
+        feedbackExportPending = journalModel.state.value.pendingFeedbackExport.isNotEmpty(),
+        feedbackExportCount = journalModel.state.value.opened?.details?.photos.orEmpty()
+            .count { it.photo.id in journalModel.state.value.exportFrames },
         busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null || plotsModel.state.value.busy || syncModel.state.value.busy,
         syncGeneration = syncModel.state.value.generation,
         pendingSync = syncModel.state.value.pending,
@@ -274,6 +279,11 @@ class FieldDemoActivity : ComponentActivity() {
                     else fieldModel.selectFrame(operation.number)
                 }
                 is Operation.SetFrameRole -> fieldModel.setFrameRole(operation.role)
+                is Operation.SaveFrameFeedback -> journalModel.saveFrameFeedback(operation.verdict, operation.correction)
+                is Operation.ToggleExportFrame -> journalModel.toggleExportFrame(operation.number)
+                Operation.PrepareFeedbackExport -> journalModel.prepareFeedbackExport()
+                Operation.LaunchFeedbackExport -> exportFeedbackFile()
+                Operation.CancelFeedbackExport -> journalModel.cancelFeedbackExport()
                 Operation.OpenSyncSettings -> navigation?.navigate("settings") { launchSingleTop = true }
                 Operation.SpeakSyncStatus -> syncModel.status()
                 is Operation.SendInspection -> syncModel.send(operation.id)
@@ -763,6 +773,28 @@ class FieldDemoActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(format.mimeType)){uri->if(uri!=null)journalModel.export(uri,format)}
                 }
                 val restore=rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()){uri->if(uri!=null)journalModel.restore(uri)}
+                var feedbackExportIds by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(arrayListOf<String>()) }
+                val feedbackExport = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
+                    val ids = feedbackExportIds.toList()
+                    feedbackExportIds = arrayListOf()
+                    if (uri != null && ids.isNotEmpty()) journalModel.exportFeedback(uri, ids)
+                }
+                SideEffect {
+                    exportFeedbackFile = {
+                        feedbackExportIds = ArrayList(journalModel.state.value.pendingFeedbackExport)
+                        journalModel.cancelFeedbackExport()
+                        listeningPermission.cancel()
+                        voice.stop()
+                        feedbackExport.launch("AgroVoice-feedback.zip")
+                    }
+                }
+                if (journalState.pendingFeedbackExport.isNotEmpty()) {
+                    androidx.compose.material3.AlertDialog(onDismissRequest = journalModel::cancelFeedbackExport,
+                        title = { Text("Сохранить выбранные кадры?") },
+                        text = { Text("В ZIP попадут отмеченные фотографии, технический результат и ваша оценка с исправлением. Заметки журнала, GPS и EXIF исключены. На самом изображении и в исправлении могут остаться личные сведения — проверьте их перед передачей. Файл сохраняется в выбранное вами место; приложение не отправляет его автоматически.") },
+                        confirmButton = { TextButton(onClick = { press(VoiceAction.CONFIRM) }) { Text("Выбрать место сохранения") } },
+                        dismissButton = { TextButton(onClick = { press(VoiceAction.CANCEL) }) { Text("Отмена") } })
+                }
                 val systemPicker: ()->Unit={closePhotoFlow();gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))}
                 SideEffect {systemGallery=systemPicker}
                 val context=currentScreen().protocolName
@@ -923,6 +955,11 @@ class FieldDemoActivity : ComponentActivity() {
                                         }
                                     } else {
                                         SavedInspectionScreen(saved, onBack = { press(VoiceAction.BACK) },
+                                            exportFrames = journalState.exportFrames,
+                                            onToggleExport = { press(VoiceAction.SELECT_EXPORT_FRAME, it.toString()) },
+                                            onExportFeedback = { press(VoiceAction.EXPORT_FEEDBACK) },
+                                            onFeedback = { verdict, correction -> press(VoiceAction.FRAME_FEEDBACK,
+                                                com.agronomy.phytomonitor.actions.FeedbackActions.value(verdict, correction)) },
                                             onSelectFrame = { press(VoiceAction.SELECT_FRAME, it.toString()) },
                                             syncModel = syncModel, onSync = { press(it) },
                                             onPlantHistory = { press(VoiceAction.PLANT_HISTORY) },

@@ -120,7 +120,7 @@ def train(args):
             data=str(config / f"{variant}.yaml"), imgsz=416,
             epochs=1 if args.smoke else args.epochs, patience=5,
             fraction=0.003 if args.smoke else 1.0, batch=args.batch,
-            device=0, workers=2, amp=False, cache=False,
+            device=0, workers=args.workers, amp=False, cache=False,
             optimizer="AdamW", lr0=0.001, cos_lr=True, seed=20261019,
             deterministic=True, project=str(args.out), name=variant,
             save=True, save_period=1, plots=False, verbose=False,

@@ -52,7 +52,7 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
     val executor=remember {ContextCompat.getMainExecutor(context)}
     var ready by remember {mutableStateOf(false)}
     var shooting by remember {mutableStateOf(false)}
-    var streamed by remember {mutableStateOf(false)}
+    val streamed = state.previewStreaming
     val saveCallback by rememberUpdatedState(onSaved)
     val adviceCallback by rememberUpdatedState(onAdvice)
     var qualityMessage by remember { mutableStateOf("Оцениваю освещение и детализацию…") }
@@ -126,12 +126,13 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
             }
             ready=true
         }.onFailure {flow.error("Камера недоступна: ${it.message}")}},executor)
-        val observer=androidx.lifecycle.Observer<PreviewView.StreamState> {streamed=it==PreviewView.StreamState.STREAMING}
+        val observer=androidx.lifecycle.Observer<PreviewView.StreamState> {flow.previewStreaming(it==PreviewView.StreamState.STREAMING)}
         previewView.previewStreamState.observe(owner,observer)
         onDispose {
             disposed = true
             active.set(false)
             ready = false
+            flow.previewStreaming(false)
             analysis.clearAnalyzer()
             worker.shutdown()
             previewView.previewStreamState.removeObserver(observer)
@@ -144,7 +145,7 @@ fun PlantCamera(flow: CameraViewModel,onSaved: (Uri)->Unit,onCancel: ()->Unit,on
             if(ready && streamed && flow.consumeAutoShot())takePhoto()
         }
     }
-    CameraLayout(previewView, shooting, ready, state.message,
+    CameraLayout(previewView, shooting, ready && streamed, state.message,
         qualityMessage = if (state.guidanceEnabled) qualityMessage else "Подсказки качества выключены.",
         guidanceEnabled = state.guidanceEnabled, onToggleGuidance = { onGuidance(!state.guidanceEnabled) },
         onShoot=onShoot, onCancel=onCancel, voicePanel=voicePanel)

@@ -5,6 +5,7 @@ import java.util.Locale
 
 enum class VoiceAction {
     ADD_FRAME, ADD_FRAME_GALLERY, SELECT_FRAME, FRAME_ROLE,
+    FRAME_FEEDBACK, SELECT_EXPORT_FRAME, EXPORT_FEEDBACK,
     SYNC_SETTINGS, SYNC_STATUS, SYNC_CURRENT, SYNC_RETRY, SYNC_RECEIVE, SYNC_LOGOUT, SYNC_ALL, SYNC_CONFLICT,
     CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP,
     CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP,
@@ -25,7 +26,7 @@ object VoiceCommands {
         phrases.forEach { aliases[it] = command }
     }
     init {
-        add(VoiceCommand(VoiceAction.ADD_FRAME, "Добавляю кадр"), "добавь кадр", "еще один кадр", "сними еще один ракурс")
+        add(VoiceCommand(VoiceAction.ADD_FRAME, "Добавляю кадр"), "добавь кадр", "ещё один кадр", "сними ещё один ракурс")
         add(VoiceCommand(VoiceAction.ADD_FRAME_GALLERY, "Добавляю кадр из галереи"), "добавь кадр из галереи")
         add(VoiceCommand(VoiceAction.FRAME_ROLE, "Общий вид", "overview"), "это общий вид", "общий вид")
         add(VoiceCommand(VoiceAction.FRAME_ROLE, "Лицевая сторона", "front"), "это лицевая сторона", "лицевая сторона")
@@ -37,14 +38,14 @@ object VoiceCommands {
         }
         add(VoiceCommand(VoiceAction.SYNC_SETTINGS, "Настройки синхронизации"), "открой синхронизацию", "настройки синхронизации", "подключись к серверу")
         add(VoiceCommand(VoiceAction.SYNC_STATUS, "Состояние синхронизации"), "статус синхронизации", "что с отправкой", "осмотры отправлены")
-        add(VoiceCommand(VoiceAction.SYNC_CURRENT, "Передача осмотра"), "отправь этот осмотр", "отправь осмотр", "синхронизируй этот осмотр", "передай осмотр на сервер")
+        add(VoiceCommand(VoiceAction.SYNC_CURRENT, "Передача осмотра"), "отправь этот осмотр", "отправь осмотр", "синхронизировать этот осмотр", "передай осмотр на сервер")
         add(VoiceCommand(VoiceAction.SYNC_RETRY, "Повтор очереди"), "повтори отправку", "повтори синхронизацию", "отправь очередь")
         add(VoiceCommand(VoiceAction.SYNC_RECEIVE, "Получение осмотров"), "получи осмотры с сервера", "загрузи осмотры с сервера")
         add(VoiceCommand(VoiceAction.SYNC_LOGOUT, "Выход из аккаунта"), "выйди из аккаунта", "отключи синхронизацию")
-        add(VoiceCommand(VoiceAction.SYNC_ALL, "Передача журнала"), "отправь все осмотры", "синхронизируй весь журнал")
+        add(VoiceCommand(VoiceAction.SYNC_ALL, "Передача журнала"), "отправь все осмотры", "синхронизировать весь журнал")
         add(VoiceCommand(VoiceAction.SYNC_CONFLICT, "Конфликт синхронизации"), "разбери конфликт", "отправь локальный вариант")
         add(VoiceCommand(VoiceAction.CANCEL, "Передача не подтверждена"), "не отправляй", "не передавай осмотры", "отмени отправку")
-        add(VoiceCommand(VoiceAction.RESUME_DRAFT, "Продолжаю осмотр"), "продолжить осмотр", "продолжи осмотр", "восстанови черновик")
+        add(VoiceCommand(VoiceAction.RESUME_DRAFT, "Продолжаю осмотр"), "продолжить осмотр", "продолжи осмотр", "верни черновик")
         add(VoiceCommand(VoiceAction.DISCARD_DRAFT, "Отменяю черновик"), "отменить черновик", "отмени черновик", "начать новый осмотр", "начни новый осмотр")
         add(VoiceCommand(VoiceAction.CAMERA_GUIDANCE, "Подсказки кадра включены", "true"), "включи подсказки кадра")
         add(VoiceCommand(VoiceAction.CAMERA_GUIDANCE, "Подсказки кадра выключены", "false"), "выключи подсказки кадра")
@@ -132,7 +133,10 @@ object VoiceCommands {
         if (count > 10000) return null
         return (phrasesFor(globalActions + setOf(VoiceAction.SPEAK_RESULT, VoiceAction.SILENCE, VoiceAction.NOTE, VoiceAction.SELECT_FRAME)) +
             listOf("осмотр", "открой осмотр", "запись", "открой запись", "номер",
+                "кадр верный", "кадр неверный", "не знаю", "экспорт выбранных кадров",
+                "да", "подтвердить", "отмена",
                 "не открывай осмотр", "не читай результат", "[unk]") +
+            (1..10).map { "выбери для экспорта кадр ${RussianPhotoNumber.words(it)}" } +
             (1..count.coerceAtLeast(1)).map(RussianPhotoNumber::words)).distinct()
     }
     private val knowledgeActions = setOf(VoiceAction.KNOWLEDGE, VoiceAction.READ_KNOWLEDGE,
@@ -190,6 +194,7 @@ object VoiceCommands {
     }
     fun parseForScreen(text: String, screen: String, plots: Collection<String> = emptyList()): VoiceCommand? {
         if(screen=="note")return null
+        if (screen == "journal") com.agronomy.phytomonitor.actions.FeedbackActions.parse(text)?.let { return it }
         com.agronomy.phytomonitor.actions.BrowseActions.parse(text, screen)?.let { return it }
         if (screen in setOf("main", "journal")) {
             val normalized = text.trim().lowercase().replace('ё', 'е').removeSuffix(".")
@@ -261,13 +266,21 @@ object RussianPhotoNumber {
         val values=small.withIndex().filter {it.index>0}.associate {it.value to it.index} +
             tens.withIndex().filter {it.index>=2}.associate {it.value to it.index*10} +
             hundreds.withIndex().filter {it.index>0}.associate {it.value to it.index*100} + mapOf("одна" to 1,"две" to 2)
-        var part=0;var total=0
-        for(word in body.split(" ")) {
-            if(word in setOf("тысяча","тысячи","тысяч")){if(total!=0)return null;total=(if(part==0)1 else part)*1000;part=0}
-            else part+=values[word] ?: return null
+        var part = 0
+        var total = 0
+        for (word in body.split(" ")) {
+            if (word in setOf("тысяча", "тысячи", "тысяч")) {
+                if (total != 0) return null
+                total = (if (part == 0) 1 else part) * 1000
+                part = 0
+            } else {
+                part += values[word] ?: return null
+            }
         }
-        val number=total+part
-        if(number !in 1..999999)return null
-        return number.takeIf {words(it)==body || it==1000 && body=="тысяча"}
+        val number = total + part
+        if (number !in 1..999999) {
+            return null
+        }
+        return number.takeIf { words(it) == body || it == 1000 && body == "тысяча" }
     }
 }

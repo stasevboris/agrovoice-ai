@@ -71,11 +71,15 @@ class SeriesMigrationTest {
             old.version = 4
         }
         val migrated = Room.databaseBuilder(context, JournalDatabase::class.java, name)
-            .addMigrations(JournalDatabase.MIGRATION_3_4, JournalDatabase.MIGRATION_4_5)
+            .addMigrations(JournalDatabase.MIGRATION_3_4, JournalDatabase.MIGRATION_4_5, JournalDatabase.MIGRATION_5_6)
             .allowMainThreadQueries().build()
         try {
             val details = migrated.journal().inspectionDetails("inspection")!!
             assertEquals("Не потерять историю", details.inspection.note)
+            assertTrue(details.photos.all { it.feedback == null })
+            migrated.journal().editFrameFeedback("inspection", 0, "unknown", "", 100)
+            assertEquals("unknown", migrated.journal().frameFeedback("inspection")!!.verdict)
+            assertEquals(prediction, migrated.journal().inspectionDetails("inspection")!!.inspection.predictionJson)
             assertEquals(2, details.photos.size)
             assertEquals("Сохранённая метка", details.photos.single { it.photo.id == "inspection" }.detections.single().labelRu)
             val columns = migrated.query("PRAGMA table_info(photo)", null).use { cursor ->

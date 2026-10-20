@@ -39,16 +39,21 @@ jobs:
       - uses: android-actions/setup-android@v3
       - run: sdkmanager 'platforms;android-37' 'build-tools;37.0.0'
       - uses: gradle/actions/setup-gradle@v4
-      # Tracked manifests/knowledge are sufficient for compile and JVM tests.
-      # No weights, Vosk downloads, device operations or APK publication in CI.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # Compile/JVM checks need the pinned native API AAR, not model weights.
+      - run: python -X utf8 android-app/fetch_assets.py --runtime-only
+      # APK packaging is separate: it refuses missing vision, ASR and TTS assets.
       - working-directory: android-app
-        run: bash gradlew --no-daemon testDebugUnitTest assembleDebug lintDebug
+        run: bash gradlew --no-daemon testFieldDebugUnitTest testLabDebugUnitTest lintFieldDebug lintLabDebug
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: android-check-reports
           path: |
             android-app/app/build/reports/tests/
-            android-app/app/build/reports/lint-results-debug.*
+            android-app/app/build/reports/lint-results-*.html
+            android-app/app/build/reports/lint-results-*.xml
             android-app/app/build/test-results/
           retention-days: 7

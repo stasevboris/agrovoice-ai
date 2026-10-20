@@ -204,6 +204,16 @@ class InspectionJournal(
 
     fun details(id: String): InspectionWithDetails? = dao.inspectionDetails(id)?.let { it.copy(photos = it.orderedPhotos()) }
 
+    fun saveFrameFeedback(photoId: String, expectedRevision: Int, verdict: String, correction: String) =
+        dao.editFrameFeedback(photoId, expectedRevision, verdict, correction, clock())
+
+    fun exportFeedback(photoIds: List<String>, output: OutputStream): Int {
+        val frames = dao.inspections().flatMap { it.photos }.associateBy { it.photo.id }
+        return com.agronomy.phytomonitor.journal.FeedbackExport.write(photoIds.map {
+            requireNotNull(frames[it]) { "Выбранный кадр больше не доступен." }
+        }, output, ::ownedPhoto)
+    }
+
     fun editNote(id: String, expectedUpdatedAt: Long, note: String): InspectionEntity =
         dao.editNote(id, expectedUpdatedAt, note, clock())
 
@@ -503,6 +513,13 @@ class InspectionJournal(
                 JournalRecords.frameRecord(parsed.id, frame, plants[frame.id], paths[frame.id].orEmpty())
             }
             dao.saveRecord(record.copy(additionalFrames = additional), change)
+            frames.mapNotNull { it.feedback }.forEach { feedback ->
+                val old = dao.frameFeedback(feedback.photoId)
+                if (old == null) dao.upsertFrameFeedback(feedback)
+                else if (feedback.updatedAt > old.updatedAt && feedback != old) {
+                    dao.upsertFrameFeedback(feedback.copy(revision = maxOf(feedback.revision, old.revision + 1)))
+                }
+            }
             recomputeAchievements()
         })
     }

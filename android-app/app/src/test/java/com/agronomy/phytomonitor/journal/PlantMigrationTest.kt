@@ -66,7 +66,7 @@ class PlantMigrationTest {
             old.version = 1
         }
         val migrated = Room.databaseBuilder(context, JournalDatabase::class.java, name)
-            .addMigrations(JournalDatabase.MIGRATION_1_2, JournalDatabase.MIGRATION_2_3, JournalDatabase.MIGRATION_3_4, JournalDatabase.MIGRATION_4_5)
+            .addMigrations(JournalDatabase.MIGRATION_1_2, JournalDatabase.MIGRATION_2_3, JournalDatabase.MIGRATION_3_4, JournalDatabase.MIGRATION_4_5, JournalDatabase.MIGRATION_5_6)
             .allowMainThreadQueries().build()
         try {
             val record = migrated.journal().inspectionDetails("i")!!

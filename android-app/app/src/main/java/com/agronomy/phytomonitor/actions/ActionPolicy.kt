@@ -48,10 +48,14 @@ object ActionPolicy {
         VoiceAction.JOURNAL_NUMBER, VoiceAction.CREATE_PLOT, VoiceAction.RENAME_PLOT, VoiceAction.DELETE_PLOT,
         VoiceAction.SET_SETTING, VoiceAction.SEARCH, VoiceAction.JOURNAL_FILTER, VoiceAction.EXPORT_JOURNAL, VoiceAction.LEAF_KNOWLEDGE,
         VoiceAction.PLANT, VoiceAction.COMPARE_INSPECTIONS, VoiceAction.CAMERA_GUIDANCE,
-        VoiceAction.SELECT_FRAME, VoiceAction.FRAME_ROLE
+        VoiceAction.SELECT_FRAME, VoiceAction.FRAME_ROLE, VoiceAction.FRAME_FEEDBACK, VoiceAction.SELECT_EXPORT_FRAME
     )
 
     fun resolve(request: ActionRequest, state: AppState): Verdict {
+        if (!state.experimentalControls && request.action in setOf(VoiceAction.MODEL, VoiceAction.THRESHOLD,
+                VoiceAction.THRESHOLD_UP, VoiceAction.THRESHOLD_DOWN, VoiceAction.COMPARE)) {
+            return Verdict.Reject("Настройка и сравнение моделей доступны в лабораторной сборке. В полевой сборке используется подготовленная модель.")
+        }
         argumentProblem(request, state)?.let { return it }
         if (state.screen == Screen.NOTE) {
             return resolveWhileDictating(request, state)
@@ -60,6 +64,14 @@ object ActionPolicy {
             return resolveNoteReview(request, state)
         }
         SyncActions.resolve(request, state)?.let { return it }
+        if (state.feedbackExportPending) {
+            return when (request.action) {
+                VoiceAction.CONFIRM -> run(Operation.LaunchFeedbackExport)
+                VoiceAction.CANCEL, VoiceAction.BACK -> run(Operation.CancelFeedbackExport)
+                VoiceAction.SILENCE, VoiceAction.LISTEN_OFF -> control(request, state)
+                else -> Verdict.Clarify("Сначала подтверди сохранение выбранных кадров или скажи «отмена».")
+            }
+        }
         if (request.action in controlActions) {
             return control(request, state)
         }
@@ -76,6 +88,7 @@ object ActionPolicy {
             return Verdict.Clarify(WAIT)
         }
         return when (request.action) {
+            in FeedbackActions.actions -> FeedbackActions.resolve(request, state)
             in SeriesActions.actions -> SeriesActions.resolve(request, state)
             VoiceAction.RESUME_DRAFT, VoiceAction.DISCARD_DRAFT -> when {
                 state.screen != Screen.MAIN -> Verdict.Clarify("Черновик доступен на главном экране.")
@@ -170,6 +183,7 @@ object ActionPolicy {
         }
         return when (request.action) {
             VoiceAction.SELECT_FRAME, VoiceAction.FRAME_ROLE -> null // SeriesActions validates range and role.
+            in FeedbackActions.actions -> null
             VoiceAction.PLANT -> if (value.length <= 120 && value.none { it.isISOControl() }) null else Verdict.Reject("Название растения — до 120 символов.")
             VoiceAction.CAMERA_GUIDANCE -> if (value in setOf("true", "false")) null else Verdict.Reject("Укажи, включить или выключить подсказки.")
             VoiceAction.COMPARE_INSPECTIONS -> if (value.split(":").let { it.size == 2 && it.all { part -> (part.toIntOrNull() ?: 0) > 0 } }) null

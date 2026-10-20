@@ -576,9 +576,12 @@ internal fun VoiceHelpDialog(onClose: () -> Unit) {
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 HelpGroup("Снимок", "Сделай фото — камера, наведи и скажи «подтвердить»\nСделай фото сразу — сразу снять\nОткрой галерею — фото с номерами\nФото номер три / три — показать снимок\nСледующее фото / предыдущее фото — листать\nПервое фото — самое новое; последнее — самое старое\nПодтвердить — снять в камере или выбрать в галерее\nОтмена / назад — вернуться\nПроверь фото — анализ выбранного снимка")
-                HelpGroup("Модели", "Модель один — YOLO11n\nМодель два — YOLO26n (быстрая модель)\nМодель три — MobileNet\nМодель четыре — EfficientNet\nМодель пять — маска + MobileNet\nМодель шесть — ученик\nМодель семь — YOLO26s (большая модель)\nМодель восемь — DETR, пример\nМодель девять — YOLO26m, технический пилот")
-                HelpGroup("Осмотр", "Добавь заметку — диктовка к снимку\nЗакончить заметку / стоп — остановить диктовку, затем «подтвердить» — сохранить\nСохрани осмотр — запись в журнал\nОткрой журнал / покажи историю\nРезультат верный / результат неверный / не уверен — твоя оценка\nСравни модели — один снимок и одинаковые настройки\nПрочитай результат — автономный русский голос, если установлен\nПокажи рамки / убери рамки\nОткрой участки — список участков\nУчасток теплица два — выбрать участок из списка\nРяд четырнадцать — номер ряда для осмотра\nПосле снимка голосом приложение читает результат и спрашивает «Сохранить осмотр?»: да / нет, можно назвать ряд или участок")
-                HelpGroup("Настройки и экран", "Картофель · Томаты · Огурцы · Все культуры\nПорог двадцать пять [процентов] — от 10 до 80\nУвеличь порог / уменьши порог — шаг 5\nПрокрути вниз / вверх · в начало / в конец\nПомощь / покажи команды · понятно — закрыть подсказку\nСтоп / выключи голос — выключить слушание\nСлушай постоянно — включить постоянный режим\nЗакрой приложение — выйти")
+                if (BuildConfig.IS_LAB) {
+                    HelpGroup("Модели", "Модель один — YOLO11n\nМодель два — YOLO26n (быстрая модель)\nМодель три — MobileNet\nМодель четыре — EfficientNet\nМодель пять — маска + MobileNet\nМодель шесть — ученик\nМодель семь — YOLO26s (большая модель)\nМодель восемь — DETR, пример\nМодель девять — YOLO26m, технический пилот")
+                    HelpGroup("Лабораторные настройки", "Сравни модели — один снимок и одинаковые настройки\nПорог двадцать пять [процентов] — от 10 до 80\nУвеличь порог / уменьши порог — шаг 5")
+                }
+                HelpGroup("Осмотр", "Добавь заметку — диктовка к снимку\nЗакончить заметку / стоп — остановить диктовку, затем «подтвердить» — сохранить\nСохрани осмотр — запись в журнал\nОткрой журнал / покажи историю\nРезультат верный / результат неверный / не уверен — твоя оценка\nПрочитай результат — автономный русский голос, если установлен\nПокажи рамки / убери рамки\nОткрой участки — список участков\nУчасток теплица два — выбрать участок из списка\nРяд четырнадцать — номер ряда для осмотра\nПосле снимка голосом приложение читает результат и спрашивает «Сохранить осмотр?»: да / нет, можно назвать ряд или участок")
+                HelpGroup("Настройки и экран", "Картофель · Томаты · Огурцы · Все культуры\nПрокрути вниз / вверх · в начало / в конец\nПомощь / покажи команды · понятно — закрыть подсказку\nСтоп / выключи голос — выключить слушание\nСлушай постоянно — включить постоянный режим\nЗакрой приложение — выйти")
                 HorizontalDivider()
                 Text(
                     "Переключатель слушает непрерывно, пока приложение на экране, до выключения. В фоне микрофон выключен; при возвращении включится, если переключатель остался включён. Без переключателя — одна команда; в камере/галерее диалог до 2 минут. В системном выборе фото голосом управлять нельзя: используй галерею с номерами. Аудио не сохраняется.",
@@ -648,25 +651,33 @@ private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean, on
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Text("Модель", style = MaterialTheme.typography.labelLarge)
-        ModelChips(model, enabled, onAction)
+        if (BuildConfig.IS_LAB) {
+            Text("Модель", style = MaterialTheme.typography.labelLarge)
+            ModelChips(model, enabled, onAction)
+        } else {
+            Text("Полевой режим: ${model.currentModel().labels.size} классов прежней модели. " +
+                "Неизвестные виды и предметы пока могут быть распознаны ошибочно.",
+                style = MaterialTheme.typography.bodySmall)
+        }
         Text("Культура", style = MaterialTheme.typography.labelLarge)
         CropChips(model, enabled, onAction)
-        // Dragging moves only the slider; the release sets the threshold through the shared executor.
-        var dragged by remember { mutableStateOf<Float?>(null) }
-        val shown = dragged ?: model.threshold
-        Text("Порог уверенности: ${thresholdPercent(shown)}", style = MaterialTheme.typography.labelLarge)
-        Slider(
-            value = shown,
-            onValueChange = { dragged = it },
-            valueRange = 0.1f..0.8f,
-            onValueChangeFinished = {
-                val percent = (shown * 100).roundToInt()
-                dragged = null
-                onAction(VoiceAction.THRESHOLD, percent.toString())
-            },
-            enabled = enabled
-        )
+        if (BuildConfig.IS_LAB) {
+            // Dragging moves only the slider; release uses the shared executor.
+            var dragged by remember { mutableStateOf<Float?>(null) }
+            val shown = dragged ?: model.threshold
+            Text("Порог уверенности: ${thresholdPercent(shown)}", style = MaterialTheme.typography.labelLarge)
+            Slider(
+                value = shown,
+                onValueChange = { dragged = it },
+                valueRange = 0.1f..0.8f,
+                onValueChangeFinished = {
+                    val percent = (shown * 100).roundToInt()
+                    dragged = null
+                    onAction(VoiceAction.THRESHOLD, percent.toString())
+                },
+                enabled = enabled
+            )
+        }
         Row(
             Modifier
                 .fillMaxWidth()
@@ -680,16 +691,18 @@ private fun AnalysisSheetContent(model: FieldDemoViewModel, enabled: Boolean, on
             Text("Рамки на фото", modifier = Modifier.weight(1f))
             Switch(checked = model.showBoxes, onCheckedChange = null)
         }
-        OutlinedButton(
-            onClick = { onAction(VoiceAction.COMPARE, "") },
-            enabled = enabled && model.bitmap != null,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Icon(AgroIcons.Compare, contentDescription = null, modifier = Modifier.size(18.dp))
-            Spacer(Modifier.width(6.dp))
-            Text("Сравнить модели")
+        if (BuildConfig.IS_LAB) {
+            OutlinedButton(
+                onClick = { onAction(VoiceAction.COMPARE, "") },
+                enabled = enabled && model.bitmap != null,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(AgroIcons.Compare, contentDescription = null, modifier = Modifier.size(18.dp))
+                Spacer(Modifier.width(6.dp))
+                Text("Сравнить модели")
+            }
+            ComparisonList(model)
         }
-        ComparisonList(model)
         Row(
             Modifier
                 .fillMaxWidth()

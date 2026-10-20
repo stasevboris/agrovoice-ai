@@ -22,6 +22,10 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import com.agronomy.phytomonitor.journal.FrameRole
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -65,7 +69,9 @@ internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit
     onEditNote: () -> Unit, onKnowledge: (Int) -> Unit, onReanalyse: () -> Unit,
     syncModel: com.agronomy.phytomonitor.sync.SyncViewModel,
     onSync: (com.agronomy.phytomonitor.voice.VoiceAction) -> Unit,
-    onPlantHistory: () -> Unit = {}, onSelectFrame: (Int) -> Unit = {}) {
+    onPlantHistory: () -> Unit = {}, onSelectFrame: (Int) -> Unit = {},
+    exportFrames: Set<String> = emptySet(), onToggleExport: (Int) -> Unit = {},
+    onExportFeedback: () -> Unit = {}, onFeedback: (String, String) -> Unit = { _, _ -> }) {
     val inspection = view.details.inspection
     val date = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(inspection.createdAt))
     Column(Modifier.fillMaxSize()) {
@@ -111,6 +117,27 @@ internal fun SavedInspectionScreen(view: SavedInspectionView, onBack: () -> Unit
                 OutlinedButton(onClick = { onKnowledge(index + 1) }) { Text("Справка по листу ${index + 1}") }
             }
             SavedFacts(view)
+            val feedback = view.activePhoto?.feedback
+            var correction by rememberSaveable(view.activePhoto?.photo?.id, feedback?.revision) { mutableStateOf(feedback?.correction.orEmpty()) }
+            Text("Ваша оценка выбранного кадра", style = MaterialTheme.typography.titleMedium)
+            Text("Это мнение пользователя, без проверки специалистом. Исходный ответ модели сохраняется.")
+            feedback?.let { Text("Сохранено: ${if (it.verdict == "unknown") "не знаю" else reviewText(it.verdict)}${if (it.correction.isNotBlank()) ": ${it.correction}" else ""}") }
+            androidx.compose.material3.OutlinedTextField(value = correction,
+                onValueChange = { correction = it.take(500) }, label = { Text("Ваше исправление (необязательно)") },
+                modifier = Modifier.fillMaxWidth())
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = { onFeedback("correct", "") }) { Text("Верно") }
+                OutlinedButton(onClick = { onFeedback("incorrect", correction) }) { Text("Неверно / сохранить исправление") }
+                OutlinedButton(onClick = { onFeedback("unknown", "") }) { Text("Не знаю") }
+            }
+            Text("Кадры для экспорта", style = MaterialTheme.typography.titleMedium)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                view.details.photos.forEachIndexed { index, frame ->
+                    FilterChip(selected = frame.photo.id in exportFrames, onClick = { onToggleExport(index + 1) },
+                        label = { Text("Экспорт: кадр ${index + 1}") })
+                }
+            }
+            OutlinedButton(onClick = onExportFeedback, enabled = exportFrames.isNotEmpty()) { Text("Экспорт выбранных кадров") }
             view.predictionJson?.let { ResultProvenance(it) }
             com.agronomy.phytomonitor.sync.InspectionSyncPanel(syncModel, inspection.id, inspection.updatedAt, onSync)
             if (view.details.photos.any { it.photo.plantId != null }) {

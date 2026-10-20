@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -14,8 +16,8 @@ android {
         applicationId = "com.agronomy.phytomonitor"
         minSdk = 26
         targetSdk = 37
-        versionCode = 19
-        versionName = "0.19-field"
+        versionCode = 20
+        versionName = "0.20"
 
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
@@ -24,6 +26,33 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("field") {
+            dimension = "distribution"
+            versionNameSuffix = "-field"
+            buildConfigField("boolean", "IS_LAB", "false")
+        }
+        create("lab") {
+            dimension = "distribution"
+            applicationIdSuffix = ".lab"
+            versionNameSuffix = "-lab"
+            buildConfigField("boolean", "IS_LAB", "true")
+        }
+    }
+    // Source weights are shared locally; generated flavor trees contain only selected files.
+    sourceSets.getByName("main").assets.setSrcDirs(emptyList<String>())
+    val signingProperties = providers.gradleProperty("releaseSigningProperties").orNull?.let { path ->
+        Properties().apply { file(path).inputStream().use { load(it) } }
+    }
+    if (signingProperties != null) {
+        signingConfigs.create("localRelease") {
+            storeFile = file(requireNotNull(signingProperties.getProperty("storeFile")))
+            storePassword = requireNotNull(signingProperties.getProperty("storePassword"))
+            keyAlias = requireNotNull(signingProperties.getProperty("keyAlias"))
+            keyPassword = requireNotNull(signingProperties.getProperty("keyPassword"))
+        }
+    }
     buildTypes {
         getByName("debug") {
             if (providers.gradleProperty("isolateApp").orNull == "true") {
@@ -32,8 +61,11 @@ android {
         }
         release {
             optimization {
-                enable = false
+                enable = true
             }
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            if (signingProperties != null) signingConfig = signingConfigs.getByName("localRelease")
+            if (providers.gradleProperty("isolateApp").orNull == "true") applicationIdSuffix = ".verification"
         }
     }
     compileOptions {
@@ -42,6 +74,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     testOptions {
         unitTests.isIncludeAndroidResources = true
@@ -77,6 +110,34 @@ val copyKnowledge = tasks.register<PrepareKnowledgeAssets>("copyKnowledge") {
 }
 androidComponents.onVariants { variant ->
     variant.sources.assets?.addGeneratedSourceDirectory(copyKnowledge, PrepareKnowledgeAssets::outputDirectory)
+}
+
+abstract class PrepareFlavorAssets : Exec() {
+    @get:OutputDirectory abstract val outputDirectory: DirectoryProperty
+}
+val python = providers.gradleProperty("pythonExecutable").getOrElse("python")
+val flavorAssets = listOf("field", "lab").associateWith { flavor ->
+    tasks.register<PrepareFlavorAssets>("prepare${flavor.replaceFirstChar { it.uppercase() }}Assets") {
+        inputs.dir("src/main/assets")
+        inputs.files(rootProject.file("prepare_flavor_assets.py"), rootProject.file("fetch_assets.py"))
+        inputs.file(rootProject.file("../ml-pipeline/allcrops/taxonomy_v1.json"))
+        outputDirectory.set(layout.buildDirectory.dir("generated/flavorAssets/$flavor"))
+        commandLine(python, "-X", "utf8", rootProject.file("prepare_flavor_assets.py"), "--flavor", flavor)
+    }
+}
+androidComponents.onVariants { variant ->
+    val flavor = variant.productFlavors.first { it.first == "distribution" }.second
+    val prepare = flavorAssets.getValue(flavor)
+    variant.sources.assets?.addGeneratedSourceDirectory(prepare, PrepareFlavorAssets::outputDirectory)
+    val verify = tasks.register<Exec>("verify${variant.name.replaceFirstChar { it.uppercase() }}Assets") {
+        dependsOn(prepare)
+        commandLine(python, "-X", "utf8", rootProject.file("prepare_flavor_assets.py"), "--flavor", flavor, "--check")
+    }
+    // JVM/compile checks may omit weights, but an installable APK must never do so.
+    tasks.matching { it.name == "package${variant.name.replaceFirstChar { it.uppercase() }}" ||
+        it.name == "package${variant.name.replaceFirstChar { it.uppercase() }}Bundle" }.configureEach {
+        dependsOn(verify)
+    }
 }
 
 dependencies {

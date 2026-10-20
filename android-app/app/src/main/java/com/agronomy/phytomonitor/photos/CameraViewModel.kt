@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 data class CameraState(val shotRequested: Boolean = false, val capturing: Boolean = false, val message: String? = null,
+    val previewStreaming: Boolean = false,
     val guidanceEnabled: Boolean = true, val qualitySamples: Int = 0,
     val qualityVerdict: com.agronomy.phytomonitor.PhotoVerdict? = null)
 
@@ -20,6 +21,7 @@ class CameraViewModel : ViewModel() {
         return requested
     }
     fun capturing(value: Boolean) = mutableState.update { it.copy(capturing = value) }
+    fun previewStreaming(value: Boolean) = mutableState.update { it.copy(previewStreaming = value) }
     fun error(message: String) = mutableState.update { it.copy(message = message) }
     fun guidance(enabled: Boolean) = mutableState.update { it.copy(guidanceEnabled = enabled) }
     fun quality(verdict: com.agronomy.phytomonitor.PhotoVerdict) = mutableState.update {

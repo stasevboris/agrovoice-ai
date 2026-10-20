@@ -33,6 +33,56 @@ VOICE_MANIFEST = ASSETS/"voice/manifest.json"
 RELEASE_CONFIG = APP/"model_release.json"
 CACHE = APP/"build/asset_cache"
 TTS_MANIFEST = ASSETS/"tts/manifest.json"
+OFFLINE = False
+
+
+def flavor_manifest(manifest: dict, flavor: str) -> dict:
+    if flavor == "lab":
+        return manifest
+    selected = [model for model in manifest["models"] if model["id"] == "yolo26s"]
+    if not selected:
+        raise ValueError("field baseline yolo26s is missing from the model manifest")
+    return {**manifest, "models": selected}
+
+
+def import_local_file(local_dir: Path | None, asset: str, target: Path, expected: str) -> bool:
+    """Copy only a verified original, accepting an Android checkout or a flat bundle."""
+    if local_dir is None:
+        return False
+    candidates = [local_dir / "app/src/main/assets" / asset, local_dir / asset,
+                  local_dir / PurePosixPath(asset).name]
+    if asset.startswith("libs/"):
+        candidates.insert(0, local_dir / "app" / asset)
+    source = next((path for path in candidates if path.is_file()), None)
+    if source is None:
+        return False
+    if sha256(source) != expected:
+        raise ValueError(f"SHA-256 mismatch: {source.name}")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if source.resolve() != target.resolve():
+        shutil.copyfile(source, target)
+    return True
+
+
+def fetch_runtime(check_only: bool, local_dir: Path | None) -> list[str]:
+    runtime = json.loads(TTS_MANIFEST.read_text(encoding="utf-8"))["runtime"]
+    target = APP / "app/libs" / runtime["file"]
+    if target.is_file() and sha256(target) == runtime["sha256"]:
+        return []
+    if check_only:
+        return ["tts: missing or corrupt runtime"]
+    try:
+        if not import_local_file(local_dir, f"libs/{runtime['file']}", target, runtime["sha256"]):
+            source = CACHE / runtime["file"]
+            if not source.is_file() or sha256(source) != runtime["sha256"]:
+                download(runtime["source"], source)
+            if sha256(source) != runtime["sha256"]:
+                raise ValueError("SHA-256 mismatch: TTS runtime")
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, target)
+    except (OSError, ValueError) as error:
+        return [f"tts runtime: {error}"]
+    return []
 
 
 def fetch_tts(check_only: bool, local_dir: Path | None) -> list[str]:
@@ -41,6 +91,18 @@ def fetch_tts(check_only: bool, local_dir: Path | None) -> list[str]:
     root = ASSETS / "tts" / manifest["model"]
     runtime = manifest["runtime"]
     runtime_target = APP / "app/libs" / runtime["file"]
+
+    if local_dir and not check_only:
+        try:
+            for item in manifest["files"]:
+                target = root / item["path"]
+                if not target.is_file() or sha256(target) != item["sha256"]:
+                    import_local_file(local_dir, f"tts/{manifest['model']}/{item['path']}", target, item["sha256"])
+            problems = fetch_runtime(False, local_dir)
+            if problems:
+                return problems
+        except (OSError, ValueError) as error:
+            return [f"tts: {error}"]
 
     def valid(path, expected):
         return path.is_file() and sha256(path) == expected
@@ -113,6 +175,8 @@ def sha256(path: Path) -> str:
 
 
 def download(url: str, target: Path):
+    if OFFLINE:
+        raise OSError(f"offline: required local asset is missing ({target.name})")
     target.parent.mkdir(parents=True, exist_ok=True)
     temporary = target.with_suffix(target.suffix+".part")
     print(f"  скачиваю {url}")
@@ -139,8 +203,8 @@ def release_url(config: dict, asset: str) -> str | None:
     return f"https://github.com/{config['repository']}/releases/download/{config['tag']}/{name}"
 
 
-def fetch_models(check_only: bool, local_dir: Path | None) -> list[str]:
-    manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
+def fetch_models(check_only: bool, local_dir: Path | None, flavor: str = "lab") -> list[str]:
+    manifest = flavor_manifest(json.loads(MODEL_MANIFEST.read_text(encoding="utf-8")), flavor)
     config = json.loads(RELEASE_CONFIG.read_text(encoding="utf-8")) if RELEASE_CONFIG.exists() else {}
     problems = []
     for asset, expected in model_files(manifest):
@@ -153,20 +217,17 @@ def fetch_models(check_only: bool, local_dir: Path | None) -> list[str]:
             problems.append(f"{asset}: {state}")
             print(f"{state:7} {asset}")
             continue
-        source = local_dir/PurePosixPath(asset).name if local_dir else None
         url = release_url(config, asset)
         try:
-            if source and source.is_file():
-                print(f"  копирую {source}")
-                target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(source, target)
+            if import_local_file(local_dir, asset, target, expected):
+                pass
             elif url:
                 download(url, target)
             else:
                 problems.append(f"{asset}: нет в релизе {config.get('tag', '?')} и не найден локально")
                 print(f"нет     {asset} (не опубликован; положите вручную или укажите --local-dir)")
                 continue
-        except OSError as error:
+        except (OSError, ValueError) as error:
             problems.append(f"{asset}: {error}")
             print(f"ошибка  {asset}: {error}")
             continue
@@ -185,8 +246,16 @@ def voice_ready(manifest: dict) -> list[str]:
             if not (root/item["path"]).is_file() or sha256(root/item["path"]) != item["sha256"]]
 
 
-def fetch_voice(check_only: bool) -> list[str]:
+def fetch_voice(check_only: bool, local_dir: Path | None = None) -> list[str]:
     manifest = json.loads(VOICE_MANIFEST.read_text(encoding="utf-8"))
+    if local_dir and not check_only:
+        try:
+            for item in manifest["files"]:
+                target = ASSETS / "voice/ru" / item["path"]
+                if not target.is_file() or sha256(target) != item["sha256"]:
+                    import_local_file(local_dir, f"voice/ru/{item['path']}", target, item["sha256"])
+        except (OSError, ValueError) as error:
+            return [f"voice: {error}"]
     bad = voice_ready(manifest)
     if not bad:
         print(f"ok      голосовая модель {manifest['model']} ({len(manifest['files'])} файлов)")
@@ -215,6 +284,7 @@ def fetch_voice(check_only: bool) -> list[str]:
 
 
 def main(argv=None):
+    global OFFLINE
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -223,12 +293,21 @@ def main(argv=None):
     parser.add_argument("--models-only", action="store_true")
     parser.add_argument("--voice-only", action="store_true")
     parser.add_argument("--tts-only", action="store_true", help="only built-in Russian TTS and its runtime")
+    parser.add_argument("--runtime-only", action="store_true", help="only pinned sherpa AAR, for compile/tests in CI")
+    parser.add_argument("--flavor", choices=("field", "lab"), default="lab")
+    parser.add_argument("--offline", action="store_true", help="never access the network")
     args = parser.parse_args(argv)
+    OFFLINE = args.offline
     problems = []
+    if args.runtime_only:
+        problems = fetch_runtime(args.check, args.local_dir)
+        if problems:
+            print("\n".join(problems))
+        return int(bool(problems))
     if not args.voice_only and not args.tts_only:
-        problems += fetch_models(args.check, args.local_dir)
+        problems += fetch_models(args.check, args.local_dir, args.flavor)
     if not args.models_only and not args.tts_only:
-        problems += fetch_voice(args.check)
+        problems += fetch_voice(args.check, args.local_dir)
     if not args.models_only and not args.voice_only:
         problems += fetch_tts(args.check, args.local_dir)
     if problems:

@@ -59,6 +59,7 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
         require(prediction.optJSONArray("detections") != null) { "Формат результата сервера не поддерживается: осмотр оставлен на сервере." }
         val frameMetadata = frameMetadata(prediction, references)
         validateEvidence(data, prediction, references, frameMetadata)
+        validateFeedback(data, prediction, references, frameMetadata)
         val files = JSONArray()
         check(staging.isDirectory || staging.mkdirs()) { "Не удалось подготовить загрузку фото." }
         for (index in 0 until references.length()) {
@@ -140,6 +141,13 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
                 JSONObject().put("detections", it)
             }
             if (evidence != null) dao.insertDetections(JournalRecords.detections(evidence, photoId))
+            data.optJSONArray("frame_feedback")?.let { values ->
+                val matching = (0 until values.length()).map { values.getJSONObject(it) }.filter {
+                    it.getString("photo_sha256") == file.getString("sha256") && it.getString("report_sha256") == FrameFeedback.evidenceSha(reportSha)
+                }
+                require(matching.size <= 1) { "Повторяющаяся оценка кадра." }
+                matching.singleOrNull()?.let { dao.upsertFrameFeedback(FrameFeedback.fromJson(photoId, it)) }
+            }
         }
         val request = JSONObject().put("id", serverId).put("base_version", remote.getLong("version"))
             .put("updated_at", remote.getString("updated_at")).put("data", JSONObject(data.toString()))
@@ -170,6 +178,30 @@ class SyncImporter(private val database: JournalDatabase, private val photos: Fi
                 JournalRecords.detections(JSONObject().put("detections", stored), id)
             }
             id to frame
+        }
+    }
+
+    private fun validateFeedback(data: JSONObject, prediction: JSONObject, references: JSONArray,
+                                 frames: Map<String, JSONObject>) {
+        if (!data.has("frame_feedback")) return
+        val values = data.optJSONArray("frame_feedback") ?: error("Неверный список оценок кадров.")
+        require(values.length() <= references.length()) { "Оценок больше, чем кадров." }
+        val keys = mutableSetOf<Pair<String, String>>()
+        for (index in 0 until values.length()) {
+            val feedback = FrameFeedback.fromJson("", values.getJSONObject(index))
+            val key = feedback.photoSha256 to feedback.reportSha256
+            require(keys.add(key)) { "Повторяющаяся оценка кадра." }
+            val matching = (0 until references.length()).count { photoIndex ->
+                val photo = references.getJSONObject(photoIndex)
+                val metadata = frames[photo.getString("id")]
+                val reportSha = metadata?.optString("report_sha256") ?: if (photoIndex == 0) {
+                    prediction.optJSONObject("agrovoice_origin")?.optString("report_sha256").orEmpty()
+                } else ""
+                val framePrediction = if (metadata != null) metadata.optJSONObject("prediction") else prediction.takeIf { photoIndex == 0 }
+                photo.getString("sha256") == feedback.photoSha256 && FrameFeedback.evidenceSha(reportSha) == feedback.reportSha256 &&
+                    feedback.matchesAnalysis(framePrediction)
+            }
+            require(matching == 1) { "Оценка не относится к единственному исходному анализу кадра." }
         }
     }
 

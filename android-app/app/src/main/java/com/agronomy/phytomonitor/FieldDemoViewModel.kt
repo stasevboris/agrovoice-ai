@@ -83,7 +83,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     /** Errors stop the task; confirmations of a finished action do not. */
     var messageIsError by mutableStateOf(true); private set
     var reportName by mutableStateOf<String?>(null); private set
-    var selectedModel by mutableStateOf("yolo26n"); private set
+    var selectedModel by mutableStateOf(if (BuildConfig.IS_LAB) "yolo26n" else "yolo26s"); private set
     /** Crop ids are taxonomy ids («potato»); values saved by older versions («Potato») are lower-cased. */
     var crop by mutableStateOf("all"); private set
     var threshold by mutableStateOf(0.25f); private set
@@ -107,7 +107,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
             val saved = settings.state.filterNotNull().first()
             selectedModel = saved.model.takeIf { id -> detector.models.any { it.id == id } } ?: detector.models.first().id
             crop = saved.crop.takeIf { it == "all" || (currentModel().family != "detr" && it in currentModel().crops) } ?: "all"
-            threshold = saved.threshold
+            threshold = if (BuildConfig.IS_LAB) saved.threshold else 0.25f
             plotName = saved.plot
             rowName = saved.row
             locationEnabled = saved.location
@@ -146,6 +146,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun setModel(id: String, analyzePhoto: Boolean=true) {
+        if (!BuildConfig.IS_LAB) {
+            if (id != selectedModel) showError("Смена модели доступна в лабораторной сборке.")
+            return
+        }
         if(busy || id==selectedModel || detector.models.none {it.id==id})return
         if (immutableSeriesResult()) return
         selectedModel=id;review="unrated";comparison=emptyList()
@@ -169,6 +173,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     }
     /** Keeps the current result on screen while the slider moves; analyze() replaces it when the drag ends. */
     fun changeThreshold(value: Float) {
+        if (!BuildConfig.IS_LAB) {
+            showError("Изменение порога доступно в лабораторной сборке.")
+            return
+        }
         if(busy)return
         if (immutableSeriesResult()) return
         threshold=value
@@ -333,6 +341,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         journalReady.complete(report)
     }
     fun compareModels(){
+        if (!BuildConfig.IS_LAB) {
+            showError("Сравнение моделей доступно в лабораторной сборке.")
+            return
+        }
         val source=bitmap ?: run {showError("Сначала выбери фото");return};val file=photo ?: return
         if(busy)return
         val filter=crop;val score=threshold
@@ -491,7 +503,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
                         review = draft.review
                         selectedModel = draft.model.takeIf { id -> detector.models.any { it.id == id } } ?: selectedModel
                         crop = draft.crop
-                        threshold = draft.threshold
+                        threshold = if (BuildConfig.IS_LAB) draft.threshold else 0.25f
                         activeDraft = draft
                         pendingDraft = null
                         busy = false

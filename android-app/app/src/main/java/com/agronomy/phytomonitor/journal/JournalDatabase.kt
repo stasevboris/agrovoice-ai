@@ -99,6 +99,29 @@ interface JournalDao {
     @Query("SELECT * FROM photo WHERE id = :id")
     fun photo(id: String): PhotoEntity?
 
+    @Query("SELECT * FROM frame_feedback WHERE photo_id = :photoId")
+    fun frameFeedback(photoId: String): FrameFeedback?
+
+    @Upsert
+    fun upsertFrameFeedback(feedback: FrameFeedback)
+
+    @Transaction
+    fun editFrameFeedback(photoId: String, expectedRevision: Int, verdict: String, correction: String, now: Long): FrameFeedback {
+        val photo = requireNotNull(photo(photoId)) { "Кадр не найден." }
+        val existing = frameFeedback(photoId)
+        check((existing?.revision ?: 0) == expectedRevision) { "Оценка кадра изменилась. Открой осмотр заново." }
+        val version = FrameFeedback.versionOf(photo.predictionJson?.let { org.json.JSONObject(it) })
+        val feedback = FrameFeedback(photoId, photo.sha256, FrameFeedback.evidenceSha(photo.reportSha256), version,
+            verdict, correction.trim(), maxOf(now, (existing?.updatedAt ?: 0) + 1), expectedRevision + 1)
+        feedback.validate()
+        val inspection = requireNotNull(inspection(photo.inspectionId))
+        upsertFrameFeedback(feedback)
+        val updated = inspection.copy(updatedAt = maxOf(now, inspection.updatedAt + 1), syncState = "local")
+        upsertInspection(updated)
+        enqueueSync(SyncQueueEntity(entity = "inspection", entityId = inspection.id, operation = "upsert", createdAt = updated.updatedAt))
+        return feedback
+    }
+
     @Query("DELETE FROM detection WHERE photo_id = :photoId")
     fun deleteDetections(photoId: String)
 
@@ -227,6 +250,7 @@ interface JournalDao {
         PlantEntity::class,
         InspectionEntity::class,
         PhotoEntity::class,
+        FrameFeedback::class,
         DetectionEntity::class,
         DiseaseEntity::class,
         TreatmentEntity::class,
@@ -236,7 +260,7 @@ interface JournalDao {
         JournalEventEntity::class,
         com.agronomy.phytomonitor.sync.SyncRecord::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = true
 )
 abstract class JournalDatabase : RoomDatabase() {
@@ -245,6 +269,15 @@ abstract class JournalDatabase : RoomDatabase() {
 
     companion object {
         @Volatile private var instance: JournalDatabase? = null
+
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS frame_feedback (photo_id TEXT NOT NULL, photo_sha256 TEXT NOT NULL, " +
+                    "report_sha256 TEXT NOT NULL, analysis_version INTEGER, verdict TEXT NOT NULL, correction TEXT NOT NULL, " +
+                    "updated_at INTEGER NOT NULL, revision INTEGER NOT NULL, source TEXT NOT NULL, PRIMARY KEY(photo_id), " +
+                    "FOREIGN KEY(photo_id) REFERENCES photo(id) ON UPDATE NO ACTION ON DELETE CASCADE)")
+            }
+        }
 
         /** ALTER preserves existing photo IDs, detections, plant links and sync records. */
         val MIGRATION_4_5 = object : Migration(4, 5) {
@@ -311,7 +344,7 @@ abstract class JournalDatabase : RoomDatabase() {
 
         fun get(context: Context): JournalDatabase = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(context.applicationContext, JournalDatabase::class.java, "journal.db")
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                 .build()
                 .also { instance = it }
         }

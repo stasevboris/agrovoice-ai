@@ -31,6 +31,9 @@ object FreeSpeech {
         if (phrase.isEmpty()) {
             return Understanding.NotUnderstood
         }
+        if (screen == "journal") com.agronomy.phytomonitor.actions.FeedbackActions.parse(phrase)?.let {
+            return Understanding.Commands(listOf(it))
+        }
         if (screen == "plots") {
             com.agronomy.phytomonitor.actions.PlotActions.parse(phrase, plots)?.let {
                 return Understanding.Commands(listOf(it))

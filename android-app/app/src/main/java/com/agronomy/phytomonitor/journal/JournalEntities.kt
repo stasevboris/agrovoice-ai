@@ -157,7 +157,9 @@ data class PhotoWithDetections(
     @Relation(parentColumn = "id", entityColumn = "photo_id")
     val detections: List<DetectionEntity>,
     @Relation(entity = PlantEntity::class, parentColumn = "plant_id", entityColumn = "id", projection = ["name"])
-    val plantName: String? = null
+    val plantName: String? = null,
+    @Relation(parentColumn = "id", entityColumn = "photo_id")
+    val feedback: FrameFeedback? = null
 )
 
 data class InspectionWithDetails(

@@ -40,7 +40,9 @@ data class JournalState(
     val scrollSequence: Long = 0,
     val earned: List<AchievementEntity> = emptyList(),
     val historyPlantId: String? = null,
-    val comparison: List<SavedInspectionView> = emptyList()
+    val comparison: List<SavedInspectionView> = emptyList(),
+    val exportFrames: Set<String> = emptySet(),
+    val pendingFeedbackExport: List<String> = emptyList()
 ) {
     val history: List<InspectionEntry>
         get() = entries.filter { historyPlantId != null && it.plantId == historyPlantId }
@@ -166,7 +168,52 @@ class JournalViewModel(application: Application) : AndroidViewModel(application)
 
     fun closeInspection() {
         opening?.cancel()
-        mutableState.update { it.copy(opened = null, openingId = null) }
+        mutableState.update { it.copy(opened = null, openingId = null, exportFrames = emptySet(), pendingFeedbackExport = emptyList()) }
+    }
+
+    fun saveFrameFeedback(verdict: String, correction: String) {
+        val opened = state.value.opened ?: return
+        val frame = opened.activePhoto ?: return
+        val revision = frame.feedback?.revision ?: 0
+        transact {
+            val details = withContext(Dispatchers.IO) {
+                journal.saveFrameFeedback(frame.photo.id, revision, verdict, correction)
+                requireNotNull(journal.details(opened.details.inspection.id))
+            }
+            mutableState.update { current ->
+                val view = current.opened
+                current.copy(opened = if (view?.details?.inspection?.id == details.inspection.id) view.copy(details = details) else view,
+                    message = "Оценка кадра сохранена отдельно от результата модели. Это мнение пользователя.")
+            }
+        }
+    }
+
+    fun toggleExportFrame(number: Int) {
+        val id = state.value.opened?.details?.photos?.getOrNull(number - 1)?.photo?.id ?: return
+        mutableState.update { it.copy(exportFrames = if (id in it.exportFrames) it.exportFrames - id else it.exportFrames + id) }
+    }
+
+    fun prepareFeedbackExport() {
+        val current = state.value
+        val ids = current.opened?.details?.photos.orEmpty().map { it.photo.id }.filter { it in current.exportFrames }
+        mutableState.update { it.copy(pendingFeedbackExport = ids,
+            message = if (ids.isEmpty()) "Отметь кадры для экспорта." else null) }
+    }
+
+    fun cancelFeedbackExport() = mutableState.update { it.copy(pendingFeedbackExport = emptyList()) }
+
+    fun exportFeedback(uri: Uri, ids: List<String>) = transact {
+        withContext(Dispatchers.IO) {
+            // Prepare fully before opening the document: a missing/corrupt frame leaves no partial ZIP.
+            val cache = File.createTempFile("feedback-", ".zip", getApplication<Application>().cacheDir)
+            try {
+                cache.outputStream().use { journal.exportFeedback(ids, it) }
+                requireNotNull(getApplication<Application>().contentResolver.openOutputStream(uri, "wt")) {
+                    "Не удалось открыть файл экспорта."
+                }.use { output -> cache.inputStream().use { it.copyTo(output) } }
+            } finally { cache.delete() }
+        }
+        mutableState.update { it.copy(message = "Выбранные кадры сохранены без EXIF и метаданных журнала.") }
     }
 
     fun selectFrame(number: Int) {

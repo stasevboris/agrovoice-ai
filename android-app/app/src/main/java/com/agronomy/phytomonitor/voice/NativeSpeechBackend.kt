@@ -42,9 +42,12 @@ internal class NativeSpeechBackend(private val context: Context) : SpeechBackend
 
     override fun initialize(onReady: (String?) -> Unit) {
         worker.execute {
+            val started = SystemClock.elapsedRealtime()
+            var prepared = started
             val name = runCatching {
                 Class.forName("com.k2fsa.sherpa.onnx.OfflineTts", true, javaClass.classLoader)
                 val model = prepareModel()
+                prepared = SystemClock.elapsedRealtime()
                 if (closed) return@runCatching null
                 engine = OfflineTts(config = OfflineTtsConfig(
                     model = OfflineTtsModelConfig(
@@ -59,17 +62,28 @@ internal class NativeSpeechBackend(private val context: Context) : SpeechBackend
                 ))
                 "Denis (встроенный)"
             }.onFailure { Log.w("AgroVoiceTts", "Built-in voice unavailable", it) }.getOrNull()
+            Log.i("AgroVoiceTts", "Voice initialization took ${SystemClock.elapsedRealtime() - started} ms " +
+                "(files ${prepared - started} ms)")
             main.post { if (!closed) onReady(name) }
         }
     }
 
+    /**
+     * Copies and hashes the voice once. Like the detector models, later starts trust a marker with the
+     * manifest and file sizes: hashing 36 MB in 359 files took ~7 s on every Redmi Note 7 start.
+     */
     private fun prepareModel(): File {
-        val manifest = context.assets.open("tts/manifest.json").bufferedReader().use {
-            JSONObject(it.readText())
-        }
+        val text = context.assets.open("tts/manifest.json").bufferedReader().use { it.readText() }
+        val manifest = JSONObject(text)
         val model = manifest.getString("model")
         val root = File(context.filesDir, "tts/$model")
         val files = manifest.getJSONArray("files")
+        val marker = File(root, ".verified")
+        fun stamp(): String = text.hashCode().toString() + ":" + (0 until files.length()).sumOf { index ->
+            File(root, files.getJSONObject(index).getString("path")).length()
+        }
+        if (marker.isFile && marker.readText() == stamp()) return root
+        marker.delete()
         for (index in 0 until files.length()) {
             check(!closed) { "Voice initialization cancelled" }
             val item = files.getJSONObject(index)
@@ -85,6 +99,7 @@ internal class NativeSpeechBackend(private val context: Context) : SpeechBackend
             check(digest(temporary) == expected) { "Corrupt built-in voice: $path" }
             Files.move(temporary.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING)
         }
+        marker.writeText(stamp())
         return root
     }
 

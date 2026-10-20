@@ -31,6 +31,7 @@ data class ActionRequest(
 
 /** What the executor may rely on. Built from the view models right before every action. */
 data class AppState(
+    val experimentalControls: Boolean = true,
     val screen: Screen = Screen.MAIN,
     val hasPhoto: Boolean = false,
     val hasResult: Boolean = false,
@@ -71,6 +72,8 @@ data class AppState(
     val journalCount: Int = 0,
     val settings: Map<String, Boolean> = emptyMap(),
     val openedInspectionId: String? = null,
+    val feedbackExportPending: Boolean = false,
+    val feedbackExportCount: Int = 0,
     val editingInspectionId: String? = null,
     val resultOpen: Boolean = false,
     /** The app has just asked «Сохранить осмотр?» and waits for «да» or «нет». */
@@ -92,6 +95,11 @@ data class AppState(
 
 /** A concrete change of the app. The Activity performs it without further decisions. */
 sealed interface Operation {
+    data class SaveFrameFeedback(val verdict: String, val correction: String) : Operation
+    data class ToggleExportFrame(val number: Int) : Operation
+    data object PrepareFeedbackExport : Operation
+    data object LaunchFeedbackExport : Operation
+    data object CancelFeedbackExport : Operation
     data class AddFrame(val gallery: Boolean, val withVoice: Boolean) : Operation
     data class SelectFrame(val number: Int, val saved: Boolean) : Operation
     data class SetFrameRole(val role: String) : Operation

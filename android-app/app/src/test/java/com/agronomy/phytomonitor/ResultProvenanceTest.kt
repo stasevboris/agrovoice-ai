@@ -33,7 +33,13 @@ class ResultProvenanceTest {
 
     @Before
     fun prepareSyntheticPhoto() {
-        manifest = JSONObject(context.assets.open("models/manifest.json").bufferedReader().use { it.readText() })
+        // Historical reports from lab remain readable in field, even when their weights
+        // are not packaged. Exercise serialization for all catalog families in both flavors.
+        var root = File(requireNotNull(System.getProperty("user.dir"))).absoluteFile
+        while (!File(root, "android-app/app/src/main/assets/models/manifest.json").isFile) {
+            root = requireNotNull(root.parentFile) { "Source model catalog not found" }
+        }
+        manifest = JSONObject(File(root, "android-app/app/src/main/assets/models/manifest.json").readText())
         models = ModelCatalog.parse(manifest)
         bitmap = Bitmap.createBitmap(40, 20, Bitmap.Config.ARGB_8888)
         photo = PhotoFiles.newCapture(context)

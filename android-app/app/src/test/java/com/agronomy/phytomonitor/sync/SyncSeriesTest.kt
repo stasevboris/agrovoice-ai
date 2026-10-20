@@ -44,7 +44,7 @@ class SyncSeriesTest {
 
     private data class Fixture(val remote: JSONObject, val bytes: Map<String, ByteArray>)
 
-    private fun fixture(count: Int = 2, detections: Int = 1): Fixture {
+    private fun fixture(count: Int = 2, detections: Int = 1, feedback: Boolean = false): Fixture {
         val context = context("source")
         val journal = InspectionJournal(context, db())
         val manifest = JSONObject(base.assets.open("models/manifest.json").bufferedReader().use { it.readText() })
@@ -72,6 +72,7 @@ class SyncSeriesTest {
             InspectionFrame("frame-$index", report, if (index == 0) FrameRole.FRONT else FrameRole.BACK)
         }
         val saved = journal.saveSeries("series", frames, "Серия", "uncertain", "Участок", plant = "Растение")
+        if (feedback) journal.saveFrameFeedback("frame-1", 0, "incorrect", "Другая культура")
         val snapshot = SyncPayload.snapshot(account, journal.details(saved.id)!!, 0, saved.created, { true })
         val files = JSONArray(snapshot.photoFiles)
         val bytes = (0 until files.length()).map { files.getJSONObject(it) }
@@ -90,6 +91,43 @@ class SyncSeriesTest {
     }
 
     @After fun close() = databases.forEach { it.close() }
+
+    @Test fun rejectsFeedbackClaimingAnotherKnownAnalysisVersionBeforeDownloading() {
+        val fixture = fixture(feedback = true)
+        fixture.remote.getJSONObject("data").getJSONArray("frame_feedback").getJSONObject(0).put("analysis_version", 2)
+        val target = context("feedback-version-target")
+        val database = db()
+        val photos = File(target.filesDir, "photos")
+        val importer = SyncImporter(database, photos, File(target.cacheDir, "stage"))
+        assertTrue(runCatching { importer.importRecord(account, fixture.remote, api(fixture)) }.isFailure)
+        assertEquals(0, database.journal().inspectionCount())
+        assertTrue(photos.listFiles().orEmpty().isEmpty())
+    }
+
+    @Test fun feedbackSurvivesSyncAndArchiveWithoutRewritingPrediction() {
+        val fixture = fixture(feedback = true)
+        val data = fixture.remote.getJSONObject("data")
+        assertEquals(1, data.getJSONArray("frame_feedback").length())
+        assertFalse(data.getJSONObject("prediction").has("frame_feedback"))
+        val target = context("feedback-target")
+        val database = db()
+        val importer = SyncImporter(database, File(target.filesDir, "photos"), File(target.cacheDir, "stage"))
+        assertTrue(importer.importRecord(account, fixture.remote, api(fixture)))
+        val journal = InspectionJournal(target, database)
+        val details = journal.details(journal.list().single().id)!!
+        assertNull(details.photos[0].feedback)
+        assertEquals("Другая культура", details.photos[1].feedback!!.correction)
+        assertEquals("user", details.photos[1].feedback!!.source)
+        val archive = ByteArrayOutputStream().also { journal.exportArchive(it) }.toByteArray()
+        val restored = InspectionJournal(context("feedback-restored"), db())
+        assertEquals(1, restored.import(ByteArrayInputStream(archive)).added)
+        val after = restored.details(details.inspection.id)!!
+        assertEquals(details.photos.map { it.feedback }, after.photos.map { it.feedback })
+        assertEquals(details.photos.map { it.photo.predictionJson }, after.photos.map { it.photo.predictionJson })
+        val binding = requireNotNull(SyncArchiveBinding.recover(account, after))
+        val snapshot = SyncPayload.snapshot(account, after, 0, binding.snapshotUpdatedAt, { true }, binding)
+        assertTrue(SyncPayload.sameJson(data, JSONObject(snapshot.request).getJSONObject("data")))
+    }
 
     @Test fun everyFrameHasExplicitWireMetadataWithoutLocalPaths() {
         val fixture = fixture()

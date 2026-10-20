@@ -1,0 +1,302 @@
+{
+  "date": "2026-10-20",
+  "device": "Redmi Note 7 (lavender), Android 13, USB-powered",
+  "scope": [
+    "A-11/A-14/R-01 frame feedback and private export",
+    "A-12 field/lab",
+    "T-04 R8 release build",
+    "A-04/T-02 scenario timing",
+    "S-04 Android verified update store (not wired to UI)"
+  ],
+  "checks": {
+    "android_jvm": {
+      "testFieldDebugUnitTest": {
+        "tests": 343,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "testLabDebugUnitTest": {
+        "tests": 343,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "android_command": "gradlew.bat testFieldDebugUnitTest testLabDebugUnitTest lintFieldDebug lintLabDebug assembleFieldDebug",
+    "android_exit_code": 0,
+    "python_unittest": "113 tests OK (ml-pipeline/tests)",
+    "server_pytest": "60 passed (docker compose --profile test run --rm tests python -m pytest -q)",
+    "release_r8": "assembleFieldRelease -PisolateApp=true succeeded after -dontwarn java.awt.** (JNA AWT helpers)"
+  },
+  "device_tests": {
+    "frame_feedback": {
+      "status": "passed",
+      "synthetic": true,
+      "selected_frames": 2,
+      "original_frames": 3,
+      "evidence_unchanged": true,
+      "exif_removed": true,
+      "archive_feedback_preserved": true,
+      "scope": "Activity injected commands, selected-frame Room feedback, privacy dialog/cancel, ViewModel file URI ZIP, archive restore; no live speech or system document picker interaction"
+    },
+    "scenario_debug_first_and_repeat": {
+      "samples": [
+        {
+          "run": 0,
+          "kind": "first_activity_in_fresh_instrumentation_process",
+          "model_id": "yolo26s",
+          "activity_launch_to_ready_ms": 2277,
+          "camera_open_to_first_stream_ms": 1238,
+          "shutter_to_imported_photo_ms": 3303,
+          "analysis_action_to_result_ms": 681,
+          "reported_inference_ms": 420,
+          "save_action_to_confirmed_room_ms": 795,
+          "camera_open_to_saved_ms": 6017,
+          "activity_launch_to_saved_ms": 8342,
+          "pss_kib_before_after": [
+            204338,
+            335671
+          ],
+          "battery_temperature_tenths_c_before_after": [
+            260,
+            270
+          ],
+          "plugged": 2
+        },
+        {
+          "run": 1,
+          "kind": "repeat_in_same_activity",
+          "model_id": "yolo26s",
+          "camera_open_to_first_stream_ms": 1127,
+          "shutter_to_imported_photo_ms": 2261,
+          "analysis_action_to_result_ms": 908,
+          "reported_inference_ms": 341,
+          "save_action_to_confirmed_room_ms": 241,
+          "camera_open_to_saved_ms": 4537,
+          "pss_kib_before_after": [
+            336268,
+            363275
+          ],
+          "battery_temperature_tenths_c_before_after": [
+            270,
+            270
+          ],
+          "plugged": 2
+        },
+        {
+          "run": 2,
+          "kind": "repeat_in_same_activity",
+          "model_id": "yolo26s",
+          "camera_open_to_first_stream_ms": 1348,
+          "shutter_to_imported_photo_ms": 2262,
+          "analysis_action_to_result_ms": 648,
+          "reported_inference_ms": 391,
+          "save_action_to_confirmed_room_ms": 310,
+          "camera_open_to_saved_ms": 4568,
+          "pss_kib_before_after": [
+            363370,
+            357786
+          ],
+          "battery_temperature_tenths_c_before_after": [
+            270,
+            270
+          ],
+          "plugged": 2
+        }
+      ],
+      "boundaries": "elapsedRealtime; ActivityScenario launch until idle; CAMERA until first preview stream; CONFIRM until imported bitmap; ANALYZE until result; SAVE until Room confirmation",
+      "limits": "Instrumentation overhead and polling included; first Activity is not raw OS process startup. Camera scene unlabelled, no diagnosis truth. Charging battery deltas do not measure discharge; battery sensor is not device-surface temperature. Generated captures remain in isolated journal/gallery for traceability; images not exported by this report."
+    },
+    "scenario_debug_split_capture": {
+      "samples": [
+        {
+          "run": 0,
+          "kind": "first_activity_in_fresh_instrumentation_process",
+          "model_id": "yolo26s",
+          "activity_launch_to_ready_ms": 2358,
+          "camera_open_to_first_stream_ms": 1140,
+          "shutter_to_imported_photo_ms": 2487,
+          "shutter_to_saved_jpeg_ms": 1704,
+          "saved_jpeg_to_decoded_photo_ms": 783,
+          "analysis_action_to_result_ms": 564,
+          "reported_inference_ms": 407,
+          "save_action_to_confirmed_room_ms": 840,
+          "camera_open_to_saved_ms": 5031,
+          "activity_launch_to_saved_ms": 7434,
+          "pss_kib_before_after": [
+            205646,
+            332010
+          ],
+          "battery_temperature_tenths_c_before_after": [
+            270,
+            270
+          ],
+          "plugged": 2
+        },
+        {
+          "run": 1,
+          "kind": "repeat_in_same_activity",
+          "model_id": "yolo26s",
+          "camera_open_to_first_stream_ms": 1164,
+          "shutter_to_imported_photo_ms": 2169,
+          "shutter_to_saved_jpeg_ms": 1640,
+          "saved_jpeg_to_decoded_photo_ms": 529,
+          "analysis_action_to_result_ms": 453,
+          "reported_inference_ms": 340,
+          "save_action_to_confirmed_room_ms": 189,
+          "camera_open_to_saved_ms": 3975,
+          "pss_kib_before_after": [
+            334695,
+            356122
+          ],
+          "battery_temperature_tenths_c_before_after": [
+            270,
+            270
+          ],
+          "plugged": 2
+        },
+        {
+          "run": 2,
+          "kind": "repeat_in_same_activity",
+          "model_id": "yolo26s",
+          "camera_open_to_first_stream_ms": 1044,
+          "shutter_to_imported_photo_ms": 1991,
+          "shutter_to_saved_jpeg_ms": 940,
+          "saved_jpeg_to_decoded_photo_ms": 1051,
+          "analysis_action_to_result_ms": 632,
+          "reported_inference_ms": 362,
+          "save_action_to_confirmed_room_ms": 614,
+          "camera_open_to_saved_ms": 4281,
+          "pss_kib_before_after": [
+            359108,
+            349933
+          ],
+          "battery_temperature_tenths_c_before_after": [
+            270,
+            270
+          ],
+          "plugged": 2
+        }
+      ],
+      "boundaries": "elapsedRealtime; ActivityScenario launch until idle; CAMERA until first preview stream; CONFIRM until imported bitmap (split at CameraX onImageSaved: capturing flag false); ANALYZE until result; SAVE until Room confirmation",
+      "limits": "Instrumentation overhead and polling included; first Activity is not raw OS process startup. Camera scene unlabelled, no diagnosis truth. Charging battery deltas do not measure discharge; battery sensor is not device-surface temperature. Generated captures remain in isolated journal/gallery for traceability; images not exported by this report."
+    }
+  },
+  "starts": {
+    "main_debug_before_voice_marker": {
+      "version": "0.20-field",
+      "cold_total_ms": [
+        3184,
+        3024,
+        3086,
+        3035,
+        3056
+      ],
+      "voice_init_ms": [
+        6998,
+        6902,
+        6851,
+        6862,
+        6892
+      ],
+      "voice_files_ms": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "hot_total_ms": [
+        74,
+        86,
+        66
+      ],
+      "method": "am force-stop; am start -W TotalTime (until first frame); voice init from AgroVoiceTts log; USB-powered debug build",
+      "limits": "Debug build without R8; not a field battery or thermal measurement."
+    },
+    "main_debug_after_voice_marker": {
+      "version": "0.20-field",
+      "cold_total_ms": [
+        3115,
+        3027,
+        3018,
+        3025
+      ],
+      "voice_init_ms": [
+        6526,
+        6529,
+        6540,
+        6588
+      ],
+      "voice_files_ms": [
+        57,
+        48,
+        54,
+        54
+      ],
+      "hot_total_ms": [
+        71,
+        78,
+        76
+      ],
+      "method": "am force-stop; am start -W TotalTime (until first frame); voice init from AgroVoiceTts log; USB-powered debug build",
+      "limits": "Debug build without R8; not a field battery or thermal measurement."
+    },
+    "isolated_release_r8_debug_key": {
+      "version": "0.20-field",
+      "cold_total_ms": [
+        794,
+        643,
+        657,
+        655
+      ],
+      "voice_init_ms": [
+        6259,
+        6062,
+        6023,
+        6060
+      ],
+      "voice_files_ms": [
+        189,
+        17,
+        26,
+        27
+      ],
+      "hot_total_ms": [
+        51,
+        48,
+        50
+      ],
+      "method": "am force-stop; am start -W TotalTime (until first frame); voice init from AgroVoiceTts log; USB-powered debug build",
+      "limits": "Debug build without R8; not a field battery or thermal measurement."
+    }
+  },
+  "user_data": {
+    "stage": "after_update",
+    "files_hashed": 1427,
+    "records": 4,
+    "detections": 5,
+    "original_external_changed": [],
+    "original_rows_changed": [],
+    "original_data_preserved": true,
+    "settings_hashes_changed": []
+  },
+  "findings": [
+    "Debug build cold start ~3 s vs ~0.65-0.8 s for the R8 release build of the same code: debug is not representative.",
+    "Capture is the largest scenario step: CameraX full-resolution JPEG to MediaStore ~0.9-1.7 s, import+decode ~0.5-1.0 s; inference ~0.35-0.42 s.",
+    "Built-in Denis engine construction takes ~6 s after every start; the system voice is used meanwhile. Re-hashing 359 voice files each start was removed (marker like the detector models).",
+    "Feedback-version check: an opinion naming another analysis version is rejected on archive import and sync; null stays allowed.",
+    "Five fixed command phrases contained words absent from the Vosk vocabulary and could never be recognised; rephrased."
+  ],
+  "not_verified": [
+    "live speech by independent speakers",
+    "physical headset",
+    "TalkBack with a person",
+    "Wi-Fi phone -> server",
+    "system document picker interaction",
+    "field lighting/scenes",
+    "battery discharge (phone was USB-powered)"
+  ],
+  "artifacts": "artifacts/verification/autonomous_20261020/ (APKs, logs, phone snapshots; not in git)"
+}
