@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-20",
+  "device": "Redmi Note 7, isolated package",
+  "test": "LargeFontDeviceTest via artifacts/.../phone/run_large_font.py",
+  "method": "system font_scale 1.0/1.3/2.0 (restored to 1.0); semantics TextLayoutResult: ellipsis or characters after last visible line; visible part of MAIN/JOURNAL/SETTINGS/KNOWLEDGE",
+  "before_fix_at_2.0": [
+    {
+      "screen": "MAIN",
+      "text": "Заметка",
+      "hidden_chars": 1
+    },
+    {
+      "screen": "MAIN",
+      "text": "Журнал",
+      "hidden_chars": 1
+    },
+    {
+      "screen": "MAIN",
+      "text": "Сделать фото",
+      "hidden_chars": 5
+    }
+  ],
+  "fix": "ToolButton width is a minimum, not fixed; camera button label may wrap to two lines with minimum height 56 dp",
+  "after_fix": {
+    "1.0": {
+      "MAIN": 0,
+      "JOURNAL": 0,
+      "SETTINGS": 0,
+      "KNOWLEDGE": 0
+    },
+    "1.3": {
+      "MAIN": 0,
+      "JOURNAL": 0,
+      "SETTINGS": 0,
+      "KNOWLEDGE": 0
+    },
+    "2.0": {
+      "MAIN": 0,
+      "JOURNAL": 0,
+      "SETTINGS": 0,
+      "KNOWLEDGE": 0
+    }
+  },
+  "not_checked": [
+    "off-screen parts of scrolling screens",
+    "clipping inside fixed-size boxes",
+    "TalkBack focus order and labels with a person",
+    "camera and result screens"
+  ]
+}

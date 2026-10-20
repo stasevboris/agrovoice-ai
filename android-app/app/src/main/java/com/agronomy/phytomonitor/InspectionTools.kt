@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -191,7 +192,7 @@ internal fun InspectionTools(
             Text("Сохранить осмотр")
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            ToolButton("Заметка", AgroIcons.Edit, enabled = !model.busy, onClick = onNote, modifier = Modifier.width(104.dp))
+            ToolButton("Заметка", AgroIcons.Edit, enabled = !model.busy, onClick = onNote, modifier = Modifier.widthIn(min = 104.dp))
             ToolButton(
                 if (speaking) "Стоп" else "Прочитать",
                 if (speaking) AgroIcons.Stop else AgroIcons.Speaker,
@@ -199,7 +200,7 @@ internal fun InspectionTools(
                 onClick = onSpeak,
                 modifier = Modifier.weight(1f)
             )
-            ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { onAction(VoiceAction.JOURNAL, "") }, modifier = Modifier.width(104.dp))
+            ToolButton("Журнал", AgroIcons.Journal, enabled = true, onClick = { onAction(VoiceAction.JOURNAL, "") }, modifier = Modifier.widthIn(min = 104.dp))
         }
         Text(speakerStatus, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
@@ -235,7 +236,7 @@ private fun LocationLine(model: FieldDemoViewModel, onLocation: (Boolean) -> Uni
     }
 }
 
-/** Square-ish button with the icon above a short label; three of them fit in one row. */
+/** Square-ish button with the icon above a short label; it grows with a large system font instead of cutting the label. */
 @Composable
 private fun ToolButton(label: String, icon: ImageVector, enabled: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     OutlinedButton(

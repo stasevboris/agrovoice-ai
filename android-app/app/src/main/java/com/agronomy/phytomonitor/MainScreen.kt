@@ -502,11 +502,12 @@ private fun BottomArea(
                     enabled = enabled,
                     modifier = Modifier
                         .weight(1f)
-                        .height(56.dp)
+                        .heightIn(min = 56.dp)
                 ) {
                     Icon(AgroIcons.Camera, contentDescription = null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Сделать фото", maxLines = 1)
+                    // With a large system font the label wraps instead of losing «фото».
+                    Text("Сделать фото", maxLines = 2, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
                 }
                 FilledTonalIconButton(
                     onClick = onGallery,
