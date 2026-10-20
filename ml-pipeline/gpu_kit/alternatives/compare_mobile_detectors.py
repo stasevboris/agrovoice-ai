@@ -1,7 +1,8 @@
 """Same-frame CPU ONNX comparison: crop/localization and source-unknown acceptance.
 
-Only field-val and unknown/nonplant val are read. Predictions keep each model's native
-winner and class-aware NMS before mapping to crops. This does not evaluate diagnoses.
+Only field-val and unknown/nonplant val are read. YOLO uses its native winner and
+class-aware NMS; bundled DETR uses native decoded rows without NMS. Both map to crops.
+This does not evaluate diagnoses or publish model weights.
 """
 import argparse
 from collections import Counter, defaultdict
@@ -71,6 +72,24 @@ def decode(output, geometry):
     rows[:, [0, 2]] = ((rows[:, [0, 2]] - pad_x) / scale).clip(0, width)
     rows[:, [1, 3]] = ((rows[:, [1, 3]] - pad_y) / scale).clip(0, height)
     return rows[(rows[:, 2] > rows[:, 0]) & (rows[:, 3] > rows[:, 1])]
+
+
+def decode_detr(output, geometry, class_count):
+    """FieldDetector.decodeDetr: native xyxy/score/class, rounded per-axis scales, no NMS."""
+    if output.shape != (1, 300, 6) or not np.isfinite(output).all():
+        raise ValueError("Expected finite DETR output [1, 300, 6]")
+    rows = output[0].copy()
+    # Android Float.toInt truncates towards zero; no class is inferred from other scores.
+    classes = np.trunc(rows[:, 5])
+    rows[:, 5] = classes
+    rows = rows[(classes >= 0) & (classes < class_count) & (rows[:, 4] >= THRESHOLD)]
+    width, height, scale, pad_x, pad_y = geometry
+    scale_x = max(1, round(width * scale)) / width
+    scale_y = max(1, round(height * scale)) / height
+    rows[:, [0, 2]] = ((rows[:, [0, 2]] - pad_x) / scale_x).clip(0, width)
+    rows[:, [1, 3]] = ((rows[:, [1, 3]] - pad_y) / scale_y).clip(0, height)
+    rows = rows[(rows[:, 2] > rows[:, 0]) & (rows[:, 3] > rows[:, 1])]
+    return rows[np.argsort(-rows[:, 4], kind="stable")]
 
 
 def legacy_crops(classes, taxonomy):
@@ -143,13 +162,19 @@ def run(args):
 
     taxonomy = json.loads(args.taxonomy.read_text(encoding="utf-8"))
     manifest = json.loads(args.app_manifest.read_text(encoding="utf-8"))
-    app = next(item for item in manifest["models"] if item["id"] == args.app_model)
-    if app.get("family") != "yolo" or app.get("classifier"):
-        raise ValueError("Comparison currently supports direct ordinary YOLO detectors only")
-    app_path = args.app_manifest.parent.parent / app["asset"]
-    if sha256(app_path) != app["sha256"]:
-        raise ValueError("APK detector does not match its manifest SHA256")
-    models = [(args.app_model, app_path, legacy_crops(app.get("classes", manifest["classes"]), taxonomy))]
+    models = []
+    for identity in [args.app_model, *getattr(args, "app_alternative", [])]:
+        if identity in {model[0] for model in models}:
+            raise ValueError("Model names must be unique")
+        app = next((item for item in manifest["models"] if item["id"] == identity), None)
+        if (app is None or app.get("family") not in ("yolo", "detr") or app.get("classifier") or
+                app.get("side", SIDE) != SIDE):
+            raise ValueError(f"Expected a bundled direct 416 YOLO/DETR detector: {identity}")
+        app_path = args.app_manifest.parent.parent / app["asset"]
+        if sha256(app_path) != app["sha256"]:
+            raise ValueError(f"APK detector does not match its manifest SHA256: {identity}")
+        crops = legacy_crops(app.get("classes", manifest["classes"]), taxonomy)
+        models.append((identity, app_path, crops, app["family"], app))
     candidate_crops = [item["crop"] for item in taxonomy["classes"]]
     for candidate in args.candidate:
         name, path = candidate.split("=", 1)
@@ -157,8 +182,8 @@ def run(args):
             raise ValueError("Candidate names must be nonempty and unique")
         if not Path(path).is_file():
             raise FileNotFoundError(path)
-        models.append((name, Path(path), candidate_crops))
-    common = set.intersection(*(set(crops) for _, _, crops in models))
+        models.append((name, Path(path), candidate_crops, "yolo", {}))
+    common = set.intersection(*(set(crops) for _, _, crops, _, _ in models))
     if not common:
         raise ValueError("No common crops")
     field_path = args.data / "annotations/val_field.json"
@@ -178,8 +203,9 @@ def run(args):
               "manifest_sha256": sha256(args.app_manifest), "taxonomy_sha256": sha256(args.taxonomy),
               "planned_images": {"field": len(field["images"]), **{key: len(paths) for key, paths in unknown.items()}},
               "protocol": {"confidence": THRESHOLD, "nms_iou": .7, "matching_iou": .5,
+                           "nms_applies_to": "yolo only; DETR native rows have no NMS",
                            "matching": "Confidence-ordered class-agnostic IoU>=0.5 matching; wrong crop consumes GT",
-                           "native_class_nms": True, "crop_mapping_after_native_winner": True,
+                           "native_class_nms": "see each model decode_policy", "crop_mapping_after_native_winner": True,
                            "device": "CPU", "threads": args.threads, "max_seconds": args.max_seconds},
               "limitations": ["Crop and localization only; generic leaf labels do not establish healthy diagnoses.",
                               "TP/FP/FN score the first localized crop response, not standard class-aware detection AP.",
@@ -192,16 +218,22 @@ def run(args):
     options.inter_op_num_threads = 1
     try:
         with (args.out / "predictions.jsonl").open("w", encoding="utf-8") as output:
-            for name, path, crops in models:
+            for name, path, crops, family, metadata in models:
                 check_time()
                 session = ort.InferenceSession(str(path), sess_options=options, providers=["CPUExecutionProvider"])
                 inputs, outputs = session.get_inputs(), session.get_outputs()
+                expected_output = [1, 300, 6] if family == "detr" else [1, 4 + len(crops), 3549]
                 if (len(inputs) != 1 or inputs[0].type != "tensor(float)" or inputs[0].shape != [1, 3, SIDE, SIDE] or
-                        len(outputs) != 1 or outputs[0].shape != [1, 4 + len(crops), 3549]):
+                        len(outputs) != 1 or outputs[0].type != "tensor(float)" or outputs[0].shape != expected_output):
                     raise ValueError(f"Unsupported detector shape/type: {name}")
                 stats = dict.fromkeys(COUNTS, 0)
                 stats["confusion"] = Counter()
                 item = {"name": name, "onnx": str(path), "sha256": sha256(path), "class_crops": crops,
+                        "model_name": metadata.get("name", name), "family": family,
+                        "provisional": metadata.get("provisional", True), "license": metadata.get("license", "not specified here"),
+                        "decode_policy": {"native_class_nms": family == "yolo",
+                                          "output": "xyxy_score_class" if family == "detr" else "cxcywh_class_scores",
+                                          "box_mapping": "rounded_axis_scales" if family == "detr" else "letterbox_scale"},
                         "field": stats, "acceptance": {}, "complete": False}
                 report["models"].append(item)
                 sources = {"field": [(str(row["id"]), args.data / row["file_name"]) for row in field["images"]],
@@ -214,7 +246,8 @@ def run(args):
                         check_time()
                         batch, geometry = preprocess(image)
                         raw = session.run(None, {inputs[0].name: batch})[0]
-                        predictions = crop_predictions(decode(raw, geometry), crops)
+                        rows = decode_detr(raw, geometry, len(crops)) if family == "detr" else decode(raw, geometry)
+                        predictions = crop_predictions(rows, crops)
                         output.write(json.dumps({"model": name, "source": source, "id": identity,
                                                  "image": str(image), "predictions": predictions}) + "\n")
                         if source == "field":
@@ -248,7 +281,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--app-manifest", type=Path, default=ROOT / "android-app/app/src/main/assets/models/manifest.json")
     parser.add_argument("--app-model", default="yolo26s")
-    parser.add_argument("--candidate", action="append", required=True, metavar="NAME=ONNX")
+    parser.add_argument("--candidate", action="append", default=[], metavar="NAME=ONNX")
+    parser.add_argument("--app-alternative", action="append", default=[], metavar="ID",
+                        help="Compare another bundled direct YOLO/DETR model from the same manifest")
     parser.add_argument("--taxonomy", type=Path, default=ROOT / "ml-pipeline/allcrops/taxonomy_v1.json")
     parser.add_argument("--data", type=Path, default=ROOT / "ml-pipeline/dataset_vision_training_v1")
     parser.add_argument("--unknown-root", type=Path, default=ROOT / "ml-pipeline")
@@ -257,6 +292,8 @@ def main():
     parser.add_argument("--deadline", help="Optional ISO timestamp with timezone; earliest time limit wins")
     parser.add_argument("--threads", type=int, default=2)
     args = parser.parse_args()
+    if not args.candidate and not args.app_alternative:
+        parser.error("At least one --candidate or --app-alternative is required")
     if (not np.isfinite(args.max_seconds) or args.max_seconds <= 0 or args.threads <= 0 or
             any("=" not in item for item in args.candidate)):
         parser.error("A finite positive max-seconds, positive threads and NAME=ONNX candidates are required")

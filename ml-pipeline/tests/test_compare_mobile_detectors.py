@@ -26,6 +26,37 @@ spec.loader.exec_module(module)
 
 
 class MobileComparisonTest(unittest.TestCase):
+    def test_detr_keeps_duplicate_queries_without_nms(self):
+        output = np.zeros((1, 300, 6), dtype=np.float32)
+        output[0, :2] = [[10, 10, 20, 20, .8, 0], [10, 10, 20, 20, .9, 0]]
+        rows = module.decode_detr(output, (100, 100, 1, 0, 0), 1)
+        self.assertEqual(len(rows), 2)
+        np.testing.assert_allclose(rows[:, 4], [.9, .8])
+
+    def test_detr_uses_rounded_axis_scales_and_preserves_class_id(self):
+        output = np.zeros((1, 300, 6), dtype=np.float32)
+        output[0, 0] = [0, 69, 208, 207.5, .9, 1]
+        rows = module.decode_detr(output, (3, 2, 416 / 3, 0, 69), 2)
+        np.testing.assert_allclose(rows[0, :4], [0, 0, 1.5, 1])
+        self.assertEqual(rows[0, 5], 1)
+
+    def test_detr_discards_unknown_classes_and_invalid_boxes(self):
+        output = np.zeros((1, 300, 6), dtype=np.float32)
+        output[0, :4] = [[10, 10, 20, 20, .9, -1], [10, 10, 20, 20, .9, 2],
+                         [20, 10, 10, 20, .9, 0], [10, 10, 20, 20, .25, 1]]
+        rows = module.decode_detr(output, (100, 100, 1, 0, 0), 2)
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0, 5], 1)
+
+    def test_detr_rejects_wrong_shape_and_nonfinite_output(self):
+        for shape in ((1, 6, 300), (1, 299, 6), (300, 6)):
+            with self.subTest(shape=shape), self.assertRaises(ValueError):
+                module.decode_detr(np.zeros(shape, dtype=np.float32), (100, 100, 1, 0, 0), 1)
+        output = np.zeros((1, 300, 6), dtype=np.float32)
+        output[0, 0, 0] = np.nan
+        with self.assertRaises(ValueError):
+            module.decode_detr(output, (100, 100, 1, 0, 0), 1)
+
     def test_cli_rejects_unbounded_runtime_before_creating_output(self):
         with tempfile.TemporaryDirectory() as folder:
             output = Path(folder) / "comparison"
@@ -117,6 +148,26 @@ class MobileComparisonTest(unittest.TestCase):
 
 @unittest.skipIf(onnx is None, "Synthetic ONNX smoke requires optional ONNX dependencies")
 class MobileComparisonSmokeTest(unittest.TestCase):
+    def add_detr(self, args):
+        output = np.zeros((1, 300, 6), dtype=np.float32)
+        output[0, :2] = [[104, 104, 312, 312, .9, 0], [104, 104, 312, 312, .8, 0]]
+        graph = helper.make_graph(
+            [helper.make_node("Constant", [], ["output0"], value=numpy_helper.from_array(output))],
+            "constant_detr", [helper.make_tensor_value_info("images", TensorProto.FLOAT, [1, 3, 416, 416])],
+            [helper.make_tensor_value_info("output0", TensorProto.FLOAT, [1, 300, 6])],
+        )
+        model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 17)])
+        model.ir_version = 9
+        path = args.app_manifest.parent / "detr.onnx"
+        onnx.save(model, path)
+        manifest = json.loads(args.app_manifest.read_text())
+        manifest["models"].append({"id": "detr", "name": "Synthetic DETR", "family": "detr", "side": 416,
+                                   "asset": "models/detr.onnx", "sha256": module.sha256(path),
+                                   "provisional": True, "license": "Synthetic fixture"})
+        args.app_manifest.write_text(json.dumps(manifest), encoding="utf-8")
+        args.candidate = []
+        args.app_alternative = ["detr"]
+
     def fixture(self, root):
         assets = root / "assets/models"
         assets.mkdir(parents=True)
@@ -168,6 +219,35 @@ class MobileComparisonSmokeTest(unittest.TestCase):
             self.assertEqual((model["field"]["tp"], model["field"]["fp"], model["field"]["fn"]), (1, 0, 0))
             self.assertTrue(all(result == {"images": 1, "accepted": 1} for result in model["acceptance"].values()))
         self.assertEqual(report["models"][0]["sha256"], report["models"][1]["sha256"])
+
+    def test_bundled_detr_cli_without_yolo_candidate_records_native_decode(self):
+        with tempfile.TemporaryDirectory() as folder:
+            args = self.fixture(Path(folder))
+            self.add_detr(args)
+            result = subprocess.run(
+                [sys.executable, "-X", "utf8", str(SOURCE), "--app-manifest", str(args.app_manifest),
+                 "--app-model", "app", "--app-alternative", "detr", "--taxonomy", str(args.taxonomy),
+                 "--data", str(args.data), "--unknown-root", str(args.unknown_root), "--out", str(args.out),
+                 "--max-seconds", "30", "--threads", "1"],
+                capture_output=True, text=True, encoding="utf-8",
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            report = json.loads((args.out / "report.json").read_text())
+        self.assertEqual([model["family"] for model in report["models"]], ["yolo", "detr"])
+        detr = report["models"][1]
+        self.assertFalse(detr["decode_policy"]["native_class_nms"])
+        self.assertEqual((detr["field"]["tp"], detr["field"]["fp"], detr["field"]["fn"]), (1, 1, 0))
+        self.assertEqual(detr["license"], "Synthetic fixture")
+        self.assertTrue(detr["provisional"])
+
+    def test_bundled_alternative_must_match_its_manifest_hash(self):
+        with tempfile.TemporaryDirectory() as folder:
+            args = self.fixture(Path(folder))
+            self.add_detr(args)
+            (args.app_manifest.parent / "detr.onnx").write_bytes(b"damaged")
+            with self.assertRaisesRegex(ValueError, "SHA256"):
+                module.run(args)
+            self.assertFalse(args.out.exists())
 
     def test_expired_deadline_writes_partial_report_without_inference(self):
         with tempfile.TemporaryDirectory() as folder:
