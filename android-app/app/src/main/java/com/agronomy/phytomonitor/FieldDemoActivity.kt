@@ -211,6 +211,7 @@ class FieldDemoActivity : ComponentActivity() {
         busy = fieldModel.busy || journalModel.state.value.busy || journalModel.state.value.openingId != null || plotsModel.state.value.busy || syncModel.state.value.busy,
         syncGeneration = syncModel.state.value.generation,
         pendingSync = syncModel.state.value.pending,
+        knowledgeUpdate = syncModel.state.value.offeredKnowledge?.version,
         inspectionSaved = fieldModel.inspectionSaved,
         review = fieldModel.review,
         galleryCount = if (photoFlow.loading) 0 else photoFlow.photos.size,
@@ -291,6 +292,8 @@ class FieldDemoActivity : ComponentActivity() {
                 Operation.ReceiveSync -> syncModel.receive()
                 Operation.LogoutSync -> syncModel.logout()
                 Operation.AskSyncAll -> syncModel.askAll()
+                Operation.CheckUpdates -> syncModel.checkUpdates()
+                Operation.InstallKnowledgeUpdate -> syncModel.installKnowledge()
                 is Operation.AskSyncConflict -> syncModel.askConflict(operation.id)
                 is Operation.ConfirmSync -> syncModel.confirm(operation.confirmation)
                 Operation.CancelSyncConfirmation -> syncModel.cancelConfirmation()
@@ -732,6 +735,7 @@ class FieldDemoActivity : ComponentActivity() {
                 val syncState by syncModel.state.collectAsState()
                 val syncRoute = route + backStackEntry?.arguments?.getString("id")?.let { "/$it" }.orEmpty()
                 LaunchedEffect(syncRoute) { syncModel.screenChanged(syncRoute) }
+                LaunchedEffect(syncState.knowledgeRevision) { if (syncState.knowledgeRevision > 0) knowledgeModel.reload() }
                 LaunchedEffect(Unit) {
                     syncModel.events.collect { notice ->
                         if (notice.error) model.showError(notice.text) else model.notify(notice.text)

@@ -7,6 +7,7 @@ enum class VoiceAction {
     ADD_FRAME, ADD_FRAME_GALLERY, SELECT_FRAME, FRAME_ROLE,
     FRAME_FEEDBACK, SELECT_EXPORT_FRAME, EXPORT_FEEDBACK,
     SYNC_SETTINGS, SYNC_STATUS, SYNC_CURRENT, SYNC_RETRY, SYNC_RECEIVE, SYNC_LOGOUT, SYNC_ALL, SYNC_CONFLICT,
+    UPDATES_CHECK, UPDATES_INSTALL,
     CAMERA, CAMERA_NOW, OPEN_CAMERA, GALLERY, SYSTEM_GALLERY, ANALYZE, MODEL, CROP,
     CANCEL, BACK, EXIT, HELP, CLOSE_HELP, LISTEN_ON, LISTEN_OFF, THRESHOLD, THRESHOLD_UP,
     THRESHOLD_DOWN, SCROLL, PHOTO_NUMBER, FIRST_PHOTO, LAST_PHOTO, NEXT_PHOTO, PREVIOUS_PHOTO,
@@ -43,6 +44,8 @@ object VoiceCommands {
         add(VoiceCommand(VoiceAction.SYNC_RECEIVE, "Получение осмотров"), "получи осмотры с сервера", "загрузи осмотры с сервера")
         add(VoiceCommand(VoiceAction.SYNC_LOGOUT, "Выход из аккаунта"), "выйди из аккаунта", "отключи синхронизацию")
         add(VoiceCommand(VoiceAction.SYNC_ALL, "Передача журнала"), "отправь все осмотры", "синхронизировать весь журнал")
+        add(VoiceCommand(VoiceAction.UPDATES_CHECK, "Проверка обновлений"), "проверь обновления", "проверить обновления", "есть ли обновления")
+        add(VoiceCommand(VoiceAction.UPDATES_INSTALL, "Установка справочника"), "установи обновление справочника", "установить обновление справочника", "скачай новый справочник")
         add(VoiceCommand(VoiceAction.SYNC_CONFLICT, "Конфликт синхронизации"), "разбери конфликт", "отправь локальный вариант")
         add(VoiceCommand(VoiceAction.CANCEL, "Передача не подтверждена"), "не отправляй", "не передавай осмотры", "отмени отправку")
         add(VoiceCommand(VoiceAction.RESUME_DRAFT, "Продолжаю осмотр"), "продолжить осмотр", "продолжи осмотр", "верни черновик")

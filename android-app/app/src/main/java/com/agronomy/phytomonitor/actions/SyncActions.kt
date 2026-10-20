@@ -12,7 +12,8 @@ sealed interface SyncConfirmation {
 
 object SyncActions {
     val actions = setOf(VoiceAction.SYNC_SETTINGS, VoiceAction.SYNC_STATUS, VoiceAction.SYNC_CURRENT,
-        VoiceAction.SYNC_RETRY, VoiceAction.SYNC_RECEIVE, VoiceAction.SYNC_LOGOUT, VoiceAction.SYNC_ALL, VoiceAction.SYNC_CONFLICT)
+        VoiceAction.SYNC_RETRY, VoiceAction.SYNC_RECEIVE, VoiceAction.SYNC_LOGOUT, VoiceAction.SYNC_ALL, VoiceAction.SYNC_CONFLICT,
+        VoiceAction.UPDATES_CHECK, VoiceAction.UPDATES_INSTALL)
 
     fun resolve(request: ActionRequest, state: AppState): Verdict? {
         val pending = state.pendingSync
@@ -44,6 +45,9 @@ object SyncActions {
             VoiceAction.SYNC_ALL -> if (state.screen == Screen.SETTINGS) run(Operation.AskSyncAll)
                 else Verdict.Clarify("Отправка всего журнала доступна в настройках синхронизации.")
             VoiceAction.SYNC_RETRY -> run(Operation.RetrySync)
+            VoiceAction.UPDATES_CHECK -> run(Operation.CheckUpdates)
+            VoiceAction.UPDATES_INSTALL -> if (state.knowledgeUpdate == null) Verdict.Clarify("Сначала проверьте обновления: новой версии справочника нет.")
+                else run(Operation.InstallKnowledgeUpdate)
             VoiceAction.SYNC_RECEIVE -> run(Operation.ReceiveSync)
             else -> null
         }

@@ -63,6 +63,8 @@ data class AppState(
     val pendingPlotDeletion: PlotTarget? = null,
     val syncGeneration: String? = null,
     val pendingSync: SyncConfirmation? = null,
+    /** Version of a checked, not yet installed reference book from the server. */
+    val knowledgeUpdate: String? = null,
     val plot: String = "",
     val row: String = "",
     val plant: String = "",
@@ -110,6 +112,8 @@ sealed interface Operation {
     data object ReceiveSync : Operation
     data object LogoutSync : Operation
     data object AskSyncAll : Operation
+    data object CheckUpdates : Operation
+    data object InstallKnowledgeUpdate : Operation
     data class AskSyncConflict(val id: String) : Operation
     data class ConfirmSync(val confirmation: SyncConfirmation) : Operation
     data object CancelSyncConfirmation : Operation

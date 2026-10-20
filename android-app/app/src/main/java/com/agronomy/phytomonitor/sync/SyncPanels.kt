@@ -50,6 +50,13 @@ fun SyncSettingsPanel(model: SyncViewModel, initialServer: String, onAction: (Vo
             Button(enabled = !state.busy, onClick = { onAction(VoiceAction.SYNC_ALL) }) { Text("Отправить все осмотры") }
             Button(enabled = !state.busy, onClick = { onAction(VoiceAction.SYNC_RETRY) }) { Text("Повторить и обновить статусы") }
             Button(enabled = !state.busy, onClick = { onAction(VoiceAction.SYNC_RECEIVE) }) { Text("Получить новые осмотры сервера") }
+            Text("Справочник: " + (state.activeKnowledge?.let { "обновление ${it.version}" } ?: "встроенная версия"))
+            TextButton(enabled = !state.busy, onClick = { onAction(VoiceAction.UPDATES_CHECK) }) { Text("Проверить обновления") }
+            state.offeredKnowledge?.let { release ->
+                Button(enabled = !state.busy, onClick = { onAction(VoiceAction.UPDATES_INSTALL) }) {
+                    Text("Установить справочник ${release.version}")
+                }
+            }
         } else Text("Синхронизация выключена. Осмотры доступны на устройстве.")
         TextButton(onClick = { onAction(VoiceAction.SYNC_STATUS) }) { Text("Прочитать состояние синхронизации") }
         if (state.generation != null || state.busy) TextButton(onClick = { onAction(VoiceAction.SYNC_LOGOUT) }) { Text("Выйти и остановить отправку") }

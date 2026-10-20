@@ -7,6 +7,8 @@ import java.io.File
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
+import com.agronomy.phytomonitor.updates.UpdateRelease
+import com.agronomy.phytomonitor.updates.VerifiedUpdateStore
 
 interface SyncApi {
     fun push(update: JSONObject): JSONObject
@@ -26,6 +28,19 @@ class SyncHttpClient(origin: String, private val token: String? = null,
         JSONObject().put("username", username).put("password", password))
 
     fun profile(): JSONObject = json("GET", "/me")
+
+    fun updates(): List<UpdateRelease> = UpdateRelease.feed(request("GET", "/updates", null, "application/json") {}
+        .toString(Charsets.UTF_8))
+
+    /** Streams into the content-addressed store; size and SHA are checked there before the file appears. */
+    fun downloadUpdate(release: UpdateRelease, store: VerifiedUpdateStore): File {
+        val connection = open("GET", release.downloadPath)
+        try {
+            ensureActive()
+            if (connection.responseCode !in 200..299) throw SyncHttpException(connection.responseCode)
+            return store.stage(release, connection.inputStream) { active() && !Thread.currentThread().isInterrupted }
+        } finally { connection.disconnect() }
+    }
 
     override fun push(update: JSONObject): JSONObject = json("POST", "/sync/inspections",
         JSONObject().put("inspections", JSONArray().put(update))).getJSONArray("results").getJSONObject(0)

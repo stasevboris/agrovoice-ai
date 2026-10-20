@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import com.agronomy.phytomonitor.updates.KnowledgeUpdates
 
 data class KnowledgeState(
     val catalog: KnowledgeCatalog? = null,
@@ -19,7 +20,9 @@ data class KnowledgeState(
     val selectedCode: String? = null,
     val loading: Boolean = true,
     val error: String? = null,
-    val legacyClasses: Map<String, String> = emptyMap()
+    val legacyClasses: Map<String, String> = emptyMap(),
+    /** Null while the bundled reference book is used. */
+    val updateVersion: String? = null
 ) {
     val selected: KnowledgeCard? get() = catalog?.cards?.firstOrNull { it.code == selectedCode }
     val visible: List<KnowledgeCard> get() = catalog?.search(query, crop).orEmpty()
@@ -33,17 +36,27 @@ class KnowledgeViewModel(application: Application) : AndroidViewModel(applicatio
     private val mutableState = MutableStateFlow(KnowledgeState())
     val state = mutableState.asStateFlow()
 
-    init {
+    init { reload() }
+
+    /** Called again after a verified reference book update; the open card stays selected if it still exists. */
+    fun reload() {
+        val application = getApplication<Application>()
         viewModelScope.launch {
             try {
-                val catalog = withContext(Dispatchers.IO) {
-                    application.assets.open("knowledge/kb_v1.json").bufferedReader().use { KnowledgeCatalog.parse(it.readText()) }
+                val loaded = withContext(Dispatchers.IO) {
+                    KnowledgeUpdates.load(KnowledgeUpdates.store(application)) {
+                        application.assets.open("knowledge/kb_v1.json").bufferedReader().use { it.readText() }
+                    }
                 }
                 val legacy = withContext(Dispatchers.IO) {
                     val json = application.assets.open("knowledge/legacy_classes_v1.json").bufferedReader().use { JSONObject(it.readText()) }
                     json.keys().asSequence().associateWith(json::getString)
                 }
-                mutableState.update { it.copy(catalog = catalog, legacyClasses = legacy, loading = false) }
+                mutableState.update { current ->
+                    current.copy(catalog = loaded.catalog, legacyClasses = legacy, loading = false, error = null,
+                        updateVersion = loaded.release?.version,
+                        selectedCode = current.selectedCode?.takeIf { code -> loaded.catalog.cards.any { it.code == code } })
+                }
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (error: Exception) {

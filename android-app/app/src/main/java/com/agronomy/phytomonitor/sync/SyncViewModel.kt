@@ -20,6 +20,8 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import com.agronomy.phytomonitor.updates.KnowledgeUpdates
+import com.agronomy.phytomonitor.updates.UpdateRelease
 
 data class SyncNotice(val text: String, val error: Boolean = false)
 data class SyncUiState(
@@ -31,14 +33,22 @@ data class SyncUiState(
     val records: List<SyncRecord> = emptyList(),
     val pending: SyncConfirmation? = null,
     val message: String? = null,
-    val messageIsError: Boolean = false
-)
+    val messageIsError: Boolean = false,
+    /** The last feed read from the server and the reference book that is active on this phone. */
+    val updates: List<UpdateRelease> = emptyList(),
+    val activeKnowledge: UpdateRelease? = null,
+    /** Incremented after a new reference book is activated, so the open catalog is reloaded. */
+    val knowledgeRevision: Int = 0
+) {
+    val offeredKnowledge: UpdateRelease? get() = KnowledgeUpdates.offered(updates, activeKnowledge)
+}
 
 /** Activity-scoped owner of sync operations; Compose never executes network or queue writes. */
 class SyncViewModel(application: Application) : AndroidViewModel(application) {
     private val context = application.applicationContext
     private val store = SyncSessionStore.get(context)
     private val database = JournalDatabase.get(context)
+    private val updateStore = KnowledgeUpdates.store(context)
     private val mutable = MutableStateFlow(SyncUiState())
     val state: StateFlow<SyncUiState> = mutable
     private val notices = Channel<SyncNotice>(Channel.BUFFERED)
@@ -49,6 +59,10 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
     private var screen: String? = null
 
     init {
+        viewModelScope.launch {
+            val active = withContext(Dispatchers.IO) { updateStore.available("kb").firstOrNull() }
+            mutable.update { it.copy(activeKnowledge = active) }
+        }
         viewModelScope.launch {
             store.session.collectLatest { session ->
                 mutable.update { it.copy(generation = session?.generation, origin = session?.origin.orEmpty(),
@@ -176,6 +190,28 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
         }
+    }
+
+    fun checkUpdates() = withSession("updates") { session, active ->
+        val releases = SyncHttpClient(session.origin, session.token, active).updates()
+        checkActive(active)
+        mutable.update { it.copy(updates = releases) }
+        KnowledgeUpdates.describe(releases, state.value.activeKnowledge)
+    }
+
+    /** Download → SHA → format check → atomic switch; the previous book stays available for rollback. */
+    fun installKnowledge() = withSession("install-kb") { session, active ->
+        val release = state.value.offeredKnowledge ?: return@withSession "Сначала проверьте обновления: новой версии справочника нет."
+        val file = SyncHttpClient(session.origin, session.token, active).downloadUpdate(release, updateStore)
+        checkActive(active)
+        try {
+            com.agronomy.phytomonitor.knowledge.KnowledgeCatalog.parse(file.readText(Charsets.UTF_8))
+        } catch (error: Exception) {
+            throw IllegalStateException("Файл справочника не прошёл проверку формата. Используется прежняя версия.", error)
+        }
+        updateStore.activate(release)
+        mutable.update { it.copy(activeKnowledge = release, knowledgeRevision = it.knowledgeRevision + 1) }
+        "Справочник обновлён до версии ${release.version}. Прежняя версия сохранена. Карточки без проверки специалистом остаются черновиками."
     }
 
     fun cancelConfirmation() {

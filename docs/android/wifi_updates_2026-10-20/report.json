@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-20",
+  "device": "Redmi Note 7 (lavender), Android 13; isolated package com.agronomy.phytomonitor.verification",
+  "scope": [
+    "A-20 phone -> local server over Wi-Fi",
+    "S-04 reference-book update: check, download, SHA, format, activation, rollback"
+  ],
+  "android_checks": {
+    "command": "gradlew.bat testFieldDebugUnitTest testLabDebugUnitTest lintFieldDebug lintLabDebug",
+    "exit_code": 0,
+    "jvm": {
+      "testFieldDebugUnitTest": {
+        "tests": 346,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "testLabDebugUnitTest": {
+        "tests": 346,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "wifi": {
+    "transport": "phone Wi-Fi -> PC LAN address -> TCP forward -> loopback verify-api",
+    "adb_reverse_during_run": "none",
+    "phases": [
+      {
+        "test": "SyncUiWorkerDeviceTest#loginAndSendThroughRealWorker",
+        "passed": true
+      },
+      {
+        "test": "SyncUiWorkerDeviceTest#restoreKeystoreRejectExpiredWorkerAndLogout",
+        "passed": true
+      },
+      {
+        "test": "SyncUiWorkerDeviceTest#loggedOutProcessDoesNotSendStaleQueue",
+        "passed": true
+      },
+      {
+        "test": "KnowledgeUpdateDeviceTest",
+        "passed": true
+      }
+    ],
+    "network": "home LAN 192.168.0.0/24; Windows profile Public; inbound allowed only by the existing python.exe firewall rule; forward accepted only the phone address and was stopped after the run"
+  },
+  "knowledge_update": {
+    "release_version": "2026.10.19-potato-draft",
+    "sha256": "b03f413a3f443d354c26e5242ee14e4be9977cf49644a0181e4364740494761d",
+    "bytes": 38323,
+    "cards": 49,
+    "card_statuses": "draft",
+    "message": "Справочник обновлён до версии 2026.10.19-potato-draft. Прежняя версия сохранена. Карточки без проверки специалистом остаются черновиками.",
+    "elapsed_ms_whole_test": 5554
+  },
+  "behaviour": [
+    "Install before a feed check is refused by the shared action policy for buttons and voice.",
+    "A SHA-valid file that is not a reference book is not activated; a broken active file falls back to the previous one, then to the bundled book.",
+    "Model releases are listed but not installed: applying downloaded detector weights is not implemented."
+  ],
+  "not_verified": [
+    "Wi-Fi through a router other than the home one",
+    "HTTPS server",
+    "Wi-Fi drop during transfer (USB-reverse drop test from 19.10 not repeated)",
+    "live speech; commands were injected as recognised text"
+  ],
+  "artifacts": "artifacts/verification/autonomous_20261020/phone/ (logs, phone reports; not in git)"
+}
