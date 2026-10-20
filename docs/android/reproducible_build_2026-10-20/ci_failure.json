@@ -12,7 +12,17 @@
   ],
   "root_cause": "setup-android v3 defaults to installing obsolete SDK tools package, which is absent in current Google repository. JDK setup and SDK license acceptance succeeded.",
   "change": "Override setup-android packages to platform-tools; preserve explicit Android 37 and build-tools 37.0.0 installation.",
-  "validation": "Awaiting remote rerun of corrected commit; git diff --check passed.",
+  "validation": "Corrected SDK-tools input passed in run 39398369099; next failure was incorrect Android platform package ID.",
   "python_job": "success",
-  "log": "artifacts/verification/reproducible_build_20261020/android_job118544783854.log"
+  "log": "artifacts/verification/reproducible_build_20261020/android_job118544783854.log",
+  "followup": {
+    "failed_commit": "28cda7a50003e7ce8d9cbbeecce05a7b4fa9b60e",
+    "run_id": 39398369099,
+    "job_id": 118546628655,
+    "evidence": "Warning: Failed to find package 'platforms;android-37'",
+    "source": "https://dl.google.com/android/repository/repository2-3.xml",
+    "root_cause": "Google publishes API 37 platform as platforms;android-37.0, not platforms;android-37.",
+    "change": "Use exact published platform ID platforms;android-37.0; compileSdk and targetSdk remain 37.",
+    "validation": "Repository XML confirms platforms;android-37.0 and build-tools;37.0.0 exist; remote corrected run pending."
+  }
 }
