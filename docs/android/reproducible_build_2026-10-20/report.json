@@ -187,6 +187,7 @@
     "Clean source checkout verified; existing machine SDK/JDK/dependency caches reused, not a fresh-machine setup.",
     "APK contents checked by SHA-256; no phone installation or inference validation performed in this check.",
     "No claim of byte-identical APKs across machines or repeated builds.",
-    "GitHub Actions has no workflows or runs before publication; remote runner result pending root-reviewed commit and push."
-  ]
+    "Remote CI subsequently passed for commit d678ad6bb0edbb4aa336aef83ba39ac4491ca93f; see ci_run.json. It checks code without model weights or APK packaging."
+  ],
+  "remote_ci_report": "ci_run.json"
 }

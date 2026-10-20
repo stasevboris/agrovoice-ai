@@ -23,6 +23,6 @@
     "source": "https://dl.google.com/android/repository/repository2-3.xml",
     "root_cause": "Google publishes API 37 platform as platforms;android-37.0, not platforms;android-37.",
     "change": "Use exact published platform ID platforms;android-37.0; compileSdk and targetSdk remain 37.",
-    "validation": "Repository XML confirms platforms;android-37.0 and build-tools;37.0.0 exist; remote corrected run pending."
+    "validation": "Both Android setup fixes verified by successful run 39398928388 at d678ad6bb0edbb4aa336aef83ba39ac4491ca93f; see ci_run.json."
   }
 }

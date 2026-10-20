@@ -155,8 +155,8 @@
 ### A-15 DataStore и настройки — **агент**
 Перенести SharedPreferences в DataStore; экран «Настройки»: голос, озвучка, модель (только в lab), сервер (заготовка). 0,5 дня.
 
-### A-16 CI — **агент**
-GitHub Actions: Python-тесты (`ml-pipeline/tests`, без тяжёлых данных — тесты с `skipUnless`), Android `testDebugUnitTest` и `assembleDebug` с заглушкой ассетов. **Готово, когда:** бейдж в README зелёный. 0,5 дня.
+### A-16 CI — **проверено на GitHub 20.10.2026; APK отдельно по G-05**
+GitHub Actions: Python-тесты без тяжёлых данных, KB, JVM-тесты и lint для `field`/`lab`; [удалённый прогон](android/reproducible_build_2026-10-20/ci_run.json), бейдж рабочей ветки в README. Полноценный APK требует настоящих ассетов: заглушки не выдаются за рабочую сборку. Обе APK собраны из чистого checkout с проверенным локальным импортом — [отчёт](android/reproducible_build_2026-10-20/report.json). Общедоступное получение весов — открытая часть G-05.
 
 ---
 
