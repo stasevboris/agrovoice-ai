@@ -105,7 +105,8 @@ class KnowledgeBaseTests(unittest.TestCase):
 
     def test_absence_of_data_is_explicit(self):
         card = self.card("tomato__late_blight")
-        card["missing"].remove("symptoms")
+        card["symptoms"] = []
+        card["missing"] = [name for name in card["missing"] if name != "symptoms"]
         self.assertProblem("symptoms пуст без явной отметки")
         card["missing"].append("symptoms")
         card["symptoms"] = [statement()]

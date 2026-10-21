@@ -1,0 +1,58 @@
+{
+  "comment": "Соответствие классов taxonomy_v1 страницам Агроэкологического атласа (agroatlas.ru). Проверено вручную 21.10.2026: страница описывает тот же возбудитель и тот же орган растения. Классы без записи здесь не покрыты атласом.",
+  "base": "https://agroatlas.ru/ru/content/diseases/",
+  "pages": {
+    "apple__scab": {
+      "path": "Pomae/Pomae_Venturia_inaequalis",
+      "note": "Возбудитель Venturia inaequalis."
+    },
+    "apple__black_rot": {
+      "path": "Pomae/Pomae_Sphaeropsis_malorum",
+      "note": "Возбудитель Botryosphaeria obtusa (Sphaeropsis malorum)."
+    },
+    "corn__northern_leaf_blight": {
+      "path": "Zeae/Zeae_Helminthosporium_turcicum",
+      "note": "Возбудитель Exserohilum turcicum (Helminthosporium turcicum)."
+    },
+    "cucumber__anthracnose": {
+      "path": "Cucurbitae/Cucurbitae_Colletotrichum_lagenarium",
+      "note": "Антракноз тыквенных культур."
+    },
+    "cucumber__downy_mildew": {
+      "path": "Cucurbitae/Cucurbitae_Pseudoperonospora_cubensis",
+      "note": "Ложная мучнистая роса огурца."
+    },
+    "potato__early_blight": {
+      "path": "Solani/Solani_Macrosporium_solani",
+      "note": "Возбудитель Alternaria solani."
+    },
+    "potato__late_blight": {
+      "path": "Solani/Solani_Phytophthora_infestans",
+      "note": "Возбудитель Phytophthora infestans."
+    },
+    "squash__powdery_mildew": {
+      "path": "Cucurbitae/Cucurbitae_Erysiphe_cichoracearum",
+      "note": "Страница описывает мучнистую росу огурца; возбудитель поражает тыквенные, включая тыкву и кабачок."
+    },
+    "tomato__bacterial_spot": {
+      "path": "Lycopersici/Lycopersici_Xanthomonas_campestris_pv_vesicatoria",
+      "note": "Чёрная бактериальная пятнистость томата."
+    },
+    "tomato__early_blight": {
+      "path": "Lycopersici/Lycopersici_Alternaria_solani",
+      "note": "Возбудитель Alternaria solani."
+    },
+    "tomato__late_blight": {
+      "path": "Lycopersici/Lycopersici_Phytophtora_infestans",
+      "note": "Возбудитель Phytophthora infestans."
+    },
+    "tomato__leaf_mold": {
+      "path": "Lycopersici/Lycopersici_Cladosporium_fulvum",
+      "note": "Возбудитель Cladosporium fulvum (Passalora fulva)."
+    },
+    "tomato__septoria_leaf_spot": {
+      "path": "Lycopersici/Lycopersici_Septoria_lycopersici",
+      "note": "Возбудитель Septoria lycopersici."
+    }
+  }
+}
