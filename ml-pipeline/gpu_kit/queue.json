@@ -1,7 +1,7 @@
 {
-  "dataset": "datasets/allcrops_v1",
+  "dataset": "datasets/allcrops_web_v1",
   "smoke_dataset": "datasets/allcrops_v1_smoke",
-  "comment": "Runs execute in order. 'hours' is a cap: the run keeps 60 epochs if they fit, otherwise after epoch 1 it switches to Ultralytics 'time' (LR schedule refitted). The queue also respects --deadline/--budget-hours and leaves time for export.",
+  "comment": "Runs execute in order. 'hours' is a cap: the run keeps 60 epochs if they fit, otherwise after epoch 1 it switches to Ultralytics 'time' (LR schedule refitted). The queue also respects --deadline/--budget-hours and leaves time for export. Training set = checked allcrops_v1 train + screened web train; early stopping and metrics use the former field/lab val from allcrops_v1, never the weak web val.",
   "defaults": {
     "imgsz": 416,
     "epochs": 60,
@@ -20,13 +20,13 @@
     "close_mosaic": 10
   },
   "runs": [
-    {"name": "allcrops_v1_yolo26s_416_s20261003", "model": "yolo26s.pt", "seed": 20261003, "hours": 1.4,
+    {"name": "allcrops_web_v1_yolo26s_416_s20261003", "model": "yolo26s.pt", "seed": 20261003, "hours": 1.4,
      "why": "Main phone candidate: same size as the APK 0.16 S model (about 0.47 s on Redmi Note 7)."},
-    {"name": "allcrops_v1_yolo26n_416_s20261003", "model": "yolo26n.pt", "seed": 20261003, "hours": 0.8,
+    {"name": "allcrops_web_v1_yolo26n_416_s20261003", "model": "yolo26n.pt", "seed": 20261003, "hours": 0.8,
      "why": "Fast model for weak phones (about 0.17 s on Redmi Note 7)."},
-    {"name": "allcrops_v1_yolo26m_416_s20261003", "model": "yolo26m.pt", "seed": 20261003, "hours": 1.6,
+    {"name": "allcrops_web_v1_yolo26m_416_s20261003", "model": "yolo26m.pt", "seed": 20261003, "hours": 1.6,
      "why": "Accuracy ceiling / teacher; too slow for Note 7 but useful for A56 and for the thesis comparison."},
-    {"name": "allcrops_v1_yolo26s_416_s20261004", "model": "yolo26s.pt", "seed": 20261004, "hours": 1.4,
+    {"name": "allcrops_web_v1_yolo26s_416_s20261004", "model": "yolo26s.pt", "seed": 20261004, "hours": 1.4,
      "why": "Second seed of the main candidate, only if time remains."}
   ]
 }

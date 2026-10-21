@@ -1,9 +1,11 @@
-"""Assemble the self-contained training kit for a rented GPU (RTX 5090) and zip it.
+"""Assemble the self-contained training kit for a GPU (RTX 5090) and zip it.
 
-Kit = gpu_kit scripts + datasets/allcrops_v1 (+ tiny smoke set) + COCO-pretrained weights + plot font.
+Kit = gpu_kit scripts + datasets/allcrops_web_v1 (checked allcrops_v1 + screened web photos)
++ tiny smoke set + COCO-pretrained weights + plot font.
   python -X utf8 ml-pipeline/pack_gpu_kit.py
 Output: artifacts/gpu_kit/agrovoice_gpu_kit_<date>.zip and kit_manifest.json (SHA of every file).
-Build the datasets first: build_allcrops_v1.py (full) and build_allcrops_v1.py --limit-per-class 2 --out ml-pipeline/dataset_allcrops_v1_smoke
+Build the datasets first: build_allcrops_v1.py (full), prepare_web_search.py build (web),
+build_mix_dataset.py (mix), build_allcrops_v1.py --limit-per-class 2 --out ml-pipeline/dataset_allcrops_v1_smoke
 """
 from __future__ import annotations
 
@@ -31,7 +33,7 @@ def sha256(path: Path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--dataset", type=Path, default=ROOT/"ml-pipeline/dataset_allcrops_v1")
+    parser.add_argument("--dataset", type=Path, default=ROOT/"ml-pipeline/dataset_allcrops_web_v1")
     parser.add_argument("--smoke-dataset", type=Path, default=ROOT/"ml-pipeline/dataset_allcrops_v1_smoke")
     parser.add_argument("--out", type=Path, default=ROOT/"artifacts/gpu_kit")
     args = parser.parse_args()
@@ -49,7 +51,7 @@ def main():
     font = ROOT/"ml-pipeline/.cache/ultralytics_root/Arial.ttf"
     if font.exists():  # Ultralytics downloads it for plots otherwise
         entries += [(font, "config/Arial.ttf"), (font, "config/Ultralytics/Arial.ttf")]
-    for source, target in ((args.dataset, "datasets/allcrops_v1"), (args.smoke_dataset, "datasets/allcrops_v1_smoke")):
+    for source, target in ((args.dataset, f"datasets/{args.dataset.name}"), (args.smoke_dataset, "datasets/allcrops_v1_smoke")):
         for path in sorted(source.rglob("*")):
             if path.is_file() and path.suffix != ".cache" and "previews" not in path.parts:
                 entries.append((path, f"{target}/{path.relative_to(source).as_posix()}"))

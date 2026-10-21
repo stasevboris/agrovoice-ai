@@ -1,8 +1,22 @@
-# AgroVoice — обучение на арендованной RTX 5090
+# AgroVoice — обучение на RTX 5090 (кафедра)
 
-Комплект самодостаточный: скрипты, набор `allcrops_v1` (49 классов, 15 культур), исходные веса YOLO26 n/s/m.
+Комплект самодостаточный: скрипты, набор `allcrops_web_v1` (49 классов, 15 культур: проверенные фото `allcrops_v1` + отфильтрованные веб-фото), исходные веса YOLO26 n/s/m.
 Интернет на машине нужен только для установки PyTorch и пакетов (`pip`).
 Всё проверено на этом ПК: пробный прогон, лимит времени, STOP с продолжением, экспорт ONNX и паритет с PyTorch (на CPU, 16.10.2026). Сама 5090 не проверялась — первые 15 минут сеанса уходят на `check_env.py` и `--smoke`.
+
+## Состав набора
+
+| Часть | Что это | Где используется |
+|---|---|---|
+| `images/train` | проверенные фото `allcrops_v1` + веб-фото после CLIP и детектора листа | обучение |
+| `val_select.txt` | прежний field-val (PlantDoc) + до 15 lab-val на класс | ранняя остановка, `data.yaml` |
+| `data_field.yaml`, `data_lab.yaml` | прежние field/lab val и test из `allcrops_v1` | итоговые метрики |
+| `val_web.txt` | веб-val, разделённый по сайтам | только справочно, в очередь не входит |
+
+Метки веб-фото слабые: это поисковый запрос и страница-источник, а не диагноз эксперта. Поэтому веб-val не участвует в ранней остановке и не попадает в `evaluation.json`; решение о замене модели в APK принимается по field-метрикам. Веб-фото не публикуются и не передаются третьим лицам: права каждого источника надо проверять отдельно.
+
+Набор `allcrops_web_v1` собран 21.10.2026 и прошёл аудит файлов, списков и меток; полный `--smoke` на нём не запускался — первые 15 минут сеанса как раз для него.
+
 
 ## Что получится на выходе
 
@@ -64,7 +78,7 @@ powercfg /change standby-timeout-ac 0            # чтобы ПК не усну
 использовать [TRAINING_PLAYBOOK](../../docs/guides/TRAINING_PLAYBOOK.md), а не переносить
 результаты этой baseline-очереди в другое сравнение без оговорок.
 
-Поменять порядок или лимиты — в `queue.json`. Запустить только одну модель: `--only allcrops_v1_yolo26s_416_s20261003`.
+Поменять порядок или лимиты — в `queue.json`. Запустить только одну модель: `--only allcrops_web_v1_yolo26s_416_s20261003`.
 
 ### Наблюдение
 
@@ -101,7 +115,7 @@ python package_results.py          # -> results_<host>_<дата>.zip (best/last
 
 ## Что потом делать с результатами (дома)
 
-1. Распаковать `results_*.zip` в `runs/allcrops_v1/` (задача M-04: разбор метрик).
-2. Подготовить релиз: `python -X utf8 ml-pipeline/prepare_model_release.py runs/allcrops_v1/<S> runs/allcrops_v1/<N> --tag models-allcrops-v1 --update-config` → `artifacts/release/models-allcrops-v1/` (ONNX, SHA256SUMS, MODEL_CARD, RELEASE_NOTES, LICENSE, ATTRIBUTION).
+1. Распаковать `results_*.zip` в `runs/allcrops_web_v1/` (задача M-04: разбор метрик).
+2. Подготовить релиз: `python -X utf8 ml-pipeline/prepare_model_release.py runs/allcrops_web_v1/<S> runs/allcrops_web_v1/<N> --tag models-allcrops-v1 --update-config` → `artifacts/release/models-allcrops-v1/` (ONNX, SHA256SUMS, MODEL_CARD, RELEASE_NOTES, LICENSE, ATTRIBUTION).
 3. Создать на GitHub релиз с тегом `models-allcrops-v1`, текст — `RELEASE_NOTES.md`, приложить все файлы папки.
 4. Задача A-03 в `docs/ROADMAP.md`: модель в APK (манифест с 49 классами и 15 культурами), замер на Redmi Note 7 и A56.
