@@ -6,6 +6,7 @@ images. Files stay in an ignored folder and are not redistributed.
 
 Steps (each one resumes where it stopped):
     python -X utf8 ml-pipeline/external/collect_web_images.py search
+    python -X utf8 ml-pipeline/external/collect_web_images.py search_extra   # weak classes, own phrases
     python -X utf8 ml-pipeline/external/collect_web_images.py download
     python -X utf8 ml-pipeline/external/collect_web_images.py dedup
     python -X utf8 ml-pipeline/external/collect_web_images.py sheets
@@ -93,10 +94,10 @@ def search_page(query, first):
     return results
 
 
-def command_search(out, pages, delay):
+def run_queries(out, queries_by_class, pages, delay):
     path = out / "candidates.jsonl"
     done = {(row["class"], row["query"], row["first"]) for row in read_jsonl(out / "searched.jsonl")}
-    for code, queries in class_queries().items():
+    for code, queries in queries_by_class.items():
         for query in queries:
             for page in range(pages):
                 first = page * 35
@@ -114,6 +115,20 @@ def command_search(out, pages, delay):
                 append_jsonl(out / "searched.jsonl", [{"class": code, "query": query, "first": first, "results": len(rows)}])
                 print(f"{code} | {query} | {first}: {len(rows)}", flush=True)
                 time.sleep(delay)
+
+
+def command_search(out, pages, delay):
+    run_queries(out, class_queries(), pages, delay)
+
+
+def command_search_extra(out, path, pages, delay):
+    """Targeted second pass for classes where the general phrases found too few usable photos."""
+    config = json.loads(path.read_text(encoding="utf-8"))
+    known = {item["code"] for item in json.loads(TAXONOMY.read_text(encoding="utf-8"))["classes"]}
+    unknown = set(config) - known
+    if unknown:
+        raise SystemExit(f"Unknown classes in {path}: {sorted(unknown)}")
+    run_queries(out, {code: config[code] for code in sorted(config)}, pages, delay)
 
 
 def download_one(url, images):
@@ -254,8 +269,9 @@ def command_sheets(out, per_sheet=48, status="candidate"):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("command", choices=["search", "download", "dedup", "sheets"])
+    parser.add_argument("command", choices=["search", "search_extra", "download", "dedup", "sheets"])
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    parser.add_argument("--extra", type=Path, default=Path(__file__).with_name("web_queries_extra_v1.json"))
     parser.add_argument("--pages", type=int, default=3)
     parser.add_argument("--delay", type=float, default=1.5)
     parser.add_argument("--workers", type=int, default=12)
@@ -264,6 +280,8 @@ def main():
     args.out.mkdir(parents=True, exist_ok=True)
     if args.command == "search":
         command_search(args.out, args.pages, args.delay)
+    elif args.command == "search_extra":
+        command_search_extra(args.out, args.extra, args.pages, args.delay)
     elif args.command == "download":
         command_download(args.out, args.workers)
     elif args.command == "dedup":

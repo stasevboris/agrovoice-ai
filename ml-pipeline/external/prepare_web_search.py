@@ -113,8 +113,11 @@ def command_screen(out, batch):
         kind_text = kind_text / kind_text.norm(dim=-1, keepdim=True)
         crop_text = crop_text / crop_text.norm(dim=-1, keepdim=True)
     crop_of = class_crops()
-    rows = candidates(out)
-    results = []
+    screen_path = out / "screen.jsonl"
+    results = read_jsonl(screen_path) if screen_path.exists() else []
+    done = {row["sha256"] for row in results}
+    rows = [row for row in candidates(out) if row["sha256"] not in done]
+    print(f"to screen: {len(rows)} new, {len(results)} already screened", flush=True)
     for start in range(0, len(rows), batch):
         chunk = rows[start:start + batch]
         tensors = []
@@ -140,7 +143,7 @@ def command_screen(out, batch):
             results.append({"sha256": row["sha256"], "class": row["classes"][0], "leaf_share": round(keep_share, 4),
                             "top_kind": top_kind, "crop_rank": rank, "top_crop": crops[order[0]],
                             "decision": decision})
-        print(f"{min(start + batch, len(rows))}/{len(rows)}", flush=True)
+        print(f"{len(results)}/{len(done) + len(rows)}", flush=True)
     write_jsonl(out / "screen.jsonl", results)
     counts = Counter(row["decision"] for row in results)
     print(json.dumps(counts, indent=1))
@@ -150,9 +153,12 @@ def command_boxes(out, device, batch):
     from ultralytics import YOLO
 
     kept = {row["sha256"] for row in read_jsonl(out / "screen.jsonl") if row["decision"] == "keep"}
-    rows = [row for row in candidates(out) if row["sha256"] in kept and not blocked(row)]
+    detections_path = out / "detections.jsonl"
+    detections = read_jsonl(detections_path) if detections_path.exists() else []
+    done = {row["sha256"] for row in detections}
+    rows = [row for row in candidates(out) if row["sha256"] in kept and not blocked(row) and row["sha256"] not in done]
+    print(f"to detect: {len(rows)} new, {len(detections)} already detected", flush=True)
     model = YOLO(str(DETECTOR))
-    detections = []
     for start in range(0, len(rows), batch):
         chunk = rows[start:start + batch]
         paths = [str(out / "images" / row["file"]) for row in chunk]
@@ -162,7 +168,7 @@ def command_boxes(out, device, batch):
             boxes = [[round(value, 5) for value in xywhn] + [round(confidence, 4)]
                      for xywhn, confidence in zip(result.boxes.xywhn.tolist(), result.boxes.conf.tolist())]
             detections.append({"sha256": row["sha256"], "boxes": boxes})
-        print(f"{min(start + batch, len(rows))}/{len(rows)}", flush=True)
+        print(f"{len(detections)}/{len(done) + len(rows)}", flush=True)
     write_jsonl(out / "detections.jsonl", detections)
 
 
@@ -191,7 +197,10 @@ def command_build(out, overwrite):
     decisions = Counter()
     per_class = defaultdict(Counter)
     for sha, boxes in sorted(detections.items()):
-        photo = photos[sha]
+        photo = photos.get(sha)
+        if photo is None:  # became a near-duplicate after a later collection pass
+            decisions["stale_detection"] += 1
+            continue
         code = photo["classes"][0]
         record = {"class": code, "closeup": False}
         kept, region, decision = leaf_boxes(record, boxes)

@@ -1,5 +1,6 @@
 """Тесты отбора веб-фотографий: стоковые и соцсети не должны попадать в набор."""
 
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -8,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "ml-pipeline" / "external"))
 
 import prepare_web_search as web  # noqa: E402
+import collect_web_images as collect  # noqa: E402
 
 
 def photo(page_url, image_url="https://cdn.example.org/leaf.jpg"):
@@ -36,6 +38,19 @@ class BlockedDomainTests(unittest.TestCase):
         first = web.split_of("ogorod.ru")
         self.assertEqual(first, web.split_of("ogorod.ru"))
         self.assertIn(first, {"train", "val"})
+
+
+class ExtraQueryTests(unittest.TestCase):
+    def test_extra_phrases_name_real_classes_and_are_unique(self):
+        config = json.loads((ROOT/"ml-pipeline/external/web_queries_extra_v1.json").read_text(encoding="utf-8"))
+        classes = {item["code"] for item in json.loads(
+            (ROOT/"ml-pipeline/allcrops/taxonomy_v1.json").read_text(encoding="utf-8"))["classes"]}
+        self.assertTrue(set(config) <= classes)
+        for code, queries in config.items():
+            self.assertGreaterEqual(len(queries), 3, code)
+            self.assertEqual(len(queries), len(set(queries)), code)
+            for query in queries:
+                self.assertTrue(query.strip(), code)
 
 
 if __name__ == "__main__":

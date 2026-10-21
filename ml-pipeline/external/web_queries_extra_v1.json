@@ -1,0 +1,57 @@
+{
+  "cucumber__nk_deficiency": [
+    "cucumber leaf nitrogen deficiency yellowing",
+    "cucumber leaf potassium deficiency brown edges",
+    "огурцы листья недостаток азота пожелтение",
+    "огурцы листья недостаток калия край",
+    "Cucumis sativus nitrogen potassium deficiency leaf"
+  ],
+  "tomato__nk_deficiency": [
+    "tomato leaf nitrogen deficiency yellow leaves",
+    "tomato leaf potassium deficiency leaf margin",
+    "томаты листья недостаток азота калия",
+    "Solanum lycopersicum nitrogen potassium deficiency leaf"
+  ],
+  "tomato__target_spot": [
+    "tomato target spot leaf lesions",
+    "Corynespora cassiicola tomato leaf",
+    "томаты целевая пятнистость листья",
+    "tomato leaf spot concentric rings"
+  ],
+  "cherry__powdery_mildew": [
+    "cherry powdery mildew leaf white coating",
+    "cherry leaves white powdery spots",
+    "вишня мучнистая роса листья белый налет",
+    "Prunus cerasus powdery mildew leaf"
+  ],
+  "tomato__potassium_deficiency": [
+    "tomato potassium deficiency leaf margin yellow",
+    "tomato leaf edge necrosis potassium",
+    "томаты недостаток калия листья край",
+    "Solanum lycopersicum potassium deficiency leaf"
+  ],
+  "peach__healthy": [
+    "peach tree healthy green leaves",
+    "peach leaves close up healthy",
+    "персик листья зеленые здоровые",
+    "Prunus persica healthy leaves"
+  ],
+  "peach__bacterial_spot": [
+    "peach bacterial spot leaf symptoms",
+    "Xanthomonas arboricola pruni peach leaf",
+    "персик бактериальная пятнистость листья",
+    "peach leaf shot hole spots"
+  ],
+  "tomato__septoria_leaf_spot": [
+    "tomato Septoria leaf spot symptoms",
+    "Septoria lycopersici tomato leaf",
+    "томаты септориоз листьев пятна",
+    "tomato leaf small dark spots yellow halo"
+  ],
+  "tomato__bacterial_spot": [
+    "tomato bacterial spot leaf symptoms",
+    "Xanthomonas tomato leaf spots",
+    "томаты бактериальная пятнистость листья",
+    "tomato leaf water soaked spots"
+  ]
+}
