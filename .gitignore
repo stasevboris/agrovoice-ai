@@ -75,3 +75,5 @@ docs/**/*.jsonl
 
 # Local verification reports and logs
 /artifacts/verification/
+/artifacts/kb_sources/
+/artifacts/web_data_*/

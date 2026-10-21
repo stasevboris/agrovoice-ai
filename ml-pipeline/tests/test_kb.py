@@ -64,7 +64,9 @@ class KnowledgeBaseTests(unittest.TestCase):
         codes = [card["code"] for card in self.document["cards"]]
         self.assertEqual([item["code"] for item in self.taxonomy["classes"]], codes)
         self.assertTrue(all(card["status"] == "draft" for card in self.document["cards"]))
-        self.assertEqual(0, sum(len(card["treatments"]) for card in self.document["cards"]))
+        treatments = [item for card in self.document["cards"] for item in card["treatments"]]
+        # Register rows are copied with their page; they stay unchecked drafts until a specialist reviews them.
+        self.assertTrue(all(item["source"] == "B01" and ", с. " in item["locator"] for item in treatments))
 
     def test_complete_verified_card_is_accepted(self):
         self.verified_potato()
