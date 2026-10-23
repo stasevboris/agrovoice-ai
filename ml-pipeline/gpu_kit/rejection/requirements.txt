@@ -1,0 +1,6 @@
+numpy
+pillow
+onnx
+onnxruntime
+transformers==4.57.1
+safetensors
