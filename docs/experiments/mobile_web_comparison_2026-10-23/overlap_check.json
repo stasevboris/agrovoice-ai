@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "field_images": 349,
+  "train_images_checked": 31918,
+  "train_images_planned": 31918,
+  "exact_matches": [],
+  "limitations": [
+    "Exact file bytes only; resized/recompressed and near duplicates are not excluded by this check.",
+    "Historical split overlap and validation-based model selection remain limitations."
+  ]
+}

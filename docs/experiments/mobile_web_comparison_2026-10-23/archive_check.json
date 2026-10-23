@@ -1,0 +1,26 @@
+{
+  "archive": "F:\\agrovoice-ai\\runs\\home_20261023_collected\\results_DESKTOP-65R9RBR_20261023_2106.zip",
+  "bytes": 306291608,
+  "sha256": "c5756f963ff782cd9c8776e2cc79a30799037f55cd86a115d036fd0ec07d8874",
+  "source_archive": "\\\\wsl.localhost\\AgroVoice-ML\\root\\kit\\agrovoice_gpu_kit_20261023\\results_DESKTOP-65R9RBR_20261023_2106.zip",
+  "source_archive_sha256": "a6cda7794345de0e17a78c4a75c3a31765ef166ec4f7bdc901d0268a960d68a6",
+  "copied_archive_matched_source_before_log_addition": true,
+  "added_evidence": [
+    "evidence/training.log",
+    "evidence/supervisor_status.json"
+  ],
+  "crc_ok": true,
+  "files": 223,
+  "models": [
+    {
+      "name": "home_20261023_allcrops_web_v1_yolo26n_416_s20261003",
+      "onnx_sha256": "c29dc7c3c780b3b748877a44e86443d6aea75bfe516619ddd75fddd57e2ce994",
+      "status": "done"
+    },
+    {
+      "name": "home_20261023_allcrops_web_v1_yolo26s_416_s20261003",
+      "onnx_sha256": "4dc7cfde29ac6db7a88f59421a490295adc92932b8db95f745533ae192d8b030",
+      "status": "done"
+    }
+  ]
+}

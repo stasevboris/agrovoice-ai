@@ -1,0 +1,296 @@
+[
+  {
+    "crop": "apple",
+    "gt": 119,
+    "models": {
+      "yolo26s": {
+        "correct": 69,
+        "missed": 26,
+        "wrong_crop": 24
+      },
+      "web_s": {
+        "correct": 68,
+        "missed": 32,
+        "wrong_crop": 19
+      },
+      "web_n": {
+        "correct": 72,
+        "missed": 39,
+        "wrong_crop": 8
+      }
+    }
+  },
+  {
+    "crop": "blueberry",
+    "gt": 155,
+    "models": {
+      "yolo26s": {
+        "correct": 93,
+        "missed": 59,
+        "wrong_crop": 3
+      },
+      "web_s": {
+        "correct": 102,
+        "missed": 50,
+        "wrong_crop": 3
+      },
+      "web_n": {
+        "correct": 101,
+        "missed": 50,
+        "wrong_crop": 4
+      }
+    }
+  },
+  {
+    "crop": "cherry",
+    "gt": 29,
+    "models": {
+      "yolo26s": {
+        "correct": 19,
+        "missed": 9,
+        "wrong_crop": 1
+      },
+      "web_s": {
+        "correct": 21,
+        "missed": 7,
+        "wrong_crop": 1
+      },
+      "web_n": {
+        "correct": 19,
+        "missed": 10,
+        "wrong_crop": 0
+      }
+    }
+  },
+  {
+    "crop": "corn",
+    "gt": 87,
+    "models": {
+      "yolo26s": {
+        "correct": 73,
+        "missed": 14,
+        "wrong_crop": 0
+      },
+      "web_s": {
+        "correct": 69,
+        "missed": 18,
+        "wrong_crop": 0
+      },
+      "web_n": {
+        "correct": 69,
+        "missed": 18,
+        "wrong_crop": 0
+      }
+    }
+  },
+  {
+    "crop": "cucumber",
+    "gt": 0,
+    "models": {
+      "yolo26s": {
+        "correct": 0,
+        "missed": 0,
+        "wrong_crop": 0
+      },
+      "web_s": {
+        "correct": 0,
+        "missed": 0,
+        "wrong_crop": 0
+      },
+      "web_n": {
+        "correct": 0,
+        "missed": 0,
+        "wrong_crop": 0
+      }
+    }
+  },
+  {
+    "crop": "grape",
+    "gt": 56,
+    "models": {
+      "yolo26s": {
+        "correct": 34,
+        "missed": 22,
+        "wrong_crop": 0
+      },
+      "web_s": {
+        "correct": 43,
+        "missed": 13,
+        "wrong_crop": 0
+      },
+      "web_n": {
+        "correct": 40,
+        "missed": 16,
+        "wrong_crop": 0
+      }
+    }
+  },
+  {
+    "crop": "peach",
+    "gt": 126,
+    "models": {
+      "yolo26s": {
+        "correct": 89,
+        "missed": 34,
+        "wrong_crop": 3
+      },
+      "web_s": {
+        "correct": 96,
+        "missed": 28,
+        "wrong_crop": 2
+      },
+      "web_n": {
+        "correct": 92,
+        "missed": 30,
+        "wrong_crop": 4
+      }
+    }
+  },
+  {
+    "crop": "pepper",
+    "gt": 80,
+    "models": {
+      "yolo26s": {
+        "correct": 52,
+        "missed": 24,
+        "wrong_crop": 4
+      },
+      "web_s": {
+        "correct": 54,
+        "missed": 22,
+        "wrong_crop": 4
+      },
+      "web_n": {
+        "correct": 49,
+        "missed": 24,
+        "wrong_crop": 7
+      }
+    }
+  },
+  {
+    "crop": "potato",
+    "gt": 83,
+    "models": {
+      "yolo26s": {
+        "correct": 33,
+        "missed": 37,
+        "wrong_crop": 13
+      },
+      "web_s": {
+        "correct": 43,
+        "missed": 24,
+        "wrong_crop": 16
+      },
+      "web_n": {
+        "correct": 36,
+        "missed": 35,
+        "wrong_crop": 12
+      }
+    }
+  },
+  {
+    "crop": "raspberry",
+    "gt": 77,
+    "models": {
+      "yolo26s": {
+        "correct": 59,
+        "missed": 11,
+        "wrong_crop": 7
+      },
+      "web_s": {
+        "correct": 61,
+        "missed": 12,
+        "wrong_crop": 4
+      },
+      "web_n": {
+        "correct": 61,
+        "missed": 10,
+        "wrong_crop": 6
+      }
+    }
+  },
+  {
+    "crop": "soybean",
+    "gt": 30,
+    "models": {
+      "yolo26s": {
+        "correct": 24,
+        "missed": 4,
+        "wrong_crop": 2
+      },
+      "web_s": {
+        "correct": 26,
+        "missed": 2,
+        "wrong_crop": 2
+      },
+      "web_n": {
+        "correct": 24,
+        "missed": 2,
+        "wrong_crop": 4
+      }
+    }
+  },
+  {
+    "crop": "squash",
+    "gt": 48,
+    "models": {
+      "yolo26s": {
+        "correct": 24,
+        "missed": 24,
+        "wrong_crop": 0
+      },
+      "web_s": {
+        "correct": 24,
+        "missed": 23,
+        "wrong_crop": 1
+      },
+      "web_n": {
+        "correct": 28,
+        "missed": 19,
+        "wrong_crop": 1
+      }
+    }
+  },
+  {
+    "crop": "strawberry",
+    "gt": 65,
+    "models": {
+      "yolo26s": {
+        "correct": 60,
+        "missed": 5,
+        "wrong_crop": 0
+      },
+      "web_s": {
+        "correct": 63,
+        "missed": 2,
+        "wrong_crop": 0
+      },
+      "web_n": {
+        "correct": 62,
+        "missed": 3,
+        "wrong_crop": 0
+      }
+    }
+  },
+  {
+    "crop": "tomato",
+    "gt": 354,
+    "models": {
+      "yolo26s": {
+        "correct": 226,
+        "missed": 115,
+        "wrong_crop": 13
+      },
+      "web_s": {
+        "correct": 242,
+        "missed": 93,
+        "wrong_crop": 19
+      },
+      "web_n": {
+        "correct": 232,
+        "missed": 109,
+        "wrong_crop": 13
+      }
+    }
+  }
+]

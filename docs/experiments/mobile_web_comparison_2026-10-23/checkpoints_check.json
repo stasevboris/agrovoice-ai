@@ -1,0 +1,16 @@
+[
+  {
+    "run": "home_20261023_allcrops_web_v1_yolo26n_416_s20261003",
+    "epoch_zero_based": 41,
+    "completed_epochs": 42,
+    "optimizer_present": true,
+    "classes": 49
+  },
+  {
+    "run": "home_20261023_allcrops_web_v1_yolo26s_416_s20261003",
+    "epoch_zero_based": 36,
+    "completed_epochs": 37,
+    "optimizer_present": true,
+    "classes": 49
+  }
+]
