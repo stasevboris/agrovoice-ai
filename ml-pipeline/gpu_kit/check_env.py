@@ -43,7 +43,8 @@ def main():
         capability = f"sm_{properties.major}{properties.minor}"
         info.update(gpu=properties.name, vram_gb=round(properties.total_memory/2**30, 1), capability=capability,
                     arch_list=torch.cuda.get_arch_list())
-        if capability not in torch.cuda.get_arch_list() and f"compute_{properties.major}{properties.minor}" not in " ".join(torch.cuda.get_arch_list()):
+        # ROCm reports gfx versions in the arch list, so the CUDA sm_XX check applies to CUDA builds only.
+        if torch.version.hip is None and capability not in torch.cuda.get_arch_list() and f"compute_{properties.major}{properties.minor}" not in " ".join(torch.cuda.get_arch_list()):
             problems.append(f"This PyTorch build has no kernels for {capability} (RTX 50xx needs a cu128+ wheel).")
         else:
             x = torch.randn(4096, 4096, device="cuda")
@@ -66,13 +67,15 @@ def main():
         except Exception as error:
             problems.append(f"Cannot import {package}: {error}")
 
-    dataset = KIT/"datasets/allcrops_v1"
+    queue = json.loads((KIT/"queue.json").read_text(encoding="utf-8"))
+    dataset = KIT/queue["dataset"]
     report = dataset/"report.json"
     if not report.exists():
         problems.append(f"Dataset missing: {dataset}")
     else:
         splits = json.loads(report.read_text(encoding="utf-8"))["splits"]
-        info["dataset_images"] = {k: v["images"] for k, v in splits.items()}
+        # allcrops_web_v1 also lists plain counts such as web_train next to the split dictionaries.
+        info["dataset_images"] = {k: v["images"] if isinstance(v, dict) else v for k, v in splits.items()}
         train = splits["train"]["images"]
         cache_gb = train*416*416*3/2**30  # Ultralytics RAM cache stores resized uint8 images
         info["ram_cache_needed_gb"] = round(cache_gb, 1)

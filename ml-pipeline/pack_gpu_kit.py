@@ -51,7 +51,9 @@ def main():
     font = ROOT/"ml-pipeline/.cache/ultralytics_root/Arial.ttf"
     if font.exists():  # Ultralytics downloads it for plots otherwise
         entries += [(font, "config/Arial.ttf"), (font, "config/Ultralytics/Arial.ttf")]
-    for source, target in ((args.dataset, f"datasets/{args.dataset.name}"), (args.smoke_dataset, "datasets/allcrops_v1_smoke")):
+    # train_queue.py and check_env.py read the dataset from queue.json, so the kit must use exactly that path.
+    queue = json.loads((ROOT/"ml-pipeline/gpu_kit/queue.json").read_text(encoding="utf-8"))
+    for source, target in ((args.dataset, queue["dataset"]), (args.smoke_dataset, queue["smoke_dataset"])):
         for path in sorted(source.rglob("*")):
             if path.is_file() and path.suffix != ".cache" and "previews" not in path.parts:
                 entries.append((path, f"{target}/{path.relative_to(source).as_posix()}"))
