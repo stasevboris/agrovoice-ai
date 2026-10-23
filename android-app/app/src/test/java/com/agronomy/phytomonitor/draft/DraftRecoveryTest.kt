@@ -71,6 +71,10 @@ class DraftRecoveryTest {
         assertEquals(0.25, JSONObject(restored.reportJson!!).getDouble("confidence_threshold"), 0.0)
         assertEquals("tomato", JSONObject(restored.reportJson).getString("crop_filter"))
         assertEquals(report.toString(), restored.reportJson)
+        assertNull(result.otherCrop)
+        report.put("other_crop_top", "potato")
+        store.write(draft.copy(reportJson = report.toString()))
+        assertEquals("potato", store.read()!!.result()!!.otherCrop)
     }
 
     @Test

@@ -15,6 +15,11 @@ fun assessAnalysis(detectionCount: Int, quality: PhotoQuality?): AnalysisAssessm
     else -> AnalysisAssessment.PRELIMINARY
 }
 
+/** The model's most confident leaf belongs to another crop than the one chosen by hand. */
+fun otherCropWarning(chosen: String, other: String): String =
+    "Модель считает лист скорее культурой «$other», чем выбранной «$chosen». " +
+        "Результат по выбранной культуре может быть неверным: проверьте выбор культуры или переснимите."
+
 /** Shared wording for TTS and visible photo warnings; confidence is never a diagnosis probability. */
 fun spokenAnalysis(labels: List<String>, quality: PhotoQuality?): String {
     val warning = quality?.advice?.let { "$it " }.orEmpty()

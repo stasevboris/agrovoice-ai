@@ -426,7 +426,9 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
     fun spokenResult(): String {
         val found=result ?: return "Сначала сделай фото и дождись анализа."
         val prefix = if (frames.size > 1) "Кадр $selectedFrame из ${frames.size}. ${frameRole.label}. " else ""
-        return prefix + spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality) +
+        val names = found.model.cropNames
+        val otherCrop = found.otherCrop?.let { otherCropWarning(names[resultCrop] ?: resultCrop, names[it] ?: it) + " " }.orEmpty()
+        return prefix + otherCrop + spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality) +
             (seriesWarning?.let { " $it" } ?: "")
     }
     private fun snapshotDraft(): InspectionDraft? {

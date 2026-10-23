@@ -113,6 +113,16 @@ def lock_owner(database: Session, owner_id: UUID):
                            .execution_options(populate_existing=True))
 
 
+def missing_photos(database: Session, owner_id: UUID, update: InspectionUpdate):
+    """Declared photos without stored bytes; the client re-sends only these. Bytes are never loaded."""
+    declared = [reference.id for reference in update.data.photos]
+    if not declared:
+        return []
+    stored = set(database.scalars(select(Photo.client_id).where(
+        Photo.owner_id == owner_id, Photo.client_id.in_(declared), Photo.content.is_not(None))))
+    return [str(photo_id) for photo_id in declared if photo_id not in stored]
+
+
 def apply_update(database: Session, owner: User, update: InspectionUpdate):
     record = database.get(Inspection, (owner.id, update.id))
     payload = update.data.model_dump(mode="json")
@@ -121,7 +131,8 @@ def apply_update(database: Session, owner: User, update: InspectionUpdate):
     updated_at = update.updated_at.astimezone(timezone.utc)
     if record is not None:
         if record.payload == payload and record.updated_at == updated_at:
-            return {"status": "unchanged", "inspection": view(record)}
+            return {"status": "unchanged", "inspection": view(record),
+                    "missing_photos": missing_photos(database, owner.id, update)}
         if update.base_version != record.version or updated_at <= record.updated_at:
             return {"status": "conflict", "inspection": view(record)}
     elif update.base_version != 0:
@@ -155,7 +166,8 @@ def apply_update(database: Session, owner: User, update: InspectionUpdate):
             database.add(Photo(owner_id=owner.id, client_id=reference.id, inspection_id=record.client_id,
                                sha256=reference.sha256, size=reference.bytes))
     database.flush()
-    return {"status": "accepted", "inspection": view(record)}
+    return {"status": "accepted", "inspection": view(record),
+            "missing_photos": missing_photos(database, owner.id, update)}
 
 
 @router.post("/sync/inspections")

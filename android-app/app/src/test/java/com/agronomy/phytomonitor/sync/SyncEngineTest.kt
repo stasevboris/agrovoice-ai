@@ -254,6 +254,30 @@ class SyncEngineTest {
         assertTrue(SyncPayload.sameJson(JSONObject("{\"a\":1,\"b\":[2,3]}"), JSONObject("{\"b\":[2.0,3],\"a\":1.0}")))
     }
 
+    @Test fun noteOnlyEditDoesNotReuploadPhotosTheServerAlreadyStores() {
+        val api = FakeApi().apply { reportMissing = true }
+        engine.enqueue(account, "old-id")
+        engine.synchronize(account, api)
+        assertEquals(1, api.uploads)
+        val old = db.journal().inspection("old-id")!!
+        db.journal().editNote(old.id, old.updatedAt, "Только заметка", old.updatedAt + 1)
+        engine.synchronize(account, api)
+        assertEquals("synced", state().state)
+        assertEquals(2, api.pushes.size)
+        assertEquals(1, api.uploads)
+    }
+
+    @Test fun photoTheServerStillMissesIsSentAgain() {
+        val api = FakeApi().apply { reportMissing = true; failPhoto = true }
+        engine.enqueue(account, "old-id")
+        engine.synchronize(account, api)
+        assertEquals("error", state().state)
+        api.failPhoto = false
+        engine.synchronize(account, api)
+        assertEquals("synced", state().state)
+        assertEquals(1, api.uploads)
+    }
+
     private fun state() = db.sync().record(account, "old-id")!!
 
     private class FakeApi : SyncApi {
@@ -268,6 +292,8 @@ class SyncEngineTest {
         var duringPush: (() -> Unit)? = null
         var latest: JSONObject? = null
         var pulled: JSONObject? = null
+        var reportMissing = false
+        val stored = mutableSetOf<String>()
         override fun push(update: JSONObject): JSONObject {
             if (unauthorized) throw SyncHttpException(401)
             pushes += JSONObject(update.toString())
@@ -277,11 +303,18 @@ class SyncEngineTest {
                 .put("expert_status", "unreviewed")
             latest = remote
             if (losePushReply) { losePushReply = false; throw IOException("lost response") }
-            return JSONObject().put("status", if (conflict) "conflict" else "accepted").put("inspection", remote)
+            val reply = JSONObject().put("status", if (conflict) "conflict" else "accepted").put("inspection", remote)
+            if (reportMissing) {
+                val photos = update.getJSONObject("data").getJSONArray("photos")
+                val missing = (0 until photos.length()).map { photos.getJSONObject(it).getString("id") }.filter { it !in stored }
+                reply.put("missing_photos", JSONArray(missing))
+            }
+            return reply
         }
         override fun upload(id: String, file: File, sha: String) {
             if (failPhoto) throw IOException("connection lost")
             uploads++
+            stored += id
         }
         override fun pull(after: Long): JSONObject {
             if (pullUnauthorized) throw SyncHttpException(401)

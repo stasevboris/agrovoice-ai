@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-23",
+  "scope": "Fixes for the strict review of 20.10 (artifacts/verification/strict_review_20261020/REVIEW.md) and the manual-crop warning",
+  "changes": {
+    "upload_cancel": "SyncHttpClient.upload sends the body in 64 KiB blocks and checks the session before each block",
+    "only_missing_photos": "server returns missing_photos for accepted/unchanged pushes; SyncEngine uploads only those; an older server without the field still gets every photo",
+    "knowledge_logout_race": "KnowledgeUpdates.install parses, then activates under the same session lock (store.commitQueue) as model updates",
+    "knowledge_rollback_chain": "rollback target is the book actually in use (first parseable), not the previous pointer",
+    "other_crop_warning": "with a manually chosen crop the result still ranks within that crop (A-14), but other_crop_top is stored in the report and shown/spoken when the model's own best leaf belongs to another crop"
+  },
+  "checks": [
+    {"command": "gradlew testFieldDebugUnitTest testLabDebugUnitTest lintFieldDebug", "result": "field 369/369, lab 369/369, lint 0 errors (65 warnings, 2 hints)", "log": "artifacts/verification/gradle_20261023.log"},
+    {"command": "docker compose build api; docker compose --profile test run --rm tests", "result": "61 passed", "log": "artifacts/verification/server_tests_20261023.log", "note": "without rebuilding the image the stale image ran 21 tests"},
+    {"command": "am instrument SyncDeviceTest (Redmi Note 7, isolated package com.agronomy.phytomonitor.verification, adb reverse to isolated verify-api on 127.0.0.1:8028)", "result": "OK (2 tests)", "log": "artifacts/verification/sync_fixes_20261023/device_SyncDeviceTest.log"},
+    {"command": "tar of isolated app data before/after", "result": "387 files, 0 changed", "log": "artifacts/verification/sync_fixes_20261023/isolated_compare.json"},
+    {"command": "sha256 of installed isolated APK vs current build", "result": "identical (0650409a...); KnowledgeUpdateDeviceTest and SyncUiWorkerDeviceTest phases from 21.10 therefore apply to this code", "log": "artifacts/verification/fix_review_20261021/"}
+  ],
+  "not_checked": [
+    "logout during a real phone upload over Wi-Fi (covered only by the JVM HTTP test with a real local HTTP server)",
+    "usefulness of the other-crop warning on real photos",
+    "main installation com.agronomy.phytomonitor was not updated in this step"
+  ]
+}

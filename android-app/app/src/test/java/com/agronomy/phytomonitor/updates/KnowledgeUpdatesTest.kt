@@ -53,6 +53,36 @@ class KnowledgeUpdatesTest {
         assertEquals("good", KnowledgeUpdates.load(store) { bundled }.release!!.version)
     }
 
+    @Test fun installKeepsTheBookReallyInUseAsRollbackTarget() {
+        val store = VerifiedUpdateStore(temporary.newFolder())
+        val textA = JSONObject(bundled).put("kb_version", "working-A").toString()
+        val a = release(textA, version = "working-A")
+        install(store, a, textA)
+        // SHA-valid B that does not parse: the loader keeps using A.
+        install(store, release("{}", version = "bad-B"), "{}")
+        assertEquals("working-A", KnowledgeUpdates.active(store)!!.version)
+        val textC = JSONObject(bundled).put("kb_version", "working-C").toString()
+        val c = release(textC, version = "working-C")
+        store.stage(c, ByteArrayInputStream(textC.toByteArray()))
+        KnowledgeUpdates.install(store, c)
+        assertEquals("working-C", KnowledgeUpdates.active(store)!!.version)
+        store.file(c).writeText("corrupted-after-install")
+        assertEquals("working-A", KnowledgeUpdates.load(store) { bundled }.release!!.version)
+    }
+
+    @Test fun endedSessionCannotActivateAParsedBook() {
+        val store = VerifiedUpdateStore(temporary.newFolder())
+        val text = JSONObject(bundled).put("kb_version", "late").toString()
+        val late = release(text, version = "late")
+        store.stage(late, ByteArrayInputStream(text.toByteArray()))
+        val result = runCatching {
+            KnowledgeUpdates.install(store, late) { throw java.util.concurrent.CancellationException("Logged out") }
+        }
+        assertTrue(result.exceptionOrNull() is java.util.concurrent.CancellationException)
+        assertNull(KnowledgeUpdates.active(store))
+        assertTrue(runCatching { KnowledgeUpdates.install(store, release("{}", version = "bad")) }.isFailure)
+    }
+
     @Test fun offerSkipsActiveAndModelsAreNotInstalled() {
         val old = release("old", version = "old")
         val next = release("next", version = "next")

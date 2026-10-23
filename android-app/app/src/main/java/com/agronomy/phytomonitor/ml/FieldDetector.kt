@@ -42,7 +42,9 @@ data class DetectionResult(val model: DetectorModel, val boxes: List<LeafDetecti
                            val inferenceMs: Double, val pipelineMs: Double,
                            val proposedLeaves: Int = 0, val classifiedLeaves: Int = 0,
                            val skippedLeaves: Int = 0,
-                           val photoQuality: PhotoQuality? = null)
+                           val photoQuality: PhotoQuality? = null,
+                           /** Crop of the model's own most confident leaf when it differs from the manually chosen crop. */
+                           val otherCrop: String? = null)
 
 /** One background executor, at most one detector and one classifier session. */
 class FieldDetector(private val context: Context) : Closeable {
@@ -156,6 +158,7 @@ class FieldDetector(private val context: Context) : Closeable {
         // The crop of each class comes from the manifest, not from the beginning of an English class name.
         val allowed=if(crop=="all") null else model.classCrops.indices.filter {model.classCrops[it]==crop}.toSet()
         var inferenceNanos=0L
+        var globalTop:LeafDetection?=null
         val proposals=OnnxTensor.createTensor(environment,input.asFloatBuffer(),longArrayOf(1,3,model.side.toLong(),model.side.toLong())).use {tensor ->
             val before=SystemClock.elapsedRealtimeNanos()
             detector.run(mapOf(detector.inputNames.first() to tensor)).use {result ->
@@ -164,12 +167,19 @@ class FieldDetector(private val context: Context) : Closeable {
                 val output=((result[0] as OnnxTensor).value as Array<Array<FloatArray>>)[0]
                 trace?.invoke(input.asReadOnlyBuffer(),output)
                 stageTrace?.invoke("detector",input.asReadOnlyBuffer(),output.flatMap {it.asIterable()}.toFloatArray(),intArrayOf(1,output.size,output[0].size))
-                if(model.family=="detr")decodeDetr(output,geometry,threshold,allowed,model.classes.size)
-                else YoloPostprocessor.decode(output,geometry,if(classifier==null)threshold else PROPOSAL_THRESHOLD,
+                if(model.family=="detr"){
+                    val all=decodeDetr(output,geometry,threshold,null,model.classes.size)
+                    globalTop=all.firstOrNull()
+                    all.filter {allowed==null || it.classId in allowed}
+                } else {
+                    if(classifier==null && allowed!=null)globalTop=YoloPostprocessor.decode(output,geometry,threshold,iouThreshold=NMS_IOU).firstOrNull()
+                    YoloPostprocessor.decode(output,geometry,if(classifier==null)threshold else PROPOSAL_THRESHOLD,
                     if(classifier==null)allowed else null,iouThreshold=NMS_IOU,classAgnostic=classifier!=null)
+                }
             }
         }
-        if(classifier==null)return DetectionResult(model,proposals,inferenceNanos/1e6,(SystemClock.elapsedRealtimeNanos()-started)/1e6)
+        if(classifier==null)return DetectionResult(model,proposals,inferenceNanos/1e6,(SystemClock.elapsedRealtimeNanos()-started)/1e6,
+            otherCrop=otherCrop(model,allowed,globalTop))
         val predicted=mutableListOf<LeafDetection>()
         // Explicit ceiling keeps multi-leaf photos usable on older phones; skipped count is reported.
         val selected=proposals.take(MAX_CLASSIFIED_LEAVES)
@@ -190,12 +200,20 @@ class FieldDetector(private val context: Context) : Closeable {
                     val cls = candidates.maxByOrNull { logits[it] } ?: return@classify
                     val score=(leaf.confidence*probabilities[cls]/total).toFloat()
                     if(score>=threshold)predicted+=leaf.copy(classId=cls,confidence=score)
+                    val best=logits.indices.maxByOrNull {logits[it]}!!
+                    val bestScore=(leaf.confidence*probabilities[best]/total).toFloat()
+                    if(bestScore>=threshold && bestScore>(globalTop?.confidence ?: 0f))globalTop=leaf.copy(classId=best,confidence=bestScore)
                 }
             }
         }
         return DetectionResult(model,predicted.sortedByDescending {it.confidence},inferenceNanos/1e6,
-            (SystemClock.elapsedRealtimeNanos()-started)/1e6,proposals.size,selected.size,proposals.size-selected.size)
+            (SystemClock.elapsedRealtimeNanos()-started)/1e6,proposals.size,selected.size,proposals.size-selected.size,
+            otherCrop=otherCrop(model,allowed,globalTop))
     }
+
+    /** The manual crop still ranks within its classes (A-14), but the user is told when the model itself prefers another crop. */
+    private fun otherCrop(model: DetectorModel, allowed: Set<Int>?, top: LeafDetection?): String? =
+        top?.takeIf {allowed!=null && it.classId !in allowed}?.let {model.classCrops.getOrNull(it.classId)}
 
     fun prepareInput(bitmap: Bitmap, geometry: Letterbox=Letterbox(bitmap.width,bitmap.height)): ByteBuffer {
         val frame=Bitmap.createBitmap(geometry.side,geometry.side,Bitmap.Config.ARGB_8888)

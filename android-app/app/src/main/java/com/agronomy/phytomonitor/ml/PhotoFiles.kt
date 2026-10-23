@@ -128,6 +128,7 @@ object PhotoFiles {
             .put("dataset",result.model.dataset).put("seed",result.model.seed).put("provisional",result.model.provisional)
             .put("detector_seed",result.model.detectorSeed).put("family",result.model.family)
             .put("proposed_leaves",result.proposedLeaves).put("classified_leaves",result.classifiedLeaves).put("skipped_leaves",result.skippedLeaves)
+            .put("other_crop_top",result.otherCrop ?: JSONObject.NULL)
             .put("score_policy",if(result.model.classifier==null) "detector class score" else "detector maximum class score times classifier softmax; uncalibrated")
             .put("model_metadata",manifest.getJSONArray("models").let {array ->
                 (0 until array.length()).map {array.getJSONObject(it)}.first {it.getString("id")==result.model.id}

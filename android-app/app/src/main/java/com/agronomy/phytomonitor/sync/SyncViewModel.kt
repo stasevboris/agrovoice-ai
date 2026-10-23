@@ -77,7 +77,7 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             val (active, models) = withContext(Dispatchers.IO) {
-                updateStore.available("kb").firstOrNull() to ModelUpdates.get(context).also { it.load() }
+                KnowledgeUpdates.active(updateStore) to ModelUpdates.get(context).also { it.load() }
             }
             mutable.update { it.copy(activeKnowledge = active) }
             models.state.filterNotNull().collect { selected ->
@@ -245,14 +245,12 @@ class SyncViewModel(application: Application) : AndroidViewModel(application) {
     fun installKnowledge() = withSession("install-kb") { session, active ->
         checkActive { active() && state.value.generation == session.generation }
         val release = state.value.offeredKnowledge ?: return@withSession "Сначала проверьте обновления: новой версии справочника нет."
-        val file = SyncHttpClient(session.origin, session.token, active).downloadUpdate(release, updateStore)
+        SyncHttpClient(session.origin, session.token, active).downloadUpdate(release, updateStore)
         checkActive(active)
-        try {
-            com.agronomy.phytomonitor.knowledge.KnowledgeCatalog.parse(file.readText(Charsets.UTF_8))
-        } catch (error: Exception) {
-            throw IllegalStateException("Файл справочника не прошёл проверку формата. Используется прежняя версия.", error)
+        // Same publication lock as the model: logout during parsing cannot switch the book afterwards.
+        KnowledgeUpdates.install(updateStore, release, active) { activate ->
+            store.commitQueue(session.generation, active, activate)
         }
-        updateStore.activate(release)
         mutable.update { it.copy(activeKnowledge = release, knowledgeRevision = it.knowledgeRevision + 1) }
         "Справочник обновлён до версии ${release.version}. Прежняя версия сохранена. Карточки без проверки специалистом остаются черновиками."
     }

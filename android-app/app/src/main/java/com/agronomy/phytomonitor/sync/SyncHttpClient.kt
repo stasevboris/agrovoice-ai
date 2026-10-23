@@ -49,7 +49,18 @@ class SyncHttpClient(origin: String, private val token: String? = null,
     override fun upload(id: String, file: File, sha: String) {
         java.util.UUID.fromString(id)
         request("PUT", "/photos/$id", file.length(), "application/octet-stream", sha) { connection ->
-            connection.outputStream.use { output -> file.inputStream().use { it.copyTo(output) } }
+            connection.outputStream.use { output -> file.inputStream().use { input -> send(input, output) } }
+        }
+    }
+
+    /** Checks the session between blocks: logout stops the body instead of waiting for the whole file. */
+    private fun send(input: java.io.InputStream, output: java.io.OutputStream) {
+        val buffer = ByteArray(64 * 1024)
+        while (true) {
+            ensureActive()
+            val count = input.read(buffer)
+            if (count < 0) break
+            output.write(buffer, 0, count)
         }
     }
 

@@ -41,13 +41,16 @@ class KnowledgeCatalogTest {
 
     @Test
     fun expiredVerificationAndMissingExpertBlockNarration() {
-        val card = catalog().cards.first { it.code == "potato__late_blight" }.copy(status = "verified", verifiedBy = "TEST: специалист",
-            verifiedAt = "2026-10-19", reviewDue = "2026-10-20", missing = emptyList())
-        assertTrue(card.reviewed(LocalDate.parse("2026-10-19")))
-        assertFalse(card.reviewed(LocalDate.parse("2026-10-21")))
-        assertFalse(card.copy(verifiedBy = null).reviewed(LocalDate.parse("2026-10-19")))
-        assertFalse(card.copy(missing = listOf("treatments")).reviewed(LocalDate.parse("2026-10-19")))
-        assertFalse(card.copy(sources = emptyList()).reviewed(LocalDate.parse("2026-10-19")))
+        val draft = catalog().cards.first { it.code == "potato__late_blight" }
+        // Dates follow the card's newest source access, so refreshing the KB does not age this test.
+        val day = draft.sources.maxOf { LocalDate.parse(it.accessed) }
+        val card = draft.copy(status = "verified", verifiedBy = "TEST: специалист",
+            verifiedAt = day.toString(), reviewDue = day.plusDays(1).toString(), missing = emptyList())
+        assertTrue(card.reviewed(day))
+        assertFalse(card.reviewed(day.plusDays(2)))
+        assertFalse(card.copy(verifiedBy = null).reviewed(day))
+        assertFalse(card.copy(missing = listOf("treatments")).reviewed(day))
+        assertFalse(card.copy(sources = emptyList()).reviewed(day))
     }
 
     @Test

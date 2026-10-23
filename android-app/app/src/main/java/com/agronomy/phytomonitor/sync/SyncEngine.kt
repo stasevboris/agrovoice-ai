@@ -74,9 +74,12 @@ class SyncEngine(
                 val remote = result.getJSONObject("inspection")
                 check(remote.getString("id") == current.serverId && remote.getLong("version") > 0) { "Сервер вернул другой осмотр." }
                 val files = JSONArray(current.photoFiles)
+                val missing = missingPhotos(result)
                 for (index in 0 until files.length()) {
                     ensureActive(active)
                     val item = files.getJSONObject(index)
+                    // Skip only what the server itself confirmed as stored; an older server lists nothing, so all are sent.
+                    if (missing != null && item.getString("id") !in missing) continue
                     val file = File(item.getString("path")).canonicalFile
                     require(allowedPhoto(file) && file.isFile && file.length() == item.getLong("bytes") &&
                         InspectionJournal.sha256(file) == item.getString("sha256")) {
@@ -162,6 +165,11 @@ class SyncEngine(
         val previousTime = old?.let { SyncPayload.parseTime(JSONObject(it.request).getString("updated_at")).toEpochMilli() } ?: 0
         val time = maxOf(details.inspection.updatedAt, minimumTime, previousTime + 1)
         return SyncPayload.snapshot(account, details, old?.serverVersion ?: 0, time, allowedPhoto, old)
+    }
+
+    private fun missingPhotos(result: JSONObject): Set<String>? {
+        val array = result.optJSONArray("missing_photos") ?: return null
+        return (0 until array.length()).map { array.getString(it) }.toSet()
     }
 
     private fun changed(before: SyncRecord, after: SyncRecord): Boolean =

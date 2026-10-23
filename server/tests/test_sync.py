@@ -168,9 +168,32 @@ def test_metadata_update_does_not_read_photo_bytes(client, database, auth):
     finally:
         event.remove(connection, "before_cursor_execute", capture)
     assert response.json()["results"][0]["status"] == "accepted"
+    assert response.json()["results"][0]["missing_photos"] == []
     assert any("FROM photos" in statement for statement in statements)
-    assert all("photos.content" not in statement for statement in statements)
+    # A WHERE filter on content is allowed; selecting the bytes is not.
+    assert all("photos.content" not in statement.split("FROM")[0] for statement in statements)
     assert client.get(f'/photos/{photo["id"]}', headers=auth).content == content
+
+
+def test_push_lists_only_photos_without_stored_bytes(client, auth):
+    first, second = b"first photo bytes", b"second photo bytes"
+    item = update(first)
+    item["data"]["photos"].append({"id": str(uuid.uuid4()), "sha256": hashlib.sha256(second).hexdigest(),
+                                   "bytes": len(second)})
+    ids = [photo["id"] for photo in item["data"]["photos"]]
+    assert push(client, auth, item).json()["results"][0]["missing_photos"] == ids
+    photo = item["data"]["photos"][0]
+    assert client.put(f'/photos/{photo["id"]}', content=first,
+                      headers={**auth, "X-Content-SHA256": photo["sha256"]}).status_code == 200
+    repeated = push(client, auth, item).json()["results"][0]
+    assert repeated["status"] == "unchanged"
+    assert repeated["missing_photos"] == [ids[1]]
+    item["base_version"] = 1
+    item["updated_at"] = (datetime.now(timezone.utc) + timedelta(minutes=1)).isoformat()
+    item["data"]["note"] = "Note-only correction"
+    edited = push(client, auth, item).json()["results"][0]
+    assert edited["status"] == "accepted"
+    assert edited["missing_photos"] == [ids[1]]
 
 
 def test_disconnect_during_stream_and_full_retry(client, database, auth):

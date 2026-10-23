@@ -432,6 +432,10 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
                 MessageBanner("Ещё ${result.skippedLeaves} листьев не обработаны. Сними участок крупнее.", isError = false)
             }
         }
+        result.otherCrop?.let { other ->
+            val names = result.model.cropNames
+            MessageBanner(otherCropWarning(names[model.resultCrop] ?: model.resultCrop, names[other] ?: other), isError = true)
+        }
         if (result.boxes.isEmpty()) {
             MessageBanner(NO_DETECTIONS_ADVICE, isError = false)
         } else {

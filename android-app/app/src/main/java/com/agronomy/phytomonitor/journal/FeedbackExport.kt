@@ -14,7 +14,7 @@ import java.util.zip.ZipOutputStream
 
 /** Deliberately separate from backup: never serialize an inspection or recursively copy unknown JSON. */
 object FeedbackExport {
-    private val predictionFields = "decoded_width decoded_height model model_sha256 family crop_filter confidence_threshold app_version inference_ms pipeline_ms proposed_leaves classified_leaves skipped_leaves"
+    private val predictionFields = "decoded_width decoded_height model model_sha256 family crop_filter confidence_threshold app_version inference_ms pipeline_ms proposed_leaves classified_leaves skipped_leaves other_crop_top"
     private val provenanceFields = "schema_version model_id model_name model_sha256 family taxonomy_version taxonomy_source class_order_sha256 class_order_hash_encoding"
 
     private fun scalars(source: JSONObject, fields: String): JSONObject = JSONObject().apply {

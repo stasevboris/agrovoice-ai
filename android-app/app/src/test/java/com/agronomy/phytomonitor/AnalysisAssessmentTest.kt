@@ -42,6 +42,8 @@ class AnalysisAssessmentTest {
         assertEquals(PhotoVerdict.NO_WARNING, quality.verdict)
         assertEquals(AnalysisAssessment.PRELIMINARY, assessAnalysis(1, quality))
         assertTrue(spokenAnalysis(listOf("Томат: здоровый"), quality).contains("Результат нужно проверить"))
+        val warning = otherCropWarning("Огурец", "Томат")
+        assertTrue(warning.contains("«Томат»") && warning.contains("«Огурец»") && warning.contains("может быть неверным"))
     }
 
     @Test fun qualityAndAssessmentSurviveJsonRoundTripWithoutChangingDetections() {
