@@ -1,7 +1,7 @@
-"""Pack everything worth taking home from the GPU machine into one zip (safe to run mid-training).
+"""Pack results after the training process has stopped (checkpoints may be changing during training).
 
   python package_results.py            -> results_<host>_<YYYYmmdd_HHMM>.zip in the kit root
-Includes per run: best.pt, last.pt, best.onnx, results.csv, args.yaml, plots, eval/, run_summary.json,
+Includes per run: best.pt, last.pt, last_resumable.pt, best.onnx, results.csv, args.yaml, plots, eval/, run_summary.json,
 android_manifest_entry.json; plus env.json, queue*.json and logs/. Skips epoch*.pt snapshots.
 """
 from __future__ import annotations
@@ -19,7 +19,7 @@ def wanted(path: Path) -> bool:
     if path.name.startswith("epoch") and path.suffix == ".pt":
         return False
     if path.suffix == ".pt":
-        return path.name in ("best.pt", "last.pt")
+        return path.name in ("best.pt", "last.pt", "last_resumable.pt")
     return path.suffix in KEEP_SUFFIXES
 
 

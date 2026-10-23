@@ -18,7 +18,7 @@ import shutil
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPTS = ["README.md", "check_env.py", "train_queue.py", "package_results.py", "queue.json",
+SCRIPTS = ["README.md", "START_HERE_RU.md", "check_env.py", "train_queue.py", "package_results.py", "queue.json",
            "setup_linux.sh", "setup_windows.ps1", "requirements-gpu.txt"]
 WEIGHTS = ["yolo26n.pt", "yolo26s.pt", "yolo26m.pt", "yolo11n.pt"]
 

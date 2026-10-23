@@ -1,6 +1,52 @@
 # Что ставить на обучение AgroVoice
 
 Это инструкция для Бориса. Оперативное состояние — [STATUS](../STATUS.md).
+
+## Готовый запуск: комплект от 23.10.2026
+
+Для обучения всех целевых классов на кафедре используйте
+[пошаговую инструкцию Windows/Linux](../../ml-pipeline/gpu_kit/START_HERE_RU.md).
+Архив для внешнего SSD:
+`artifacts/gpu_kit/ready_20261023/agrovoice_gpu_kit_20261023.zip`.
+Рядом лежат инструкция, отчёт проверки архива и `SHA256SUMS.txt`.
+Он содержит данные, начальные веса и скрипты; Python-пакеты устанавливаются по сети.
+Прежние архивы не заменяются. Успешный smoke на RX не подтверждает совместимость 5090.
+
+На домашнем ПК 23.10 уже работает отдельная очередь S → N; второй экземпляр
+не запускать. Статус и лог доступны из PowerShell:
+
+```powershell
+Set-Location F:\agrovoice-ai
+Get-Content .\runs\home_20261023_allcrops_web\status.json
+Get-Content .\runs\home_20261023_allcrops_web\training.log -Tail 10 -Wait
+```
+
+`Ctrl+C` в окне чтения лога прекращает только просмотр, не обучение.
+Мягко остановить домашнюю очередь:
+
+```powershell
+wsl -d AgroVoice-ML -u root --exec touch /root/kit/agrovoice_gpu_kit_20261023/STOP
+```
+
+Дождаться изменения статуса с `running` на итоговый. Затем собрать и скопировать
+результаты (исправленный сборщик результатов уже установлен в этот WSL-комплект):
+
+```powershell
+wsl -d AgroVoice-ML -u root --exec /opt/agrovoice/venv/bin/python /root/kit/agrovoice_gpu_kit_20261023/package_results.py
+Copy-Item -Path '\\wsl.localhost\AgroVoice-ML\root\kit\agrovoice_gpu_kit_20261023\results_*.zip' -Destination .\runs\home_20261023_allcrops_web\
+```
+
+Жёсткая остановка этой домашней очереди задана на 22:50 МСК 23.10.
+Файлы запуска в `artifacts/verification/home_train_20261023` относятся только
+к этому дню; они не являются командой для запуска завтра. На следующий день
+нужна новая явная команда на домашнее обучение и новая дата ограничения.
+
+## Исторический план исследований и альтернатив
+
+Ниже сохранён отдельный план строгого набора и альтернатив. Пары N/S, INT8 и
+первый Qwen-пилот уже выполнялись: итоги в STATUS и связанных отчётах.
+Этот раздел не является очередью готового комплекта `allcrops_web_v1`.
+
 Подготовленные данные и их фактические количества —
 [основной отчёт](../data/TRAINING_PREPARATION_REPORT.json) и
 [новое пополнение](../data/WEB_RESEARCH_PREPARATION_REPORT.json).
