@@ -29,7 +29,7 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def supervise(args):
+def supervise(args, entrypoint=None):
     # Detect ROCm before starting a child; CPU on the home PC uses the same day limit.
     import torch
     home = bool(torch.version.hip) or args.device == 'cpu'
@@ -41,7 +41,7 @@ def supervise(args):
     lock = args.out / 'run.lock'
     with lock.open('x') as stream:
         stream.write(str(os.getpid()))
-    command = [sys.executable, '-u', str(Path(__file__).resolve()), *sys.argv[1:], '--worker']
+    command = [sys.executable, '-u', str(entrypoint or Path(__file__).resolve()), *sys.argv[1:], '--worker']
     status = dict(status='running', deadline=args.deadline, automatic_restart=False,
                   encoder=args.encoder, source='explicit manual CLI start')
     write_json(args.out / 'status.json', status)

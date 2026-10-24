@@ -54,9 +54,12 @@ class OnnxBenchmarkDeviceTest {
             val loadMs = (SystemClock.elapsedRealtimeNanos() - loadStarted) / 1e6
             session.use {
                 val input = session.inputNames.first()
-                val shape = longArrayOf(1, 3, 416, 416)
+                val shape = (session.inputInfo.getValue(input).info as ai.onnxruntime.TensorInfo).shape
+                require(shape.size == 4 && shape[0] == 1L && shape[1] == 3L &&
+                    shape[2] in 1L..1024L && shape[2] == shape[3]) { "Expected a fixed square RGB input" }
+                val side = shape[2].toInt()
                 val random = Random(20261020)
-                val values = FloatArray(3 * 416 * 416) { random.nextFloat() }
+                val values = FloatArray(3 * side * side) { random.nextFloat() }
                 val times = mutableListOf<Double>()
                 var outputShape = ""
                 repeat(5 + runs) { index ->
@@ -72,6 +75,7 @@ class OnnxBenchmarkDeviceTest {
                 val median = (sorted[(runs - 1) / 2] + sorted[runs / 2]) / 2
                 results.put(JSONObject().put("model", name).put("sha256", sha256)
                     .put("bytes", file.length()).put("session_load_ms", loadMs)
+                    .put("input_shape", shape.joinToString("x"))
                     .put("output_shape", outputShape).put("runs", times.size)
                     .put("times_ms", JSONArray(times))
                     .put("median_ms", median).put("p90_ms", sorted[ceil(runs * 0.9).toInt() - 1])
@@ -87,7 +91,7 @@ class OnnxBenchmarkDeviceTest {
             .put("created_epoch_ms", System.currentTimeMillis())
             .put("percentile_method", "nearest rank; median averages the two middle values")
             .put("memory_scope", "Whole test process PSS while the session is open; not model-only memory")
-            .put("method", "ORT Java CPU, 4 intra-op threads, 5 warm-up runs, random 1x3x416x416 input; preprocessing and decoding excluded")
+            .put("method", "ORT Java CPU, 4 intra-op threads, 5 warm-up runs, random fixed RGB input from session shape; preprocessing and decoding excluded")
             .toString(2))
     }
 }

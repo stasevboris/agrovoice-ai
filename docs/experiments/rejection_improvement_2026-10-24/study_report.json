@@ -1,0 +1,1015 @@
+{
+  "status": "audit_candidate",
+  "selected": {
+    "selected_name": "dino_norm_mlp_crop_vs_reject",
+    "policy": {
+      "threshold": 0.9958845687447002,
+      "metrics": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 482,
+          "tp": 462,
+          "fp": 259,
+          "fn": 197,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.6407766990291263,
+          "recall": 0.701062215477997,
+          "f1": 0.6695652173913044
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 1
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 0
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 43
+          }
+        }
+      }
+    },
+    "selection_partition": "cal",
+    "audit_read_for_selection": false
+  },
+  "calibration_candidates": [
+    {
+      "name": "previous_dinov2_knownness",
+      "policy": {
+        "threshold": 0.9480029211568025,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 505,
+            "tp": 469,
+            "fp": 312,
+            "fn": 190,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6005121638924455,
+            "recall": 0.7116843702579666,
+            "f1": 0.6513888888888889
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 120
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "previous_dinov2_crop_vs_reject",
+      "policy": {
+        "threshold": 0.9007465298153168,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 494,
+            "tp": 469,
+            "fp": 278,
+            "fn": 190,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6278447121820616,
+            "recall": 0.7116843702579666,
+            "f1": 0.6671408250355618
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 1
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 68
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 485
+    },
+    {
+      "name": "dino_knn_known_k10",
+      "policy": {
+        "threshold": 0.5589704275131225,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 498,
+            "tp": 460,
+            "fp": 307,
+            "fn": 199,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5997392438070405,
+            "recall": 0.6980273141122914,
+            "f1": 0.6451612903225806
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 0
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 53
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 141
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "dino_knn_margin_k5",
+      "policy": {
+        "threshold": 0.021712930202484132,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 502,
+            "tp": 468,
+            "fp": 309,
+            "fn": 191,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6023166023166023,
+            "recall": 0.7101669195751138,
+            "f1": 0.6518105849582173
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 115
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "previous_mobilenet_knownness",
+      "policy": {
+        "threshold": 0.7573817039816377,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 501,
+            "tp": 464,
+            "fp": 323,
+            "fn": 195,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5895806861499364,
+            "recall": 0.7040971168437026,
+            "f1": 0.6417704011065007
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 12
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 86
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "previous_mobilenet_crop_vs_reject",
+      "policy": {
+        "threshold": 0.4066035437068333,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 495,
+            "tp": 461,
+            "fp": 312,
+            "fn": 198,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5963777490297542,
+            "recall": 0.6995447647951442,
+            "f1": 0.6438547486033519
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 6
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 55
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "dino_norm_linear_knownness",
+      "policy": {
+        "threshold": 0.9782424793859738,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 503,
+            "tp": 466,
+            "fp": 312,
+            "fn": 193,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5989717223650386,
+            "recall": 0.7071320182094082,
+            "f1": 0.6485734168406402
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 2
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 103
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "dino_norm_linear_crop_vs_reject",
+      "policy": {
+        "threshold": 0.9538617809539025,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 496,
+            "tp": 470,
+            "fp": 281,
+            "fn": 189,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.625832223701731,
+            "recall": 0.7132018209408194,
+            "f1": 0.6666666666666666
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 1
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 66
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 485
+    },
+    {
+      "name": "dino_norm_mlp_knownness",
+      "policy": {
+        "threshold": 0.996416662066522,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 493,
+            "tp": 461,
+            "fp": 300,
+            "fn": 198,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6057818659658344,
+            "recall": 0.6995447647951442,
+            "f1": 0.6492957746478873
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 1
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 73
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "dino_norm_mlp_crop_vs_reject",
+      "policy": {
+        "threshold": 0.9958845687447002,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 482,
+            "tp": 462,
+            "fp": 259,
+            "fn": 197,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6407766990291263,
+            "recall": 0.701062215477997,
+            "f1": 0.6695652173913044
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 1
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 43
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 485
+    },
+    {
+      "name": "mobile_norm_mlp_knownness",
+      "policy": {
+        "threshold": 0.813416395851955,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 505,
+            "tp": 468,
+            "fp": 321,
+            "fn": 191,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5931558935361216,
+            "recall": 0.7101669195751138,
+            "f1": 0.6464088397790055
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 1
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 2
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 45
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    },
+    {
+      "name": "mobile_norm_mlp_crop_vs_reject",
+      "policy": {
+        "threshold": 0.38241517591070406,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 491,
+            "tp": 462,
+            "fp": 307,
+            "fn": 197,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.6007802340702211,
+            "recall": 0.701062215477997,
+            "f1": 0.6470588235294118
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 1
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 1
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 33
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 485
+    },
+    {
+      "name": "dino_binary_mlp_knownness",
+      "policy": {
+        "threshold": 0.7234022521972656,
+        "metrics": {
+          "field": {
+            "images": 184,
+            "gt": 659,
+            "localized": 499,
+            "tp": 463,
+            "fp": 320,
+            "fn": 196,
+            "ignored_gt": 0,
+            "ignored_predictions": 0,
+            "precision": 0.5913154533844189,
+            "recall": 0.7025796661608498,
+            "f1": 0.6421636615811374
+          },
+          "acceptance": {
+            "dataset_nonplant_openimages_v2": {
+              "images": 3,
+              "accepted": 1
+            },
+            "dataset_unknown_beans_screened_v1": {
+              "images": 59,
+              "accepted": 0
+            },
+            "dataset_unknown_deepweeds_v1": {
+              "images": 1318,
+              "accepted": 118
+            }
+          }
+        }
+      },
+      "baseline": {
+        "field": {
+          "images": 184,
+          "gt": 659,
+          "localized": 523,
+          "tp": 484,
+          "fp": 335,
+          "fn": 175,
+          "ignored_gt": 0,
+          "ignored_predictions": 0,
+          "precision": 0.590964590964591,
+          "recall": 0.7344461305007587,
+          "f1": 0.6549391069012178
+        },
+        "acceptance": {
+          "dataset_nonplant_openimages_v2": {
+            "images": 3,
+            "accepted": 2
+          },
+          "dataset_unknown_beans_screened_v1": {
+            "images": 59,
+            "accepted": 53
+          },
+          "dataset_unknown_deepweeds_v1": {
+            "images": 1318,
+            "accepted": 534
+          }
+        }
+      },
+      "threshold_points_evaluated": 53,
+      "maximum_calibration_tp": 484
+    }
+  ],
+  "audit_baseline": {
+    "field": {
+      "images": 165,
+      "gt": 650,
+      "localized": 460,
+      "tp": 428,
+      "fp": 266,
+      "fn": 222,
+      "ignored_gt": 0,
+      "ignored_predictions": 0,
+      "precision": 0.6167146974063401,
+      "recall": 0.6584615384615384,
+      "f1": 0.6369047619047619
+    },
+    "acceptance": {
+      "dataset_nonplant_openimages_v2": {
+        "images": 2,
+        "accepted": 0
+      },
+      "dataset_unknown_beans_screened_v1": {
+        "images": 74,
+        "accepted": 63
+      },
+      "dataset_unknown_deepweeds_v1": {
+        "images": 263,
+        "accepted": 85
+      }
+    }
+  },
+  "audit_gated": {
+    "field": {
+      "images": 165,
+      "gt": 650,
+      "localized": 430,
+      "tp": 407,
+      "fp": 217,
+      "fn": 243,
+      "ignored_gt": 0,
+      "ignored_predictions": 0,
+      "precision": 0.6522435897435898,
+      "recall": 0.6261538461538462,
+      "f1": 0.6389324960753532
+    },
+    "acceptance": {
+      "dataset_nonplant_openimages_v2": {
+        "images": 2,
+        "accepted": 0
+      },
+      "dataset_unknown_beans_screened_v1": {
+        "images": 74,
+        "accepted": 0
+      },
+      "dataset_unknown_deepweeds_v1": {
+        "images": 263,
+        "accepted": 8
+      }
+    }
+  },
+  "completed_recipes": 4,
+  "test_evaluated": false,
+  "apk_changed": false,
+  "config": {
+    "deadline": "2026-10-24T21:00:00+03:00",
+    "device": "cuda",
+    "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+    "gpu": "AMD Radeon RX 9060 XT",
+    "data_sha256": "4e8071c3d46a3b1752b2a3a56c3114ddad1b540122f03f48bfa91244f60642cf",
+    "frames_sha256": "62e0acfa28e46e7edbed302bb0fbb692318bbc3ae1808ec9953879cb1f68678a",
+    "seed": 20261024,
+    "recipes": [
+      {
+        "name": "dino_norm_linear",
+        "encoder": "dinov2",
+        "hidden": 0,
+        "binary": false,
+        "lr": 0.01
+      },
+      {
+        "name": "dino_norm_mlp",
+        "encoder": "dinov2",
+        "hidden": 128,
+        "binary": false,
+        "lr": 0.003
+      },
+      {
+        "name": "mobile_norm_mlp",
+        "encoder": "mobilenet",
+        "hidden": 128,
+        "binary": false,
+        "lr": 0.003
+      },
+      {
+        "name": "dino_binary_mlp",
+        "encoder": "dinov2",
+        "hidden": 128,
+        "binary": true,
+        "lr": 0.003
+      }
+    ],
+    "audit_used_for_selection": false,
+    "original_detector_sha256": "4dc7cfde29ac6db7a88f59421a490295adc92932b8db95f745533ae192d8b030"
+  },
+  "ended": "2026-10-24T09:37:53.025174+03:00",
+  "limitations": [
+    "Historical field validation and frozen S selection bias remain.",
+    "Scene-level unknown labels and tiny nonplant set are not expert diagnoses.",
+    "Only crop/localization refusal, not disease accuracy.",
+    "Multiple calibration comparisons can overfit; audit used once for the selected finalist.",
+    "No Android integration/export of DINO; no practical phone-performance claim."
+  ],
+  "full_threshold_curves": {
+    "path": "runs\\rejection_improvement_20261024\\report.json",
+    "sha256": "43d9232c9cbaa7dcd8aa7e06a69e48fd6923f7f462a9f1be18215cba650c1dfe",
+    "also_in_private_archive": "study/report.json"
+  }
+}

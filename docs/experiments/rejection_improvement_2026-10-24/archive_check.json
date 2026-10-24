@@ -1,0 +1,10 @@
+{
+  "archive": "artifacts\\gpu_kit\\rejection_improved_20261024\\agrovoice_rejection_improved_20261024.zip",
+  "bytes": 133344527,
+  "sha256": "fb40a86791ccb790ce707097d0a9526fa33aa0b90d8ac61f22355cc66850de63",
+  "crc_ok": true,
+  "files": 56,
+  "private_research_results": true,
+  "published": false,
+  "description": "Result archive, not an installer. Includes fixed S and DINO verifier ONNX, selected policy, heads/optimizer and evaluation evidence."
+}

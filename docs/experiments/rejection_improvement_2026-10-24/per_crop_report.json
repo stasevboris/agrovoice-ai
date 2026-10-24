@@ -1,0 +1,359 @@
+{
+  "cal": [
+    {
+      "crop": "apple",
+      "gt": 66,
+      "baseline_tp": 42,
+      "gated_tp": 41,
+      "retained_ratio": 0.9761904761904762,
+      "baseline_wrong_crop": 14,
+      "gated_wrong_crop": 7
+    },
+    {
+      "crop": "blueberry",
+      "gt": 71,
+      "baseline_tp": 53,
+      "gated_tp": 50,
+      "retained_ratio": 0.9433962264150944,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "cherry",
+      "gt": 18,
+      "baseline_tp": 13,
+      "gated_tp": 13,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "corn",
+      "gt": 39,
+      "baseline_tp": 32,
+      "gated_tp": 30,
+      "retained_ratio": 0.9375,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "grape",
+      "gt": 41,
+      "baseline_tp": 29,
+      "gated_tp": 29,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "peach",
+      "gt": 47,
+      "baseline_tp": 41,
+      "gated_tp": 41,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "pepper",
+      "gt": 59,
+      "baseline_tp": 41,
+      "gated_tp": 40,
+      "retained_ratio": 0.975609756097561,
+      "baseline_wrong_crop": 2,
+      "gated_wrong_crop": 1
+    },
+    {
+      "crop": "potato",
+      "gt": 48,
+      "baseline_tp": 19,
+      "gated_tp": 18,
+      "retained_ratio": 0.9473684210526315,
+      "baseline_wrong_crop": 13,
+      "gated_wrong_crop": 6
+    },
+    {
+      "crop": "raspberry",
+      "gt": 37,
+      "baseline_tp": 35,
+      "gated_tp": 35,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "soybean",
+      "gt": 19,
+      "baseline_tp": 15,
+      "gated_tp": 13,
+      "retained_ratio": 0.8666666666666667,
+      "baseline_wrong_crop": 2,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "squash",
+      "gt": 25,
+      "baseline_tp": 17,
+      "gated_tp": 16,
+      "retained_ratio": 0.9411764705882353,
+      "baseline_wrong_crop": 1,
+      "gated_wrong_crop": 1
+    },
+    {
+      "crop": "strawberry",
+      "gt": 30,
+      "baseline_tp": 29,
+      "gated_tp": 29,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "tomato",
+      "gt": 159,
+      "baseline_tp": 118,
+      "gated_tp": 107,
+      "retained_ratio": 0.9067796610169492,
+      "baseline_wrong_crop": 7,
+      "gated_wrong_crop": 5
+    }
+  ],
+  "audit": [
+    {
+      "crop": "apple",
+      "gt": 53,
+      "baseline_tp": 26,
+      "gated_tp": 27,
+      "retained_ratio": 1.0384615384615385,
+      "baseline_wrong_crop": 5,
+      "gated_wrong_crop": 1
+    },
+    {
+      "crop": "blueberry",
+      "gt": 84,
+      "baseline_tp": 49,
+      "gated_tp": 39,
+      "retained_ratio": 0.7959183673469388,
+      "baseline_wrong_crop": 3,
+      "gated_wrong_crop": 1
+    },
+    {
+      "crop": "cherry",
+      "gt": 11,
+      "baseline_tp": 8,
+      "gated_tp": 8,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 1,
+      "gated_wrong_crop": 1
+    },
+    {
+      "crop": "corn",
+      "gt": 48,
+      "baseline_tp": 37,
+      "gated_tp": 37,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "grape",
+      "gt": 15,
+      "baseline_tp": 14,
+      "gated_tp": 14,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "peach",
+      "gt": 79,
+      "baseline_tp": 55,
+      "gated_tp": 55,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 2,
+      "gated_wrong_crop": 2
+    },
+    {
+      "crop": "pepper",
+      "gt": 21,
+      "baseline_tp": 13,
+      "gated_tp": 13,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 2,
+      "gated_wrong_crop": 1
+    },
+    {
+      "crop": "potato",
+      "gt": 35,
+      "baseline_tp": 24,
+      "gated_tp": 21,
+      "retained_ratio": 0.875,
+      "baseline_wrong_crop": 3,
+      "gated_wrong_crop": 3
+    },
+    {
+      "crop": "raspberry",
+      "gt": 40,
+      "baseline_tp": 26,
+      "gated_tp": 26,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 4,
+      "gated_wrong_crop": 2
+    },
+    {
+      "crop": "soybean",
+      "gt": 11,
+      "baseline_tp": 11,
+      "gated_tp": 8,
+      "retained_ratio": 0.7272727272727273,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "squash",
+      "gt": 23,
+      "baseline_tp": 7,
+      "gated_tp": 7,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "strawberry",
+      "gt": 35,
+      "baseline_tp": 34,
+      "gated_tp": 32,
+      "retained_ratio": 0.9411764705882353,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "tomato",
+      "gt": 195,
+      "baseline_tp": 124,
+      "gated_tp": 120,
+      "retained_ratio": 0.967741935483871,
+      "baseline_wrong_crop": 12,
+      "gated_wrong_crop": 12
+    }
+  ],
+  "test": [
+    {
+      "crop": "apple",
+      "gt": 34,
+      "baseline_tp": 28,
+      "gated_tp": 27,
+      "retained_ratio": 0.9642857142857143,
+      "baseline_wrong_crop": 2,
+      "gated_wrong_crop": 1
+    },
+    {
+      "crop": "blueberry",
+      "gt": 22,
+      "baseline_tp": 20,
+      "gated_tp": 20,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 2,
+      "gated_wrong_crop": 2
+    },
+    {
+      "crop": "cherry",
+      "gt": 19,
+      "baseline_tp": 10,
+      "gated_tp": 10,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 5,
+      "gated_wrong_crop": 4
+    },
+    {
+      "crop": "corn",
+      "gt": 26,
+      "baseline_tp": 26,
+      "gated_tp": 26,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "grape",
+      "gt": 23,
+      "baseline_tp": 23,
+      "gated_tp": 23,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "peach",
+      "gt": 10,
+      "baseline_tp": 9,
+      "gated_tp": 9,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 1,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "pepper",
+      "gt": 26,
+      "baseline_tp": 18,
+      "gated_tp": 17,
+      "retained_ratio": 0.9444444444444444,
+      "baseline_wrong_crop": 5,
+      "gated_wrong_crop": 4
+    },
+    {
+      "crop": "potato",
+      "gt": 27,
+      "baseline_tp": 19,
+      "gated_tp": 19,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 3,
+      "gated_wrong_crop": 3
+    },
+    {
+      "crop": "raspberry",
+      "gt": 17,
+      "baseline_tp": 16,
+      "gated_tp": 16,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "soybean",
+      "gt": 20,
+      "baseline_tp": 15,
+      "gated_tp": 15,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 5,
+      "gated_wrong_crop": 5
+    },
+    {
+      "crop": "squash",
+      "gt": 6,
+      "baseline_tp": 5,
+      "gated_tp": 5,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "strawberry",
+      "gt": 30,
+      "baseline_tp": 30,
+      "gated_tp": 30,
+      "retained_ratio": 1.0,
+      "baseline_wrong_crop": 0,
+      "gated_wrong_crop": 0
+    },
+    {
+      "crop": "tomato",
+      "gt": 192,
+      "baseline_tp": 131,
+      "gated_tp": 123,
+      "retained_ratio": 0.9389312977099237,
+      "baseline_wrong_crop": 12,
+      "gated_wrong_crop": 9
+    }
+  ]
+}

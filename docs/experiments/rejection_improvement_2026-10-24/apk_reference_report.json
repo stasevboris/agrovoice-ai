@@ -1,0 +1,36 @@
+{
+  "model": "yolo26s APK",
+  "sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+  "field": {
+    "images": 236,
+    "gt": 452,
+    "localized": 374,
+    "tp": 329,
+    "fp": 173,
+    "fn": 123,
+    "ignored_gt": 0,
+    "ignored_predictions": 0,
+    "precision": 0.6553784860557769,
+    "recall": 0.7278761061946902,
+    "f1": 0.689727463312369
+  },
+  "acceptance": {
+    "dataset_nonplant_openimages_v2": {
+      "images": 6,
+      "accepted": 2
+    },
+    "dataset_unknown_beans_screened_v1": {
+      "images": 128,
+      "accepted": 100
+    },
+    "dataset_unknown_deepweeds_v1": {
+      "images": 1489,
+      "accepted": 484
+    }
+  },
+  "test_evaluated": true,
+  "threshold": 0.25,
+  "threshold_tuned": false,
+  "purpose": "Descriptive fixed reference; no model selection after frozen test",
+  "predictions_sha256": "9ddebc1fd111861d15967ec0fa6fc5e77aebe00831be9e40e992defb80071a94"
+}

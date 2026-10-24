@@ -18,6 +18,7 @@
 | Дополнение ext_v2 | [gpu_kit/README_ext_v2.md](gpu_kit/README_ext_v2.md), [pack_ext_addon.py](pack_ext_addon.py) | Отдельный пакет дополнения |
 | Новое сравнение моделей | [gpu_kit/alternatives/README.md](gpu_kit/alternatives/README.md) | Одинаковые данные и field-val, test отложен |
 | Проверяющий модуль отказа | [инструкция MobileNet → DINOv2](../docs/guides/REJECTION_STAGE.md), [gpu_kit/rejection/](gpu_kit/rejection/) | Замороженные признаки и голова культур/отказа, calibration отдельно от audit, подготовка без запуска обучения |
+| Улучшение политики отказа | [study.py](gpu_kit/rejection/study.py), [validate_frozen.py](gpu_kit/rejection/validate_frozen.py), [результаты](../docs/experiments/rejection_improvement_2026-10-24/README.md) | Calibration-only выбор головы/score, один audit и фиксированный test; без переназначения диагноза и без публикации |
 | Ограниченное домашнее обучение | [train_home_pilot.py](gpu_kit/alternatives/train_home_pilot.py) | ROCm smoke и пара без/с негативами; чекпойнты и отдельный watchdog до явного дедлайна |
 | CPU-классификатор команд | [train_intent_classifier.py](assistant/train_intent_classifier.py) | Обучение только на train, выбор на val, JSON-предложения для проверки Android-исполнителем; не готовый свободный диалог |
 | LoRA помощника и голосовые пробы | [train_assistant_sft.py](assistant/train_assistant_sft.py), [prepare_voice_probes.ps1](assistant/prepare_voice_probes.ps1) | SFT с assistant-only loss и отдельными val/test; синтетические WAV только от установленных голосов |
