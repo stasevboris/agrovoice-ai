@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import shutil
 
 import fetch_assets as assets
@@ -16,11 +16,38 @@ def asset_files(manifest: dict, voice: dict, tts: dict) -> dict[str, str]:
     return files
 
 
-def prepare(flavor: str, output: Path, check: bool = False) -> list[str]:
+def experiment_entry(flavor: str, bundle: Path | None) -> dict | None:
+    if bundle is None:
+        return None
+    if flavor != "lab":
+        raise ValueError("Private rejection experiment is available only in lab")
+    entry = json.loads((bundle / "entry.json").read_text(encoding="utf-8"))
+    if entry.get("family") != "yolo" or entry.get("classifier") or not entry.get("verifier"):
+        raise ValueError("Experiment must be YOLO with a crop verifier")
+    for graph in [entry, entry["verifier"]]:
+        relative = PurePosixPath(graph["asset"])
+        if relative.is_absolute() or relative.parts[:1] != ("models",) or len(relative.parts) != 2 or ":" in str(relative) or "\\" in str(relative):
+            raise ValueError("Invalid experiment asset path")
+        source = bundle / relative
+        if not source.is_file() or assets.sha256(source) != graph["sha256"]:
+            raise ValueError("Experiment SHA-256 mismatch: " + str(relative))
+    return entry
+
+
+def prepare(flavor: str, output: Path, check: bool = False, experiment: Path | None = None) -> list[str]:
     manifest = assets.flavor_manifest(json.loads(assets.MODEL_MANIFEST.read_text(encoding="utf-8")), flavor)
+    entry = experiment_entry(flavor, experiment)
+    if entry is not None:
+        if any(model["id"] == entry["id"] for model in manifest["models"]):
+            raise ValueError("Duplicate experiment model id")
+        manifest["models"].append(entry)
     voice = json.loads(assets.VOICE_MANIFEST.read_text(encoding="utf-8"))
     tts = json.loads(assets.TTS_MANIFEST.read_text(encoding="utf-8"))
     files = asset_files(manifest, voice, tts)
+    experiment_files = {} if entry is None else {
+        graph["asset"]: graph["sha256"] for graph in [entry, entry["verifier"]]
+    }
+    files.update(experiment_files)
     metadata = {"models/manifest.json": manifest, "voice/manifest.json": voice, "tts/manifest.json": tts}
     taxonomy = assets.APP.parent / "ml-pipeline/allcrops/taxonomy_v1.json"
     metadata["taxonomies/taxonomy_v1.json"] = json.loads(taxonomy.read_text(encoding="utf-8"))
@@ -47,7 +74,7 @@ def prepare(flavor: str, output: Path, check: bool = False) -> list[str]:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(source, target)
     for relative in files:
-        source = assets.ASSETS / relative
+        source = experiment / relative if relative in experiment_files else assets.ASSETS / relative
         target = output / relative
         if source.is_file():
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -70,9 +97,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--flavor", required=True, choices=("field", "lab"))
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--experiment", type=Path, help="Private local lab bundle with entry.json and verified graphs")
     args = parser.parse_args()
     output = assets.APP / "app/build/generated/flavorAssets" / args.flavor
-    problems = prepare(args.flavor, output, args.check)
+    problems = prepare(args.flavor, output, args.check, args.experiment)
     if problems:
         print("APK packaging requires verified real assets. Run fetch_assets.py --flavor " + args.flavor)
         print("Missing/corrupt: " + ", ".join(problems))

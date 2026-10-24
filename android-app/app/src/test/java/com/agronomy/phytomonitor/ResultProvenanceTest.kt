@@ -83,6 +83,33 @@ class ResultProvenanceTest {
     }
 
     @Test
+    fun rejectionReportAndDraftKeepFrozenPolicyAndDistinguishSkippedLeaves() {
+        val original = models.first { it.family == "yolo" && it.classifier == null }
+        val graph = JSONObject().put("id", "reject-test").put("asset", "models/reject.onnx")
+            .put("sha256", "a".repeat(64)).put("side", 224).put("policy", "crop_vs_reject_v1")
+            .put("threshold", 0.9958845687447002).put("detector_threshold", 0.25)
+            .put("detector_sha256", original.sha256).put("crops", JSONArray(original.crops + "__reject__"))
+        val entries = manifest.getJSONArray("models")
+        (0 until entries.length()).map { entries.getJSONObject(it) }.first { it.getString("id") == original.id }
+            .put("verifier", graph)
+        val model = ModelCatalog.parse(manifest).first { it.id == original.id }
+        val summary = com.agronomy.phytomonitor.ml.VerificationSummary(3, 2, 1, 2, 0, emptyList())
+        val result = DetectionResult(model, emptyList(), 100.0, 150.0, verification = summary)
+        val file = PhotoFiles.saveResult(context, photo, bitmap, result, manifest, "all", .9f)
+        val report = JSONObject(file.readText())
+        assertEquals(.25, report.getDouble("confidence_threshold"), 0.0)
+        assertEquals("global_winner_then_crop_filter", report.getString("crop_policy"))
+        val snapshot = report.getJSONObject("result_provenance").getJSONObject("verifier")
+        assertEquals(graph.getDouble("threshold"), snapshot.getDouble("threshold"), 0.0)
+        assertEquals(graph.getString("sha256"), snapshot.getString("sha256"))
+        val draft = com.agronomy.phytomonitor.draft.InspectionDraft(photo = photo.path,
+            reportJson = file.readText(), catalogJson = manifest.toString())
+        assertEquals(summary, draft.result()!!.verification)
+        graph.put("threshold", .1)
+        assertEquals(0.9958845687447002, snapshot.getDouble("threshold"), 0.0)
+    }
+
+    @Test
     fun repeatedAnalysisAndClassReorderingKeepOriginalReportUnchanged() {
         val model = models.first { it.family == "yolo" }
         val first = save(model)

@@ -11,7 +11,7 @@ object UpdateCompatibility {
             "Нет метаданных подготовленного выпуска модели"
         }
         val entry = release.metadata.getJSONObject("manifest_entry")
-        require(entry.optString("family") == "yolo" && !entry.has("classifier") && entry.optString("sha256") == release.sha256) {
+        require(entry.optString("family") == "yolo" && !entry.has("classifier") && !entry.has("verifier") && entry.optString("sha256") == release.sha256) {
             "Модель или её SHA не поддерживается"
         }
         val model = ModelCatalog.parse(JSONObject().put("schema", 3).put("models", JSONArray().put(entry))).single()
@@ -21,7 +21,7 @@ object UpdateCompatibility {
         val sameId = bundled.firstOrNull { it.id == model.id }
         val canonicalOrder = canonical.isNotEmpty() && model.classes == canonical && model.dataset == "allcrops_v1"
         val existingOrder = sameId != null && model.classes == sameId.classes && model.labels == sameId.labels &&
-            sameId.family == "yolo" && sameId.classifier == null
+            sameId.family == "yolo" && sameId.classifier == null && sameId.verifier == null
         require((canonicalOrder || existingOrder) && (sameId == null || existingOrder)) {
             "Порядок классов модели не совместим с приложением"
         }

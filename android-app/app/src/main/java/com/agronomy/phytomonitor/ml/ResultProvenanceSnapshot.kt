@@ -64,6 +64,16 @@ internal object ResultProvenanceSnapshot {
                 .put("output", "logits_softmax_all_classes")
                 .put("graph_normalization", metadata.optJSONObject("classifier")?.optString("normalization", "unspecified") ?: "unspecified"))
         }
+        model.verifier?.let { verifier ->
+            postprocessing.put("confidence_threshold", verifier.detectorThreshold.toDouble())
+                .put("proposal_threshold", verifier.detectorThreshold.toDouble())
+                .put("crop_filter_stage", "after_global_winner_and_nms")
+                .put("crop_policy", "global_winner_then_crop_filter")
+            snapshot.put("verifier", JSONObject(metadata.getJSONObject("verifier").toString())
+                .put("preprocessing", "floor_ceil_crop_gray114_bilinear_pad_JPEG95_RGB_ImageNet_mean_std")
+                .put("scope", "Experimental crop rejection; never validates disease")
+                .put("max_leaves", verifier.maxLeaves))
+        }
         return snapshot
     }
 }

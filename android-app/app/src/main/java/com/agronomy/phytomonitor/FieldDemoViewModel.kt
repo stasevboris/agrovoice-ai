@@ -110,7 +110,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
                 ?: detector.defaultModelId else detector.defaultModelId
             crop = com.agronomy.phytomonitor.ml.ModelCropPolicy.restore(saved.crop, currentModel(),
                 detector.updateFallback && (!BuildConfig.IS_LAB || detector.models.none { it.id == saved.model }))
-            threshold = if (BuildConfig.IS_LAB) saved.threshold else 0.25f
+            threshold = currentModel().verifier?.detectorThreshold ?: if (BuildConfig.IS_LAB) saved.threshold else 0.25f
             plotName = saved.plot
             rowName = saved.row
             locationEnabled = saved.location
@@ -156,6 +156,7 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         if(busy || id==selectedModel || detector.models.none {it.id==id})return
         if (immutableSeriesResult()) return
         selectedModel=id;review="unrated";comparison=emptyList()
+        currentModel().verifier?.let { threshold = it.detectorThreshold }
         settings.set(Keys.model, id)
         // A crop the new model does not know would hide every class.
         if(crop!="all" && (crop !in currentModel().crops || currentModel().family=="detr")){crop="all";settings.set(Keys.crop, crop)}
@@ -182,6 +183,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         }
         if(busy)return
         if (immutableSeriesResult()) return
+        if (currentModel().verifier != null) {
+            showError("В эксперименте отказа используется фиксированный порог детектора 25 %.")
+            return
+        }
         threshold=value
         comparison=emptyList()
         settings.set(Keys.threshold, value)
@@ -428,7 +433,10 @@ class FieldDemoViewModel(application: Application) : AndroidViewModel(applicatio
         val prefix = if (frames.size > 1) "Кадр $selectedFrame из ${frames.size}. ${frameRole.label}. " else ""
         val names = found.model.cropNames
         val otherCrop = found.otherCrop?.let { otherCropWarning(names[resultCrop] ?: resultCrop, names[it] ?: it) + " " }.orEmpty()
-        return prefix + otherCrop + spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality) +
+        val analysis = if (found.verification != null && found.boxes.isEmpty()) {
+            (found.photoQuality?.advice?.plus(" ") ?: "") + "Проверка не приняла результат. Проверь культуру и сними один лист крупнее."
+        } else spokenAnalysis(found.boxes.map { found.model.labels[it.classId] }, found.photoQuality)
+        return prefix + otherCrop + (found.verification?.message()?.plus(" ") ?: "") + analysis +
             (seriesWarning?.let { " $it" } ?: "")
     }
     private fun snapshotDraft(): InspectionDraft? {

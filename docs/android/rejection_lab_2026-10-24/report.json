@@ -1,0 +1,105 @@
+{
+  "status": "software_verified_device_pending",
+  "base_commit": "37d8f3e",
+  "commands": [
+    ".\\ml-pipeline\\venv\\Scripts\\python.exe -X utf8 -m unittest discover -s ml-pipeline/tests",
+    ".\\gradlew.bat testFieldDebugUnitTest testLabDebugUnitTest assembleFieldDebug assembleLabDebug lintFieldDebug lintLabDebug -PrejectionExperimentDir=F:/agrovoice-ai/artifacts/gpu_kit/rejection_lab_20261024",
+    "Previous successful build also compiled assembleLabDebugAndroidTest; no device tests executed",
+    ".\\ml-pipeline\\venv\\Scripts\\python.exe -X utf8 artifacts/verification/thermal_20261024/check_input.py"
+  ],
+  "python": {
+    "tests": 209,
+    "status": "OK"
+  },
+  "jvm": {
+    "field": {
+      "tests": 378,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "lab": {
+      "tests": 378,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "android_build": "BUILD SUCCESSFUL",
+  "apks": {
+    "field": {
+      "path": "android-app\\app\\build\\outputs\\apk\\field\\debug\\app-field-debug.apk",
+      "sha256": "f4f7bd84a309ac67e0d3eded0e99fb94ff4f3969904e705724fdadacb3f273c9",
+      "bytes": 238235507,
+      "models": [
+        "yolo26s"
+      ],
+      "verified_graphs": 1
+    },
+    "lab": {
+      "path": "android-app\\app\\build\\outputs\\apk\\lab\\debug\\app-lab-debug.apk",
+      "sha256": "eb3b3ba3762bcb2074c20a9cf73cfd931869d2a80570af6f2c2812907b79d300",
+      "bytes": 515862292,
+      "models": [
+        "yolo11n",
+        "yolo26n",
+        "mobilenet_v3_large",
+        "efficientnet_b0",
+        "masked_mobilenet_v3_large",
+        "distilled_mobilenet_v3_large",
+        "yolo26s",
+        "deimv2_n",
+        "yolo26m",
+        "web_s_dino_reject_experimental"
+      ],
+      "verified_graphs": 11
+    }
+  },
+  "preprocessing": {
+    "method": "Robolectric native Android bitmap/JPEG preprocessing versus Pillow, synthetic patterned images",
+    "samples": [
+      {
+        "index": 0,
+        "max_abs": 0.017507076263427734,
+        "mean_abs": 1.3142534953658469e-05,
+        "fraction_over_point_one": 0.0
+      },
+      {
+        "index": 1,
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "fraction_over_point_one": 0.0
+      }
+    ]
+  },
+  "training_checkpoint_check": {
+    "checked_at": "2026-10-24T10:29:16.027207+00:00",
+    "checkpoint_files": {
+      "last_resumable.pt": 80624261,
+      "epoch0.pt": 80624261,
+      "best.pt": 80624261,
+      "last.pt": 80624261
+    },
+    "temperature_measurement": "Unavailable via WSL hwmon; no temperature claim",
+    "auto_restart": false
+  },
+  "review": "Self-review only; no agent tool available for an independent review",
+  "logs": "artifacts/verification/thermal_20261024",
+  "limitations": [
+    "ADB list empty: no install, phone inference, camera preprocessing or user data operations performed",
+    "Synthetic Robolectric preprocessing parity is not real-camera or ONNX whole-chain validation",
+    "Android checks at most 8 proposals; desktop accuracy is not automatically applicable",
+    "Field APK retains the previous model; no model publication or push",
+    "Second-seed detector training is ongoing; no quality or temperature conclusion"
+  ],
+  "lint": {
+    "field": {
+      "errors": 0,
+      "issues": 67
+    },
+    "lab": {
+      "errors": 0,
+      "issues": 67
+    }
+  }
+}

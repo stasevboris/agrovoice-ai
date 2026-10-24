@@ -84,7 +84,8 @@ data class InspectionDraft(
         return DetectionResult(originalModel, boxes, report.getDouble("inference_ms"),
             report.getDouble("pipeline_ms"), report.optInt("proposed_leaves"),
             report.optInt("classified_leaves"), report.optInt("skipped_leaves"), quality,
-            if (report.isNull("other_crop_top")) null else report.getString("other_crop_top"))
+            if (report.isNull("other_crop_top")) null else report.getString("other_crop_top"),
+            report.optJSONObject("verification")?.let(com.agronomy.phytomonitor.ml.VerificationSummary::fromJson))
     }
 
     fun toJson(): JSONObject = JSONObject()

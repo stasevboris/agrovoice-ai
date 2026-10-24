@@ -37,14 +37,16 @@ data class DetectorModel(val id: String, val name: String, val asset: String, va
                          val classes: List<String> = emptyList(), val labels: List<String> = emptyList(),
                          val classCrops: List<String> = emptyList(), val crops: List<String> = emptyList(),
                          val cropNames: Map<String,String> = emptyMap(),
-                         val taxonomyVersion: String? = null)
+                         val taxonomyVersion: String? = null,
+                         val verifier: CropVerifierGraph? = null)
 data class DetectionResult(val model: DetectorModel, val boxes: List<LeafDetection>,
                            val inferenceMs: Double, val pipelineMs: Double,
                            val proposedLeaves: Int = 0, val classifiedLeaves: Int = 0,
                            val skippedLeaves: Int = 0,
                            val photoQuality: PhotoQuality? = null,
                            /** Crop of the model's own most confident leaf when it differs from the manually chosen crop. */
-                           val otherCrop: String? = null)
+                           val otherCrop: String? = null,
+                           val verification: VerificationSummary? = null)
 
 /** One background executor, at most one detector and one classifier session. */
 class FieldDetector(private val context: Context) : Closeable {
@@ -104,7 +106,7 @@ class FieldDetector(private val context: Context) : Closeable {
 
     /** Deletes copies left by older app versions (id-prefixed names, superseded digests). */
     private fun removeStaleCopies(folder: File) {
-        val wanted=models.flatMap {listOfNotNull(it.sha256,it.classifier?.sha256)}.toSet()
+        val wanted=models.flatMap {listOfNotNull(it.sha256,it.classifier?.sha256,it.verifier?.sha256)}.toSet()
         folder.listFiles()?.filter {it.nameWithoutExtension !in wanted}?.forEach {it.delete()}
     }
 
@@ -153,6 +155,8 @@ class FieldDetector(private val context: Context) : Closeable {
             else shape.size==3 && shape[0]==1L && shape[1]==(model.classes.size+4).toLong() && shape[2]>0
         }
         val classifier=model.classifier?.let {c -> graph(c.id,c.asset,c.sha256,c.side){it.contentEquals(longArrayOf(1,model.classes.size.toLong()))}}
+        val verifier = model.verifier
+        require(verifier == null || BuildConfig.IS_LAB) { "Проверяющая модель доступна только в лабораторной сборке" }
         val geometry=Letterbox(bitmap.width,bitmap.height,model.side)
         val input=prepareInput(bitmap,geometry)
         // The crop of each class comes from the manifest, not from the beginning of an English class name.
@@ -171,12 +175,36 @@ class FieldDetector(private val context: Context) : Closeable {
                     val all=decodeDetr(output,geometry,threshold,null,model.classes.size)
                     globalTop=all.firstOrNull()
                     all.filter {allowed==null || it.classId in allowed}
+                } else if (verifier != null) {
+                    val all = verifier.decode(output, geometry, model.classCrops, "all")
+                    globalTop = all.firstOrNull()
+                    all.filter { allowed == null || it.classId in allowed }
                 } else {
                     if(classifier==null && allowed!=null)globalTop=YoloPostprocessor.decode(output,geometry,threshold,iouThreshold=NMS_IOU).firstOrNull()
                     YoloPostprocessor.decode(output,geometry,if(classifier==null)threshold else PROPOSAL_THRESHOLD,
                     if(classifier==null)allowed else null,iouThreshold=NMS_IOU,classAgnostic=classifier!=null)
                 }
             }
+        }
+        if (verifier != null) {
+            val session = graph(verifier.id, verifier.asset, verifier.sha256, verifier.side) {
+                it.contentEquals(longArrayOf(1, verifier.crops.size.toLong()))
+            }
+            val (accepted, summary) = verifier.verify(proposals, model.classCrops) { index, leaf ->
+                val leafInput = VerifierInput.prepare(bitmap, leaf, verifier.side)
+                OnnxTensor.createTensor(environment, leafInput.asFloatBuffer(), longArrayOf(1, 3, verifier.side.toLong(), verifier.side.toLong())).use { tensor ->
+                    val before = SystemClock.elapsedRealtimeNanos()
+                    session.run(mapOf(session.inputNames.first() to tensor)).use { result ->
+                        inferenceNanos += SystemClock.elapsedRealtimeNanos() - before
+                        @Suppress("UNCHECKED_CAST")
+                        val logits = ((result[0] as OnnxTensor).value as Array<FloatArray>)[0]
+                        stageTrace?.invoke("verifier_$index", leafInput.asReadOnlyBuffer(), logits.copyOf(), intArrayOf(1, logits.size))
+                        logits
+                    }
+                }
+            }
+            return DetectionResult(model, accepted, inferenceNanos / 1e6, (SystemClock.elapsedRealtimeNanos() - started) / 1e6,
+                otherCrop = otherCrop(model, allowed, globalTop), verification = summary)
         }
         if(classifier==null)return DetectionResult(model,proposals,inferenceNanos/1e6,(SystemClock.elapsedRealtimeNanos()-started)/1e6,
             otherCrop=otherCrop(model,allowed,globalTop))

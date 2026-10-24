@@ -38,4 +38,18 @@ class UpdateCompatibilityTest {
             UpdateCompatibility.model(item, emptyList(), canonical)
         }
     }
+
+    @Test fun updateCannotSilentlyRemoveOrIntroduceAnExperimentalVerifier() {
+        val item = release()
+        val original = UpdateCompatibility.model(item, emptyList(), canonical)
+        val data = JSONObject().put("id", "v").put("asset", "models/v.onnx").put("sha256", "b".repeat(64))
+            .put("side", 224).put("crops", JSONArray(listOf("apple", "__reject__")))
+            .put("policy", "crop_vs_reject_v1").put("threshold", 0.99).put("detector_threshold", 0.25)
+        item.metadata.getJSONObject("manifest_entry").put("verifier", data)
+        assertThrows(IllegalArgumentException::class.java) { UpdateCompatibility.model(item, emptyList(), canonical) }
+        val graph = com.agronomy.phytomonitor.ml.CropVerifierGraph.parse(data, listOf("apple"))
+        assertThrows(IllegalArgumentException::class.java) {
+            UpdateCompatibility.model(release(), listOf(original.copy(verifier = graph)), canonical)
+        }
+    }
 }

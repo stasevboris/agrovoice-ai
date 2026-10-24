@@ -107,6 +107,15 @@ object ModelCatalog {
             ClassifierGraph(it.getString("id"), it.getString("asset"), it.getString("sha256"), it.getInt("seed"), it.getString("kind"), it.optInt("side", 224))
         }
         val seed = data.optInt("seed", 20261003)
+        val verifier = data.optJSONObject("verifier")?.let { CropVerifierGraph.parse(it, crops) }
+        if (verifier != null && (classifier != null || data.optString("family", "yolo") != "yolo")) {
+            throw ManifestException("$id: verifier поддерживает только обычный YOLO без классификатора")
+        }
+        if (verifier != null) {
+            require(verifier.id != id && data.getJSONObject("verifier").getString("detector_sha256") == data.getString("sha256")) {
+                "Проверяющая модель относится к другому детектору"
+            }
+        }
         return DetectorModel(
             id = id,
             name = data.getString("name"),
@@ -124,7 +133,8 @@ object ModelCatalog {
             classCrops = classCrops,
             crops = crops,
             cropNames = cropNames,
-            taxonomyVersion = taxonomyVersion(data) ?: sharedTaxonomy.takeIf { own == null }
+            taxonomyVersion = taxonomyVersion(data) ?: sharedTaxonomy.takeIf { own == null },
+            verifier = verifier
         )
     }
 

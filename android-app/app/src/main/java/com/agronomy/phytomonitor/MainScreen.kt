@@ -436,8 +436,12 @@ private fun ResultSection(model: FieldDemoViewModel, result: DetectionResult, co
             val names = result.model.cropNames
             MessageBanner(otherCropWarning(names[model.resultCrop] ?: model.resultCrop, names[other] ?: other), isError = true)
         }
+        result.verification?.let { verification ->
+            MessageBanner(verification.message(), isError = false)
+        }
         if (result.boxes.isEmpty()) {
-            MessageBanner(NO_DETECTIONS_ADVICE, isError = false)
+            MessageBanner(if (result.verification == null) NO_DETECTIONS_ADVICE else
+                "Проверка не приняла результат. Проверь культуру и сними один лист крупнее с другого ракурса.", isError = false)
         } else {
             result.boxes.forEachIndexed { index, box ->
                 LeafResultRow(

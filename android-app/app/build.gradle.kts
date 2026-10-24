@@ -116,13 +116,18 @@ abstract class PrepareFlavorAssets : Exec() {
     @get:OutputDirectory abstract val outputDirectory: DirectoryProperty
 }
 val python = providers.gradleProperty("pythonExecutable").getOrElse("python")
+val rejectionExperiment = providers.gradleProperty("rejectionExperimentDir").orNull
+fun experimentArguments(flavor: String): List<String> =
+    if (flavor == "lab" && rejectionExperiment != null) listOf("--experiment", rejectionExperiment) else emptyList()
 val flavorAssets = listOf("field", "lab").associateWith { flavor ->
     tasks.register<PrepareFlavorAssets>("prepare${flavor.replaceFirstChar { it.uppercase() }}Assets") {
         inputs.dir("src/main/assets")
         inputs.files(rootProject.file("prepare_flavor_assets.py"), rootProject.file("fetch_assets.py"))
         inputs.file(rootProject.file("../ml-pipeline/allcrops/taxonomy_v1.json"))
+        inputs.property("rejectionExperimentDir", if (flavor == "lab") rejectionExperiment.orEmpty() else "")
+        if (flavor == "lab" && rejectionExperiment != null) inputs.dir(rejectionExperiment)
         outputDirectory.set(layout.buildDirectory.dir("generated/flavorAssets/$flavor"))
-        commandLine(python, "-X", "utf8", rootProject.file("prepare_flavor_assets.py"), "--flavor", flavor)
+        commandLine(listOf(python, "-X", "utf8", rootProject.file("prepare_flavor_assets.py").toString(), "--flavor", flavor) + experimentArguments(flavor))
     }
 }
 androidComponents.onVariants { variant ->
@@ -131,7 +136,7 @@ androidComponents.onVariants { variant ->
     variant.sources.assets?.addGeneratedSourceDirectory(prepare, PrepareFlavorAssets::outputDirectory)
     val verify = tasks.register<Exec>("verify${variant.name.replaceFirstChar { it.uppercase() }}Assets") {
         dependsOn(prepare)
-        commandLine(python, "-X", "utf8", rootProject.file("prepare_flavor_assets.py"), "--flavor", flavor, "--check")
+        commandLine(listOf(python, "-X", "utf8", rootProject.file("prepare_flavor_assets.py").toString(), "--flavor", flavor, "--check") + experimentArguments(flavor))
     }
     // JVM/compile checks may omit weights, but an installable APK must never do so.
     tasks.matching { it.name == "package${variant.name.replaceFirstChar { it.uppercase() }}" ||

@@ -104,6 +104,25 @@ class StagedAssetsTest(unittest.TestCase):
             self.assertEqual((SCRIPT.parent.parent / "ml-pipeline/allcrops/taxonomy_v1.json").read_bytes(),
                              (self.output / "taxonomies/taxonomy_v1.json").read_bytes())
 
+    def test_private_verifier_bundle_is_explicit_lab_only_and_verified(self):
+        bundle = self.root / "experiment"
+        (bundle / "models").mkdir(parents=True)
+        for name in ["detector", "verifier"]:
+            (bundle / "models" / (name + ".onnx")).write_bytes(name.encode())
+        entry = {"id": "private", "family": "yolo", "asset": "models/detector.onnx",
+                 "sha256": fetch.sha256(bundle / "models/detector.onnx"),
+                 "verifier": {"asset": "models/verifier.onnx", "sha256": fetch.sha256(bundle / "models/verifier.onnx")}}
+        (bundle / "entry.json").write_text(json.dumps(entry), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "lab"):
+            self.prepare.prepare("field", self.output, experiment=bundle)
+        self.prepare.prepare("lab", self.output, experiment=bundle)
+        self.assertEqual((self.output / "models/verifier.onnx").read_bytes(), b"verifier")
+        staged = json.loads((self.output / "models/manifest.json").read_text())
+        self.assertEqual(staged["models"][-1], entry)
+        (bundle / "models/verifier.onnx").write_bytes(b"corrupt")
+        with self.assertRaisesRegex(ValueError, "SHA"):
+            self.prepare.prepare("lab", self.output, experiment=bundle)
+
 
 if __name__ == "__main__":
     unittest.main()

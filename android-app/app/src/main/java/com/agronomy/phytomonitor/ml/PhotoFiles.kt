@@ -129,17 +129,21 @@ object PhotoFiles {
             .put("detector_seed",result.model.detectorSeed).put("family",result.model.family)
             .put("proposed_leaves",result.proposedLeaves).put("classified_leaves",result.classifiedLeaves).put("skipped_leaves",result.skippedLeaves)
             .put("other_crop_top",result.otherCrop ?: JSONObject.NULL)
+            .put("verification",result.verification?.toJson() ?: JSONObject.NULL)
             .put("score_policy",if(result.model.classifier==null) "detector class score" else "detector maximum class score times classifier softmax; uncalibrated")
             .put("model_metadata",manifest.getJSONArray("models").let {array ->
                 (0 until array.length()).map {array.getJSONObject(it)}.first {it.getString("id")==result.model.id}
             })
-            .put("crop_filter",crop).put("confidence_threshold",threshold.toDouble())
-            .put("crop_policy", if (crop == "all") "model_default" else "rank_within_crop_without_score_renormalization")
+            .put("crop_filter",crop).put("confidence_threshold",(result.model.verifier?.detectorThreshold ?: threshold).toDouble())
+            .put("crop_policy", if (result.model.verifier != null) "global_winner_then_crop_filter" else if (crop == "all") "model_default" else "rank_within_crop_without_score_renormalization")
             .put("app_version", context.packageManager.getPackageInfo(context.packageName, 0).versionName ?: "unknown")
             .put("inference_ms",result.inferenceMs).put("pipeline_ms",result.pipelineMs)
             .put("detections",boxes).put("device","${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}")
             .put("scope","Whole leaf with crop/condition. Confidence is not disease probability or damaged area.")
         addAnalysisAssessment(report, result.boxes.size, result.photoQuality)
+        if (result.verification != null) {
+            report.getJSONObject("assessment").put("policy", "Experimental crop rejection only; disease diagnosis not validated")
+        }
         report.put("result_provenance", ResultProvenanceSnapshot.create(
             result.model, bitmap.width, bitmap.height, crop, threshold, report.getJSONObject("model_metadata")
         ))
