@@ -76,9 +76,9 @@ def execution_window(value, now=None, home=False):
     end = datetime.fromisoformat(value)
     if end.tzinfo is None:
         raise ValueError('Deadline must contain timezone')
-    if home and (end.astimezone(msk).date() != now.astimezone(msk).date()
-                 or end.astimezone(msk).time().isoformat() != '23:00:00'):
-        raise ValueError('Home training must end at 23:00 MSK today; no overnight restart')
+    latest = now.astimezone(msk).replace(hour=23, minute=0, second=0, microsecond=0)
+    if home and (end.astimezone(msk).date() != latest.date() or end > latest):
+        raise ValueError('Home deadline must be today at or before 23:00 MSK; no overnight restart')
     soft = end.timestamp() - 20 * 60
     hard = end.timestamp() - 5 * 60
     if soft <= now.timestamp():

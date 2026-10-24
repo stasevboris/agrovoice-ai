@@ -1,0 +1,15 @@
+{
+  "samples": 8,
+  "max_abs_diff": 1.926720142364502e-05,
+  "sha256": "e1f05efa2394c6bb1915ced54506b1bd868cfce41f4403b1a0a8f68db3b3d013",
+  "source_partitions": [
+    "cal",
+    "audit"
+  ],
+  "optimizer_steps": 0,
+  "onnx_shape": [
+    1,
+    16
+  ],
+  "status": "passed"
+}

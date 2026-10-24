@@ -89,6 +89,13 @@ class RejectionPolicyTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.core.execution_window(deadline, now, home=True)
 
+    def test_home_accepts_earlier_same_day_deadline(self):
+        now = datetime(2026, 10, 24, 9, tzinfo=timezone(timedelta(hours=3)))
+        soft, hard = self.core.execution_window('2026-10-24T21:00:00+03:00', now, home=True)
+        deadline = datetime(2026, 10, 24, 21, tzinfo=now.tzinfo).timestamp()
+        self.assertEqual(deadline - 20 * 60, soft)
+        self.assertEqual(deadline - 5 * 60, hard)
+
     def test_audit_cannot_change_selected_threshold(self):
         spec = importlib.util.spec_from_file_location('rejection_evaluate', SOURCE / 'evaluate.py')
         module = importlib.util.module_from_spec(spec)

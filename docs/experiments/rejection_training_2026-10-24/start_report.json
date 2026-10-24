@@ -1,0 +1,84 @@
+{
+  "checked_at": "2026-10-24T09:21:41.894965+03:00",
+  "authorized_deadline": "2026-10-24T21:00:00+03:00",
+  "soft_stop": "2026-10-24T20:40:00+03:00",
+  "hard_stop": "2026-10-24T20:55:00+03:00",
+  "automatic_restart": false,
+  "mode": "Frozen features + 20 head epochs; sequential MobileNet then DINO",
+  "queue_status_at_check": {
+    "status": "running",
+    "started": "2026-10-24T09:20:15.766955+03:00",
+    "deadline": "2026-10-24T21:00:00+03:00",
+    "soft_stop": "2026-10-24T20:40:00+03:00",
+    "hard_stop": "2026-10-24T20:55:00+03:00",
+    "automatic_restart": false,
+    "kit": "/root/rejection_stage_20261024/agrovoice_rejection_20261023",
+    "runs": [
+      {
+        "encoder": "mobilenet",
+        "command": [
+          "/opt/agrovoice/venv/bin/python",
+          "-u",
+          "/root/rejection_stage_20261024/agrovoice_rejection_20261023/train.py",
+          "--encoder",
+          "mobilenet",
+          "--device",
+          "cuda",
+          "--out",
+          "/root/rejection_stage_20261024/agrovoice_rejection_20261023/runs/mobilenet_01",
+          "--deadline",
+          "2026-10-24T21:00:00+03:00",
+          "--epochs",
+          "20",
+          "--batch",
+          "32",
+          "--workers",
+          "4"
+        ],
+        "status": "running"
+      }
+    ],
+    "last_checked": "2026-10-24T09:21:36.033143+03:00"
+  },
+  "gpu_checks": [
+    {
+      "encoder": "mobilenet",
+      "device": "cuda",
+      "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+      "hip": "7.2.53211-e1a6bc5663",
+      "dimensions": 576,
+      "checked_crop_images": 2,
+      "data_rows": 10391,
+      "classes": 16,
+      "data_partitions_valid": true,
+      "feature_inference": "passed",
+      "training_performed": false,
+      "optimizer_steps": 0
+    },
+    {
+      "encoder": "dinov2",
+      "device": "cuda",
+      "torch": "2.9.1+rocm7.2.1.gitff65f5bc",
+      "hip": "7.2.53211-e1a6bc5663",
+      "dimensions": 384,
+      "checked_crop_images": 2,
+      "data_rows": 10391,
+      "classes": 16,
+      "data_partitions_valid": true,
+      "feature_inference": "passed",
+      "training_performed": false,
+      "optimizer_steps": 0
+    }
+  ],
+  "tests": {
+    "command": "ml-pipeline/venv/Scripts/python.exe -X utf8 -m unittest discover -s ml-pipeline/tests",
+    "passed": 196
+  },
+  "outputs": "runs/rejection_20261024",
+  "limitations": [
+    "Training in progress at capture; no final refusal result asserted.",
+    "No APK changes or publication.",
+    "Source weak labels, historical validation selection, limited unknown scenes remain.",
+    "Queue is a local OS process, not a promise of assistant work after this turn."
+  ]
+}
