@@ -1,0 +1,501 @@
+{
+  "package": "com.agronomy.phytomonitor",
+  "method": "Installed target FieldDetector and PhotoFiles via reflection; all crops, threshold 0.25; no UI or microphone test",
+  "results": [
+    {
+      "file": "01_apple_field.jpg",
+      "sha256": "71f548f2a501b7fd3546c62fd1ba5e8b3b83497ac5e3645e80a7128a5a0aa9bc",
+      "width": 800,
+      "height": 692,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 693.694062,
+      "detections": [
+        {
+          "class_id": 1,
+          "label": "Яблоня: лист без указанной болезни",
+          "score": 0.8576063
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Яблоня: лист без указанной болезни. Результат нужно проверить."
+    },
+    {
+      "file": "01_table_no_leaves.jpg",
+      "sha256": "76958723c62f78c979a79260faca5ecdc727201a9db22bbd00e1929e68f367db",
+      "width": 1500,
+      "height": 2000,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 485.129427,
+      "detections": [],
+      "spoken_analysis": "При выбранной культуре и пороге лист не найден. Это не означает, что растение здорово. Проверь выбранную культуру и сними лист крупнее с другого ракурса."
+    },
+    {
+      "file": "02_apple_field.jpg",
+      "sha256": "bbc421cd0589e19f68462e49c43784500e8c09200953385037f98ef0235507e7",
+      "width": 1600,
+      "height": 1200,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 463.914791,
+      "detections": [
+        {
+          "class_id": 0,
+          "label": "Яблоня: парша",
+          "score": 0.5330523
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Яблоня: парша. Результат нужно проверить."
+    },
+    {
+      "file": "02_houseplant_monstera.jpg",
+      "sha256": "85fad35a2590bb6ceb9a8a1dedd7d65082d20b83d5c337f49a3757bbe8e8e445",
+      "width": 1024,
+      "height": 1365,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 468.288437,
+      "detections": [
+        {
+          "class_id": 3,
+          "label": "Перец: лист без указанной болезни",
+          "score": 0.72309244
+        },
+        {
+          "class_id": 3,
+          "label": "Перец: лист без указанной болезни",
+          "score": 0.70611364
+        },
+        {
+          "class_id": 3,
+          "label": "Перец: лист без указанной болезни",
+          "score": 0.7020375
+        },
+        {
+          "class_id": 3,
+          "label": "Перец: лист без указанной болезни",
+          "score": 0.6305556
+        },
+        {
+          "class_id": 3,
+          "label": "Перец: лист без указанной болезни",
+          "score": 0.5329825
+        },
+        {
+          "class_id": 3,
+          "label": "Перец: лист без указанной болезни",
+          "score": 0.50452006
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Перец: лист без указанной болезни. Лист 2. Перец: лист без указанной болезни. Лист 3. Перец: лист без указанной болезни. Лист 4. Перец: лист без указанной болезни. Лист 5. Перец: лист без указанной болезни. Результат нужно проверить."
+    },
+    {
+      "file": "03_cherry_field.jpg",
+      "sha256": "665a8791c4911577d1ad218a7564af5bac1340330b14f06ee567d7eea53fb603",
+      "width": 1056,
+      "height": 1260,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 474.415625,
+      "detections": [
+        {
+          "class_id": 6,
+          "label": "Вишня: лист",
+          "score": 0.89915574
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Вишня: лист. Результат нужно проверить."
+    },
+    {
+      "file": "04_cherry_field.jpg",
+      "sha256": "c930d50c59de9bd1f6100292b39bf0bcbc09bce7f02a60c78f22c0dc6e3bd0e6",
+      "width": 1064,
+      "height": 1600,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 499.675729,
+      "detections": [
+        {
+          "class_id": 6,
+          "label": "Вишня: лист",
+          "score": 0.5296409
+        },
+        {
+          "class_id": 6,
+          "label": "Вишня: лист",
+          "score": 0.50719666
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Вишня: лист. Лист 2. Вишня: лист. Результат нужно проверить."
+    },
+    {
+      "file": "05_corn_field.jpg",
+      "sha256": "7053ba3bb368f0e712c923464a7094de0e4dca2b5ae725e6547073eeea1f2bf2",
+      "width": 1600,
+      "height": 1200,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 471.890521,
+      "detections": [
+        {
+          "class_id": 8,
+          "label": "Кукуруза: ожог листа",
+          "score": 0.43304056
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Кукуруза: ожог листа. Результат нужно проверить."
+    },
+    {
+      "file": "06_corn_field.jpg",
+      "sha256": "ef924ed6e469558728204c5e584299b901f30e91e786832e3a58bbd74e6c96a9",
+      "width": 432,
+      "height": 268,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 462.621094,
+      "detections": [
+        {
+          "class_id": 9,
+          "label": "Кукуруза: ржавчина",
+          "score": 0.9014816
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Кукуруза: ржавчина. Результат нужно проверить."
+    },
+    {
+      "file": "07_grape_field.jpg",
+      "sha256": "918196342cbd2eacc6169c0ea41f5c6f1f54e4187ac4c748be74a6ec56d095a2",
+      "width": 1060,
+      "height": 795,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 486.134531,
+      "detections": [
+        {
+          "class_id": 28,
+          "label": "Виноград: чёрная гниль",
+          "score": 0.90485895
+        },
+        {
+          "class_id": 28,
+          "label": "Виноград: чёрная гниль",
+          "score": 0.7175445
+        },
+        {
+          "class_id": 28,
+          "label": "Виноград: чёрная гниль",
+          "score": 0.37476033
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Виноград: чёрная гниль. Лист 2. Виноград: чёрная гниль. Лист 3. Виноград: чёрная гниль. Результат нужно проверить."
+    },
+    {
+      "file": "08_grape_field.jpg",
+      "sha256": "6e71ee467ba38ed0ebc1c3f803a60498481bfcce65f508f19356482fd84e488d",
+      "width": 470,
+      "height": 612,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 474.556354,
+      "detections": [
+        {
+          "class_id": 27,
+          "label": "Виноград: лист",
+          "score": 0.92119044
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Виноград: лист. Результат нужно проверить."
+    },
+    {
+      "file": "09_pepper_field.jpg",
+      "sha256": "19d38aea9852f463c5454a0062cb773dc86d5804fd28b5eb30ce471c1f4b22d5",
+      "width": 800,
+      "height": 582,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 456.983541,
+      "detections": [
+        {
+          "class_id": 3,
+          "label": "Перец: лист без указанной болезни",
+          "score": 0.67351866
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Перец: лист без указанной болезни. Результат нужно проверить."
+    },
+    {
+      "file": "10_pepper_field.jpg",
+      "sha256": "abe426d94e7ef9e4508c9b1a31e794b6648932f75a068501aab14287108a4681",
+      "width": 400,
+      "height": 300,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 460.308854,
+      "detections": [
+        {
+          "class_id": 4,
+          "label": "Перец: пятнистость",
+          "score": 0.7563407
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Перец: пятнистость. Результат нужно проверить."
+    },
+    {
+      "file": "11_raspberry_field.jpg",
+      "sha256": "5a4649613cc05e84524300da49ae4765936d122c0d67c463e90a1cc09e3574f2",
+      "width": 1200,
+      "height": 801,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 461.639323,
+      "detections": [
+        {
+          "class_id": 14,
+          "label": "Малина: лист",
+          "score": 0.9151553
+        },
+        {
+          "class_id": 14,
+          "label": "Малина: лист",
+          "score": 0.6260295
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Малина: лист. Лист 2. Малина: лист. Результат нужно проверить."
+    },
+    {
+      "file": "12_raspberry_field.jpg",
+      "sha256": "852a7b86ff6ba86891a6f472e53fe0ec161d2d07f707f2d1e3480b79ab83a52d",
+      "width": 1024,
+      "height": 772,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 458.82901,
+      "detections": [
+        {
+          "class_id": 14,
+          "label": "Малина: лист",
+          "score": 0.87511563
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Малина: лист. Результат нужно проверить."
+    },
+    {
+      "file": "13_soybean_field.jpg",
+      "sha256": "a3e55a7a0fa4ec5814029067495c2c4d9650c8622a758d69a5b93b35e059de81",
+      "width": 447,
+      "height": 682,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 458.779635,
+      "detections": [
+        {
+          "class_id": 15,
+          "label": "Соя: лист",
+          "score": 0.93877506
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Соя: лист. Результат нужно проверить."
+    },
+    {
+      "file": "14_soybean_field.jpg",
+      "sha256": "1ee9a63179e9d2d67270890eb6eb1098f0ffc6802fda8f58ee103be13e33e25e",
+      "width": 1296,
+      "height": 864,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 484.326094,
+      "detections": [],
+      "spoken_analysis": "При выбранной культуре и пороге лист не найден. Это не означает, что растение здорово. Проверь выбранную культуру и сними лист крупнее с другого ракурса."
+    },
+    {
+      "file": "15_squash_field.jpg",
+      "sha256": "33abde37b42ed91be53cac8c0c1a8f574098c9ec244be8ac8780d4def935f356",
+      "width": 800,
+      "height": 598,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 496.522813,
+      "detections": [
+        {
+          "class_id": 16,
+          "label": "Тыквенные: мучнистая роса (класс Squash)",
+          "score": 0.9325578
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Тыквенные: мучнистая роса (класс Squash). Результат нужно проверить."
+    },
+    {
+      "file": "16_squash_field.jpg",
+      "sha256": "573a7efa3df4aaa1f48d2760f044ed726514eaf6fec19f11a24976a9448b3004",
+      "width": 576,
+      "height": 432,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 483.980365,
+      "detections": [
+        {
+          "class_id": 16,
+          "label": "Тыквенные: мучнистая роса (класс Squash)",
+          "score": 0.85923505
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Тыквенные: мучнистая роса (класс Squash). Результат нужно проверить."
+    },
+    {
+      "file": "17_tomato_field.jpg",
+      "sha256": "331a1052f4cfb05632a55d016b7f276c011959ea9b164689600ef2710f9e04bf",
+      "width": 768,
+      "height": 768,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 483.064739,
+      "detections": [
+        {
+          "class_id": 21,
+          "label": "Томат: бактериальная пятнистость",
+          "score": 0.47853252
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Томат: бактериальная пятнистость. Результат нужно проверить."
+    },
+    {
+      "file": "18_tomato_field.jpg",
+      "sha256": "0d87aa5a566c1bf8570e9cbb6b7913f8af2094d6c4502859c94c87004b79ead9",
+      "width": 400,
+      "height": 268,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 460.996198,
+      "detections": [
+        {
+          "class_id": 22,
+          "label": "Томат: фитофтороз",
+          "score": 0.80344296
+        },
+        {
+          "class_id": 22,
+          "label": "Томат: фитофтороз",
+          "score": 0.55522424
+        },
+        {
+          "class_id": 22,
+          "label": "Томат: фитофтороз",
+          "score": 0.51386356
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Томат: фитофтороз. Лист 2. Томат: фитофтороз. Лист 3. Томат: фитофтороз. Результат нужно проверить."
+    },
+    {
+      "file": "19_peach_lab.jpg",
+      "sha256": "b5d26a4fccf6965c70202c453627f12ff382d3e7cbed287cbec5c42b5597a739",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 460.008958,
+      "detections": [],
+      "spoken_analysis": "При выбранной культуре и пороге лист не найден. Это не означает, что растение здорово. Проверь выбранную культуру и сними лист крупнее с другого ракурса."
+    },
+    {
+      "file": "20_strawberry_lab.jpg",
+      "sha256": "fdb8b366f66254577756869c9afa76b9d828cb40a2340f2761aa41a1532b831e",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 476.276458,
+      "detections": [
+        {
+          "class_id": 18,
+          "label": "Томат: альтернариоз",
+          "score": 0.7303195
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Томат: альтернариоз. Результат нужно проверить."
+    },
+    {
+      "file": "21_peach_lab.jpg",
+      "sha256": "8cdac7b9cf419778cc1349a9be44dac5fc2c0870514c9e8c177e56fd2654abcb",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 505.336094,
+      "detections": [],
+      "spoken_analysis": "При выбранной культуре и пороге лист не найден. Это не означает, что растение здорово. Проверь выбранную культуру и сними лист крупнее с другого ракурса."
+    },
+    {
+      "file": "22_blueberry_lab.jpg",
+      "sha256": "19eb1b5662ad16487b4af6d7033886b1262dfa297f6d324eb7732840017d5e5b",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 496.966406,
+      "detections": [],
+      "spoken_analysis": "При выбранной культуре и пороге лист не найден. Это не означает, что растение здорово. Проверь выбранную культуру и сними лист крупнее с другого ракурса."
+    },
+    {
+      "file": "23_potato_lab.jpg",
+      "sha256": "39cf2e42a2c2a0c68c6add60ed7b9b1f9f49adf17059f40b79473a4cef3862d9",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 470.759167,
+      "detections": [
+        {
+          "class_id": 18,
+          "label": "Томат: альтернариоз",
+          "score": 0.7936808
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Томат: альтернариоз. Результат нужно проверить."
+    },
+    {
+      "file": "24_strawberry_lab.jpg",
+      "sha256": "6ea317bfa59fe50418277d0d6eaf1b6d3233a8573fd0897af714d9072b6df820",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 479.905052,
+      "detections": [],
+      "spoken_analysis": "При выбранной культуре и пороге лист не найден. Это не означает, что растение здорово. Проверь выбранную культуру и сними лист крупнее с другого ракурса."
+    },
+    {
+      "file": "25_blueberry_lab.jpg",
+      "sha256": "43af32573a74883bfd03cf2ce494374660e81cd8f904b76839fafa58d1fe1e2a",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 479.330365,
+      "detections": [
+        {
+          "class_id": 10,
+          "label": "Персик: лист",
+          "score": 0.7168919
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Персик: лист. Результат нужно проверить."
+    },
+    {
+      "file": "26_potato_lab.jpg",
+      "sha256": "dd089216ec31cb8afdd90762d8ae0f4ffb2245b8be72fea81d2da4e25bb496e4",
+      "width": 256,
+      "height": 256,
+      "model_id": "yolo26s",
+      "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+      "elapsed_ms": 478.699999,
+      "detections": [
+        {
+          "class_id": 18,
+          "label": "Томат: альтернариоз",
+          "score": 0.7176336
+        }
+      ],
+      "spoken_analysis": "Предварительный результат. Лист 1. Томат: альтернариоз. Результат нужно проверить."
+    }
+  ]
+}

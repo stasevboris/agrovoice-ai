@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-28",
+  "device": "Redmi Note 7 / Android 13",
+  "installed_app": "0.21-field",
+  "model": "yolo26s",
+  "model_sha256": "1df8594030641215f067c9b11e8a93e54b62a97bdf008fd9adb88a86ac5dd57d",
+  "parameters": {
+    "crop": "all",
+    "threshold": 0.25
+  },
+  "processed_images": 28,
+  "table": {
+    "expected": "No leaf detection",
+    "detections": 0,
+    "actual_text": "При выбранной культуре и пороге лист не найден. Это не означает, что растение здорово. Проверь выбранную культуру и сними лист крупнее с другого ракурса.",
+    "criterion_met_for_this_photo": true
+  },
+  "houseplant": {
+    "source_species": "Monstera deliciosa",
+    "expected": "Unsupported species; no supported crop diagnosis",
+    "detections": [
+      {
+        "class_id": 3,
+        "label": "Перец: лист без указанной болезни",
+        "score": 0.72309244
+      },
+      {
+        "class_id": 3,
+        "label": "Перец: лист без указанной болезни",
+        "score": 0.70611364
+      },
+      {
+        "class_id": 3,
+        "label": "Перец: лист без указанной болезни",
+        "score": 0.7020375
+      },
+      {
+        "class_id": 3,
+        "label": "Перец: лист без указанной болезни",
+        "score": 0.6305556
+      },
+      {
+        "class_id": 3,
+        "label": "Перец: лист без указанной болезни",
+        "score": 0.5329825
+      },
+      {
+        "class_id": 3,
+        "label": "Перец: лист без указанной болезни",
+        "score": 0.50452006
+      }
+    ],
+    "actual_text": "Предварительный результат. Лист 1. Перец: лист без указанной болезни. Лист 2. Перец: лист без указанной болезни. Лист 3. Перец: лист без указанной болезни. Лист 4. Перец: лист без указанной болезни. Лист 5. Перец: лист без указанной болезни. Результат нужно проверить.",
+    "criterion_met_for_this_photo": false
+  },
+  "preservation": {
+    "journal_tables_unchanged": true,
+    "photos_reports_settings_draft_unchanged": true,
+    "integrity": "ok"
+  },
+  "app_apk_updated": false,
+  "model_updated": false,
+  "test_apk_updated_only": true,
+  "visual_ui_or_live_speech_verified": false,
+  "gallery": "/sdcard/Pictures/AgroVoice_Refusal_Check",
+  "gallery_sha_and_index_verified": true,
+  "instrumentation_result": "OK (1 diagnostic test); this is execution success, not OOD acceptance success",
+  "source_photo": {
+    "filename": "02_houseplant_monstera.jpg",
+    "expected_semantics": "Plant with leaves; species unsupported by AgroVoice",
+    "species_source_label": "Monstera deliciosa",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Monstera_deliciosa_2004.jpg",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/d/d2/Monstera_deliciosa_2004.jpg",
+    "author": "Tigerente at German Wikipedia",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "changes": "None; original bytes",
+    "sha256": "85fad35a2590bb6ceb9a8a1dedd7d65082d20b83d5c337f49a3757bbe8e8e445",
+    "selection": "Chosen by depicted subject before model inference"
+  },
+  "evidence": "artifacts/verification/demo_20261028/ood_check/"
+}
