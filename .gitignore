@@ -77,3 +77,6 @@ docs/**/*.jsonl
 /artifacts/verification/
 /artifacts/kb_sources/
 /artifacts/web_data_*/
+
+# Private disk inventories (personal folder names, paths)
+/artifacts/transfer_plan_*/
