@@ -16,10 +16,12 @@ def asset_files(manifest: dict, voice: dict, tts: dict) -> dict[str, str]:
     return files
 
 
-def experiment_entry(flavor: str, bundle: Path | None) -> dict | None:
+def experiment_entry(flavor: str, bundle: Path | None, field_verifier: bool = False) -> dict | None:
+    if field_verifier and (flavor != "field" or bundle is None):
+        raise ValueError("Field verifier requires an explicit field bundle")
     if bundle is None:
         return None
-    if flavor != "lab":
+    if flavor != "lab" and not field_verifier:
         raise ValueError("Private rejection experiment is available only in lab")
     entry = json.loads((bundle / "entry.json").read_text(encoding="utf-8"))
     if entry.get("family") != "yolo" or entry.get("classifier") or not entry.get("verifier"):
@@ -34,13 +36,17 @@ def experiment_entry(flavor: str, bundle: Path | None) -> dict | None:
     return entry
 
 
-def prepare(flavor: str, output: Path, check: bool = False, experiment: Path | None = None) -> list[str]:
+def prepare(flavor: str, output: Path, check: bool = False, experiment: Path | None = None,
+            field_verifier: bool = False) -> list[str]:
     manifest = assets.flavor_manifest(json.loads(assets.MODEL_MANIFEST.read_text(encoding="utf-8")), flavor)
-    entry = experiment_entry(flavor, experiment)
+    entry = experiment_entry(flavor, experiment, field_verifier)
     if entry is not None:
-        if any(model["id"] == entry["id"] for model in manifest["models"]):
+        if field_verifier:
+            manifest = {"schema": 3, "models": [entry]}
+        elif any(model["id"] == entry["id"] for model in manifest["models"]):
             raise ValueError("Duplicate experiment model id")
-        manifest["models"].append(entry)
+        else:
+            manifest["models"].append(entry)
     voice = json.loads(assets.VOICE_MANIFEST.read_text(encoding="utf-8"))
     tts = json.loads(assets.TTS_MANIFEST.read_text(encoding="utf-8"))
     files = asset_files(manifest, voice, tts)
@@ -98,9 +104,10 @@ def main():
     parser.add_argument("--flavor", required=True, choices=("field", "lab"))
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--experiment", type=Path, help="Private local lab bundle with entry.json and verified graphs")
+    parser.add_argument("--field-verifier", action="store_true", help="Use the explicit private bundle as the only field pipeline")
     args = parser.parse_args()
     output = assets.APP / "app/build/generated/flavorAssets" / args.flavor
-    problems = prepare(args.flavor, output, args.check, args.experiment)
+    problems = prepare(args.flavor, output, args.check, args.experiment, args.field_verifier)
     if problems:
         print("APK packaging requires verified real assets. Run fetch_assets.py --flavor " + args.flavor)
         print("Missing/corrupt: " + ", ".join(problems))

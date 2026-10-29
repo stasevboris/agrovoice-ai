@@ -6,6 +6,8 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+val fieldRejectionEnabled = providers.gradleProperty("fieldRejection").orNull == "true"
+
 android {
     namespace = "com.agronomy.phytomonitor"
     compileSdk {
@@ -16,8 +18,9 @@ android {
         applicationId = "com.agronomy.phytomonitor"
         minSdk = 26
         targetSdk = 37
-        versionCode = 21
-        versionName = "0.21"
+        versionCode = 22
+        versionName = "0.22"
+        buildConfigField("boolean", "FIELD_REJECTION_ENABLED", fieldRejectionEnabled.toString())
 
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
@@ -117,15 +120,24 @@ abstract class PrepareFlavorAssets : Exec() {
 }
 val python = providers.gradleProperty("pythonExecutable").getOrElse("python")
 val rejectionExperiment = providers.gradleProperty("rejectionExperimentDir").orNull
+require(!fieldRejectionEnabled || rejectionExperiment != null) {
+    "fieldRejection requires rejectionExperimentDir with the verified private bundle"
+}
 fun experimentArguments(flavor: String): List<String> =
-    if (flavor == "lab" && rejectionExperiment != null) listOf("--experiment", rejectionExperiment) else emptyList()
+    when {
+        flavor == "field" && fieldRejectionEnabled -> listOf("--experiment", rejectionExperiment!!, "--field-verifier")
+        flavor == "lab" && rejectionExperiment != null -> listOf("--experiment", rejectionExperiment)
+        else -> emptyList()
+    }
 val flavorAssets = listOf("field", "lab").associateWith { flavor ->
     tasks.register<PrepareFlavorAssets>("prepare${flavor.replaceFirstChar { it.uppercase() }}Assets") {
         inputs.dir("src/main/assets")
         inputs.files(rootProject.file("prepare_flavor_assets.py"), rootProject.file("fetch_assets.py"))
         inputs.file(rootProject.file("../ml-pipeline/allcrops/taxonomy_v1.json"))
-        inputs.property("rejectionExperimentDir", if (flavor == "lab") rejectionExperiment.orEmpty() else "")
-        if (flavor == "lab" && rejectionExperiment != null) inputs.dir(rejectionExperiment)
+        val usesExperiment = flavor == "lab" || (flavor == "field" && fieldRejectionEnabled)
+        inputs.property("rejectionExperimentDir", if (usesExperiment) rejectionExperiment.orEmpty() else "")
+        inputs.property("fieldRejection", flavor == "field" && fieldRejectionEnabled)
+        if (usesExperiment && rejectionExperiment != null) inputs.dir(rejectionExperiment)
         outputDirectory.set(layout.buildDirectory.dir("generated/flavorAssets/$flavor"))
         commandLine(listOf(python, "-X", "utf8", rootProject.file("prepare_flavor_assets.py").toString(), "--flavor", flavor) + experimentArguments(flavor))
     }

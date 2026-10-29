@@ -156,7 +156,9 @@ class FieldDetector(private val context: Context) : Closeable {
         }
         val classifier=model.classifier?.let {c -> graph(c.id,c.asset,c.sha256,c.side){it.contentEquals(longArrayOf(1,model.classes.size.toLong()))}}
         val verifier = model.verifier
-        require(verifier == null || BuildConfig.IS_LAB) { "Проверяющая модель доступна только в лабораторной сборке" }
+        require(verifier == null || BuildConfig.IS_LAB || BuildConfig.FIELD_REJECTION_ENABLED) {
+            "Проверяющая модель не включена в эту сборку"
+        }
         val geometry=Letterbox(bitmap.width,bitmap.height,model.side)
         val input=prepareInput(bitmap,geometry)
         // The crop of each class comes from the manifest, not from the beginning of an English class name.

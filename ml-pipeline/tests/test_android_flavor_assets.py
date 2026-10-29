@@ -123,6 +123,29 @@ class StagedAssetsTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "SHA"):
             self.prepare.prepare("lab", self.output, experiment=bundle)
 
+    def test_explicit_field_verifier_is_the_only_default_pipeline(self):
+        bundle = self.root / "field_bundle"
+        (bundle / "models").mkdir(parents=True)
+        for name in ("detector", "verifier"):
+            (bundle / "models" / (name + ".onnx")).write_bytes(name.encode())
+        entry = {"id": "checked_field", "family": "yolo", "asset": "models/detector.onnx",
+                 "sha256": fetch.sha256(bundle / "models/detector.onnx"),
+                 "verifier": {"asset": "models/verifier.onnx", "sha256": fetch.sha256(bundle / "models/verifier.onnx")}}
+        (bundle / "entry.json").write_text(json.dumps(entry), encoding="utf-8")
+        self.prepare.prepare("field", self.output, experiment=bundle, field_verifier=True)
+        staged = json.loads((self.output / "models/manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(staged, {"schema": 3, "models": [entry]})
+        self.assertFalse((self.output / "models/s.onnx").exists())
+        self.assertEqual(self.prepare.prepare("field", self.output, check=True,
+                                             experiment=bundle, field_verifier=True), [])
+        (self.output / "models/verifier.onnx").write_bytes(b"broken")
+        self.assertEqual(self.prepare.prepare("field", self.output, check=True,
+                                             experiment=bundle, field_verifier=True), ["models/verifier.onnx"])
+
+    def test_field_verifier_never_silently_builds_without_its_bundle(self):
+        with self.assertRaisesRegex(ValueError, "bundle"):
+            self.prepare.prepare("field", self.output, field_verifier=True)
+
 
 if __name__ == "__main__":
     unittest.main()

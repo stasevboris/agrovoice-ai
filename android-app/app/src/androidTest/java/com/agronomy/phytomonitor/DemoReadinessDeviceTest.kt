@@ -33,9 +33,18 @@ class DemoReadinessDeviceTest {
         try {
             detectorClass.getMethod("initialize").invoke(detector)
             val models = detectorClass.getMethod("getModels").invoke(detector) as List<*>
+            val requested = arguments.getString("modelId") ?: "default"
+            val selectedId = if (requested == "default") {
+                detectorClass.getMethod("getDefaultModelId").invoke(detector) as String
+            } else requested
             val model = models.single {
-                it!!.javaClass.getMethod("getId").invoke(it) == "yolo26s"
+                it!!.javaClass.getMethod("getId").invoke(it) == selectedId
             }!!
+            if (arguments.getString("requireVerifier") == "true") {
+                check(model.javaClass.getMethod("getVerifier").invoke(model) != null) {
+                    "The default model bypasses the required verifier"
+                }
+            }
             for (name in names) {
                 val file = File(folder, name)
                 check(file.isFile)
@@ -69,12 +78,18 @@ class DemoReadinessDeviceTest {
                     val speechClass = loader.loadClass("com.agronomy.phytomonitor.AnalysisAssessmentKt")
                     val speech = speechClass.methods.single { it.name == "spokenAnalysis" }
                         .invoke(null, spokenLabels, quality) as String
+                    val verification = result.javaClass.methods.firstOrNull { it.name == "getVerification" }
+                        ?.invoke(result)
+                    val verificationJson = verification?.javaClass?.getMethod("toJson")?.invoke(verification)
+                    val verificationMessage = verification?.javaClass?.getMethod("message")?.invoke(verification)
                     results.put(JSONObject().put("file", name).put("sha256", sha)
                         .put("width", bitmap.width).put("height", bitmap.height)
                         .put("model_id", actualModel.javaClass.getMethod("getId").invoke(actualModel))
                         .put("model_sha256", actualModel.javaClass.getMethod("getSha256").invoke(actualModel))
                         .put("elapsed_ms", elapsedMs).put("detections", detections)
-                        .put("spoken_analysis", speech))
+                        .put("base_spoken_analysis", speech)
+                        .put("verification", verificationJson ?: JSONObject.NULL)
+                        .put("verification_message", verificationMessage ?: JSONObject.NULL))
                 } finally {
                     bitmap.recycle()
                 }

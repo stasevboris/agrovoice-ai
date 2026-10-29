@@ -7,6 +7,9 @@ import org.json.JSONObject
 
 object UpdateCompatibility {
     fun model(release: UpdateRelease, bundled: List<DetectorModel>, canonical: List<String>): DetectorModel {
+        require(bundled.none { it.verifier != null }) {
+            "Обновление одиночной модели не поддерживает встроенную проверку культуры"
+        }
         require(release.kind == "model" && release.metadata.optString("prepared_by") == "prepare_model_release.py") {
             "Нет метаданных подготовленного выпуска модели"
         }

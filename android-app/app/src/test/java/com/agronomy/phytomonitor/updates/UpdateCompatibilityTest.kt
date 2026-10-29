@@ -52,4 +52,16 @@ class UpdateCompatibilityTest {
             UpdateCompatibility.model(release(), listOf(original.copy(verifier = graph)), canonical)
         }
     }
+
+    @Test fun differentModelIdCannotBypassBundledVerifier() {
+        val original = UpdateCompatibility.model(release(), emptyList(), canonical)
+        val data = JSONObject().put("id", "v").put("asset", "models/v.onnx").put("sha256", "b".repeat(64))
+            .put("side", 224).put("crops", JSONArray(listOf("apple", "__reject__")))
+            .put("policy", "crop_vs_reject_v1").put("threshold", 0.99).put("detector_threshold", 0.25)
+        val graph = com.agronomy.phytomonitor.ml.CropVerifierGraph.parse(data, listOf("apple"))
+        val protected = original.copy(id = "field_with_verifier", verifier = graph)
+        assertThrows(IllegalArgumentException::class.java) {
+            UpdateCompatibility.model(release(), listOf(protected), canonical)
+        }
+    }
 }
